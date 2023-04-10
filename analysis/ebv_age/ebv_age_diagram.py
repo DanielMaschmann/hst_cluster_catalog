@@ -88,19 +88,21 @@ for index in range(0, 20):
 ax_hum[0, 0].set_xlim(5.7, 10.3)
 ax_hum[0, 0].set_ylim(-0.1, 2.1)
 fig_hum.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
-fig_hum.text(0.08, 0.5, 'log(M$_{*}$/M$_{\odot}$)', va='center', rotation='vertical', fontsize=fontsize)
+fig_hum.text(0.08, 0.5, 'E(B-V)', va='center', rotation='vertical', fontsize=fontsize)
 
 ax_ml[0, 0].set_xlim(5.7, 10.3)
 ax_ml[0, 0].set_ylim(-0.1, 2.1)
 fig_ml.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
-fig_ml.text(0.08, 0.5, 'log(M$_{*}$/M$_{\odot}$)', va='center', rotation='vertical', fontsize=fontsize)
+fig_ml.text(0.08, 0.5, 'E(B-V)', va='center', rotation='vertical', fontsize=fontsize)
 
 # plt.tight_layout()
 fig_hum.subplots_adjust(wspace=0, hspace=0)
 fig_hum.savefig('plot_output/age_ebv_hum_1.png', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_ebv_hum_1.pdf', bbox_inches='tight', dpi=300)
 
 fig_ml.subplots_adjust(wspace=0, hspace=0)
 fig_ml.savefig('plot_output/age_ebv_ml_1.png', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_ebv_ml_1.pdf', bbox_inches='tight', dpi=300)
 
 
 
@@ -166,21 +168,23 @@ for index in range(20, 39):
 ax_hum[0, 0].set_xlim(5.7, 10.3)
 ax_hum[0, 0].set_ylim(-0.1, 2.1)
 fig_hum.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
-fig_hum.text(0.08, 0.5, 'log(M$_{*}$/M$_{\odot}$)', va='center', rotation='vertical', fontsize=fontsize)
+fig_hum.text(0.08, 0.5, 'E(B-V)', va='center', rotation='vertical', fontsize=fontsize)
 ax_hum[4, 3].axis('off')
 
 ax_ml[0, 0].set_xlim(5.7, 10.3)
 ax_ml[0, 0].set_ylim(-0.1, 2.1)
 fig_ml.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
-fig_ml.text(0.08, 0.5, 'log(M$_{*}$/M$_{\odot}$)', va='center', rotation='vertical', fontsize=fontsize)
+fig_ml.text(0.08, 0.5, 'E(B-V)', va='center', rotation='vertical', fontsize=fontsize)
 ax_ml[4, 3].axis('off')
 
 # plt.tight_layout()
 fig_hum.subplots_adjust(wspace=0, hspace=0)
 fig_hum.savefig('plot_output/age_ebv_hum_2.png', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_ebv_hum_2.pdf', bbox_inches='tight', dpi=300)
 
 fig_ml.subplots_adjust(wspace=0, hspace=0)
 fig_ml.savefig('plot_output/age_ebv_ml_2.png', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_ebv_ml_2.pdf', bbox_inches='tight', dpi=300)
 
 
 

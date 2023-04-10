@@ -11,7 +11,7 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path)
 
 # get model
-hdu_a = fits.open('../cigale_model/sfh2exp/out/models-block-0.fits')
+hdu_a = fits.open('../cigale_model/sfh2exp/no_dust/out/models-block-0.fits')
 data_mod = hdu_a[1].data
 age_mod = data_mod['sfh.age']
 m_star_mod = data_mod['stellar.m_star']
@@ -115,9 +115,11 @@ fig_ml.text(0.08, 0.5, 'log(M$_{*}$/M$_{\odot}$)', va='center', rotation='vertic
 # plt.tight_layout()
 fig_hum.subplots_adjust(wspace=0, hspace=0)
 fig_hum.savefig('plot_output/age_m_star_hum_1.png', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_m_star_hum_1.pdf', bbox_inches='tight', dpi=300)
 
 fig_ml.subplots_adjust(wspace=0, hspace=0)
 fig_ml.savefig('plot_output/age_m_star_ml_1.png', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_m_star_ml_1.pdf', bbox_inches='tight', dpi=300)
 
 
 
@@ -199,7 +201,9 @@ ax_ml[4, 3].axis('off')
 
 fig_hum.subplots_adjust(wspace=0, hspace=0)
 fig_hum.savefig('plot_output/age_m_star_hum_2.png', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_m_star_hum_2.pdf', bbox_inches='tight', dpi=300)
 
 fig_ml.subplots_adjust(wspace=0, hspace=0)
 fig_ml.savefig('plot_output/age_m_star_ml_2.png', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_m_star_ml_2.pdf', bbox_inches='tight', dpi=300)
 

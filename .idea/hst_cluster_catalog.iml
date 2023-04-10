@@ -3,9 +3,12 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
     <content url="file://$MODULE_DIR$/../phangs_photometry_tools" />
+    <content url="file://$USER_HOME$/data/PHANGS-HST/v1.0" />
+    <content url="file://$USER_HOME$/software/python_packages/MegaTable" />
     <content url="file://$USER_HOME$/software/python_packages/PHANGS_utils" />
     <content url="file://$USER_HOME$/software/python_packages/cluster_detection" />
     <content url="file://$USER_HOME$/software/python_packages/jwst_scripts" />
+    <content url="file://$USER_HOME$/software/python_packages/xgaltool" />
     <orderEntry type="jdk" jdkName="project" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
