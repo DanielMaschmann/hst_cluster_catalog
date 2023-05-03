@@ -45,217 +45,154 @@ catalog_access.load_hst_cc_list(target_list=cc_target_list, classify='ml', clust
 
 
 max_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
-max_f555w_abs_mag_hum_3 = np.zeros(len(cc_target_list))
 min_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
-min_f555w_abs_mag_hum_3 = np.zeros(len(cc_target_list))
 mean_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
-mean_f555w_abs_mag_hum_3 = np.zeros(len(cc_target_list))
 median_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
-median_f555w_abs_mag_hum_3 = np.zeros(len(cc_target_list))
 p16_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
-p16_f555w_abs_mag_hum_3 = np.zeros(len(cc_target_list))
 p84_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
-p84_f555w_abs_mag_hum_3 = np.zeros(len(cc_target_list))
 
 max_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
-max_f555w_abs_mag_ml_3 = np.zeros(len(cc_target_list))
 min_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
-min_f555w_abs_mag_ml_3 = np.zeros(len(cc_target_list))
 mean_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
-mean_f555w_abs_mag_ml_3 = np.zeros(len(cc_target_list))
 median_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
-median_f555w_abs_mag_ml_3 = np.zeros(len(cc_target_list))
 p16_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
-p16_f555w_abs_mag_ml_3 = np.zeros(len(cc_target_list))
 p84_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
-p84_f555w_abs_mag_ml_3 = np.zeros(len(cc_target_list))
 
 
 max_mstar_hum_12 = np.zeros(len(cc_target_list))
-max_mstar_hum_3 = np.zeros(len(cc_target_list))
 min_mstar_hum_12 = np.zeros(len(cc_target_list))
-min_mstar_hum_3 = np.zeros(len(cc_target_list))
 mean_mstar_hum_12 = np.zeros(len(cc_target_list))
-mean_mstar_hum_3 = np.zeros(len(cc_target_list))
 median_mstar_hum_12 = np.zeros(len(cc_target_list))
-median_mstar_hum_3 = np.zeros(len(cc_target_list))
 p16_mstar_hum_12 = np.zeros(len(cc_target_list))
-p16_mstar_hum_3 = np.zeros(len(cc_target_list))
 p84_mstar_hum_12 = np.zeros(len(cc_target_list))
-p84_mstar_hum_3 = np.zeros(len(cc_target_list))
 
 max_mstar_ml_12 = np.zeros(len(cc_target_list))
-max_mstar_ml_3 = np.zeros(len(cc_target_list))
 min_mstar_ml_12 = np.zeros(len(cc_target_list))
-min_mstar_ml_3 = np.zeros(len(cc_target_list))
 mean_mstar_ml_12 = np.zeros(len(cc_target_list))
-mean_mstar_ml_3 = np.zeros(len(cc_target_list))
 median_mstar_ml_12 = np.zeros(len(cc_target_list))
-median_mstar_ml_3 = np.zeros(len(cc_target_list))
 p16_mstar_ml_12 = np.zeros(len(cc_target_list))
-p16_mstar_ml_3 = np.zeros(len(cc_target_list))
 p84_mstar_ml_12 = np.zeros(len(cc_target_list))
-p84_mstar_ml_3 = np.zeros(len(cc_target_list))
 
+mask_deep = np.zeros(len(cc_target_list), dtype=bool)
 
 for index, target in enumerate(cc_target_list):
-    print(target)
-    # if target == 'ngc0628':
-    #     cluster_class_hum_12_c = catalog_access.get_hst_cc_class_human(target='ngc0628c')
-    #     cluster_class_hum_3_c = catalog_access.get_hst_cc_class_human(target='ngc0628c', cluster_class='class3')
-    #     cluster_class_hum_12_e = catalog_access.get_hst_cc_class_human(target='ngc0628e')
-    #     cluster_class_hum_3_e = catalog_access.get_hst_cc_class_human(target='ngc0628e', cluster_class='class3')
-    #     cluster_class_hum_12 = np.concatenate([cluster_class_hum_12_c, cluster_class_hum_12_e])
-    #     cluster_class_hum_3 = np.concatenate([cluster_class_hum_3_c, cluster_class_hum_3_e])
-    #
-    #     cluster_class_ml_12_c = catalog_access.get_hst_cc_class_ml_vgg(target='ngc0628c', classify='ml')
-    #     cluster_class_ml_3_c = catalog_access.get_hst_cc_class_ml_vgg(target='ngc0628c', classify='ml', cluster_class='class3')
-    #     cluster_class_ml_12_e = catalog_access.get_hst_cc_class_ml_vgg(target='ngc0628e', classify='ml')
-    #     cluster_class_ml_3_e = catalog_access.get_hst_cc_class_ml_vgg(target='ngc0628e', classify='ml', cluster_class='class3')
-    #     cluster_class_ml_12 = np.concatenate([cluster_class_ml_12_c, cluster_class_ml_12_e])
-    #     cluster_class_ml_3 = np.concatenate([cluster_class_ml_3_c, cluster_class_ml_3_e])
-    #
-    #     f555w_mag_hum_12_c = catalog_access.get_hst_cc_band_vega_mag(target='ngc0628c', band='F555W')
-    #     f555w_mag_hum_3_c = catalog_access.get_hst_cc_band_vega_mag(target='ngc0628c', band='F555W', cluster_class='class3')
-    #     f555w_mag_hum_12_e = catalog_access.get_hst_cc_band_vega_mag(target='ngc0628e', band='F555W')
-    #     f555w_mag_hum_3_e = catalog_access.get_hst_cc_band_vega_mag(target='ngc0628e', band='F555W', cluster_class='class3')
-    #     f555w_mag_hum_12 = np.concatenate([f555w_mag_hum_12_c, f555w_mag_hum_12_e])
-    #     f555w_mag_hum_3 = np.concatenate([f555w_mag_hum_3_c, f555w_mag_hum_3_e])
-    #
-    #     f555w_mag_ml_12_c = catalog_access.get_hst_cc_band_vega_mag(target='ngc0628c', classify='ml', band='F555W')
-    #     f555w_mag_ml_3_c = catalog_access.get_hst_cc_band_vega_mag(target='ngc0628c', classify='ml', band='F555W', cluster_class='class3')
-    #     f555w_mag_ml_12_e = catalog_access.get_hst_cc_band_vega_mag(target='ngc0628e', classify='ml', band='F555W')
-    #     f555w_mag_ml_3_e = catalog_access.get_hst_cc_band_vega_mag(target='ngc0628e', classify='ml', band='F555W', cluster_class='class3')
-    #     f555w_mag_ml_12 = np.concatenate([f555w_mag_ml_12_c, f555w_mag_ml_12_e])
-    #     f555w_mag_ml_3 = np.concatenate([f555w_mag_ml_3_c, f555w_mag_ml_3_e])
-    #
-    #     mstar_hum_12_c = catalog_access.get_hst_cc_stellar_m(target='ngc0628c')
-    #     mstar_hum_3_c = catalog_access.get_hst_cc_stellar_m(target='ngc0628c', cluster_class='class3')
-    #     mstar_hum_12_e = catalog_access.get_hst_cc_stellar_m(target='ngc0628e')
-    #     mstar_hum_3_e = catalog_access.get_hst_cc_stellar_m(target='ngc0628e', cluster_class='class3')
-    #     mstar_hum_12 = np.concatenate([mstar_hum_12_c, mstar_hum_12_e])
-    #     mstar_hum_3 = np.concatenate([mstar_hum_3_c, mstar_hum_3_e])
-    #
-    #     mstar_ml_12_c = catalog_access.get_hst_cc_stellar_m(target='ngc0628c', classify='ml')
-    #     mstar_ml_3_c = catalog_access.get_hst_cc_stellar_m(target='ngc0628c', classify='ml', cluster_class='class3')
-    #     mstar_ml_12_e = catalog_access.get_hst_cc_stellar_m(target='ngc0628e', classify='ml')
-    #     mstar_ml_3_e = catalog_access.get_hst_cc_stellar_m(target='ngc0628e', classify='ml', cluster_class='class3')
-    #     mstar_ml_12 = np.concatenate([mstar_ml_12_c, mstar_ml_12_e])
-    #     mstar_ml_3 = np.concatenate([mstar_ml_3_c, mstar_ml_3_e])
-    #
-    # else:
-
     cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
-    cluster_class_hum_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
     cluster_class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
-    cluster_class_ml_3 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
 
     f555w_mag_hum_12 = catalog_access.get_hst_cc_band_vega_mag(target=target, band='F555W')
-    f555w_mag_hum_3 = catalog_access.get_hst_cc_band_vega_mag(target=target, band='F555W', cluster_class='class3')
     f555w_mag_ml_12 = catalog_access.get_hst_cc_band_vega_mag(target=target, classify='ml', band='F555W')
-    f555w_mag_ml_3 = catalog_access.get_hst_cc_band_vega_mag(target=target, classify='ml', band='F555W', cluster_class='class3')
 
     mstar_hum_12 = catalog_access.get_hst_cc_stellar_m(target=target)
-    mstar_hum_3 = catalog_access.get_hst_cc_stellar_m(target=target, cluster_class='class3')
-
     mstar_ml_12 = catalog_access.get_hst_cc_stellar_m(target=target, classify='ml')
-    mstar_ml_3 = catalog_access.get_hst_cc_stellar_m(target=target, classify='ml', cluster_class='class3')
-
 
     f555w_abs_mag_hum_12 = f555w_mag_hum_12 - 5*np.log10(dist_list[index] * 1e6) + 5
-    f555w_abs_mag_hum_3 = f555w_mag_hum_3 - 5*np.log10(dist_list[index] * 1e6) + 5
     f555w_abs_mag_ml_12 = f555w_mag_ml_12 - 5*np.log10(dist_list[index] * 1e6) + 5
-    f555w_abs_mag_ml_3 = f555w_mag_ml_3 - 5*np.log10(dist_list[index] * 1e6) + 5
+
+    median_f555w_mag_ml_12 = np.nanmedian(f555w_mag_ml_12[(f555w_mag_ml_12 > 18) & (f555w_mag_ml_12 < 26)])
+    faintest_f555w_band_mag_hum_12 = np.nanmax(f555w_mag_hum_12[(f555w_mag_hum_12 > 18) & (f555w_mag_hum_12 < 26)])
+    if median_f555w_mag_ml_12 > faintest_f555w_band_mag_hum_12:
+        mask_deep[index] = False
+    else:
+        mask_deep[index] = True
+
 
     max_f555w_abs_mag_hum_12[index] = np.nanmax(f555w_abs_mag_hum_12)
-    max_f555w_abs_mag_hum_3[index] = np.nanmax(f555w_abs_mag_hum_3)
     min_f555w_abs_mag_hum_12[index] = np.nanmin(f555w_abs_mag_hum_12)
-    min_f555w_abs_mag_hum_3[index] = np.nanmin(f555w_abs_mag_hum_3)
     mean_f555w_abs_mag_hum_12[index] = np.nanmean(f555w_abs_mag_hum_12)
-    mean_f555w_abs_mag_hum_3[index] = np.nanmean(f555w_abs_mag_hum_3)
     median_f555w_abs_mag_hum_12[index] = np.nanmedian(f555w_abs_mag_hum_12)
-    median_f555w_abs_mag_hum_3[index] = np.nanmedian(f555w_abs_mag_hum_3)
     p16_f555w_abs_mag_hum_12[index] = np.percentile(f555w_abs_mag_hum_12, 16)
-    p16_f555w_abs_mag_hum_3[index] = np.percentile(f555w_abs_mag_hum_3, 16)
     p84_f555w_abs_mag_hum_12[index] = np.percentile(f555w_abs_mag_hum_12, 84)
-    p84_f555w_abs_mag_hum_3[index] = np.percentile(f555w_abs_mag_hum_3, 84)
 
     max_f555w_abs_mag_ml_12[index] = np.nanmax(f555w_abs_mag_ml_12)
-    max_f555w_abs_mag_ml_3[index] = np.nanmax(f555w_abs_mag_ml_3)
     min_f555w_abs_mag_ml_12[index] = np.nanmin(f555w_abs_mag_ml_12)
-    min_f555w_abs_mag_ml_3[index] = np.nanmin(f555w_abs_mag_ml_3)
     mean_f555w_abs_mag_ml_12[index] = np.nanmean(f555w_abs_mag_ml_12)
-    mean_f555w_abs_mag_ml_3[index] = np.nanmean(f555w_abs_mag_ml_3)
     median_f555w_abs_mag_ml_12[index] = np.nanmedian(f555w_abs_mag_ml_12)
-    median_f555w_abs_mag_ml_3[index] = np.nanmedian(f555w_abs_mag_ml_3)
     p16_f555w_abs_mag_ml_12[index] = np.percentile(f555w_abs_mag_ml_12, 16)
-    p16_f555w_abs_mag_ml_3[index] = np.percentile(f555w_abs_mag_ml_3, 16)
     p84_f555w_abs_mag_ml_12[index] = np.percentile(f555w_abs_mag_ml_12, 84)
-    p84_f555w_abs_mag_ml_3[index] = np.percentile(f555w_abs_mag_ml_3, 84)
 
-    max_mstar_hum_12[index] = np.nanmax(mstar_hum_12)
-    max_mstar_hum_3[index] = np.nanmax(mstar_hum_3)
-    min_mstar_hum_12[index] = np.nanmin(mstar_hum_12)
-    min_mstar_hum_3[index] = np.nanmin(mstar_hum_3)
+
+    max_mstar_hum_12[index] = np.percentile(mstar_hum_12, 99)
+    min_mstar_hum_12[index] = np.percentile(mstar_hum_12, 1)
     mean_mstar_hum_12[index] = np.nanmean(mstar_hum_12)
-    mean_mstar_hum_3[index] = np.nanmean(mstar_hum_3)
     median_mstar_hum_12[index] = np.nanmedian(mstar_hum_12)
-    median_mstar_hum_3[index] = np.nanmedian(mstar_hum_3)
     p16_mstar_hum_12[index] = np.percentile(mstar_hum_12, 16)
-    p16_mstar_hum_3[index] = np.percentile(mstar_hum_3, 16)
     p84_mstar_hum_12[index] = np.percentile(mstar_hum_12, 84)
-    p84_mstar_hum_3[index] = np.percentile(mstar_hum_3, 84)
 
-    max_mstar_ml_12[index] = np.nanmax(mstar_ml_12)
-    max_mstar_ml_3[index] = np.nanmax(mstar_ml_3)
-    min_mstar_ml_12[index] = np.nanmin(mstar_ml_12)
-    min_mstar_ml_3[index] = np.nanmin(mstar_ml_3)
+    max_mstar_ml_12[index] = np.percentile(mstar_ml_12, 99)
+    min_mstar_ml_12[index] = np.percentile(mstar_ml_12, 1)
     mean_mstar_ml_12[index] = np.nanmean(mstar_ml_12)
-    mean_mstar_ml_3[index] = np.nanmean(mstar_ml_3)
     median_mstar_ml_12[index] = np.nanmedian(mstar_ml_12)
-    median_mstar_ml_3[index] = np.nanmedian(mstar_ml_3)
     p16_mstar_ml_12[index] = np.percentile(mstar_ml_12, 16)
-    p16_mstar_ml_3[index] = np.percentile(mstar_ml_3, 16)
     p84_mstar_ml_12[index] = np.percentile(mstar_ml_12, 84)
-    p84_mstar_ml_3[index] = np.percentile(mstar_ml_3, 84)
 
 
-fig, ax = plt.subplots(nrows=2, ncols=2, sharex=True, sharey='row', figsize=(20, 15))
-fontsize = 19
+fig, ax = plt.subplots(nrows=2, ncols=2, sharex=True, sharey='row', figsize=(28, 15))
+fontsize = 30
 
-ax[0, 0].scatter(dist_list, min_f555w_abs_mag_hum_12, s=120, color='tab:blue', label='Min value')
-ax[0, 0].errorbar(dist_list, median_f555w_abs_mag_hum_12,
-                  yerr=[median_f555w_abs_mag_hum_12 - p16_f555w_abs_mag_hum_12,
-                        p84_f555w_abs_mag_hum_12 - median_f555w_abs_mag_hum_12],
-                  fmt='o', color='darkslategrey', label='Median value')
-ax[0, 0].scatter(dist_list, max_f555w_abs_mag_hum_12, s=120, color='tab:red', label='Max value')
+scatter_dot_size = 140
+scatter_star_size = 400
+
+err_bar_dot_size = 12
+err_bar_star_size = 21
+
+
+for index in range(len(dist_list)):
+    if not mask_deep[index]:
+        ax[0, 0].scatter(dist_list[index], min_f555w_abs_mag_hum_12[index], s=scatter_star_size,  marker='*', color='tab:blue')
+        ax[0, 0].errorbar(dist_list[index], median_f555w_abs_mag_hum_12[index],
+                          yerr=np.array([[median_f555w_abs_mag_hum_12[index] - p16_f555w_abs_mag_hum_12[index]],
+                                         [p84_f555w_abs_mag_hum_12[index] - median_f555w_abs_mag_hum_12[index]]]),
+                          fmt='*', ms=err_bar_star_size, color='darkslategrey')
+        ax[0, 0].scatter(dist_list[index], max_f555w_abs_mag_hum_12[index], s=scatter_star_size,  marker='*', color='tab:red')
+
+    else:
+        ax[0, 0].scatter(dist_list[index], min_f555w_abs_mag_hum_12[index], s=scatter_dot_size, color='tab:blue')
+        ax[0, 0].errorbar(dist_list[index], median_f555w_abs_mag_hum_12[index],
+                          yerr=np.array([[median_f555w_abs_mag_hum_12[index] - p16_f555w_abs_mag_hum_12[index]],
+                                          [p84_f555w_abs_mag_hum_12[index] - median_f555w_abs_mag_hum_12[index]]]),
+                          fmt='o', ms=err_bar_dot_size, color='darkslategrey')
+        ax[0, 0].scatter(dist_list[index], max_f555w_abs_mag_hum_12[index], s=scatter_dot_size, color='tab:red')
+
+ax[0, 0].scatter([], [], s=scatter_dot_size, color='tab:blue', label='Brightest cluster')
+# ax[0, 0].errorbar([], [], yerr=[], fmt='o', ms=err_bar_dot_size, color='darkslategrey', label='Median value')
+ax[0, 0].scatter([], [], s=scatter_dot_size, color='darkslategrey', label='Median value')
+ax[0, 0].scatter([], [], s=scatter_dot_size, color='tab:red', label='Faintest cluster')
+
 
 ax[0, 1].scatter(dist_list, min_f555w_abs_mag_ml_12, s=120, color='tab:blue', label='Min value')
 ax[0, 1].errorbar(dist_list, median_f555w_abs_mag_ml_12,
                   yerr=[median_f555w_abs_mag_ml_12 - p16_f555w_abs_mag_ml_12,
                         p84_f555w_abs_mag_ml_12 - median_f555w_abs_mag_ml_12],
-                  fmt='o', color='darkslategrey', label='Median value')
+                  fmt='o', ms=err_bar_dot_size, color='darkslategrey', label='Median value')
 ax[0, 1].scatter(dist_list, max_f555w_abs_mag_ml_12, s=120, color='tab:red', label='Max value')
 
 
-ax[1, 0].scatter(dist_list, min_mstar_hum_12, s=120, color='tab:blue', label='Min value')
+
+ax[1, 0].scatter(dist_list, max_mstar_hum_12, s=scatter_dot_size, color='tab:purple')
 ax[1, 0].errorbar(dist_list, median_mstar_hum_12,
                   yerr=[median_mstar_hum_12 - p16_mstar_hum_12,
                         p84_mstar_hum_12 - median_mstar_hum_12],
-                  fmt='o', color='darkslategrey', label='Median value')
-ax[1, 0].scatter(dist_list, max_mstar_hum_12, s=120, color='tab:red', label='Max value')
-ax[1, 1].scatter(dist_list, min_mstar_ml_12, s=120, color='tab:blue', label='Min value')
+                  fmt='o', ms=err_bar_dot_size, color='darkslategrey')
+ax[1, 0].scatter(dist_list, min_mstar_hum_12, s=scatter_dot_size, color='tab:green')
+
+ax[1, 0].scatter([], [], s=scatter_dot_size, color='tab:purple', label='99% percentile')
+ax[1, 0].scatter([], [], s=scatter_dot_size, color='darkslategrey', label='Median value')
+ax[1, 0].scatter([], [], s=scatter_dot_size, color='tab:green', label='1% percentile')
+
+
+
+ax[1, 1].scatter(dist_list, max_mstar_ml_12, s=scatter_dot_size, color='tab:purple')
 ax[1, 1].errorbar(dist_list, median_mstar_ml_12,
                   yerr=[median_mstar_ml_12 - p16_mstar_ml_12,
                         p84_mstar_ml_12 - median_mstar_ml_12],
-                  fmt='o', color='darkslategrey', label='Median value')
-ax[1, 1].scatter(dist_list, max_mstar_ml_12, s=120, color='tab:red', label='Max value')
+                  fmt='o', ms=err_bar_dot_size, color='darkslategrey')
+ax[1, 1].scatter(dist_list, min_mstar_ml_12, s=scatter_dot_size, color='tab:green')
 
 
-for i, target in enumerate(cc_target_list):
-    if target in ['ngc4826', 'ngc5068', 'ic5332', 'ngc4548', 'ngc4564', 'ngc0685', 'ngc2835']:
-        ax[0, 0].text(dist_list[i], max_f555w_abs_mag_hum_12[i], target,
-                      horizontalalignment='left', verticalalignment='top', fontsize=fontsize)
+# for i, target in enumerate(cc_target_list):
+#     if target in ['ngc4826', 'ngc5068', 'ic5332', 'ngc4548', 'ngc4564', 'ngc0685', 'ngc2835']:
+#         ax[0, 0].text(dist_list[i], max_f555w_abs_mag_hum_12[i], target,
+#                       horizontalalignment='left', verticalalignment='top', fontsize=fontsize)
 # for i, target in enumerate(cc_target_list):
 #     if target in ['ngc4826', 'ngc5068', 'ic5332', 'ngc4548', 'ngc4564', 'ngc0685', 'ngc2835']:
 #         ax[0, 1].text(dist_list[i], max_f555w_abs_mag_ml_12[i], target,
@@ -263,7 +200,8 @@ for i, target in enumerate(cc_target_list):
 
 ax[0, 0].set_title('Human Class 1, 2', fontsize=fontsize+4)
 ax[0, 1].set_title('ML Class 1, 2', fontsize=fontsize+4)
-ax[0, 0].legend(frameon=False, fontsize=fontsize)
+ax[0, 0].legend(frameon=False, fontsize=fontsize - 6)
+ax[1, 0].legend(frameon=False, fontsize=fontsize - 6)
 
 # ax[0, 0].set_ylim(-3.5, -17.1)
 ax[0, 0].invert_yaxis()
@@ -273,10 +211,10 @@ ax[0, 0].set_ylabel('Abs. V-mag', fontsize=fontsize)
 ax[1, 0].set_ylabel(r'log(M$_{*}$/M$_{\odot}$)', fontsize=fontsize)
 ax[1, 0].set_xlabel('Distance [Mpc]', fontsize=fontsize)
 ax[1, 1].set_xlabel('Distance [Mpc]', fontsize=fontsize)
-ax[0, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[0, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[1, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[1, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax[0, 0].tick_params(axis='both', which='both', width=3, length=6, right=True, top=True, direction='in', labelsize=fontsize)
+ax[0, 1].tick_params(axis='both', which='both', width=3, length=6, right=True, top=True, direction='in', labelsize=fontsize)
+ax[1, 0].tick_params(axis='both', which='both', width=3, length=6, right=True, top=True, direction='in', labelsize=fontsize)
+ax[1, 1].tick_params(axis='both', which='both', width=3, length=6, right=True, top=True, direction='in', labelsize=fontsize)
 
 # plt.show()
 # exit()

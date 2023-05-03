@@ -23,29 +23,36 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
                                                             sample_table_path=sample_table_path)
 
 
+catalog_access.load_sample_table()
+
+
+exit()
 
 
 # get model
-hdu_a = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
-data_mod = hdu_a[1].data
-age_mod = data_mod['sfh.age']
-flux_f555w = data_mod['F555W_UVIS_CHIP2']
-flux_f814w = data_mod['F814W_UVIS_CHIP2']
-flux_f336w = data_mod['F336W_UVIS_CHIP2']
-flux_f438w = data_mod['F438W_UVIS_CHIP2']
+hdu_a_sol = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
+data_mod_sol = hdu_a_sol[1].data
+age_mod_sol = data_mod_sol['sfh.age']
+flux_f275w_sol = data_mod_sol['F275W_UVIS_CHIP2']
+flux_f555w_sol = data_mod_sol['F555W_UVIS_CHIP2']
+flux_f814w_sol = data_mod_sol['F814W_UVIS_CHIP2']
+flux_f336w_sol = data_mod_sol['F336W_UVIS_CHIP2']
+flux_f438w_sol = data_mod_sol['F438W_UVIS_CHIP2']
+mag_v_sol = hf.conv_mjy2vega(flux=flux_f555w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
+mag_i_sol = hf.conv_mjy2vega(flux=flux_f814w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
+mag_u_sol = hf.conv_mjy2vega(flux=flux_f336w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
+mag_b_sol = hf.conv_mjy2vega(flux=flux_f438w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
+mag_nuv_sol = hf.conv_mjy2vega(flux=flux_f275w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F275W', mag_sys='AB'),
+                               vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F275W'))
 
-mag_v = hf.conv_mjy2vega(flux=flux_f555w, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
-                         vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
-mag_i = hf.conv_mjy2vega(flux=flux_f814w, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
-                         vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
-mag_u = hf.conv_mjy2vega(flux=flux_f336w, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
-                         vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
-mag_b = hf.conv_mjy2vega(flux=flux_f438w, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
-                         vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
-
-model_vi = mag_v - mag_i
-model_ub = mag_u - mag_b
-
+model_vi_sol = mag_v_sol - mag_i_sol
+model_ub_sol = mag_u_sol - mag_b_sol
+model_nuvb_sol = mag_nuv_sol - mag_b_sol
+model_nuvu_sol = mag_nuv_sol - mag_u_sol
 
 
 # target_list = catalog_access.target_hst_cc
@@ -65,8 +72,6 @@ catalog_access.load_hst_cc_list(target_list=catalog_access.target_hst_cc, classi
 
 catalog_access.load_hst_cc_list(target_list=catalog_access.target_hst_cc, classify='ml')
 catalog_access.load_hst_cc_list(target_list=catalog_access.target_hst_cc, classify='ml', cluster_class='class3')
-
-
 
 
 fig = plt.figure(figsize=(24, 20))

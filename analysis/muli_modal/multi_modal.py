@@ -8,6 +8,7 @@ from astropy.io import fits
 import ast
 from astropy.io import ascii
 from astropy.table import QTable
+from photometry_tools.plotting_tools import DensityContours
 
 
 
@@ -115,6 +116,106 @@ plt.legend()
 plt.xlabel('Chi2')
 plt.savefig('plot_output/hist_chi2.png')
 plt.clf()
+
+
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(15, 8))
+fontsize = 15
+
+ax[0].plot(model_vi, model_ub, color='red', linewidth=2)
+DensityContours.get_contours_percentage(ax=ax[0], x_data=color_vi[chi2<0.5], y_data=color_ub[chi2<0.5], color='black', percent=False)
+ax[0].set_title('All Clusters', fontsize=14)
+ax[0].set_ylim(1.25, -2.2)
+ax[0].set_xlim(-1.0, 1.8)
+ax[0].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax[0].set_ylabel('U (F336W) - B (F438W/F435W'+'$^*$'+')', fontsize=fontsize)
+
+ax[0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=15)
+ax[0].set_title('Chi2 < 0.5')
+
+ax[1].plot(model_vi, model_ub, color='red', linewidth=2)
+DensityContours.get_contours_percentage(ax=ax[1], x_data=color_vi[chi2>1.5], y_data=color_ub[chi2>1.5], color='black', percent=False)
+ax[1].set_title('All Clusters', fontsize=14)
+ax[1].set_ylim(1.25, -2.2)
+ax[1].set_xlim(-1.0, 1.8)
+# ax[1].set_xticklabels([])
+ax[1].set_yticklabels([])
+ax[1].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+
+ax[1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=15)
+ax[1].set_title('Chi2 > 1.5')
+
+
+# plt.show()
+plt.tight_layout()
+plt.subplots_adjust(wspace=0.01)
+plt.savefig('plot_output/color_color_chi2.png')
+plt.clf()
+
+
+
+
+
+
+fig, ax = plt.subplots(nrows=1, ncols=4, figsize=(23, 8))
+fontsize = 17
+
+ax[0].plot(model_vi, model_ub, color='red', linewidth=2)
+DensityContours.get_contours_percentage(ax=ax[0], x_data=color_vi[cluster_class==1], y_data=color_ub[cluster_class==1], color='black', percent=True, contour_levels=[0, 0.05, 0.1, 0.2, 0.5, 0.68, 0.95, 0.99])
+ax[0].set_title('class 1', fontsize=fontsize)
+ax[0].set_ylim(1.25, -2.2)
+ax[0].set_xlim(-1.0, 1.8)
+ax[0].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax[0].set_ylabel('U (F336W) - B (F438W/F435W'+'$^*$'+')', fontsize=fontsize)
+ax[0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=15)
+
+
+ax[1].plot(model_vi, model_ub, color='red', linewidth=2)
+DensityContours.get_contours_percentage(ax=ax[1], x_data=color_vi[cluster_class==2], y_data=color_ub[cluster_class==2], color='black', percent=True, contour_levels=[0, 0.05, 0.1, 0.2, 0.5, 0.68, 0.95, 0.99])
+ax[1].set_ylim(1.25, -2.2)
+ax[1].set_xlim(-1.0, 1.8)
+# ax[1].set_xticklabels([])
+ax[1].set_yticklabels([])
+ax[1].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax[1].set_title('Class 2', fontsize=fontsize)
+ax[1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=15)
+
+ax[2].plot(model_vi, model_ub, color='red', linewidth=2)
+DensityContours.get_contours_percentage(ax=ax[2], x_data=color_vi[(cluster_class==1) | (cluster_class==2)], y_data=color_ub[(cluster_class==1) | (cluster_class==2)], color='black', percent=True, contour_levels=[0, 0.05, 0.1, 0.2, 0.5, 0.68, 0.95, 0.99])
+ax[2].set_ylim(1.25, -2.2)
+ax[2].set_xlim(-1.0, 1.8)
+# ax[2].set_xticklabels([])
+ax[2].set_yticklabels([])
+ax[2].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax[2].set_title('Class 1+2', fontsize=fontsize)
+ax[2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=15)
+
+ax[3].plot(model_vi, model_ub, color='red', linewidth=2)
+DensityContours.get_contours_percentage(ax=ax[3], x_data=color_vi[cluster_class==3], y_data=color_ub[cluster_class==3], color='black', percent=True, contour_levels=[0, 0.05, 0.1, 0.2, 0.5, 0.68, 0.95, 0.99])
+ax[3].set_ylim(1.25, -2.2)
+ax[3].set_xlim(-1.0, 1.8)
+# ax[3].set_xticklabels([])
+ax[3].set_yticklabels([])
+ax[3].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax[3].set_title('Class 3', fontsize=fontsize)
+ax[3].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=15)
+
+
+# plt.show()
+plt.tight_layout()
+plt.subplots_adjust(wspace=0.01)
+plt.savefig('plot_output/color_color_classes.png')
+plt.clf()
+
+
+
+
+exit()
+
+
+
+
+
+
 
 mode_2_low = []
 mode_2_high = []

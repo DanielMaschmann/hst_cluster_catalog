@@ -27,10 +27,12 @@ catalog_access.load_hst_cc_list(target_list=target_list, classify='ml')
 catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_class='class3')
 
 
-fig_hum, ax_hum = plt.subplots(5, 4, sharex=True, sharey=True)
-fig_hum.set_size_inches(16, 18)
-fig_ml, ax_ml = plt.subplots(5, 4, sharex=True, sharey=True)
-fig_ml.set_size_inches(16, 18)
+color_c1 = 'darkorange'
+color_c2 = 'tab:green'
+color_c3 = 'darkorange'
+
+fig_hum, ax_hum = plt.subplots(5, 4, sharex=True, sharey=True, figsize=(16, 18))
+fig_ml, ax_ml = plt.subplots(5, 4, sharex=True, sharey=True, figsize=(16, 18))
 fontsize = 18
 
 row_index = 0
@@ -58,16 +60,16 @@ for index in range(0, 20):
     class_2_ml = (cluster_class_12_ml == 2) & (cluster_class_qual_12_ml >= 0.9)
     class_3_ml = (cluster_class_3_ml == 3) & (cluster_class_qual_3_ml >= 0.9)
 
-    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum[cluster_class_3_hum == 3]) + 6),
-                                         ebv_3_hum[cluster_class_3_hum == 3], c='royalblue', s=1)
+    # ax_hum[row_index, col_index].scatter((np.log10(age_3_hum[cluster_class_3_hum == 3]) + 6),
+    #                                      ebv_3_hum[cluster_class_3_hum == 3], c=color_c3, s=20, alpha=0.5)
     ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + 6)[cluster_class_12_hum == 1],
-                                         ebv_12_hum[cluster_class_12_hum == 1], c='forestgreen', s=1)
+                                         ebv_12_hum[cluster_class_12_hum == 1], c=color_c1, s=20, alpha=0.5)
     ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + 6)[cluster_class_12_hum == 2],
-                                         ebv_12_hum[cluster_class_12_hum == 2], c='darkorange', s=1)
+                                         ebv_12_hum[cluster_class_12_hum == 2], c=color_c2, s=20, alpha=0.5)
 
-    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml[class_3_ml]) + 6), ebv_3_ml[class_3_ml], c='royalblue', s=1)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_1_ml], ebv_12_ml[class_1_ml], c='forestgreen', s=1)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_2_ml], ebv_12_ml[class_2_ml], c='darkorange', s=1)
+    # ax_ml[row_index, col_index].scatter((np.log10(age_3_ml[class_3_ml]) + 6), ebv_3_ml[class_3_ml], c=color_c3, s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_2_ml], ebv_12_ml[class_2_ml], c=color_c2, s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_1_ml], ebv_12_ml[class_1_ml], c=color_c1, s=20, alpha=0.5)
 
     anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
                                  frameon=False, prop=dict(size=fontsize-4))
@@ -137,16 +139,16 @@ for index in range(20, 39):
     class_2_ml = (cluster_class_12_ml == 2) & (cluster_class_qual_12_ml >= 0.9)
     class_3_ml = (cluster_class_3_ml == 3) & (cluster_class_qual_3_ml >= 0.9)
 
-    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum[cluster_class_3_hum == 3]) + 6),
-                                         ebv_3_hum[cluster_class_3_hum == 3], c='royalblue', s=1)
-    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + 6)[cluster_class_12_hum == 1],
-                                         ebv_12_hum[cluster_class_12_hum == 1], c='forestgreen', s=1)
+    # ax_hum[row_index, col_index].scatter((np.log10(age_3_hum[cluster_class_3_hum == 3]) + 6),
+    #                                      ebv_3_hum[cluster_class_3_hum == 3], c=color_c3, s=20, alpha=0.5)
     ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + 6)[cluster_class_12_hum == 2],
-                                         ebv_12_hum[cluster_class_12_hum == 2], c='darkorange', s=1)
+                                         ebv_12_hum[cluster_class_12_hum == 2], c=color_c2, s=20, alpha=0.5)
+    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + 6)[cluster_class_12_hum == 1],
+                                         ebv_12_hum[cluster_class_12_hum == 1], c=color_c1, s=20, alpha=0.5)
 
-    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml[class_3_ml]) + 6), ebv_3_ml[class_3_ml], c='royalblue', s=1)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_1_ml], ebv_12_ml[class_1_ml], c='forestgreen', s=1)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_2_ml], ebv_12_ml[class_2_ml], c='darkorange', s=1)
+    # ax_ml[row_index, col_index].scatter((np.log10(age_3_ml[class_3_ml]) + 6), ebv_3_ml[class_3_ml], c=color_c3, s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_2_ml], ebv_12_ml[class_2_ml], c=color_c2, s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_1_ml], ebv_12_ml[class_1_ml], c=color_c1, s=20, alpha=0.5)
 
     anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
                                  frameon=False, prop=dict(size=fontsize-4))
@@ -169,14 +171,19 @@ ax_hum[0, 0].set_xlim(5.7, 10.3)
 ax_hum[0, 0].set_ylim(-0.1, 2.1)
 fig_hum.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
 fig_hum.text(0.08, 0.5, 'E(B-V)', va='center', rotation='vertical', fontsize=fontsize)
+ax_hum[4, 3].scatter([], [], c=color_c1, s=30, label='Class 1')
+ax_hum[4, 3].scatter([], [], c=color_c2, s=30, label='Class 2')
+ax_hum[4, 3].legend(frameon=False, fontsize=fontsize)
 ax_hum[4, 3].axis('off')
 
 ax_ml[0, 0].set_xlim(5.7, 10.3)
 ax_ml[0, 0].set_ylim(-0.1, 2.1)
 fig_ml.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
 fig_ml.text(0.08, 0.5, 'E(B-V)', va='center', rotation='vertical', fontsize=fontsize)
+ax_ml[4, 3].scatter([], [], c=color_c1, s=30, label='Class 1')
+ax_ml[4, 3].scatter([], [], c=color_c2, s=30, label='Class 2')
+ax_ml[4, 3].legend(frameon=False, fontsize=fontsize)
 ax_ml[4, 3].axis('off')
-
 # plt.tight_layout()
 fig_hum.subplots_adjust(wspace=0, hspace=0)
 fig_hum.savefig('plot_output/age_ebv_hum_2.png', bbox_inches='tight', dpi=300)

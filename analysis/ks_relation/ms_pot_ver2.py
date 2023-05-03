@@ -22,7 +22,7 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
 
 
 # get model
-hdu_a = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
+hdu_a = fits.open('../cigale_model/sfh2exp/no_dust/out/models-block-0.fits')
 data_mod = hdu_a[1].data
 age_mod = data_mod['sfh.age']
 flux_f555w = data_mod['F555W_UVIS_CHIP2']
@@ -74,14 +74,14 @@ for index in range(0, 38):
 
 fig = plt.figure(figsize=(35, 25))
 fontsize = 50
-x_lim_low = 9.1
-x_lim_high = 11.3
-y_lim_low = -1.1
-y_lim_high = 0.9
+x_lim_low = 8.1
+x_lim_high = 11.9
+y_lim_low = -1.9
+y_lim_high = 1.4
 
-ms_x_pos = 0.09
+ms_x_pos = 0.08
 ms_y_pos = 0.07
-ms_x_len = 0.90
+ms_x_len = 0.91
 ms_y_len = 0.92
 
 contour_width = 0.12
@@ -90,160 +90,83 @@ contour_hight = 0.12
 ax_ms = fig.add_axes([ms_x_pos, ms_y_pos, ms_x_len, ms_y_len])
 
 # plot contours
-gswlc_access = analysis_tools.AnalysisTools(object_type='gswlc_d_v1', writable_table=True)
-gswlc_access.cross_match_table(cross_match='rcsed')
-# gswlc_access = analysis_tools.AnalysisTools(object_type='rcsed', table_cross_match='gswlc_a_v1', writable_table=False)
+gswlc_access = analysis_tools.AnalysisTools(object_type='gswlc_d_v1', writable_table=False)
 log_sfr = gswlc_access.get_log_sed_sfr()
 log_stellar_mass = gswlc_access.get_log_sed_stellar_mass()
-redshift = gswlc_access.get_redshift()
-delta_ms = log_sfr - gswlc_access.main_sequence_sf(redshift=redshift, log_stellar_mass=log_stellar_mass, ref='Whitaker+12')
-
 good_values = (log_sfr > -2.5) & (log_sfr < 3.2) & (log_stellar_mass > 6.5) & (log_stellar_mass < 12.5)
-
-hist, x_bin, y_bin = np.histogram2d(log_stellar_mass[good_values], delta_ms[good_values],
-                                    bins=(np.linspace(6.5, 12.5, 30), np.linspace(-2.1, 2.1, 30)))
+hist, x_bin, y_bin = np.histogram2d(log_stellar_mass[good_values], log_sfr[good_values],
+                                    bins=(np.linspace(6.5, 12.5, 30), np.linspace(-2.5, 3.2, 30)))
 # hist[hist < 10] = np.nan
 ax_ms.imshow(hist.T, extent=(6.5, 12.5, -2.5, 3.2), origin='lower', cmap='Greys', aspect='auto', interpolation='gaussian')
+dummy_m_star = np.linspace(x_lim_low, x_lim_high)
+dummy_sfr = gswlc_access.main_sequence_sf(redshift=0, log_stellar_mass=dummy_m_star,
+                                          ref='Whitaker+12',
+                                          output='sfr')
+ax_ms.plot(dummy_m_star, dummy_sfr, linewidth=5, linestyle='--', color='k', zorder=0)
 
-
-# dummy_m_star = np.linspace(x_lim_low, x_lim_high)
-# dummy_sfr = gswlc_access.main_sequence_sf(redshift=0, log_stellar_mass=dummy_m_star,
-#                                           ref='Whitaker+12',
-#                                           output='sfr')
-# ax_ms.plot(dummy_m_star, dummy_sfr, linewidth=5, linestyle='--', color='k', zorder=0)
-
-delta_ms_phangs = np.log10(sfr) - gswlc_access.main_sequence_sf(redshift=0, log_stellar_mass=np.log10(mstar), ref='Whitaker+12')
-
-# ax_ms.scatter(np.log10(mstar), np.log10(sfr), color='tab:red', s=600)
-ax_ms.scatter(np.log10(mstar),delta_ms_phangs, color='tab:red', s=600)
-ax_ms.plot([x_lim_low, x_lim_high], [0, 0], linewidth=4, color='k')
+ax_ms.scatter(np.log10(mstar), np.log10(sfr), color='tab:red', s=600)
 ax_ms.set_xlim(x_lim_low, x_lim_high)
 ax_ms.set_ylim(y_lim_low, y_lim_high)
 ax_ms.set_xlabel('log(M$_{*}$/M$_{\odot}$)', fontsize=fontsize)
-ax_ms.set_ylabel('log($\delta$ MS)', fontsize=fontsize)
+ax_ms.set_ylabel('log(SFR/M$_{\odot}$ yr$^{-1}$)', fontsize=fontsize)
 ax_ms.tick_params(axis='both', which='both',
                   width=5, length=10, right=True, top=True, direction='in', labelsize=fontsize)
 
+# add color-color plots
+
+# ngc 628
+
+color_ub_hum_12_e = catalog_access.get_hst_color_ub(target='ngc0628e')
+color_vi_hum_12_e = catalog_access.get_hst_color_vi(target='ngc0628e')
+color_ub_hum_3_e = catalog_access.get_hst_color_ub(target='ngc0628e', cluster_class='class3')
+color_vi_hum_3_e = catalog_access.get_hst_color_vi(target='ngc0628e', cluster_class='class3')
+color_ub_hum_12_c = catalog_access.get_hst_color_ub(target='ngc0628c')
+color_vi_hum_12_c = catalog_access.get_hst_color_vi(target='ngc0628c')
+color_ub_hum_3_c = catalog_access.get_hst_color_ub(target='ngc0628c', cluster_class='class3')
+color_vi_hum_3_c = catalog_access.get_hst_color_vi(target='ngc0628c', cluster_class='class3')
+color_ub = np.concatenate([color_ub_hum_12_e, color_ub_hum_3_e, color_ub_hum_12_c, color_ub_hum_3_c])
+color_vi = np.concatenate([color_vi_hum_12_e, color_vi_hum_3_e, color_vi_hum_12_c, color_vi_hum_3_c])
+
+ax1 = fig.add_axes([0.4, 0.8, 0.10, 0.15])
+ax1.patch.set_alpha(0.)
+good_colors = (color_ub < 2) & (color_ub > -5.0) & (color_vi > -1.5) & (color_vi < 2.6)
+# hist_cont, x_, y_ = np.histogram2d(color_vi[good_colors], color_ub[good_colors],
+#                            bins=(np.linspace(-1.5, 2.6, 10), np.linspace(-2.5, 2, 10)))
+# import scipy.ndimage
+# hist_cont = scipy.ndimage.zoom(hist_cont, 10)
+# hist_cont = scipy.ndimage.gaussian_filter(hist_cont, 0.01)
+DensityContours.get_contours_percentage(ax=ax1, x_data=color_vi[good_colors],
+                                        y_data=color_ub[good_colors],
+                                        contour_levels=[0.5, 0.7, 0.8, 0.95, 0.99],
+                                        color='k',
+                                        percent=False,
+                                        linewidth=4)
+ax1.set_title('NGC628', fontsize=fontsize-10)
+# ax1.contour(hist_cont)
+# ax1.scatter(color_vi[good_colors], color_ub[good_colors])
+ax1.plot(model_vi, model_ub, color='red', linewidth=4)
+ax1.set_xlim(-0.7, 1.9)
+ax1.set_ylim(0.8, -1.9)
+# ax1.axis('off')
+ax1.set_xlabel('V-I', fontsize=fontsize-15)
+ax1.set_ylabel('U-B', fontsize=fontsize-15)
+ax1.tick_params(axis='both', which='both', width=3, length=6, right=True, top=True, direction='in',
+                labelsize=fontsize-15)
+
+con_spec_1 = ConnectionPatch(
+    xyA=(np.log10(np.array(mstar)[np.where(target_list == 'ngc0628')])[0] - 0.02,
+         np.log10(np.array(sfr)[np.where(target_list == 'ngc0628')])[0] + 0.02), coordsA=ax_ms.transData,
+    xyB=(1.5, 0.5), coordsB=ax1.transData,
+    arrowstyle="<-",
+    linewidth=6,
+    color='k',
+    mutation_scale=60
+)
+fig.add_artist(con_spec_1)
 
 
-for index in range(0, 38):
-    target = target_list[index]
-    dist = dist_list[index]
-    print('target ', target, 'dist ', dist)
-    if target == 'ngc0628':
-        color_ub_ml_12_e = catalog_access.get_hst_color_ub(target='ngc0628e', classify='ml')
-        color_vi_ml_12_e = catalog_access.get_hst_color_vi(target='ngc0628e', classify='ml')
-        color_ub_ml_3_e = catalog_access.get_hst_color_ub(target='ngc0628e', classify='ml', cluster_class='class3')
-        color_vi_ml_3_e = catalog_access.get_hst_color_vi(target='ngc0628e', classify='ml', cluster_class='class3')
-        color_ub_ml_12_c = catalog_access.get_hst_color_ub(target='ngc0628c', classify='ml')
-        color_vi_ml_12_c = catalog_access.get_hst_color_vi(target='ngc0628c', classify='ml')
-        color_ub_ml_3_c = catalog_access.get_hst_color_ub(target='ngc0628c', classify='ml', cluster_class='class3')
-        color_vi_ml_3_c = catalog_access.get_hst_color_vi(target='ngc0628c', classify='ml', cluster_class='class3')
-        color_ub_ml_12 = np.concatenate([color_ub_ml_12_e, color_ub_ml_12_c])
-        color_vi_ml_12 = np.concatenate([color_vi_ml_12_e, color_vi_ml_12_c])
-        color_ub = np.concatenate([color_ub_ml_12_e, color_ub_ml_3_e, color_ub_ml_12_c, color_ub_ml_3_c])
-        color_vi = np.concatenate([color_vi_ml_12_e, color_vi_ml_3_e, color_vi_ml_12_c, color_vi_ml_3_c])
-    else:
-        color_ub_ml_12 = catalog_access.get_hst_color_ub(target=target, classify='ml')
-        color_vi_ml_12 = catalog_access.get_hst_color_vi(target=target, classify='ml')
-        color_ub_ml_3 = catalog_access.get_hst_color_ub(target=target, classify='ml', cluster_class='class3')
-        color_vi_ml_3 = catalog_access.get_hst_color_vi(target=target, classify='ml', cluster_class='class3')
-        color_ub = np.concatenate([color_ub_ml_12, color_ub_ml_3])
-        color_vi = np.concatenate([color_vi_ml_12, color_vi_ml_3])
-
-
-    ms_x_pos_cc = ms_x_pos + (ms_x_len / (x_lim_high - x_lim_low)) * (np.log10(mstar)[index] - x_lim_low) - contour_width/2
-    ms_y_pos_cc = ms_y_pos + (ms_y_len / (y_lim_high - y_lim_low)) * (delta_ms_phangs[index] - y_lim_low) - contour_hight / 2
-    print('ms_x_pos_cc ', ms_x_pos_cc)
-    print('ms_y_pos_cc ', ms_y_pos_cc)
-
-    ax1 = fig.add_axes([ms_x_pos_cc, ms_y_pos_cc, contour_width, contour_hight])
-    ax1.patch.set_alpha(0.5)
-    good_colors = (color_ub_ml_12 < 2) & (color_ub_ml_12 > -5.0) & (color_vi_ml_12 > -1.5) & (color_vi_ml_12 < 2.6)
-    # hist_cont, x_, y_ = np.histogram2d(color_vi[good_colors], color_ub[good_colors],
-    #                            bins=(np.linspace(-1.5, 2.6, 10), np.linspace(-2.5, 2, 10)))
-    # import scipy.ndimage
-    # hist_cont = scipy.ndimage.zoom(hist_cont, 10)
-    # hist_cont = scipy.ndimage.gaussian_filter(hist_cont, 0.01)
-    DensityContours.get_contours_percentage(ax=ax1, x_data=color_vi_ml_12[good_colors],
-                                            y_data=color_ub_ml_12[good_colors],
-                                            # contour_levels=[0.1, 0.25, 0.5, 0.7, 0.8, 0.95, 0.99],
-                                            contour_levels=[0.5, 0.7, 0.8, 0.95, 0.99],
-                                            color='blue', percent=False,
-                                            linewidth=2)
-    # ax1.contour(hist_cont)
-    # ax1.scatter(color_vi[good_colors], color_ub[good_colors])
-    ax1.plot(model_vi, model_ub, color='red', linewidth=2)
-    ax1.set_xlim(-1.0, 2.3)
-    ax1.set_ylim(1.25, -2.5)
-    ax1.axis('off')
-
-
-
-
-
-
-
-#
-#
-#
-#
-#
-# # add color-color plots
-#
-# # ngc 628
-#
-# color_ub_hum_12_e = catalog_access.get_hst_color_ub(target='ngc0628e')
-# color_vi_hum_12_e = catalog_access.get_hst_color_vi(target='ngc0628e')
-# color_ub_hum_3_e = catalog_access.get_hst_color_ub(target='ngc0628e', cluster_class='class3')
-# color_vi_hum_3_e = catalog_access.get_hst_color_vi(target='ngc0628e', cluster_class='class3')
-# color_ub_hum_12_c = catalog_access.get_hst_color_ub(target='ngc0628c')
-# color_vi_hum_12_c = catalog_access.get_hst_color_vi(target='ngc0628c')
-# color_ub_hum_3_c = catalog_access.get_hst_color_ub(target='ngc0628c', cluster_class='class3')
-# color_vi_hum_3_c = catalog_access.get_hst_color_vi(target='ngc0628c', cluster_class='class3')
-# color_ub = np.concatenate([color_ub_hum_12_e, color_ub_hum_3_e, color_ub_hum_12_c, color_ub_hum_3_c])
-# color_vi = np.concatenate([color_vi_hum_12_e, color_vi_hum_3_e, color_vi_hum_12_c, color_vi_hum_3_c])
-#
-# ax1 = fig.add_axes([0.4, 0.8, 0.10, 0.15])
-# ax1.patch.set_alpha(0.)
-# good_colors = (color_ub < 2) & (color_ub > -5.0) & (color_vi > -1.5) & (color_vi < 2.6)
-# # hist_cont, x_, y_ = np.histogram2d(color_vi[good_colors], color_ub[good_colors],
-# #                            bins=(np.linspace(-1.5, 2.6, 10), np.linspace(-2.5, 2, 10)))
-# # import scipy.ndimage
-# # hist_cont = scipy.ndimage.zoom(hist_cont, 10)
-# # hist_cont = scipy.ndimage.gaussian_filter(hist_cont, 0.01)
-# DensityContours.get_contours_percentage(ax=ax1, x_data=color_vi[good_colors],
-#                                         y_data=color_ub[good_colors],
-#                                         contour_levels=[0.5, 0.7, 0.8, 0.95, 0.99],
-#                                         color='k',
-#                                         percent=False,
-#                                         linewidth=4)
-# ax1.set_title('NGC628', fontsize=fontsize-10)
-# # ax1.contour(hist_cont)
-# # ax1.scatter(color_vi[good_colors], color_ub[good_colors])
-# ax1.plot(model_vi, model_ub, color='red', linewidth=4)
-# ax1.set_xlim(-0.7, 1.9)
-# ax1.set_ylim(0.8, -1.9)
-# # ax1.axis('off')
-# ax1.set_xlabel('V-I', fontsize=fontsize-15)
-# ax1.set_ylabel('U-B', fontsize=fontsize-15)
-# ax1.tick_params(axis='both', which='both', width=3, length=6, right=True, top=True, direction='in',
-#                 labelsize=fontsize-15)
-#
-# con_spec_1 = ConnectionPatch(
-#     xyA=(np.log10(np.array(mstar)[np.where(target_list == 'ngc0628')])[0] - 0.02,
-#          np.log10(np.array(sfr)[np.where(target_list == 'ngc0628')])[0] + 0.02), coordsA=ax_ms.transData,
-#     xyB=(1.5, 0.5), coordsB=ax1.transData,
-#     arrowstyle="<-",
-#     linewidth=6,
-#     color='k',
-#     mutation_scale=60
-# )
-# fig.add_artist(con_spec_1)
-#
-
-plt.savefig('plot_output/delta_ms_overview.png')
-plt.savefig('plot_output/delta_ms_overview.pdf')
+plt.savefig('plot_output/ms_overview.png')
+plt.savefig('plot_output/ms_overview.pdf')
 
 
 

@@ -12,15 +12,24 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path,
                                                             morph_mask_path=morph_mask_path)
 
+
+# catalog_access.load_morph_mask(target='ngc1433')
+#
+# exit()
+
+
+
 target_list = catalog_access.target_hst_cc
 dist_list = []
 for target in target_list:
     if (target == 'ngc0628c') | (target == 'ngc0628e'):
         target = 'ngc0628'
     dist_list.append(catalog_access.dist_dict[target]['dist'])
-# catalog_access.load_morph_mask_target_list(target_list=target_list)
-# np.save('morph_mask_data.npy', catalog_access.morph_mask_data)
+catalog_access.load_morph_mask_target_list(target_list=target_list)
+np.save('morph_mask_data.npy', catalog_access.morph_mask_data)
 catalog_access.morph_mask_data = np.load('morph_mask_data.npy', allow_pickle=True).item()
+
+exit()
 
 catalog_access.load_hst_cc_list(target_list=target_list)
 catalog_access.load_hst_cc_list(target_list=target_list, cluster_class='class3')

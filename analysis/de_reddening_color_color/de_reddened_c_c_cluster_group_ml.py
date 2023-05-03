@@ -23,7 +23,7 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path)
 
 # get model
-hdu_a = fits.open('../cigale_model/sfh2exp/out/models-block-0.fits')
+hdu_a = fits.open('../cigale_model/sfh2exp/no_dust/out/models-block-0.fits')
 data = hdu_a[1].data
 age_mod = data['sfh.age']
 flux_f555w = data['F555W_UVIS_CHIP2']
@@ -310,10 +310,10 @@ ax_de_red.tick_params(axis='both', which='both', width=1.5, length=4, right=True
 
 ax_c1.plot(model_vi, model_ub, color='r', linewidth=2)
 DensityContours.get_contours_percentage(ax=ax_c1,
-                                        x_data=(color_vi - vi_mod)[good_data * class_1],
-                                        y_data=(color_ub - ub_mod)[good_data * class_1],
+                                        x_data=(color_vi)[good_data * class_1],
+                                        y_data=(color_ub)[good_data * class_1],
                                         color='forestgreen', percent=False, )
-ax_c1.set_title('Class 1 de-reddened', fontsize=fontsize)
+ax_c1.set_title('Class 1', fontsize=fontsize)
 ax_c1.set_ylim(1.25, -2.2)
 ax_c1.set_xlim(-1.0, 1.8)
 # ax_c1.set_xticklabels([])
@@ -324,10 +324,10 @@ ax_c1.set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
 
 ax_c2.plot(model_vi, model_ub, color='r', linewidth=2)
 DensityContours.get_contours_percentage(ax=ax_c2,
-                                        x_data=(color_vi - vi_mod)[good_data * class_2],
-                                        y_data=(color_ub - ub_mod)[good_data * class_2],
+                                        x_data=(color_vi)[good_data * class_2],
+                                        y_data=(color_ub)[good_data * class_2],
                                         color='darkorange', percent=False, )
-ax_c2.set_title('Class 2 de-reddened', fontsize=fontsize)
+ax_c2.set_title('Class 2', fontsize=fontsize)
 ax_c2.set_ylim(1.25, -2.2)
 ax_c2.set_xlim(-1.0, 1.8)
 # ax_c2.set_xticklabels([])
@@ -337,10 +337,10 @@ ax_c2.set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
 
 ax_c3.plot(model_vi, model_ub, color='r', linewidth=2)
 DensityContours.get_contours_percentage(ax=ax_c3,
-                                        x_data=(color_vi - vi_mod)[good_data * class_3],
-                                        y_data=(color_ub - ub_mod)[good_data * class_3],
+                                        x_data=(color_vi)[good_data * class_3],
+                                        y_data=(color_ub)[good_data * class_3],
                                         color='royalblue', percent=False, )
-ax_c3.set_title('Class 3 de-reddened', fontsize=fontsize)
+ax_c3.set_title('Class 3', fontsize=fontsize)
 ax_c3.set_ylim(1.25, -2.2)
 ax_c3.set_xlim(-1.0, 1.8)
 # ax_c3.set_xticklabels([])
