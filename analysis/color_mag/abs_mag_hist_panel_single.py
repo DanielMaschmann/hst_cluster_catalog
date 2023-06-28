@@ -41,6 +41,7 @@ fontsize = 21
 fig, ax = plt.subplots(8, 5, sharex=True, sharey=True, figsize=(21, 26))
 row_index = 0
 col_index = 0
+dim_targets = []
 for index in range(0, 39):
     target = target_list[index]
     dist = dist_list[index]
@@ -65,6 +66,7 @@ for index in range(0, 39):
     faintest_v_band_mag_ml = np.nanmax(v_mag_ml[(v_mag_ml > 18) & (v_mag_ml < 26)])
     print('median_v_mag_ml ', median_v_mag_ml,  ' faintest_v_band_mag_hum ', faintest_v_band_mag_hum)
     if median_v_mag_ml > faintest_v_band_mag_hum:
+        dim_targets.append(target)
         description_str = (target.upper() + '$^{*}$' + ('\nd= %.1f Mpc' % dist) +
                            ('\nMax' + r'$_{\rm Hum}$= %.1f' % faintest_v_band_mag_hum) +
                            ('\nMax' + r'$_{\rm ML}$= %.1f' % faintest_v_band_mag_ml))
@@ -100,6 +102,7 @@ fig.subplots_adjust(wspace=0, hspace=0)
 fig.savefig('plot_output/v_mag.png', bbox_inches='tight', dpi=300)
 fig.savefig('plot_output/v_mag.pdf', bbox_inches='tight', dpi=300)
 
+print(dim_targets)
 
 exit()
 

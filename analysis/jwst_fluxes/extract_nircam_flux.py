@@ -11,7 +11,7 @@ from photometry_tools import helper_func as hf
 
 
 size_of_cutout = (3, 3)
-band_list = ['F300M', 'F335M']
+band_list = ['F200W', 'F300M', 'F335M']
 
 
 for target in ['ngc0628', 'ngc1087', 'ngc1300', 'ngc1365', 'ngc1385', 'ngc1433', 'ngc1512', 'ngc1566', 'ngc1672',
@@ -36,47 +36,43 @@ for target in ['ngc0628', 'ngc1087', 'ngc1300', 'ngc1365', 'ngc1385', 'ngc1433',
                                                                 hst_obs_hdr_file_path=hst_obs_hdr_file_path)
 
     if target == 'ngc0628':
-        catalog_access.load_hst_cc_list(target_list=['ngc0628c', 'ngc0628e'])
-        catalog_access.load_hst_cc_list(target_list=['ngc0628c', 'ngc0628e'], cluster_class='class3')
+        target = 'ngc0628c'
 
-        ra_12_c, dec_12_c = catalog_access.get_hst_cc_coords_world(target='ngc0628c')
-        ra_12_e, dec_12_e = catalog_access.get_hst_cc_coords_world(target='ngc0628e')
-        ra_3_c, dec_3_c = catalog_access.get_hst_cc_coords_world(target='ngc0628c', cluster_class='class3')
-        ra_3_e, dec_3_e = catalog_access.get_hst_cc_coords_world(target='ngc0628e', cluster_class='class3')
+    catalog_access.load_hst_cc_list(target_list=[target])
+    catalog_access.load_hst_cc_list(target_list=[target], cluster_class='class3')
+    ra_12, dec_12 = catalog_access.get_hst_cc_coords_world(target=target)
+    ra_3, dec_3 = catalog_access.get_hst_cc_coords_world(target=target, cluster_class='class3')
 
-        class_12_c = catalog_access.get_hst_cc_class_human(target='ngc0628c')
-        class_12_e = catalog_access.get_hst_cc_class_human(target='ngc0628e')
-        class_3_c = catalog_access.get_hst_cc_class_human(target='ngc0628c', cluster_class='class3')
-        class_3_e = catalog_access.get_hst_cc_class_human(target='ngc0628e', cluster_class='class3')
+    class_12 = catalog_access.get_hst_cc_class_human(target=target)
+    class_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
 
-        age_12_c = catalog_access.get_hst_cc_age(target='ngc0628c')
-        age_12_e = catalog_access.get_hst_cc_age(target='ngc0628e')
-        age_3_c = catalog_access.get_hst_cc_age(target='ngc0628c', cluster_class='class3')
-        age_3_e = catalog_access.get_hst_cc_age(target='ngc0628e', cluster_class='class3')
+    age_12 = catalog_access.get_hst_cc_age(target=target)
+    age_3 = catalog_access.get_hst_cc_age(target=target, cluster_class='class3')
 
-        ra_list = np.concatenate([ra_12_c, ra_12_e, ra_3_c, ra_3_e])
-        dec_list = np.concatenate([dec_12_c, dec_12_e, dec_3_c, dec_3_e])
-        class_list = np.concatenate([class_12_c, class_12_e, class_3_c, class_3_e])
-        age_list = np.concatenate([age_12_c, age_12_e, age_3_c, age_3_e])
+    color_vega_ub_12 = catalog_access.get_hst_color_ub_vega(target=target)
+    color_vega_ub_3 = catalog_access.get_hst_color_ub_vega(target=target, cluster_class='class3')
+    mag_vega_v_12 = catalog_access.get_hst_cc_band_vega_mag(target=target, band='F555W')
+    mag_vega_v_3 = catalog_access.get_hst_cc_band_vega_mag(target=target, band='F555W', cluster_class='class3')
 
-    else:
-        catalog_access.load_hst_cc_list(target_list=[target])
-        catalog_access.load_hst_cc_list(target_list=[target], cluster_class='class3')
-        ra_12, dec_12 = catalog_access.get_hst_cc_coords_world(target=target)
-        ra_3, dec_3 = catalog_access.get_hst_cc_coords_world(target=target, cluster_class='class3')
-
-        class_12 = catalog_access.get_hst_cc_class_human(target=target)
-        class_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
-
-        age_12 = catalog_access.get_hst_cc_age(target=target)
-        age_3 = catalog_access.get_hst_cc_age(target=target, cluster_class='class3')
-
-        ra_list = np.concatenate([ra_12, ra_3])
-        dec_list = np.concatenate([dec_12, dec_3])
-        class_list = np.concatenate([class_12, class_3])
-        age_list = np.concatenate([age_12, age_3])
+    color_ab_ub_12 = catalog_access.get_hst_color_ub_ab(target=target)
+    color_ab_ub_3 = catalog_access.get_hst_color_ub_ab(target=target, cluster_class='class3')
+    mag_ab_v_12 = catalog_access.get_hst_cc_band_ab_mag(target=target, band='F555W')
+    mag_ab_v_3 = catalog_access.get_hst_cc_band_ab_mag(target=target, band='F555W', cluster_class='class3')
 
 
+
+
+    ra_list = np.concatenate([ra_12, ra_3])
+    dec_list = np.concatenate([dec_12, dec_3])
+    class_list = np.concatenate([class_12, class_3])
+    age_list = np.concatenate([age_12, age_3])
+    color_vega_ub_list = np.concatenate([color_vega_ub_12, color_vega_ub_3])
+    mag_vega_v_list = np.concatenate([mag_vega_v_12, mag_vega_v_3])
+    color_ab_ub_list = np.concatenate([color_ab_ub_12, color_ab_ub_3])
+    mag_ab_v_list = np.concatenate([mag_ab_v_12, mag_ab_v_3])
+
+    flux_f200w = np.zeros(len(ra_list))
+    flux_f200w_err = np.zeros(len(ra_list))
     flux_f300m = np.zeros(len(ra_list))
     flux_f300m_err = np.zeros(len(ra_list))
     flux_f335m = np.zeros(len(ra_list))
@@ -88,7 +84,10 @@ for target in ['ngc0628', 'ngc1087', 'ngc1300', 'ngc1365', 'ngc1385', 'ngc1433',
                                                              band_list=band_list, include_err=False)
         source = SkyCoord(ra=ra_list[cluster_index], dec=dec_list[cluster_index], unit=(u.degree, u.degree), frame='fk5')
 
-        if (cutout_dict['F300M_img_cutout'].data is None) | (cutout_dict['F335M_img_cutout'].data is None):
+        if ((cutout_dict['F200W_img_cutout'].data is None) | (cutout_dict['F300M_img_cutout'].data is None) |
+                (cutout_dict['F335M_img_cutout'].data is None)):
+            flux_f200w[cluster_index] = np.nan
+            flux_f200w_err[cluster_index] = np.nan
             flux_f300m[cluster_index] = np.nan
             flux_f300m_err[cluster_index] = np.nan
             flux_f335m[cluster_index] = np.nan
@@ -97,8 +96,11 @@ for target in ['ngc0628', 'ngc1087', 'ngc1300', 'ngc1365', 'ngc1385', 'ngc1433',
 
         # compute flux from 50% encircled energy
         aperture_dict = phangs_photometry.circular_flux_aperture_from_cutouts(cutout_dict=cutout_dict, pos=source,
-                                                                              recenter=True, recenter_rad=0.01,
-                                                                              default_ee_rad=50)
+                                                                              recenter=True, recenter_rad=0.0001,
+                                                                              default_ee_rad=80)
+
+        flux_f200w[cluster_index] = aperture_dict['aperture_dict_F200W']['flux']
+        flux_f200w_err[cluster_index] = aperture_dict['aperture_dict_F200W']['flux_err']
 
         flux_f300m[cluster_index] = aperture_dict['aperture_dict_F300M']['flux']
         flux_f300m_err[cluster_index] = aperture_dict['aperture_dict_F300M']['flux_err']
@@ -107,22 +109,32 @@ for target in ['ngc0628', 'ngc1087', 'ngc1300', 'ngc1365', 'ngc1385', 'ngc1433',
         flux_f335m_err[cluster_index] = aperture_dict['aperture_dict_F335M']['flux_err']
 
 
+    mag_f200w = hf.conv_mjy2ab_mag(flux=flux_f200w)
     mag_f300m = hf.conv_mjy2ab_mag(flux=flux_f300m)
     mag_f335m = hf.conv_mjy2ab_mag(flux=flux_f335m)
+    abs_mag_f200w = hf.conv_mag2abs_mag(mag=mag_f200w, dist=phangs_photometry.dist_dict[target]['dist'])
     abs_mag_f300m = hf.conv_mag2abs_mag(mag=mag_f300m, dist=phangs_photometry.dist_dict[target]['dist'])
     abs_mag_f335m = hf.conv_mag2abs_mag(mag=mag_f335m, dist=phangs_photometry.dist_dict[target]['dist'])
 
     flux_dict = {
+        'flux_f200w': flux_f200w,
+        'flux_f200w_err': flux_f200w_err,
         'flux_f300m': flux_f300m,
         'flux_f300m_err': flux_f300m_err,
         'flux_f335m': flux_f335m,
         'flux_f335m_err': flux_f335m_err,
+        'mag_f200w': mag_f200w,
         'mag_f300m': mag_f300m,
         'mag_f335m': mag_f335m,
+        'abs_mag_f200w': abs_mag_f200w,
         'abs_mag_f300m': abs_mag_f300m,
         'abs_mag_f335m': abs_mag_f335m,
         'class_list': class_list,
-        'age_list': age_list
+        'age_list': age_list,
+        'color_vega_ub_list': color_vega_ub_list,
+        'mag_vega_v_list': mag_vega_v_list,
+        'color_ab_ub_list': color_ab_ub_list,
+        'mag_ab_v_list': mag_ab_v_list
     }
 
     np.save('data_output/flux_dict_%s.npy' % target, flux_dict)

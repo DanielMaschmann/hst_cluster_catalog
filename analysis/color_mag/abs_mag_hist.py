@@ -36,7 +36,7 @@ cluster_class_ml = np.array([])
 cluster_class_qual_ml = np.array([])
 
 
-
+dist_array_ml = np.array([])
 
 for target in target_list:
 
@@ -70,6 +70,8 @@ for target in target_list:
     cluster_class_qual_ml = np.concatenate([cluster_class_qual_ml, cluster_class_qual_ml_12, cluster_class_qual_ml_3])
     abs_v_band_mag_ml = np.concatenate([abs_v_band_mag_ml, abs_v_mag_ml_12, abs_v_mag_ml_3])
 
+    dist_array_ml = np.concatenate([dist_array_ml, np.ones(len(abs_v_mag_ml_12)+len(abs_v_mag_ml_3))*dist])
+
 v_mag_ex_hum_12 = catalog_access.get_hst_cc_band_vega_mag(target='ngc3621', band='F555W')
 v_mag_ex_hum_3 = catalog_access.get_hst_cc_band_vega_mag(target='ngc3621', band='F555W', cluster_class='class3')
 abs_v_mag_ex_hum_12 = hf.conv_mag2abs_mag(mag=v_mag_ex_hum_12, dist=catalog_access.dist_dict['ngc3621']['dist'])
@@ -84,6 +86,17 @@ abs_v_band_mag_ex_ml = np.concatenate([abs_v_mag_ex_ml_12, abs_v_mag_ex_ml_3])
 
 print(sum(abs_v_band_mag_ml < -10))
 print(sum(abs_v_band_mag_hum < -10))
+
+print('median ML', np.nanmedian(abs_v_band_mag_ml))
+print('median Human', np.nanmedian(abs_v_band_mag_hum))
+
+print('percentile 99 ML', np.nanpercentile(abs_v_band_mag_ml, 99))
+print('percentile 99 Human', np.nanpercentile(abs_v_band_mag_hum, 99))
+
+print(np.nanmedian(abs_v_band_mag_ml[dist_array_ml < 14]))
+print(np.nanmedian(abs_v_band_mag_ml[dist_array_ml > 14]))
+
+
 
 bins = np.linspace(-14.5, -3.5, 24)
 fig, ax = plt.subplots(nrows=1, sharex=True, figsize=(13, 6))

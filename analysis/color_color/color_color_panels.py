@@ -8,6 +8,7 @@ from xgaltool import analysis_tools
 from scipy.stats import gaussian_kde
 import matplotlib.mlab as mlab
 import scipy.ndimage
+import dust_tools.extinction_tools
 
 def contours(ax, x, y, levels=None, axis_offse=(-0.2, 0.1, -0.55, 0.6)):
 
@@ -105,6 +106,31 @@ color_c2 = 'tab:green'
 color_c3 = 'darkorange'
 
 
+# add reddening vector
+# intrinsic colors
+# vi_int = 0.8
+# ub_int = -2.2
+# arrow_ebv = 1.0
+# v_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F555W']*1e-4
+# i_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F814W']*1e-4
+# u_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F336W']*1e-4
+# b_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F438W']*1e-4
+# color_ext_vi = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89(wave1=v_wave, wave2=i_wave, ebv=arrow_ebv)
+# color_ext_ub = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89(wave1=u_wave, wave2=b_wave, ebv=arrow_ebv)
+
+vi_int = 0.8
+ub_int = -2.2
+max_av = 2
+v_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F555W']*1e-4
+i_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F814W']*1e-4
+u_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F336W']*1e-4
+b_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F438W']*1e-4
+max_color_ext_vi = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89_av(wave1=v_wave, wave2=i_wave, av=max_av)
+max_color_ext_ub = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89_av(wave1=u_wave, wave2=b_wave, av=max_av)
+max_color_ext_vi_arr = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89_av(wave1=v_wave, wave2=i_wave, av=max_av+0.1)
+max_color_ext_ub_arr = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89_av(wave1=u_wave, wave2=b_wave, av=max_av+0.1)
+
+
 fig, ax = plt.subplots(5, 4, sharex=True, sharey=True, figsize=(16, 18))
 fontsize = 18
 
@@ -148,6 +174,11 @@ for index in range(0, 20):
                                          color_ub_hum_12[cluster_class_hum_12 == 1], c=color_c1, s=10)
     ax[row_index, col_index].scatter(color_vi_hum_12[cluster_class_hum_12 == 2],
                                          color_ub_hum_12[cluster_class_hum_12 == 2], c=color_c2, s=10)
+
+
+    ax[row_index, col_index].annotate('', xy=(vi_int + max_color_ext_vi, ub_int + max_color_ext_ub), xycoords='data',
+                                      xytext=(vi_int, ub_int), fontsize=fontsize,
+                                      textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
 
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
         anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',
@@ -221,6 +252,10 @@ for index in range(20, 39):
                                          color_ub_hum_12[cluster_class_hum_12 == 1], c=color_c1, s=10)
     ax[row_index, col_index].scatter(color_vi_hum_12[cluster_class_hum_12 == 2],
                                          color_ub_hum_12[cluster_class_hum_12 == 2], c=color_c2, s=10)
+
+    ax[row_index, col_index].annotate('', xy=(vi_int + max_color_ext_vi, ub_int + max_color_ext_ub), xycoords='data',
+                                      xytext=(vi_int, ub_int), fontsize=fontsize,
+                                      textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
 
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
         anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',

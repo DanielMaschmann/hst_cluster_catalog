@@ -144,6 +144,14 @@ vi_1_my = model_vi_sol[age_mod_sol == 1][0]
 ub_1_my = model_ub_sol[age_mod_sol == 1][0]
 nuvb_1_my = model_nuvb_sol[age_mod_sol == 1][0]
 
+vi_2_my = model_vi_sol[age_mod_sol == 2][0]
+ub_2_my = model_ub_sol[age_mod_sol == 2][0]
+nuvb_2_my = model_nuvb_sol[age_mod_sol == 2][0]
+
+vi_3_my = model_vi_sol[age_mod_sol == 3][0]
+ub_3_my = model_ub_sol[age_mod_sol == 3][0]
+nuvb_3_my = model_nuvb_sol[age_mod_sol == 3][0]
+
 vi_4_my = model_vi_sol[age_mod_sol == 4][0]
 ub_4_my = model_ub_sol[age_mod_sol == 4][0]
 nuvb_4_my = model_nuvb_sol[age_mod_sol == 4][0]
@@ -179,6 +187,8 @@ nuvb_10000_my_sol50 = model_nuvb_sol50[age_mod_sol50 == 10308][0]
 
 
 ax_cc.scatter(vi_1_my, ub_1_my, c='k', s=scatter_size, zorder=10)
+ax_cc.scatter(vi_2_my, ub_2_my, c='k', s=scatter_size, zorder=10)
+ax_cc.scatter(vi_3_my, ub_3_my, c='k', s=scatter_size, zorder=10)
 ax_cc.scatter(vi_4_my, ub_4_my, c='k', s=scatter_size, zorder=10)
 ax_cc.scatter(vi_5_my, ub_5_my, c='k', s=scatter_size, zorder=10)
 ax_cc.scatter(vi_10_my, ub_10_my, c='k', s=scatter_size, zorder=10)
@@ -190,7 +200,7 @@ ax_cc.scatter(vi_1000_my_sol50, ub_1000_my_sol50, c='k', s=scatter_size, zorder=
 ax_cc.scatter(vi_10000_my_sol50, ub_10000_my_sol50, c='k', s=scatter_size, zorder=10)
 
 
-ax_cc.annotate('1 Myr', xy=(vi_1_my, ub_1_my), xycoords='data', xytext=(vi_1_my - 0.1, ub_1_my - 0.3), fontsize=fontsize,
+ax_cc.annotate('1,2,3 Myr', xy=(vi_1_my, ub_1_my), xycoords='data', xytext=(vi_1_my - 0.1, ub_1_my - 0.3), fontsize=fontsize,
                     textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
 ax_cc.annotate('4 Myr', xy=(vi_4_my, ub_4_my), xycoords='data', xytext=(vi_4_my - 0.5, ub_4_my), fontsize=fontsize,
                     textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))

@@ -90,7 +90,7 @@ print(t)
 print(t.colnames)
 
 
-exit()
+# exit()
 
 
 fig = plt.figure(figsize=(17, 17))

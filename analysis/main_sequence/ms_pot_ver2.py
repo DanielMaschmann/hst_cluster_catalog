@@ -7,7 +7,31 @@ from astropy.io import fits
 from xgaltool import analysis_tools, plotting_tools
 from photometry_tools.plotting_tools import DensityContours
 from matplotlib.patches import ConnectionPatch
+from scipy.stats import gaussian_kde
 
+
+def contours(ax, x, y, levels=None, axis_offse=(-0.2, 0.1, -0.55, 0.6)):
+
+    if levels is None:
+        levels = [0.0, 0.1, 0.25, 0.5, 0.68, 0.95, 0.975]
+
+    good_values = np.invert(((np.isnan(x) | np.isnan(y)) | (np.isinf(x) | np.isinf(y))))
+
+    x = x[good_values]
+    y = y[good_values]
+
+    k = gaussian_kde(np.vstack([x, y]))
+    xi, yi = np.mgrid[x.min()+axis_offse[0]:x.max()+axis_offse[1]:x.size**0.5*1j,
+             y.min()+axis_offse[2]:y.max()+axis_offse[3]:y.size**0.5*1j]
+    zi = k(np.vstack([xi.flatten(), yi.flatten()]))
+    #set zi to 0-1 scale
+    zi = (zi-zi.min())/(zi.max() - zi.min())
+    zi = zi.reshape(xi.shape)
+    # ax[0].scatter(xi.flatten(), yi.flatten(), c=zi)
+    cs = ax.contour(xi, yi, zi, levels=levels,
+                    colors='k',
+                    linewidths=(1,),
+                    origin='lower')
 
 # get access to HST cluster catalog
 cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'

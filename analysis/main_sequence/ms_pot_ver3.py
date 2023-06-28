@@ -7,6 +7,31 @@ from astropy.io import fits
 from xgaltool import analysis_tools, plotting_tools
 from photometry_tools.plotting_tools import DensityContours
 from matplotlib.patches import ConnectionPatch
+from scipy.stats import gaussian_kde
+
+
+def contours(ax, x, y, levels=None, axis_offse=(-0.2, 0.1, -0.55, 0.6)):
+
+    if levels is None:
+        levels = [0.0, 0.1, 0.25, 0.5, 0.68, 0.95, 0.975]
+
+    good_values = np.invert(((np.isnan(x) | np.isnan(y)) | (np.isinf(x) | np.isinf(y))))
+
+    x = x[good_values]
+    y = y[good_values]
+
+    k = gaussian_kde(np.vstack([x, y]))
+    xi, yi = np.mgrid[x.min()+axis_offse[0]:x.max()+axis_offse[1]:x.size**0.5*1j,
+             y.min()+axis_offse[2]:y.max()+axis_offse[3]:y.size**0.5*1j]
+    zi = k(np.vstack([xi.flatten(), yi.flatten()]))
+    #set zi to 0-1 scale
+    zi = (zi-zi.min())/(zi.max() - zi.min())
+    zi = zi.reshape(xi.shape)
+    # ax[0].scatter(xi.flatten(), yi.flatten(), c=zi)
+    cs = ax.contour(xi, yi, zi, levels=levels,
+                    colors='green',
+                    linewidths=(1,),
+                    origin='lower')
 
 
 # get access to HST cluster catalog
@@ -84,8 +109,8 @@ ms_y_pos = 0.07
 ms_x_len = 0.90
 ms_y_len = 0.92
 
-contour_width = 0.12
-contour_hight = 0.12
+contour_width = 0.07
+contour_hight = 0.07
 
 ax_ms = fig.add_axes([ms_x_pos, ms_y_pos, ms_x_len, ms_y_len])
 
@@ -115,7 +140,7 @@ ax_ms.imshow(hist.T, extent=(6.5, 12.5, -2.5, 3.2), origin='lower', cmap='Greys'
 delta_ms_phangs = np.log10(sfr) - gswlc_access.main_sequence_sf(redshift=0, log_stellar_mass=np.log10(mstar), ref='Whitaker+12')
 
 # ax_ms.scatter(np.log10(mstar), np.log10(sfr), color='tab:red', s=600)
-ax_ms.scatter(np.log10(mstar),delta_ms_phangs, color='tab:red', s=600)
+# ax_ms.scatter(np.log10(mstar),delta_ms_phangs, color='tab:red', s=600)
 ax_ms.plot([x_lim_low, x_lim_high], [0, 0], linewidth=4, color='k')
 ax_ms.set_xlim(x_lim_low, x_lim_high)
 ax_ms.set_ylim(y_lim_low, y_lim_high)
@@ -159,18 +184,23 @@ for index in range(0, 38):
 
     ax1 = fig.add_axes([ms_x_pos_cc, ms_y_pos_cc, contour_width, contour_hight])
     ax1.patch.set_alpha(0.5)
-    good_colors = (color_ub_ml_12 < 2) & (color_ub_ml_12 > -5.0) & (color_vi_ml_12 > -1.5) & (color_vi_ml_12 < 2.6)
-    # hist_cont, x_, y_ = np.histogram2d(color_vi[good_colors], color_ub[good_colors],
-    #                            bins=(np.linspace(-1.5, 2.6, 10), np.linspace(-2.5, 2, 10)))
-    # import scipy.ndimage
-    # hist_cont = scipy.ndimage.zoom(hist_cont, 10)
-    # hist_cont = scipy.ndimage.gaussian_filter(hist_cont, 0.01)
-    DensityContours.get_contours_percentage(ax=ax1, x_data=color_vi_ml_12[good_colors],
-                                            y_data=color_ub_ml_12[good_colors],
-                                            # contour_levels=[0.1, 0.25, 0.5, 0.7, 0.8, 0.95, 0.99],
-                                            contour_levels=[0.5, 0.7, 0.8, 0.95, 0.99],
-                                            color='blue', percent=False,
-                                            linewidth=2)
+    # good_colors = (color_ub_ml_12 < 2) & (color_ub_ml_12 > -5.0) & (color_vi_ml_12 > -1.5) & (color_vi_ml_12 < 2.6)
+    # # hist_cont, x_, y_ = np.histogram2d(color_vi[good_colors], color_ub[good_colors],
+    # #                            bins=(np.linspace(-1.5, 2.6, 10), np.linspace(-2.5, 2, 10)))
+    # # import scipy.ndimage
+    # # hist_cont = scipy.ndimage.zoom(hist_cont, 10)
+    # # hist_cont = scipy.ndimage.gaussian_filter(hist_cont, 0.01)
+    # DensityContours.get_contours_percentage(ax=ax1, x_data=color_vi_ml_12[good_colors],
+    #                                         y_data=color_ub_ml_12[good_colors],
+    #                                         # contour_levels=[0.1, 0.25, 0.5, 0.7, 0.8, 0.95, 0.99],
+    #                                         contour_levels=[0.5, 0.7, 0.8, 0.95, 0.99],
+    #                                         color='blue', percent=False,
+    #                                         linewidth=2)
+    good_colors = (color_vi_ml_12 > -1.5) & (color_vi_ml_12 < 2.5) & (color_ub_ml_12 > -2) & (color_ub_ml_12 < 1.5)
+    contours(ax=ax1, x=color_vi_ml_12[good_colors], y=color_ub_ml_12[good_colors], levels=None)
+
+    ax1.set_title(target)
+
     # ax1.contour(hist_cont)
     # ax1.scatter(color_vi[good_colors], color_ub[good_colors])
     ax1.plot(model_vi, model_ub, color='red', linewidth=2)

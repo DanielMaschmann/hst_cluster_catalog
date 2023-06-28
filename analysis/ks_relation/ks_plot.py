@@ -4,11 +4,36 @@ from photometry_tools import helper_func as hf
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from astropy.io import fits
-
 from xgaltool import analysis_tools, plotting_tools
-
-
 from photometry_tools.plotting_tools import DensityContours
+from mega_table import RadialMegaTable, TessellMegaTable
+from astropy.coordinates import SkyCoord
+import astropy.units as u
+from scipy.stats import gaussian_kde
+
+
+def contours(ax, x, y, levels=None, axis_offse=(-0.2, 0.1, -0.55, 0.6)):
+
+    if levels is None:
+        levels = [0.0, 0.1, 0.25, 0.5, 0.68, 0.95, 0.975]
+
+    good_values = np.invert(((np.isnan(x) | np.isnan(y)) | (np.isinf(x) | np.isinf(y))))
+
+    x = x[good_values]
+    y = y[good_values]
+
+    k = gaussian_kde(np.vstack([x, y]))
+    xi, yi = np.mgrid[x.min()+axis_offse[0]:x.max()+axis_offse[1]:x.size**0.5*1j,
+             y.min()+axis_offse[2]:y.max()+axis_offse[3]:y.size**0.5*1j]
+    zi = k(np.vstack([xi.flatten(), yi.flatten()]))
+    #set zi to 0-1 scale
+    zi = (zi-zi.min())/(zi.max() - zi.min())
+    zi = zi.reshape(xi.shape)
+    # ax[0].scatter(xi.flatten(), yi.flatten(), c=zi)
+    cs = ax.contour(xi, yi, zi, levels=levels,
+                    colors='k',
+                    linewidths=(1,),
+                    origin='lower')
 
 
 # get access to HST cluster catalog
@@ -21,13 +46,6 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path,
                                                             morph_mask_path=morph_mask_path,
                                                             sample_table_path=sample_table_path)
-
-
-catalog_access.load_sample_table()
-
-
-exit()
-
 
 # get model
 hdu_a_sol = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
@@ -53,6 +71,144 @@ model_vi_sol = mag_v_sol - mag_i_sol
 model_ub_sol = mag_u_sol - mag_b_sol
 model_nuvb_sol = mag_nuv_sol - mag_b_sol
 model_nuvu_sol = mag_nuv_sol - mag_u_sol
+
+target_list = catalog_access.target_hst_cc
+dist_list = []
+for target in target_list:
+    if (target == 'ngc0628c') | (target == 'ngc0628e'):
+        target = 'ngc0628'
+    dist_list.append(catalog_access.dist_dict[target]['dist'])
+sort = np.argsort(dist_list)
+target_list = np.array(target_list)[sort]
+dist_list = np.array(dist_list)[sort]
+
+catalog_access.load_hst_cc_list(target_list=target_list)
+catalog_access.load_hst_cc_list(target_list=target_list, cluster_class='class3')
+catalog_access.load_hst_cc_list(target_list=target_list, classify='ml')
+catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_class='class3')
+# sig_sfr = np.zeros(len(target_list))
+# sig_mol = np.zeros(len(target_list))
+
+
+
+fig = plt.figure(figsize=(30, 20))
+fontsize = 23
+
+x_lim_low = np.log10(0.8)
+x_lim_high = np.log10(50)
+y_lim_low = np.log10(0.0007)
+y_lim_high = np.log10(0.05)
+
+ks_x_pos = 0.07
+ks_y_pos = 0.07
+ks_x_len = 0.9
+ks_y_len = 0.9
+
+contour_width = 0.06
+contour_hight = 0.06
+
+ax_ks = fig.add_axes([ks_x_pos, ks_y_pos, ks_x_len, ks_y_len])
+
+ax_ks.set_xlim(x_lim_low, x_lim_high)
+ax_ks.set_ylim(y_lim_low, y_lim_high)
+
+dummy_h2_surface_density = np.linspace(-1, 6, 10)
+dummy_sfr_surface_density = dummy_h2_surface_density - 3
+ax_ks.plot(dummy_h2_surface_density, dummy_sfr_surface_density - 1, color='k', linestyle=':', alpha=0.7)
+ax_ks.plot(dummy_h2_surface_density, dummy_sfr_surface_density, color='k', linestyle=':', alpha=0.7)
+ax_ks.plot(dummy_h2_surface_density, dummy_sfr_surface_density + 1, color='k', linestyle=':', alpha=0.7)
+
+
+for index, target in enumerate(target_list):
+    print(target_list[index])
+    if (target == 'ngc0628c') | (target == 'ngc0628e'):
+        galaxy_name = 'ngc0628'
+    else:
+        galaxy_name = target
+    ra, dec = catalog_access.get_hst_cc_coords_world(target=target)
+    # load mega tables
+    mega_table = TessellMegaTable.read('/home/benutzer/data/PHANGS_products/mega_tables/v3p0/hexagon/%s_base_hexagon_1p5kpc.ecsv' % galaxy_name.upper())
+    hex_sig_sfr = mega_table['Sigma_SFR']
+    hex_sig_sfr_err = mega_table['e_Sigma_SFR']
+    hex_sig_mol = mega_table['Sigma_mol']
+    hex_sig_mol_err = mega_table['e_Sigma_mol']
+
+    hex_ids = mega_table['ID']
+    mask_id_with_cluster = np.zeros(len(hex_ids), dtype=bool)
+
+    for cluster_index in range(len(ra)):
+        hex_id_of_cluster = mega_table.find_coords_in_regions(ra=ra[cluster_index], dec=dec[cluster_index], fill_value=-1)
+        # print('hex_id_of_cluster ', hex_id_of_cluster)
+        index_of_hex_id = np.where(hex_ids == hex_id_of_cluster[0])
+        mask_id_with_cluster[index_of_hex_id] = True
+
+    sig_mol = np.log10(np.nanmean(hex_sig_mol[mask_id_with_cluster]).value)
+    sig_sfr = np.log10(np.nanmean(hex_sig_sfr[mask_id_with_cluster]).value)
+    print('sig_mol ', sig_mol)
+    print('sig_sfr ', sig_sfr)
+
+    ax_ks.scatter(sig_mol, sig_sfr)
+
+    ks_x_pos_cc = ks_x_pos + (ks_x_len / (x_lim_high - x_lim_low)) * (sig_mol - x_lim_low) - contour_width/2
+    ks_y_pos_cc = ks_y_pos + (ks_y_len / (y_lim_high - y_lim_low)) * (sig_sfr - y_lim_low) - contour_hight / 2
+    print('ks_x_pos_cc ', ks_x_pos_cc)
+    print('ks_y_pos_cc ', ks_y_pos_cc)
+
+
+    color_ub_ml = catalog_access.get_hst_color_ub(target=target, classify='ml')
+    color_vi_ml = catalog_access.get_hst_color_vi(target=target, classify='ml')
+
+
+    ax1 = fig.add_axes([ks_x_pos_cc, ks_y_pos_cc, contour_width, contour_hight])
+    ax1.patch.set_alpha(0.5)
+    # good_colors = (color_ub_ml < 2) & (color_ub_ml > -5.0) & (color_vi_ml > -1.5) & (color_vi_ml < 2.6)
+
+    # DensityContours.get_contours_percentage(ax=ax1, x_data=color_vi_ml[good_colors],
+    #                                         y_data=color_ub_ml[good_colors],
+    #                                         contour_levels=[0.5, 0.7, 0.8, 0.95, 0.99],
+    #                                         color='black', percent=False,
+    #                                         linewidth=2)
+    good_colors = (color_vi_ml > -1.5) & (color_vi_ml < 2.5) & (color_ub_ml > -2) & (color_ub_ml < 1.5)
+    contours(ax=ax1, x=color_vi_ml[good_colors], y=color_ub_ml[good_colors], levels=None)
+
+
+    ax1.plot(model_vi_sol, model_ub_sol, color='red', linewidth=2)
+    ax1.set_xlim(-1.0, 2.3)
+    ax1.set_ylim(1.25, -2.5)
+    ax1.axis('off')
+    ax1.set_title(target)
+
+ax_ks.set_xlabel(r'log($\Sigma_{\rm H_2 \,\, total} \,/\, {\rm M_{\odot} pc^{-2}}$)', fontsize=fontsize)
+ax_ks.set_ylabel(r'log($\Sigma_{\rm SFR \,\, total} \,/\, {\rm M_{\odot} year^{-1} \, kpc^{-2}}$)', labelpad=20, fontsize=fontsize)
+ax_ks.tick_params(axis='both', which='both', width=2, direction='in', labelsize=fontsize)
+
+
+
+
+
+# plt.scatter(sig_mol, sig_sfr)
+# plt.xscale('log')
+# plt.yscale('log')
+plt.tight_layout()
+
+plt.savefig('plot_output/ks_relation.png')
+plt.savefig('plot_output/ks_relation.pdf')
+
+exit()
+
+
+for id in t['ID']:
+    pos = SkyCoord(ra=id_dict['ra_%i' % id], dec=id_dict['dec_%i' % id], unit=(u.degree, u.degree), frame='fk5')
+    pos_pix = wcs_dss.world_to_pixel(pos)
+    print(pos_pix)
+    ax1.scatter(pos_pix[0], pos_pix[1])
+
+
+
+exit()
+
+
+
 
 
 # target_list = catalog_access.target_hst_cc
