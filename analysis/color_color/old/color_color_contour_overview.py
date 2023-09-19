@@ -42,127 +42,52 @@ def contours(ax, x, y, levels=None, legend=False, fontsize=13):
 
 
 
-cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'
-hst_obs_hdr_file_path = '/home/benutzer/data/PHANGS_products/tables'
-morph_mask_path = '/home/benutzer/data/PHANGS_products/environment_masks'
-sample_table_path = '/home/benutzer/data/PHANGS_products/sample_table'
+age_mod_sol = np.load('data_output/age_mod_sol.npy')
+model_vi_sol = np.load('data_output/model_vi_sol.npy')
+model_ub_sol = np.load('data_output/model_ub_sol.npy')
+age_mod_sol50 = np.load('data_output/age_mod_sol50.npy')
+model_vi_sol50 = np.load('data_output/model_vi_sol50.npy')
+model_ub_sol50 = np.load('data_output/model_ub_sol50.npy')
 
-catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=cluster_catalog_data_path,
-                                                            hst_obs_hdr_file_path=hst_obs_hdr_file_path,
-                                                            morph_mask_path=morph_mask_path,
-                                                            sample_table_path=sample_table_path)
+color_vi_hum = np.load('data_output/color_vi_hum.npy')
+color_ub_hum = np.load('data_output/color_ub_hum.npy')
+color_vi_err_hum = np.load('data_output/color_vi_err_hum.npy')
+color_ub_err_hum = np.load('data_output/color_ub_err_hum.npy')
+detect_vi_hum = np.load('data_output/detect_vi_hum.npy')
+detect_ub_hum = np.load('data_output/detect_ub_hum.npy')
+clcl_color_hum = np.load('data_output/clcl_color_hum.npy')
 
-
-# get model
-hdu_a_sol = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
-data_mod_sol = hdu_a_sol[1].data
-age_mod_sol = data_mod_sol['sfh.age']
-flux_f555w_sol = data_mod_sol['F555W_UVIS_CHIP2']
-flux_f814w_sol = data_mod_sol['F814W_UVIS_CHIP2']
-flux_f336w_sol = data_mod_sol['F336W_UVIS_CHIP2']
-flux_f438w_sol = data_mod_sol['F438W_UVIS_CHIP2']
-mag_v_sol = hf.conv_mjy2vega(flux=flux_f555w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
-mag_i_sol = hf.conv_mjy2vega(flux=flux_f814w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
-mag_u_sol = hf.conv_mjy2vega(flux=flux_f336w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
-mag_b_sol = hf.conv_mjy2vega(flux=flux_f438w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
-model_vi_sol = mag_v_sol - mag_i_sol
-model_ub_sol = mag_u_sol - mag_b_sol
-
-# get model
-hdu_a_sol50 = fits.open('../cigale_model/sfh2exp/no_dust/sol_met_50/out/models-block-0.fits')
-data_mod_sol50 = hdu_a_sol50[1].data
-age_mod_sol50 = data_mod_sol50['sfh.age']
-flux_f555w_sol50 = data_mod_sol50['F555W_UVIS_CHIP2']
-flux_f814w_sol50 = data_mod_sol50['F814W_UVIS_CHIP2']
-flux_f336w_sol50 = data_mod_sol50['F336W_UVIS_CHIP2']
-flux_f438w_sol50 = data_mod_sol50['F438W_UVIS_CHIP2']
-mag_v_sol50 = hf.conv_mjy2vega(flux=flux_f555w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
-mag_i_sol50 = hf.conv_mjy2vega(flux=flux_f814w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
-mag_u_sol50 = hf.conv_mjy2vega(flux=flux_f336w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
-mag_b_sol50 = hf.conv_mjy2vega(flux=flux_f438w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
-model_vi_sol50 = mag_v_sol50 - mag_i_sol50
-model_ub_sol50 = mag_u_sol50 - mag_b_sol50
+color_vi_ml = np.load('data_output/color_vi_ml.npy')
+color_ub_ml = np.load('data_output/color_ub_ml.npy')
+color_bv_ml = np.load('data_output/color_bv_ml.npy')
+color_vi_err_ml = np.load('data_output/color_vi_err_ml.npy')
+color_ub_err_ml = np.load('data_output/color_ub_err_ml.npy')
+color_bv_err_ml = np.load('data_output/color_bv_err_ml.npy')
+detect_vi_ml = np.load('data_output/detect_vi_ml.npy')
+detect_ub_ml = np.load('data_output/detect_ub_ml.npy')
+clcl_color_ml = np.load('data_output/clcl_color_ml.npy')
+clcl_qual_color_ml = np.load('data_output/clcl_qual_color_ml.npy')
 
 
-
-target_list = catalog_access.target_hst_cc
-dist_list = []
-for target in target_list:
-    if (target == 'ngc0628c') | (target == 'ngc0628e'):
-        galaxy_name = 'ngc0628'
-    else:
-        galaxy_name = target
-    dist_list.append(catalog_access.dist_dict[galaxy_name]['dist'])
-sort = np.argsort(dist_list)
-target_list = np.array(target_list)[sort]
-dist_list = np.array(dist_list)[sort]
-
-catalog_access.load_hst_cc_list(target_list=target_list)
-catalog_access.load_hst_cc_list(target_list=target_list, cluster_class='class3')
-catalog_access.load_hst_cc_list(target_list=target_list, classify='ml')
-catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_class='class3')
-
-
-color_vi_hum = np.array([])
-color_ub_hum = np.array([])
-clcl_color_hum = np.array([])
-
-color_vi_ml = np.array([])
-color_ub_ml = np.array([])
-clcl_color_ml = np.array([])
-clcl_qual_color_ml = np.array([])
-
-for index in range(0, len(target_list)):
-    target = target_list[index]
-    dist = dist_list[index]
-    print('target ', target, 'dist ', dist)
-
-    cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
-    color_ub_hum_12 = catalog_access.get_hst_color_ub(target=target)
-    color_vi_hum_12 = catalog_access.get_hst_color_vi(target=target)
-    cluster_class_hum_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
-    color_ub_hum_3 = catalog_access.get_hst_color_ub(target=target, cluster_class='class3')
-    color_vi_hum_3 = catalog_access.get_hst_color_vi(target=target, cluster_class='class3')
-    color_vi_hum = np.concatenate([color_vi_hum, color_vi_hum_12, color_vi_hum_3])
-    color_ub_hum = np.concatenate([color_ub_hum, color_ub_hum_12, color_ub_hum_3])
-    clcl_color_hum = np.concatenate([clcl_color_hum, cluster_class_hum_12, cluster_class_hum_3])
-
-    cluster_class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
-    cluster_class_qual_ml_12 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml')
-    color_ub_ml_12 = catalog_access.get_hst_color_ub(target=target, classify='ml')
-    color_vi_ml_12 = catalog_access.get_hst_color_vi(target=target, classify='ml')
-    cluster_class_ml_3 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
-    cluster_class_qual_ml_3 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml', cluster_class='class3')
-    color_ub_ml_3 = catalog_access.get_hst_color_ub(target=target, classify='ml', cluster_class='class3')
-    color_vi_ml_3 = catalog_access.get_hst_color_vi(target=target, classify='ml', cluster_class='class3')
-    color_vi_ml = np.concatenate([color_vi_ml, color_vi_ml_12, color_vi_ml_3])
-    color_ub_ml = np.concatenate([color_ub_ml, color_ub_ml_12, color_ub_ml_3])
-    clcl_color_ml = np.concatenate([clcl_color_ml, cluster_class_ml_12, cluster_class_ml_3])
-    clcl_qual_color_ml = np.concatenate([clcl_qual_color_ml, cluster_class_qual_ml_12, cluster_class_qual_ml_3])
-
-
-mask_good_colors_hum = (color_vi_hum > -2) & (color_vi_hum < 3) & (color_ub_hum > -3) & (color_ub_hum < 2)
 mask_class_1_hum = clcl_color_hum == 1
 mask_class_2_hum = clcl_color_hum == 2
 mask_class_3_hum = clcl_color_hum == 3
 
-mask_good_colors_ml = (color_vi_ml > -2) & (color_vi_ml < 3) & (color_ub_ml > -3) & (color_ub_ml < 2)
-mask_class_1_ml = (clcl_color_ml == 1) #& (clcl_qual_color_ml >= 0.9)
-mask_class_2_ml = (clcl_color_ml == 2) #& (clcl_qual_color_ml >= 0.9)
-mask_class_3_ml = (clcl_color_ml == 3) #& (clcl_qual_color_ml >= 0.9)
+mask_class_1_ml = clcl_color_ml == 1
+mask_class_2_ml = clcl_color_ml == 2
+mask_class_3_ml = clcl_color_ml == 3
+
+mask_detect_ubvi_hum = detect_vi_hum * detect_ub_hum
+mask_detect_ubvi_ml = detect_vi_ml * detect_ub_ml
+
+mask_good_colors_hum = ((color_vi_hum > -1.5) & (color_vi_hum < 2.5) &
+                        (color_ub_hum > -3) & (color_ub_hum < 1.5)) * mask_detect_ubvi_hum
+mask_good_colors_ml = ((color_vi_ml > -1.5) & (color_vi_ml < 2.5) &
+                        (color_ub_ml > -3) & (color_ub_ml < 1.5)) * mask_detect_ubvi_ml
 
 
 fig, ax = plt.subplots(ncols=4, nrows=2, sharex=True, sharey=True, figsize=(25, 13))
 fontsize = 17
-
 
 
 ax_shadow = ax[0, 0].twinx()
@@ -190,7 +115,6 @@ contours(ax=ax[1, 2], x=color_vi_ml[(mask_class_1_ml + mask_class_2_ml) * mask_g
                      y=color_ub_ml[(mask_class_1_ml + mask_class_2_ml) * mask_good_colors_ml])
 contours(ax=ax[1, 3], x=color_vi_ml[mask_class_3_ml * mask_good_colors_ml],
                      y=color_ub_ml[mask_class_3_ml * mask_good_colors_ml])
-
 
 
 ax[0, 0].plot(model_vi_sol, model_ub_sol, color='red', linewidth=3, linestyle='--', zorder=10)

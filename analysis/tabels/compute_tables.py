@@ -9,7 +9,8 @@ This macro will produce Table 1 for the PHANGS HST paper
 cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'
 hst_obs_hdr_file_path = '/home/benutzer/data/PHANGS_products/tables'
 catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=cluster_catalog_data_path,
-                                                            hst_obs_hdr_file_path=hst_obs_hdr_file_path)
+                                                            hst_obs_hdr_file_path=hst_obs_hdr_file_path,
+                                                            hst_cc_ver='IR4')
 
 
 target_list = catalog_access.target_hst_cc
@@ -119,6 +120,12 @@ for index in range(0, len(target_list)):
 
     ebv_hum = np.concatenate([ebv_hum, ebv_hum_12, ebv_hum_3])
     ebv_ml = np.concatenate([ebv_ml, ebv_ml_12, ebv_ml_3])
+
+
+
+for index in range(0, len(target_list)):
+    print(target_list[index], n_hum_1[index] + n_hum_2[index], n_ml_1[index] + n_ml_2[index])
+
 
 
 

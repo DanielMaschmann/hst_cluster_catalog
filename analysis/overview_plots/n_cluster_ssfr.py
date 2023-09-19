@@ -1,18 +1,8 @@
 """ bla bla bla """
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
-import seaborn as sns
 import photometry_tools
-from photometry_tools.analysis_tools import AnalysisTools
-from astropy.wcs import WCS
-from astropy.io import fits
-from astropy.coordinates import SkyCoord
-import astropy.units as u
-from matplotlib.colors import Normalize, LogNorm
-from astroquery.skyview import SkyView
-from astroquery.simbad import Simbad
-from mega_table import RadialMegaTable, TessellMegaTable
+from mega_table import TessellMegaTable
 
 
 # get access to HST cluster catalog
@@ -50,7 +40,7 @@ glob_log_ssfr_err = np.zeros(len(target_list))
 
 area_ssfr = np.zeros(len(target_list))
 
-
+ssfr = np.zeros(len(target_list))
 
 for index, target in enumerate(target_list):
     print(target_list[index])
@@ -58,6 +48,9 @@ for index, target in enumerate(target_list):
         galaxy_name = 'ngc0628'
     else:
         galaxy_name = target
+
+    ssfr[index] = catalog_access.get_target_ssfr(target=galaxy_name)
+
     ra, dec = catalog_access.get_hst_cc_coords_world(target=target)
     # load mega tables
     mega_table = TessellMegaTable.read('/home/benutzer/data/PHANGS_products/mega_tables/v3p0/hexagon/%s_base_hexagon_1p5kpc.ecsv' % galaxy_name.upper())
@@ -104,6 +97,19 @@ for index, target in enumerate(target_list):
 print('number_hum_12 ', number_hum_12)
 print('number_ml_12 ', number_ml_12)
 
+print(np.corrcoef(x=np.log10(area_ssfr), y=np.log10(number_hum_12)))
+print(np.corrcoef(x=np.log10(area_ssfr), y=np.log10(number_ml_12)))
+
+print(np.corrcoef(x=np.log10(area_ssfr), y=np.log10(number_hum_3)))
+print(np.corrcoef(x=np.log10(area_ssfr), y=np.log10(number_ml_3)))
+
+
+# plt.scatter(area_ssfr, ssfr)
+# plt.xscale('log')
+# plt.yscale('log')
+# plt.show()
+#
+# exit()
 
 
 fig, ax = plt.subplots(nrows=2, sharex=True, figsize=(13, 11))

@@ -59,6 +59,8 @@ p16_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
 p84_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
 
 
+p99_mstar_hum_12 = np.zeros(len(cc_target_list))
+p1_mstar_hum_12 = np.zeros(len(cc_target_list))
 max_mstar_hum_12 = np.zeros(len(cc_target_list))
 min_mstar_hum_12 = np.zeros(len(cc_target_list))
 mean_mstar_hum_12 = np.zeros(len(cc_target_list))
@@ -66,6 +68,8 @@ median_mstar_hum_12 = np.zeros(len(cc_target_list))
 p16_mstar_hum_12 = np.zeros(len(cc_target_list))
 p84_mstar_hum_12 = np.zeros(len(cc_target_list))
 
+p99_mstar_ml_12 = np.zeros(len(cc_target_list))
+p1_mstar_ml_12 = np.zeros(len(cc_target_list))
 max_mstar_ml_12 = np.zeros(len(cc_target_list))
 min_mstar_ml_12 = np.zeros(len(cc_target_list))
 mean_mstar_ml_12 = np.zeros(len(cc_target_list))
@@ -111,15 +115,19 @@ for index, target in enumerate(cc_target_list):
     p84_f555w_abs_mag_ml_12[index] = np.percentile(f555w_abs_mag_ml_12, 84)
 
 
-    max_mstar_hum_12[index] = np.percentile(mstar_hum_12, 99)
-    min_mstar_hum_12[index] = np.percentile(mstar_hum_12, 1)
+    p99_mstar_hum_12[index] = np.percentile(mstar_hum_12, 99)
+    p1_mstar_hum_12[index] = np.percentile(mstar_hum_12, 1)
+    max_mstar_hum_12[index] = np.nanmax(mstar_hum_12)
+    min_mstar_hum_12[index] = np.nanmin(mstar_hum_12)
     mean_mstar_hum_12[index] = np.nanmean(mstar_hum_12)
     median_mstar_hum_12[index] = np.nanmedian(mstar_hum_12)
     p16_mstar_hum_12[index] = np.percentile(mstar_hum_12, 16)
     p84_mstar_hum_12[index] = np.percentile(mstar_hum_12, 84)
 
-    max_mstar_ml_12[index] = np.percentile(mstar_ml_12, 99)
-    min_mstar_ml_12[index] = np.percentile(mstar_ml_12, 1)
+    p99_mstar_ml_12[index] = np.percentile(mstar_ml_12, 99)
+    p1_mstar_ml_12[index] = np.percentile(mstar_ml_12, 1)
+    max_mstar_ml_12[index] = np.nanmax(mstar_ml_12)
+    min_mstar_ml_12[index] = np.nanmin(mstar_ml_12)
     mean_mstar_ml_12[index] = np.nanmean(mstar_ml_12)
     median_mstar_ml_12[index] = np.nanmedian(mstar_ml_12)
     p16_mstar_ml_12[index] = np.percentile(mstar_ml_12, 16)
@@ -175,9 +183,9 @@ ax[1, 0].errorbar(dist_list, median_mstar_hum_12,
                   fmt='o', ms=err_bar_dot_size, color='darkslategrey')
 ax[1, 0].scatter(dist_list, min_mstar_hum_12, s=scatter_dot_size, color='tab:green')
 
-ax[1, 0].scatter([], [], s=scatter_dot_size, color='tab:purple', label='99% percentile')
+ax[1, 0].scatter([], [], s=scatter_dot_size, color='tab:purple', label='Most massive')
 ax[1, 0].scatter([], [], s=scatter_dot_size, color='darkslategrey', label='Median value')
-ax[1, 0].scatter([], [], s=scatter_dot_size, color='tab:green', label='1% percentile')
+ax[1, 0].scatter([], [], s=scatter_dot_size, color='tab:green', label='Least massive')
 
 
 

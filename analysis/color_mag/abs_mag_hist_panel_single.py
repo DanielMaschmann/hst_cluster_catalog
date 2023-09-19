@@ -58,13 +58,18 @@ for index in range(0, 39):
     abs_v_mag_ml_3 = hf.conv_mag2abs_mag(mag=v_mag_ml_3, dist=dist)
     v_mag_ml = np.concatenate([v_mag_ml_12, v_mag_ml_3])
 
-    ax[row_index, col_index].hist(v_mag_ml, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:grey', linewidth=2)
-    ax[row_index, col_index].hist(v_mag_hum, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:red', linewidth=2)
+    ax[row_index, col_index].hist(v_mag_ml, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:grey', linewidth=3)
+    ax[row_index, col_index].hist(v_mag_hum, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:red', linewidth=3)
 
     median_v_mag_ml = np.nanmedian(v_mag_ml[(v_mag_ml > 18) & (v_mag_ml < 26)])
     faintest_v_band_mag_hum = np.nanmax(v_mag_hum[(v_mag_hum > 18) & (v_mag_hum < 26)])
     faintest_v_band_mag_ml = np.nanmax(v_mag_ml[(v_mag_ml > 18) & (v_mag_ml < 26)])
     print('median_v_mag_ml ', median_v_mag_ml,  ' faintest_v_band_mag_hum ', faintest_v_band_mag_hum)
+    # get the apparent mag limit of M_v = -6
+    mag_lim = -6 + 25 + 5*np.log10(dist)
+    ax[row_index, col_index].plot([median_v_mag_ml, median_v_mag_ml], [0, 0.9], color='tab:grey', linestyle='--', linewidth=3)
+    ax[row_index, col_index].plot([mag_lim, mag_lim], [0, 0.9], color='g', linestyle='-', linewidth=3)
+
     if median_v_mag_ml > faintest_v_band_mag_hum:
         dim_targets.append(target)
         description_str = (target.upper() + '$^{*}$' + ('\nd= %.1f Mpc' % dist) +

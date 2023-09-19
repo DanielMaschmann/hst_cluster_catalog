@@ -75,6 +75,7 @@ flux_f814w_sol = data_mod_sol['F814W_UVIS_CHIP2']
 flux_f336w_sol = data_mod_sol['F336W_UVIS_CHIP2']
 flux_f438w_sol = data_mod_sol['F438W_UVIS_CHIP2']
 flux_f200w_sol = data_mod_sol['jwst.nircam.F200W']
+flux_f300w_sol = data_mod_sol['jwst.nircam.F300M']
 mag_vega_v_sol = hf.conv_mjy2vega(flux=flux_f555w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
                              vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
 mag_vega_i_sol = hf.conv_mjy2vega(flux=flux_f814w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
@@ -91,18 +92,25 @@ mag_ab_u_sol = hf.conv_mjy2ab_mag(flux=flux_f336w_sol)
 mag_ab_b_sol = hf.conv_mjy2ab_mag(flux=flux_f438w_sol)
 mag_ab_nuv_sol = hf.conv_mjy2ab_mag(flux=flux_f275w_sol)
 ZP_v_200 = 759.59/1e6
+ZP_v_300 = 3631./1e6
 mag_vega_200_sol = -2.5*np.log10(flux_f200w_sol * 1e-9/ZP_v_200)
+mag_vega_300_sol = -2.5*np.log10(flux_f300w_sol * 1e-9/ZP_v_300)
 mag_ab_200_sol = hf.conv_mjy2ab_mag(flux_f200w_sol)
+mag_ab_300_sol = hf.conv_mjy2ab_mag(flux_f300w_sol)
 
 model_vega_vi_sol = mag_vega_v_sol - mag_vega_i_sol
 model_vega_ub_sol = mag_vega_u_sol - mag_vega_b_sol
 model_vega_v200_sol = mag_vega_v_sol - mag_vega_200_sol
+model_vega_v300_sol = mag_vega_v_sol - mag_vega_300_sol
+model_vega_200300_sol = mag_vega_200_sol - mag_vega_300_sol
 model_vega_nuvb_sol = mag_vega_nuv_sol - mag_vega_b_sol
 model_vega_nuvu_sol = mag_vega_nuv_sol - mag_vega_u_sol
 
 model_ab_vi_sol = mag_ab_v_sol - mag_ab_i_sol
 model_ab_ub_sol = mag_ab_u_sol - mag_ab_b_sol
 model_ab_v200_sol = mag_ab_v_sol - mag_ab_200_sol
+model_ab_v300_sol = mag_ab_v_sol - mag_ab_300_sol
+model_ab_200300_sol = mag_ab_200_sol - mag_ab_300_sol
 model_ab_nuvb_sol = mag_ab_nuv_sol - mag_ab_b_sol
 model_ab_nuvu_sol = mag_ab_nuv_sol - mag_ab_u_sol
 
@@ -116,6 +124,7 @@ flux_f814w_sol50 = data_mod_sol50['F814W_UVIS_CHIP2']
 flux_f336w_sol50 = data_mod_sol50['F336W_UVIS_CHIP2']
 flux_f438w_sol50 = data_mod_sol50['F438W_UVIS_CHIP2']
 flux_f200w_sol50 = data_mod_sol50['jwst.nircam.F200W']
+flux_f300w_sol50 = data_mod_sol50['jwst.nircam.F300M']
 mag_vega_v_sol50 = hf.conv_mjy2vega(flux=flux_f555w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
                              vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
 mag_vega_i_sol50 = hf.conv_mjy2vega(flux=flux_f814w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
@@ -132,41 +141,57 @@ mag_ab_u_sol50 = hf.conv_mjy2ab_mag(flux=flux_f336w_sol50)
 mag_ab_b_sol50 = hf.conv_mjy2ab_mag(flux=flux_f438w_sol50)
 mag_ab_nuv_sol50 = hf.conv_mjy2ab_mag(flux=flux_f275w_sol50)
 ZP_v_200 = 759.59/1e6
+ZP_v_300 = 3631./1e6
 mag_vega_200_sol50 = -2.5*np.log10(flux_f200w_sol50 * 1e-9/ZP_v_200)
+mag_vega_300_sol50 = -2.5*np.log10(flux_f300w_sol50 * 1e-9/ZP_v_300)
 mag_ab_200_sol50 = hf.conv_mjy2ab_mag(flux_f200w_sol50)
+mag_ab_300_sol50 = hf.conv_mjy2ab_mag(flux_f300w_sol50)
 
 model_vega_vi_sol50 = mag_vega_v_sol50 - mag_vega_i_sol50
 model_vega_ub_sol50 = mag_vega_u_sol50 - mag_vega_b_sol50
 model_vega_v200_sol50 = mag_vega_v_sol50 - mag_vega_200_sol50
+model_vega_v300_sol50 = mag_vega_v_sol50 - mag_vega_300_sol50
+model_vega_200300_sol50 = mag_vega_200_sol50 - mag_vega_300_sol50
 model_vega_nuvb_sol50 = mag_vega_nuv_sol50 - mag_vega_b_sol50
 model_vega_nuvu_sol50 = mag_vega_nuv_sol50 - mag_vega_u_sol50
 
 model_ab_vi_sol50 = mag_ab_v_sol50 - mag_ab_i_sol50
 model_ab_ub_sol50 = mag_ab_u_sol50 - mag_ab_b_sol50
 model_ab_v200_sol50 = mag_ab_v_sol50 - mag_ab_200_sol50
+model_ab_v300_sol50 = mag_ab_v_sol50 - mag_ab_300_sol50
+model_ab_200300_sol50 = mag_ab_200_sol50 - mag_ab_300_sol50
 model_ab_nuvb_sol50 = mag_ab_nuv_sol50 - mag_ab_b_sol50
 model_ab_nuvu_sol50 = mag_ab_nuv_sol50 - mag_ab_u_sol50
 
-np.save('data_output/model_vega_vi_sol.npy', model_vega_vi_sol)
-np.save('data_output/model_vega_ub_sol.npy', model_vega_ub_sol)
-np.save('data_output/model_vega_v200_sol.npy', model_vega_v200_sol)
-np.save('data_output/model_vega_nuvb_sol.npy', model_vega_nuvb_sol)
-np.save('data_output/model_vega_nuvu_sol.npy', model_vega_nuvu_sol)
-np.save('data_output/model_ab_vi_sol.npy', model_ab_vi_sol)
-np.save('data_output/model_ab_ub_sol.npy', model_ab_ub_sol)
-np.save('data_output/model_ab_v200_sol.npy', model_ab_v200_sol)
-np.save('data_output/model_ab_nuvb_sol.npy', model_ab_nuvb_sol)
-np.save('data_output/model_ab_nuvu_sol.npy', model_ab_nuvu_sol)
-np.save('data_output/model_vega_vi_sol50.npy', model_vega_vi_sol50)
-np.save('data_output/model_vega_ub_sol50.npy', model_vega_ub_sol50)
-np.save('data_output/model_vega_v200_sol50.npy', model_vega_v200_sol50)
-np.save('data_output/model_vega_nuvb_sol50.npy', model_vega_nuvb_sol50)
-np.save('data_output/model_vega_nuvu_sol50.npy', model_vega_nuvu_sol50)
-np.save('data_output/model_ab_vi_sol50.npy', model_ab_vi_sol50)
-np.save('data_output/model_ab_ub_sol50.npy', model_ab_ub_sol50)
-np.save('data_output/model_ab_v200_sol50.npy', model_ab_v200_sol50)
 
+np.save('data_output/model_tracks/model_vega_vi_sol.npy', model_vega_vi_sol)
+np.save('data_output/model_tracks/model_vega_ub_sol.npy', model_vega_ub_sol)
+np.save('data_output/model_tracks/model_vega_v200_sol.npy', model_vega_v200_sol)
+np.save('data_output/model_tracks/model_vega_v300_sol.npy', model_vega_v300_sol)
+np.save('data_output/model_tracks/model_vega_200300_sol.npy', model_vega_200300_sol)
+np.save('data_output/model_tracks/model_vega_nuvb_sol.npy', model_vega_nuvb_sol)
+np.save('data_output/model_tracks/model_vega_nuvu_sol.npy', model_vega_nuvu_sol)
+np.save('data_output/model_tracks/model_ab_vi_sol.npy', model_ab_vi_sol)
+np.save('data_output/model_tracks/model_ab_ub_sol.npy', model_ab_ub_sol)
+np.save('data_output/model_tracks/model_ab_v200_sol.npy', model_ab_v200_sol)
+np.save('data_output/model_tracks/model_ab_v300_sol.npy', model_ab_v300_sol)
+np.save('data_output/model_tracks/model_ab_200300_sol.npy', model_ab_200300_sol)
+np.save('data_output/model_tracks/model_ab_nuvb_sol.npy', model_ab_nuvb_sol)
+np.save('data_output/model_tracks/model_ab_nuvu_sol.npy', model_ab_nuvu_sol)
+np.save('data_output/model_tracks/model_vega_vi_sol50.npy', model_vega_vi_sol50)
+np.save('data_output/model_tracks/model_vega_ub_sol50.npy', model_vega_ub_sol50)
+np.save('data_output/model_tracks/model_vega_v200_sol50.npy', model_vega_v200_sol50)
+np.save('data_output/model_tracks/model_vega_v300_sol50.npy', model_vega_v300_sol50)
+np.save('data_output/model_tracks/model_vega_200300_sol50.npy', model_vega_200300_sol50)
+np.save('data_output/model_tracks/model_vega_nuvb_sol50.npy', model_vega_nuvb_sol50)
+np.save('data_output/model_tracks/model_vega_nuvu_sol50.npy', model_vega_nuvu_sol50)
+np.save('data_output/model_tracks/model_ab_vi_sol50.npy', model_ab_vi_sol50)
+np.save('data_output/model_tracks/model_ab_ub_sol50.npy', model_ab_ub_sol50)
+np.save('data_output/model_tracks/model_ab_v200_sol50.npy', model_ab_v200_sol50)
+np.save('data_output/model_tracks/model_ab_v300_sol50.npy', model_ab_v300_sol50)
+np.save('data_output/model_tracks/model_ab_200300_sol50.npy', model_ab_200300_sol50)
 
+exit()
 
 
 # initialize photometry tools

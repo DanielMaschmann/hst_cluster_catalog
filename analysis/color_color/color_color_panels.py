@@ -46,42 +46,9 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
 
 
 # get model
-hdu_a_sol = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
-data_mod_sol = hdu_a_sol[1].data
-age_mod_sol = data_mod_sol['sfh.age']
-flux_f555w_sol = data_mod_sol['F555W_UVIS_CHIP2']
-flux_f814w_sol = data_mod_sol['F814W_UVIS_CHIP2']
-flux_f336w_sol = data_mod_sol['F336W_UVIS_CHIP2']
-flux_f438w_sol = data_mod_sol['F438W_UVIS_CHIP2']
-mag_v_sol = hf.conv_mjy2vega(flux=flux_f555w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
-mag_i_sol = hf.conv_mjy2vega(flux=flux_f814w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
-mag_u_sol = hf.conv_mjy2vega(flux=flux_f336w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
-mag_b_sol = hf.conv_mjy2vega(flux=flux_f438w_sol, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
-model_vi_sol = mag_v_sol - mag_i_sol
-model_ub_sol = mag_u_sol - mag_b_sol
-
-# get model
-hdu_a_sol50 = fits.open('../cigale_model/sfh2exp/no_dust/sol_met_50/out/models-block-0.fits')
-data_mod_sol50 = hdu_a_sol50[1].data
-age_mod_sol50 = data_mod_sol50['sfh.age']
-flux_f555w_sol50 = data_mod_sol50['F555W_UVIS_CHIP2']
-flux_f814w_sol50 = data_mod_sol50['F814W_UVIS_CHIP2']
-flux_f336w_sol50 = data_mod_sol50['F336W_UVIS_CHIP2']
-flux_f438w_sol50 = data_mod_sol50['F438W_UVIS_CHIP2']
-mag_v_sol50 = hf.conv_mjy2vega(flux=flux_f555w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
-mag_i_sol50 = hf.conv_mjy2vega(flux=flux_f814w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
-mag_u_sol50 = hf.conv_mjy2vega(flux=flux_f336w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
-mag_b_sol50 = hf.conv_mjy2vega(flux=flux_f438w_sol50, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
-                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
-model_vi_sol50 = mag_v_sol50 - mag_i_sol50
-model_ub_sol50 = mag_u_sol50 - mag_b_sol50
+model_nuvb_sol = np.load('../color_color/data_output/model_nuvb_sol.npy')
+model_ub_sol = np.load('../color_color/data_output/model_ub_sol.npy')
+model_vi_sol = np.load('../color_color/data_output/model_vi_sol.npy')
 
 
 
@@ -106,29 +73,14 @@ color_c2 = 'tab:green'
 color_c3 = 'darkorange'
 
 
-# add reddening vector
-# intrinsic colors
-# vi_int = 0.8
-# ub_int = -2.2
-# arrow_ebv = 1.0
-# v_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F555W']*1e-4
-# i_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F814W']*1e-4
-# u_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F336W']*1e-4
-# b_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F438W']*1e-4
-# color_ext_vi = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89(wave1=v_wave, wave2=i_wave, ebv=arrow_ebv)
-# color_ext_ub = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89(wave1=u_wave, wave2=b_wave, ebv=arrow_ebv)
-
 vi_int = 0.8
 ub_int = -2.2
-max_av = 2
-v_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F555W']*1e-4
-i_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F814W']*1e-4
-u_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F336W']*1e-4
-b_wave = catalog_access.hst_wfc3_uvis1_bands_mean_wave['F438W']*1e-4
-max_color_ext_vi = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89_av(wave1=v_wave, wave2=i_wave, av=max_av)
-max_color_ext_ub = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89_av(wave1=u_wave, wave2=b_wave, av=max_av)
-max_color_ext_vi_arr = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89_av(wave1=v_wave, wave2=i_wave, av=max_av+0.1)
-max_color_ext_ub_arr = dust_tools.extinction_tools.ExtinctionTools.color_ext_ccm89_av(wave1=u_wave, wave2=b_wave, av=max_av+0.1)
+nuvb_int = -3.0
+av_value = 1
+
+x_lim_vi = (-1.0, 2.3)
+y_lim_ub = (1.25, -2.8)
+y_lim_nuvb = (3.2, -4.3)
 
 
 fig, ax = plt.subplots(5, 4, sharex=True, sharey=True, figsize=(16, 18))
@@ -140,45 +92,61 @@ for index in range(0, 20):
     target = target_list[index]
     dist = dist_list[index]
     print('target ', target, 'dist ', dist)
+    if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
+        b_band = 'F438W'
+    else:
+        b_band = 'F435W'
+
     cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
-    color_ub_hum_12 = catalog_access.get_hst_color_ub(target=target)
-    color_vi_hum_12 = catalog_access.get_hst_color_vi(target=target)
+    color_ub_hum_12 = catalog_access.get_hst_color_ub_vega(target=target)
+    color_vi_hum_12 = catalog_access.get_hst_color_vi_vega(target=target)
     cluster_class_hum_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
-    color_ub_hum_3 = catalog_access.get_hst_color_ub(target=target, cluster_class='class3')
-    color_vi_hum_3 = catalog_access.get_hst_color_vi(target=target, cluster_class='class3')
+    color_ub_hum_3 = catalog_access.get_hst_color_ub_vega(target=target, cluster_class='class3')
+    color_vi_hum_3 = catalog_access.get_hst_color_vi_vega(target=target, cluster_class='class3')
+    detect_vi_hum_12 = ((catalog_access.get_hst_cc_band_flux(target=target, band='F555W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, band='F814W') > 0))
+    detect_ub_hum_12 = ((catalog_access.get_hst_cc_band_flux(target=target, band='F336W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, band=b_band) > 0))
+
+    class_1_hum = cluster_class_hum_12 == 1
+    class_2_hum = cluster_class_hum_12 == 2
+
+    good_colors_hum = ((color_vi_hum_12 > (x_lim_vi[0] - 1)) & (color_vi_hum_12 < (x_lim_vi[1] + 1)) &
+                                   (color_ub_hum_12 > (y_lim_ub[1] - 1)) & (color_ub_hum_12 < (y_lim_ub[0] + 1)) &
+                                   detect_vi_hum_12 & detect_ub_hum_12)
 
     cluster_class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
     cluster_class_qual_ml_12 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml')
-    color_ub_ml_12 = catalog_access.get_hst_color_ub(target=target, classify='ml')
-    color_vi_ml_12 = catalog_access.get_hst_color_vi(target=target, classify='ml')
-    cluster_class_ml_3 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
-    cluster_class_qual_ml_3 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml', cluster_class='class3')
-    color_ub_ml_3 = catalog_access.get_hst_color_ub(target=target, classify='ml', cluster_class='class3')
-    color_vi_ml_3 = catalog_access.get_hst_color_vi(target=target, classify='ml', cluster_class='class3')
-    class_1_ml = (cluster_class_ml_12 == 1) & (cluster_class_qual_ml_12 >= 0.9)
-    class_2_ml = (cluster_class_ml_12 == 2) & (cluster_class_qual_ml_12 >= 0.9)
-    class_3_ml = (cluster_class_ml_3 == 3) & (cluster_class_qual_ml_3 >= 0.9)
+    color_ub_ml_12 = catalog_access.get_hst_color_ub_vega(target=target, classify='ml')
+    color_vi_ml_12 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml')
+    detect_vi_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F555W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F814W') > 0))
+    detect_ub_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F336W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band=b_band) > 0))
 
-    color_ub_ml = np.concatenate([color_ub_ml_12, color_ub_ml_3])
-    color_vi_ml = np.concatenate([color_vi_ml_12, color_vi_ml_3])
-
-    good_colors = (color_vi_ml_12 > -1.5) & (color_vi_ml_12 < 2.5) & (color_ub_ml_12 > -3) & (color_ub_ml_12 < 1.5)
-
-    contours(ax=ax[row_index, col_index], x=color_vi_ml_12[good_colors], y=color_ub_ml_12[good_colors], levels=None)
+    class_1_ml = cluster_class_ml_12 == 1
+    class_2_ml = cluster_class_ml_12 == 2
+    good_colors_ml = ((color_vi_ml_12 > (x_lim_vi[0] - 1)) & (color_vi_ml_12 < (x_lim_vi[1] + 1)) &
+                                   (color_ub_ml_12 > (y_lim_ub[1] - 1)) & (color_ub_ml_12 < (y_lim_ub[0] + 1)) &
+                                   detect_vi_ml_12 & detect_ub_ml_12)
+    contours(ax=ax[row_index, col_index], x=color_vi_ml_12[good_colors_ml], y=color_ub_ml_12[good_colors_ml], levels=None)
 
 
     ax[row_index, col_index].plot(model_vi_sol, model_ub_sol, color='tab:red', linewidth=2, zorder=10)
-    # ax[row_index, col_index].scatter(color_vi_hum_3[cluster_class_hum_3 == 3],
-    #                                      color_ub_hum_3[cluster_class_hum_3 == 3], c=color_c1, s=10)
-    ax[row_index, col_index].scatter(color_vi_hum_12[cluster_class_hum_12 == 1],
-                                         color_ub_hum_12[cluster_class_hum_12 == 1], c=color_c1, s=10)
-    ax[row_index, col_index].scatter(color_vi_hum_12[cluster_class_hum_12 == 2],
-                                         color_ub_hum_12[cluster_class_hum_12 == 2], c=color_c2, s=10)
 
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_1_hum * good_colors_hum],
+                                     color_ub_hum_12[class_1_hum * good_colors_hum], c=color_c1, s=10)
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_2_hum * good_colors_hum],
+                                     color_ub_hum_12[class_2_hum * good_colors_hum], c=color_c2, s=10)
 
-    ax[row_index, col_index].annotate('', xy=(vi_int + max_color_ext_vi, ub_int + max_color_ext_ub), xycoords='data',
-                                      xytext=(vi_int, ub_int), fontsize=fontsize,
-                                      textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+    if (row_index == 0) & (col_index == 0):
+        text_flag = True
+    else:
+        text_flag = False
+    hf.plot_reddening_vect(ax=ax[row_index, col_index], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
+                       linewidth=3, line_color='k', text=text_flag, fontsize=fontsize)
+
 
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
         anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',
@@ -192,14 +160,13 @@ for index in range(0, 20):
     ax[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
                                              direction='in', labelsize=fontsize)
 
-
     col_index += 1
     if col_index == 4:
         row_index += 1
         col_index = 0
 
-ax[0, 0].set_ylim(1.25, -2.8)
-ax[0, 0].set_xlim(-1.0, 2.3)
+ax[0, 0].set_ylim(y_lim_ub)
+ax[0, 0].set_xlim(x_lim_vi)
 fig.text(0.5, 0.08, 'V (F555W) - I (F814W)', ha='center', fontsize=fontsize)
 fig.text(0.08, 0.5, 'U (F336W) - B (F438W/F435W'+'$^*$'+')', va='center', rotation='vertical', fontsize=fontsize)
 fig.text(0.5, 0.89, 'Class 1|2', ha='center', fontsize=fontsize)
@@ -218,44 +185,59 @@ for index in range(20, 39):
     target = target_list[index]
     dist = dist_list[index]
     print('target ', target, 'dist ', dist)
-    cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
-    color_ub_hum_12 = catalog_access.get_hst_color_ub(target=target)
-    color_vi_hum_12 = catalog_access.get_hst_color_vi(target=target)
-    cluster_class_hum_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
-    color_ub_hum_3 = catalog_access.get_hst_color_ub(target=target, cluster_class='class3')
-    color_vi_hum_3 = catalog_access.get_hst_color_vi(target=target, cluster_class='class3')
+    if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
+        b_band = 'F438W'
+    else:
+        b_band = 'F435W'
 
+    cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
+    color_ub_hum_12 = catalog_access.get_hst_color_ub_vega(target=target)
+    color_vi_hum_12 = catalog_access.get_hst_color_vi_vega(target=target)
+    cluster_class_hum_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
+    color_ub_hum_3 = catalog_access.get_hst_color_ub_vega(target=target, cluster_class='class3')
+    color_vi_hum_3 = catalog_access.get_hst_color_vi_vega(target=target, cluster_class='class3')
+    detect_vi_hum_12 = ((catalog_access.get_hst_cc_band_flux(target=target, band='F555W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, band='F814W') > 0))
+    detect_ub_hum_12 = ((catalog_access.get_hst_cc_band_flux(target=target, band='F336W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, band=b_band) > 0))
+
+    class_1_hum = cluster_class_hum_12 == 1
+    class_2_hum = cluster_class_hum_12 == 2
+    good_colors_hum = ((color_vi_hum_12 > (x_lim_vi[0] - 1)) & (color_vi_hum_12 < (x_lim_vi[1] + 1)) &
+                       (color_ub_hum_12 > (y_lim_ub[1] - 1)) & (color_ub_hum_12 < (y_lim_ub[0] + 1)) &
+                       detect_vi_hum_12 & detect_ub_hum_12)
     cluster_class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
     cluster_class_qual_ml_12 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml')
-    color_ub_ml_12 = catalog_access.get_hst_color_ub(target=target, classify='ml')
-    color_vi_ml_12 = catalog_access.get_hst_color_vi(target=target, classify='ml')
-    cluster_class_ml_3 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
-    cluster_class_qual_ml_3 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml', cluster_class='class3')
-    color_ub_ml_3 = catalog_access.get_hst_color_ub(target=target, classify='ml', cluster_class='class3')
-    color_vi_ml_3 = catalog_access.get_hst_color_vi(target=target, classify='ml', cluster_class='class3')
-    class_1_ml = (cluster_class_ml_12 == 1) & (cluster_class_qual_ml_12 >= 0.9)
-    class_2_ml = (cluster_class_ml_12 == 2) & (cluster_class_qual_ml_12 >= 0.9)
-    class_3_ml = (cluster_class_ml_3 == 3) & (cluster_class_qual_ml_3 >= 0.9)
+    color_ub_ml_12 = catalog_access.get_hst_color_ub_vega(target=target, classify='ml')
+    color_vi_ml_12 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml')
+    detect_vi_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F555W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F814W') > 0))
+    detect_ub_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F336W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band=b_band) > 0))
 
-    color_ub_ml = np.concatenate([color_ub_ml_12, color_ub_ml_3])
-    color_vi_ml = np.concatenate([color_vi_ml_12, color_vi_ml_3])
+    class_1_ml = cluster_class_ml_12 == 1
+    class_2_ml = cluster_class_ml_12 == 2
+    good_colors_ml = ((color_vi_ml_12 > (x_lim_vi[0] - 1)) & (color_vi_ml_12 < (x_lim_vi[1] + 1)) &
+                       (color_ub_ml_12 > (y_lim_ub[1] - 1)) & (color_ub_ml_12 < (y_lim_ub[0] + 1)) &
+                       detect_vi_ml_12 & detect_ub_ml_12)
 
-    good_colors = (color_vi_ml_12 > -1.5) & (color_vi_ml_12 < 2.5) & (color_ub_ml_12 > -3) & (color_ub_ml_12 < 1.5)
-
-    contours(ax=ax[row_index, col_index], x=color_vi_ml_12[good_colors], y=color_ub_ml_12[good_colors], levels=None)
+    contours(ax=ax[row_index, col_index], x=color_vi_ml_12[good_colors_ml], y=color_ub_ml_12[good_colors_ml], levels=None)
 
 
     ax[row_index, col_index].plot(model_vi_sol, model_ub_sol, color='tab:red', linewidth=2, zorder=10)
-    # ax[row_index, col_index].scatter(color_vi_hum_3[cluster_class_hum_3 == 3],
-    #                                      color_ub_hum_3[cluster_class_hum_3 == 3], c=color_c3, s=10)
-    ax[row_index, col_index].scatter(color_vi_hum_12[cluster_class_hum_12 == 1],
-                                         color_ub_hum_12[cluster_class_hum_12 == 1], c=color_c1, s=10)
-    ax[row_index, col_index].scatter(color_vi_hum_12[cluster_class_hum_12 == 2],
-                                         color_ub_hum_12[cluster_class_hum_12 == 2], c=color_c2, s=10)
 
-    ax[row_index, col_index].annotate('', xy=(vi_int + max_color_ext_vi, ub_int + max_color_ext_ub), xycoords='data',
-                                      xytext=(vi_int, ub_int), fontsize=fontsize,
-                                      textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_1_hum * good_colors_hum],
+                                     color_ub_hum_12[class_1_hum * good_colors_hum], c=color_c1, s=10)
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_2_hum * good_colors_hum],
+                                     color_ub_hum_12[class_2_hum * good_colors_hum], c=color_c2, s=10)
+
+    if (row_index == 0) & (col_index == 0):
+        text_flag = True
+    else:
+        text_flag = False
+    hf.plot_reddening_vect(ax=ax[row_index, col_index], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
+                       linewidth=3, line_color='k', text=text_flag, fontsize=fontsize)
 
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
         anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',
@@ -274,8 +256,8 @@ for index in range(20, 39):
         row_index += 1
         col_index = 0
 
-ax[0, 0].set_ylim(1.25, -2.8)
-ax[0, 0].set_xlim(-1.0, 2.3)
+ax[0, 0].set_ylim(y_lim_ub)
+ax[0, 0].set_xlim(x_lim_vi)
 fig.text(0.5, 0.08, 'V (F555W) - I (F814W)', ha='center', fontsize=fontsize)
 fig.text(0.08, 0.5, 'U (F336W) - B (F438W/F435W'+'$^*$'+')', va='center', rotation='vertical', fontsize=fontsize)
 fig.text(0.5, 0.89, 'Class 1|2', ha='center', fontsize=fontsize)
@@ -292,15 +274,104 @@ fig.savefig('plot_output/ub_vi_panel_2.png', bbox_inches='tight', dpi=300)
 fig.savefig('plot_output/ub_vi_panel_2.pdf', bbox_inches='tight', dpi=300)
 
 
-exit()
 
 
 
 
-fig_hum, ax_hum = plt.subplots(5, 4, sharex=True, sharey=True)
-fig_hum.set_size_inches(16, 18)
-fig_ml, ax_ml = plt.subplots(5, 4, sharex=True, sharey=True)
-fig_ml.set_size_inches(16, 18)
+fig, ax = plt.subplots(5, 4, sharex=True, sharey=True, figsize=(16, 18))
+fontsize = 18
+
+row_index = 0
+col_index = 0
+for index in range(0, 20):
+    target = target_list[index]
+    dist = dist_list[index]
+    print('target ', target, 'dist ', dist)
+    if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
+        b_band = 'F438W'
+    else:
+        b_band = 'F435W'
+
+    cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
+    color_nuvb_hum_12 = catalog_access.get_hst_color_nuvb_vega(target=target)
+    color_vi_hum_12 = catalog_access.get_hst_color_vi_vega(target=target)
+    cluster_class_hum_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
+    color_nuvb_hum_3 = catalog_access.get_hst_color_nuvb_vega(target=target, cluster_class='class3')
+    color_vi_hum_3 = catalog_access.get_hst_color_vi_vega(target=target, cluster_class='class3')
+    detect_vi_hum_12 = ((catalog_access.get_hst_cc_band_flux(target=target, band='F555W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, band='F814W') > 0))
+    detect_nuvb_hum_12 = ((catalog_access.get_hst_cc_band_flux(target=target, band='F336W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, band=b_band) > 0))
+
+    class_1_hum = cluster_class_hum_12 == 1
+    class_2_hum = cluster_class_hum_12 == 2
+
+    good_colors_hum = ((color_vi_hum_12 > (x_lim_vi[0] - 1)) & (color_vi_hum_12 < (x_lim_vi[1] + 1)) &
+                                   (color_nuvb_hum_12 > (y_lim_nuvb[1] - 1)) & (color_nuvb_hum_12 < (y_lim_nuvb[0] + 1)) &
+                                   detect_vi_hum_12 & detect_nuvb_hum_12)
+    cluster_class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
+    cluster_class_qual_ml_12 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml')
+    color_nuvb_ml_12 = catalog_access.get_hst_color_nuvb_vega(target=target, classify='ml')
+    color_vi_ml_12 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml')
+    detect_vi_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F555W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F814W') > 0))
+    detect_nuvb_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F275W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band=b_band) > 0))
+
+    class_1_ml = cluster_class_ml_12 == 1
+    class_2_ml = cluster_class_ml_12 == 2
+    good_colors_ml = ((color_vi_ml_12 > (x_lim_vi[0] - 1)) & (color_vi_ml_12 < (x_lim_vi[1] + 1)) &
+                                   (color_nuvb_ml_12 > (y_lim_nuvb[1] - 1)) & (color_nuvb_ml_12 < (y_lim_nuvb[0] + 1)) &
+                                   detect_vi_ml_12 & detect_nuvb_ml_12)
+
+    contours(ax=ax[row_index, col_index], x=color_vi_ml_12[good_colors_ml], y=color_nuvb_ml_12[good_colors_ml], levels=None)
+
+
+    ax[row_index, col_index].plot(model_vi_sol, model_nuvb_sol, color='tab:red', linewidth=2, zorder=10)
+
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_1_hum * good_colors_hum],
+                                     color_nuvb_hum_12[class_1_hum * good_colors_hum], c=color_c1, s=10)
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_2_hum * good_colors_hum],
+                                     color_nuvb_hum_12[class_2_hum * good_colors_hum], c=color_c2, s=10)
+
+    if (row_index == 0) & (col_index == 0):
+        text_flag = True
+    else:
+        text_flag = False
+    hf.plot_reddening_vect(ax=ax[row_index, col_index], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
+                       linewidth=3, line_color='k', text=text_flag, fontsize=fontsize)
+
+
+    if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
+        anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',
+                                     loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
+        ax[row_index, col_index].add_artist(anchored_left)
+    else:
+        anchored_left = AnchoredText(target.upper()+'$^*$'+'\nd='+str(dist)+' Mpc',
+                                     loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
+        ax[row_index, col_index].add_artist(anchored_left)
+
+    ax[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
+                                             direction='in', labelsize=fontsize)
+
+    col_index += 1
+    if col_index == 4:
+        row_index += 1
+        col_index = 0
+
+ax[0, 0].set_ylim(y_lim_nuvb)
+ax[0, 0].set_xlim(x_lim_vi)
+fig.text(0.5, 0.08, 'V (F555W) - I (F814W)', ha='center', fontsize=fontsize)
+fig.text(0.08, 0.5, 'NUV (F275W) - B (F438W/F435W'+'$^*$'+')', va='center', rotation='vertical', fontsize=fontsize)
+fig.text(0.5, 0.89, 'Class 1|2', ha='center', fontsize=fontsize)
+
+fig.subplots_adjust(wspace=0, hspace=0)
+fig.savefig('plot_output/nuvb_vi_panel_1.png', bbox_inches='tight', dpi=300)
+fig.savefig('plot_output/nuvb_vi_panel_1.pdf', bbox_inches='tight', dpi=300)
+
+
+fig, ax = plt.subplots(5, 4, sharex=True, sharey=True, figsize=(16, 18))
 fontsize = 18
 
 row_index = 0
@@ -309,83 +380,93 @@ for index in range(20, 39):
     target = target_list[index]
     dist = dist_list[index]
     print('target ', target, 'dist ', dist)
+    if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
+        b_band = 'F438W'
+    else:
+        b_band = 'F435W'
+
     cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
-    color_ub_hum_12 = catalog_access.get_hst_color_ub(target=target)
-    color_vi_hum_12 = catalog_access.get_hst_color_vi(target=target)
+    color_nuvb_hum_12 = catalog_access.get_hst_color_nuvb_vega(target=target)
+    color_vi_hum_12 = catalog_access.get_hst_color_vi_vega(target=target)
     cluster_class_hum_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
-    color_ub_hum_3 = catalog_access.get_hst_color_ub(target=target, cluster_class='class3')
-    color_vi_hum_3 = catalog_access.get_hst_color_vi(target=target, cluster_class='class3')
+    color_nuvb_hum_3 = catalog_access.get_hst_color_nuvb_vega(target=target, cluster_class='class3')
+    color_vi_hum_3 = catalog_access.get_hst_color_vi_vega(target=target, cluster_class='class3')
+    detect_vi_hum_12 = ((catalog_access.get_hst_cc_band_flux(target=target, band='F555W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, band='F814W') > 0))
+    detect_nuvb_hum_12 = ((catalog_access.get_hst_cc_band_flux(target=target, band='F275W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, band=b_band) > 0))
+
+    class_1_hum = cluster_class_hum_12 == 1
+    class_2_hum = cluster_class_hum_12 == 2
+    good_colors_hum = ((color_vi_hum_12 > (x_lim_vi[0] - 1)) & (color_vi_hum_12 < (x_lim_vi[1] + 1)) &
+                                   (color_nuvb_hum_12 > (y_lim_nuvb[1] - 1)) & (color_nuvb_hum_12 < (y_lim_nuvb[0] + 1)) &
+                                   detect_vi_hum_12 & detect_nuvb_hum_12)
 
     cluster_class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
     cluster_class_qual_ml_12 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml')
-    color_ub_ml_12 = catalog_access.get_hst_color_ub(target=target, classify='ml')
-    color_vi_ml_12 = catalog_access.get_hst_color_vi(target=target, classify='ml')
-    cluster_class_ml_3 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
-    cluster_class_qual_ml_3 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml', cluster_class='class3')
-    color_ub_ml_3 = catalog_access.get_hst_color_ub(target=target, classify='ml', cluster_class='class3')
-    color_vi_ml_3 = catalog_access.get_hst_color_vi(target=target, classify='ml', cluster_class='class3')
-    class_1_ml = (cluster_class_ml_12 == 1) & (cluster_class_qual_ml_12 >= 0.9)
-    class_2_ml = (cluster_class_ml_12 == 2) & (cluster_class_qual_ml_12 >= 0.9)
-    class_3_ml = (cluster_class_ml_3 == 3) & (cluster_class_qual_ml_3 >= 0.9)
+    color_nuvb_ml_12 = catalog_access.get_hst_color_nuvb_vega(target=target, classify='ml')
+    color_vi_ml_12 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml')
+    detect_vi_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F555W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F814W') > 0))
+    detect_nuvb_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F275W') > 0) &
+                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band=b_band) > 0))
 
-    ax_hum[row_index, col_index].plot(model_vi, model_ub, color='red', linewidth=1.2)
-    ax_hum[row_index, col_index].scatter(color_vi_hum_3[cluster_class_hum_3 == 3],
-                                         color_ub_hum_3[cluster_class_hum_3 == 3], c='royalblue', s=1)
-    ax_hum[row_index, col_index].scatter(color_vi_hum_12[cluster_class_hum_12 == 1],
-                                         color_ub_hum_12[cluster_class_hum_12 == 1], c='forestgreen', s=1)
-    ax_hum[row_index, col_index].scatter(color_vi_hum_12[cluster_class_hum_12 == 2],
-                                         color_ub_hum_12[cluster_class_hum_12 == 2], c='darkorange', s=1)
+    class_1_ml = cluster_class_ml_12 == 1
+    class_2_ml = cluster_class_ml_12 == 2
+    good_colors_ml = ((color_vi_ml_12 > (x_lim_vi[0] - 1)) & (color_vi_ml_12 < (x_lim_vi[1] + 1)) &
+                      (color_nuvb_ml_12 > (y_lim_nuvb[1] - 1)) & (color_nuvb_ml_12 < (y_lim_nuvb[0] + 1)) &
+                      detect_vi_ml_12 & detect_nuvb_ml_12)
 
-    ax_ml[row_index, col_index].plot(model_vi, model_ub, color='red', linewidth=1.2)
-    ax_ml[row_index, col_index].scatter(color_vi_ml_3[class_3_ml], color_ub_ml_3[class_3_ml], c='royalblue', s=1)
-    ax_ml[row_index, col_index].scatter(color_vi_ml_12[class_1_ml], color_ub_ml_12[class_1_ml], c='forestgreen', s=1)
-    ax_ml[row_index, col_index].scatter(color_vi_ml_12[class_2_ml], color_ub_ml_12[class_2_ml], c='darkorange', s=1)
+    contours(ax=ax[row_index, col_index], x=color_vi_ml_12[good_colors_ml], y=color_nuvb_ml_12[good_colors_ml], levels=None)
+
+
+    ax[row_index, col_index].plot(model_vi_sol, model_nuvb_sol, color='tab:red', linewidth=2, zorder=10)
+
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_1_hum * good_colors_hum],
+                                     color_nuvb_hum_12[class_1_hum * good_colors_hum], c=color_c1, s=10)
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_2_hum * good_colors_hum],
+                                     color_nuvb_hum_12[class_2_hum * good_colors_hum], c=color_c2, s=10)
+
+    if (row_index == 0) & (col_index == 0):
+        text_flag = True
+    else:
+        text_flag = False
+    hf.plot_reddening_vect(ax=ax[row_index, col_index], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
+                       linewidth=3, line_color='k', text=text_flag, fontsize=fontsize)
 
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
         anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',
                                      loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
-        ax_hum[row_index, col_index].add_artist(anchored_left)
-        anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',
-                                     loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
-        ax_ml[row_index, col_index].add_artist(anchored_left)
+        ax[row_index, col_index].add_artist(anchored_left)
     else:
         anchored_left = AnchoredText(target.upper()+'$^*$'+'\nd='+str(dist)+' Mpc',
                                      loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
-        ax_hum[row_index, col_index].add_artist(anchored_left)
-        anchored_left = AnchoredText(target.upper()+'$^*$'+'\nd='+str(dist)+' Mpc',
-                                     loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
-        ax_ml[row_index, col_index].add_artist(anchored_left)
+        ax[row_index, col_index].add_artist(anchored_left)
 
-    ax_hum[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
+    ax[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
                                              direction='in', labelsize=fontsize)
-    ax_ml[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
-                                            direction='in', labelsize=fontsize)
 
     col_index += 1
     if col_index == 4:
         row_index += 1
         col_index = 0
 
+ax[0, 0].set_ylim(y_lim_nuvb)
+ax[0, 0].set_xlim(x_lim_vi)
+fig.text(0.5, 0.08, 'V (F555W) - I (F814W)', ha='center', fontsize=fontsize)
+fig.text(0.08, 0.5, 'NUV (F275W) - B (F438W/F435W'+'$^*$'+')', va='center', rotation='vertical', fontsize=fontsize)
+fig.text(0.5, 0.89, 'Class 1|2', ha='center', fontsize=fontsize)
 
-ax_hum[0, 0].set_ylim(1.25, -2.2)
-ax_hum[0, 0].set_xlim(-1.0, 2.3)
-fig_hum.text(0.5, 0.08, 'V (F555W) - I (F814W)', ha='center', fontsize=fontsize)
-fig_hum.text(0.08, 0.5, 'U (F336W) - B (F438W/F435W'+'$^*$'+')', va='center', rotation='vertical', fontsize=fontsize)
-fig_hum.text(0.5, 0.89, 'Class 1|2|3 Human', ha='center', fontsize=fontsize)
-ax_hum[4, 3].axis('off')
 
-ax_ml[0, 0].set_ylim(1.25, -2.2)
-ax_ml[0, 0].set_xlim(-1.0, 2.3)
-fig_ml.text(0.5, 0.08, 'V (F555W) - I (F814W)', ha='center', fontsize=fontsize)
-fig_ml.text(0.08, 0.5, 'U (F336W) - B (F438W/F435W'+'$^*$'+')', va='center', rotation='vertical', fontsize=fontsize)
-fig_ml.text(0.5, 0.89, 'Class 1|2|3 ML', ha='center', fontsize=fontsize)
-ax_ml[4, 3].axis('off')
+ax[4, 3].scatter([], [], c=color_c1, s=30, label='Human class 1')
+ax[4, 3].scatter([], [], c=color_c2, s=30, label='Human class 2')
+ax[4, 3].plot([], [], color='k', label='ML')
+ax[4, 3].legend(frameon=False, fontsize=fontsize)
+ax[4, 3].axis('off')
 
-fig_hum.subplots_adjust(wspace=0, hspace=0)
-fig_hum.savefig('plot_output/ub_vi_hum_2.png', bbox_inches='tight', dpi=300)
-fig_hum.savefig('plot_output/ub_vi_hum_2.pdf', bbox_inches='tight', dpi=300)
+fig.subplots_adjust(wspace=0, hspace=0)
+fig.savefig('plot_output/nuvb_vi_panel_2.png', bbox_inches='tight', dpi=300)
+fig.savefig('plot_output/nuvb_vi_panel_2.pdf', bbox_inches='tight', dpi=300)
 
-fig_ml.subplots_adjust(wspace=0, hspace=0)
-fig_ml.savefig('plot_output/ub_vi_ml_2.png', bbox_inches='tight', dpi=300)
-fig_ml.savefig('plot_output/ub_vi_ml_2.pdf', bbox_inches='tight', dpi=300)
 

@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 from astropy.io import fits
 from astropy.wcs import WCS
 
-from astropy.visualization import make_lupton_rgb
 from photometry_tools.analysis_tools import AnalysisTools
 from photometry_tools import helper_func, plotting_tools
 import astropy.units as u
@@ -352,12 +351,23 @@ ax_img.set_title('NGC 628', fontsize=fontsize)
 
 plotting_tools.arr_axis_params(ax=ax_img, ra_tick_label=True, dec_tick_label=True,
                                ra_axis_label='R.A. (2000.0)', dec_axis_label='DEC. (2000.0)',
-                               ra_minpad=0.3, dec_minpad=0.8, tick_color='white',
+                               ra_minpad=0.3, dec_minpad=0.8, tick_color='white', label_color='k',
                                fontsize=fontsize, labelsize=fontsize, ra_tick_num=5, dec_tick_num=5)
 
 
 plt.savefig('plot_output/overview_img.png')
 plt.savefig('plot_output/overview_img.pdf')
+
+ax_img.set_title('NGC 628', fontsize=fontsize, color='white')
+
+plotting_tools.arr_axis_params(ax=ax_img, ra_tick_label=True, dec_tick_label=True,
+                               ra_axis_label='R.A. (2000.0)', dec_axis_label='DEC. (2000.0)',
+                               ra_minpad=0.3, dec_minpad=0.8, tick_color='white', label_color='white',
+                               fontsize=fontsize, labelsize=fontsize, ra_tick_num=5, dec_tick_num=5)
+
+plt.savefig('plot_output/overview_img_trans.png', transparent = True)
+
+
 
 exit()
 

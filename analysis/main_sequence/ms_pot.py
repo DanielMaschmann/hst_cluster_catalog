@@ -4,11 +4,42 @@ from photometry_tools import helper_func as hf
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from astropy.io import fits
+from scipy.stats import gaussian_kde
 
 from xgaltool import analysis_tools, plotting_tools
-
+import matplotlib
 
 from photometry_tools.plotting_tools import DensityContours
+from matplotlib import cm
+
+from matplotlib.patches import ConnectionPatch
+
+
+
+def contours(ax, x, y, levels=None, axis_offse=(-0.2, 0.1, -0.55, 0.6)):
+
+    if levels is None:
+        levels = [0.0, 0.1, 0.25, 0.5, 0.68, 0.95, 0.975]
+
+    good_values = np.invert(((np.isnan(x) | np.isnan(y)) | (np.isinf(x) | np.isinf(y))))
+
+    x = x[good_values]
+    y = y[good_values]
+
+    k = gaussian_kde(np.vstack([x, y]))
+    xi, yi = np.mgrid[x.min()+axis_offse[0]:x.max()+axis_offse[1]:x.size**0.5*1j,
+             y.min()+axis_offse[2]:y.max()+axis_offse[3]:y.size**0.5*1j]
+    zi = k(np.vstack([xi.flatten(), yi.flatten()]))
+    #set zi to 0-1 scale
+    zi = (zi-zi.min())/(zi.max() - zi.min())
+    zi = zi.reshape(xi.shape)
+    # ax[0].scatter(xi.flatten(), yi.flatten(), c=zi)
+    cmap = cm.get_cmap('viridis')
+    cs = ax.contour(xi, yi, zi, levels=levels,
+                    cmap=cmap,
+                    linewidths=(3,),
+                    origin='lower')
+
 
 
 # get access to HST cluster catalog
@@ -23,132 +54,201 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
                                                             sample_table_path=sample_table_path)
 
 
+age_mod_sol = np.load('../color_color/data_output/age_mod_sol.npy')
+model_nuvu_sol = np.load('../color_color/data_output/model_nuvu_sol.npy')
+model_ub_sol = np.load('../color_color/data_output/model_ub_sol.npy')
+model_bv_sol = np.load('../color_color/data_output/model_bv_sol.npy')
+model_vi_sol = np.load('../color_color/data_output/model_vi_sol.npy')
 
 
-# get model
-hdu_a = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
-data_mod = hdu_a[1].data
-age_mod = data_mod['sfh.age']
-flux_f555w = data_mod['F555W_UVIS_CHIP2']
-flux_f814w = data_mod['F814W_UVIS_CHIP2']
-flux_f336w = data_mod['F336W_UVIS_CHIP2']
-flux_f438w = data_mod['F438W_UVIS_CHIP2']
-
-mag_v = hf.conv_mjy2vega(flux=flux_f555w, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
-                         vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
-mag_i = hf.conv_mjy2vega(flux=flux_f814w, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
-                         vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
-mag_u = hf.conv_mjy2vega(flux=flux_f336w, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
-                         vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
-mag_b = hf.conv_mjy2vega(flux=flux_f438w, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
-                         vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
-
-model_vi = mag_v - mag_i
-model_ub = mag_u - mag_b
-
-
-
-# target_list = catalog_access.target_hst_cc
-target_list = catalog_access.phangs_galaxy_list
-dist_list = []
-for target in target_list:
-    if (target == 'ngc0628c') | (target == 'ngc0628e'):
-        target = 'ngc0628'
-    dist_list.append(catalog_access.dist_dict[target]['dist'])
-sort = np.argsort(dist_list)
-target_list = np.array(target_list)[sort]
-dist_list = np.array(dist_list)[sort]
-
+target_list = catalog_access.target_hst_cc
 
 catalog_access.load_hst_cc_list(target_list=catalog_access.target_hst_cc, classify='human')
 catalog_access.load_hst_cc_list(target_list=catalog_access.target_hst_cc, classify='human', cluster_class='class3')
-
 catalog_access.load_hst_cc_list(target_list=catalog_access.target_hst_cc, classify='ml')
 catalog_access.load_hst_cc_list(target_list=catalog_access.target_hst_cc, classify='ml', cluster_class='class3')
 
 
-
-
-fig = plt.figure(figsize=(24, 20))
-
-
-x_lim_low = 8.1
-x_lim_high = 11.9
-y_lim_low = -1.9
+x_lim_low = 9.1
+x_lim_high = 11.4
+y_lim_low = -0.9
 y_lim_high = 1.4
 
-ms_x_pos = 0.07
-ms_y_pos = 0.07
-ms_x_len = 0.9
-ms_y_len = 0.9
+len_x = x_lim_high - x_lim_low
+len_y = y_lim_high - y_lim_low
 
-contour_width = 0.12
-contour_hight = 0.12
+print('len_x ', len_x)
+print('len_y ', len_y)
+fig = plt.figure(figsize=(20, 20 * len_y / len_x))
+fontsize = 26
+
+ms_x_pos = 0.06
+ms_y_pos = 0.06
+ms_x_len = 0.93
+ms_y_len = 0.93
+
+contour_width = 0.10
+contour_hight = 0.10
 
 ax_ms = fig.add_axes([ms_x_pos, ms_y_pos, ms_x_len, ms_y_len])
 
 ax_ms.set_xlim(x_lim_low, x_lim_high)
 ax_ms.set_ylim(y_lim_low, y_lim_high)
 
+from astropy.convolution import convolve
+
+from photutils.segmentation import make_2dgaussian_kernel
 
 # plot contours
-gswlc_access = analysis_tools.AnalysisTools(object_type='gswlc_d_v1', writable_table=False)
+gswlc_access = analysis_tools.AnalysisTools(object_type='gswlc_d_v1', writable_table=True)
+gswlc_access.cross_match_table(cross_match='rcsed')
 log_sfr = gswlc_access.get_log_sed_sfr()
 log_stellar_mass = gswlc_access.get_log_sed_stellar_mass()
-good_values = (log_sfr > -2.5) & (log_sfr < 3.2) & (log_stellar_mass > 6.5) & (log_stellar_mass < 12.5)
+redshift = gswlc_access.get_redshift()
+
+good_values = (log_sfr > -2.5) & (log_sfr < 3.2) & (log_stellar_mass > 6.5) & (log_stellar_mass < 12.5) & (redshift < 0.2)
+
+dummy_m_star = np.linspace(7, 13, 50)
+dummy_sfr = gswlc_access.main_sequence_sf(redshift=0, log_stellar_mass=dummy_m_star, ref='Whitaker+12', output='sfr')
+upper_dummy_sfr = dummy_sfr + 0.34
+lower_dummy_sfr = dummy_sfr - 0.34
+
 
 hist, x_bin, y_bin = np.histogram2d(log_stellar_mass[good_values], log_sfr[good_values],
-                                    bins=(np.linspace(6.5, 12.5), np.linspace(-2.5, 3.2)))
-hist[hist < 10] = np.nan
-ax_ms.imshow(hist.T, extent=(6.5, 12.5, -2.5, 3.2), origin='lower')
+                                    bins=(np.linspace(x_lim_low, x_lim_high, 70),
+                                          np.linspace(y_lim_low, y_lim_high, 70)))
+
+ax_ms.fill_between(dummy_m_star, upper_dummy_sfr, lower_dummy_sfr, color='grey', alpha=0.3)
+ax_ms.plot(dummy_m_star, dummy_sfr, linewidth=2, color='k', linestyle='--')
+
+kernel = make_2dgaussian_kernel(3.0, size=9)  # FWHM = 3.0
+hist = convolve(hist, kernel)
+
+# hist[hist < 10] = np.nan
+cmap_ms = matplotlib.cm.get_cmap('Purples')
+norm_ms = matplotlib.colors.Normalize(vmin=0, vmax=np.nanmax(hist)/1.1)
 
 
+ax_ms.imshow(hist.T, extent=(x_lim_low, x_lim_high, y_lim_low, y_lim_high), origin='lower', cmap=cmap_ms, norm=norm_ms)
 
-for index in range(0, 38):
+ax_ms.set_xlabel('log(M$_{*}$/M$_{\odot}$)', fontsize=fontsize+5)
+ax_ms.set_ylabel('log(SFR/M$_{\odot}$ yr$^{-1}$)', labelpad=-33, fontsize=fontsize+5)
+ax_ms.tick_params(axis='both', which='both',
+                  width=5, length=10, right=True, top=True, direction='in', labelsize=fontsize+5)
+
+
+offset_dict = {
+    'ic1954': [-0.05, 0.05, 1.5, 0.5],
+    'ic5332': [0.0, 0.05, 1.0, 0.5],
+    'ngc0628e': [-0.09, 0.0, 1.5, -1.0],
+    'ngc0628c': [-0.04, 0.05, 1.5, 0.5],
+    'ngc0685': [-0.07, -0.02, 1.5, -1.3],
+    'ngc1087': [-0.05, 0.0, 1.5, -0.5],
+    'ngc1097': [+0.06, 0.1,  0.3, -0.3],
+    'ngc1300': [-0.05, -0.0, 1.1, -1.3],
+    'ngc1317': [-0.05, 0.05, 1.5, 0.5],
+    'ngc1365': [0, 0, 0, 0],
+    'ngc1385': [-0.05, 0.0, 1.5, -0.5],
+    'ngc1433': [-0.0, -0.08, 0.5, -2.5],
+    'ngc1512': [0, 0, 0, 0],
+    'ngc1559': [-0.14, 0.11, 1.5, 0.5],
+    'ngc1566': [+0.12, 0.06, 0.3, -0.3],
+    'ngc1672': [0, 0, 0, 0],
+    'ngc1792': [+0.025, 0.035, 0.3, -0.3],
+    'ngc2775': [0, 0, 0, 0],
+    'ngc2835': [0, 0, 0, 0],
+    'ngc2903': [-0.06, 0.04, 1.5, 0.5],
+    'ngc3351': [0, 0, 0, 0],
+    'ngc3621': [+0.06, -0.04, -0.5, -1.5],
+    'ngc3627': [+0.11, 0.005, 0.3, -0.3],
+    'ngc4254': [-0.14, 0.05, 1.5, -0.5],
+    'ngc4298': [-0.05, 0.05, 1.5, 0.5],
+    'ngc4303': [-0.05, 0.05, 1.5, 0.5],
+    'ngc4321': [+0.09, -0.04, 1., 0.5],
+    'ngc4535': [0, 0, 0, 0],
+    'ngc4536': [-0.08, 0.11, 1.5, 0.5],
+    'ngc4548': [0.0, 0.05, 1.0, 0.5],
+    'ngc4569': [+0.03, 0.05, 0.3, 0.2],
+    'ngc4571': [0, 0, 0, 0],
+    'ngc4654': [0.0, 0.15, 1.0, 0.8],
+    'ngc4689': [0, 0, 0, 0],
+    'ngc4826': [0, 0, 0, 0],
+    'ngc5068': [0, 0, 0, 0],
+    'ngc5248': [0, 0, 0, 0],
+    'ngc6744': [0, 0, 0, 0],
+    'ngc7496': [-0.02, 0.06, 1.0, 0.6],
+}
+
+
+# for index in range(2):
+for index in range(len(target_list)):
     target = target_list[index]
-    dist = dist_list[index]
-    print('target ', target, 'dist ', dist)
-    if target == 'ngc0628':
-        color_ub_ml_12_e = catalog_access.get_hst_color_ub(target='ngc0628e', classify='ml')
-        color_vi_ml_12_e = catalog_access.get_hst_color_vi(target='ngc0628e', classify='ml')
-        color_ub_ml_12_c = catalog_access.get_hst_color_ub(target='ngc0628c', classify='ml')
-        color_vi_ml_12_c = catalog_access.get_hst_color_vi(target='ngc0628c', classify='ml')
-        color_ub_ml = np.concatenate([color_ub_ml_12_e, color_ub_ml_12_c])
-        color_vi_ml = np.concatenate([color_vi_ml_12_e, color_vi_ml_12_c])
+
+    if (target_list[index][0:3] == 'ngc') & (target_list[index][3] == '0'):
+        target_name_str = target_list[index][0:3] + ' ' +  target_list[index][4:]
+    elif target_list[index][0:2] == 'ic':
+        target_name_str = target_list[index][0:2] + ' ' +  target_list[index][2:]
+    elif target_list[index][0:3] == 'ngc':
+        target_name_str = target_list[index][0:3] + ' ' +  target_list[index][3:]
     else:
-        color_ub_ml = catalog_access.get_hst_color_ub(target=target, classify='ml')
-        color_vi_ml = catalog_access.get_hst_color_vi(target=target, classify='ml')
+        target_name_str = target_list[index]
+    target_name_str = target_name_str.upper()
 
-    sfr = catalog_access.get_target_sfr(target=target)
-    sfr_err = catalog_access.get_target_sfr_err(target=target)
-    mstar = catalog_access.get_target_mstar(target=target)
-    mstar_err = catalog_access.get_target_mstar_err(target=target)
+    print('target ', target_name_str)
 
-    ax_ms.scatter(np.log10(mstar), np.log10(sfr))
+    if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
+        b_band = 'F438W'
+    else:
+        b_band = 'F435W'
+    color_ub_ml_12 = catalog_access.get_hst_color_ub_vega(target=target, classify='ml')
+    color_vi_ml_12 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml')
+    detect_nuvu_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F336W') > 0) &
+                          (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F275W') > 0))
+    detect_nuvb_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band=b_band) > 0) &
+                          (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F275W') > 0))
+
+    if (target == 'ngc0628e') | (target == 'ngc0628c'):
+        target_str = 'ngc0628'
+    else:
+        target_str = target
+
+    sfr = catalog_access.get_target_sfr(target=target_str)
+    sfr_err = catalog_access.get_target_sfr_err(target=target_str)
+    mstar = catalog_access.get_target_mstar(target=target_str)
+    mstar_err = catalog_access.get_target_mstar_err(target=target_str)
+
 
     ms_x_pos_cc = ms_x_pos + (ms_x_len / (x_lim_high - x_lim_low)) * (np.log10(mstar) - x_lim_low) - contour_width/2
     ms_y_pos_cc = ms_y_pos + (ms_y_len / (y_lim_high - y_lim_low)) * (np.log10(sfr) - y_lim_low) - contour_hight / 2
     print('ms_x_pos_cc ', ms_x_pos_cc)
     print('ms_y_pos_cc ', ms_y_pos_cc)
 
-    ax1 = fig.add_axes([ms_x_pos_cc, ms_y_pos_cc, contour_width, contour_hight])
+
+
+    ax1 = fig.add_axes([ms_x_pos_cc + offset_dict[target][0], ms_y_pos_cc + offset_dict[target][1], contour_width, contour_hight])
     ax1.patch.set_alpha(0.5)
-    good_colors = (color_ub_ml < 2) & (color_ub_ml > -5.0) & (color_vi_ml > -1.5) & (color_vi_ml < 2.6)
+    if offset_dict[target] != [0, 0, 0, 0]:
+        ax_ms.scatter(np.log10(mstar), np.log10(sfr), color='r', s=80)
+        con_spec_1 = ConnectionPatch(
+        xyA=(np.log10(np.array(mstar)),
+             np.log10(np.array(sfr))), coordsA=ax_ms.transData,
+        xyB=(offset_dict[target][2], offset_dict[target][3]), coordsB=ax1.transData,
+        arrowstyle="<-",
+        linewidth=2,
+        color='k',
+        mutation_scale=40
+        )
+        fig.add_artist(con_spec_1)
 
 
-    # hist_cont, x_, y_ = np.histogram2d(color_vi[good_colors], color_ub[good_colors],
-    #                            bins=(np.linspace(-1.5, 2.6, 10), np.linspace(-2.5, 2, 10)))
-    # import scipy.ndimage
-    # hist_cont = scipy.ndimage.zoom(hist_cont, 10)
-    # hist_cont = scipy.ndimage.gaussian_filter(hist_cont, 0.01)
-    DensityContours.get_contours_percentage(ax=ax1, x_data=color_vi_ml[good_colors],
-                                            y_data=color_ub_ml[good_colors],
-                                            contour_levels=[0.5, 0.7, 0.8, 0.95, 0.99],
-                                            color='black', percent=False,
-                                            linewidth=2)
-    # ax1.contour(hist_cont)
-    # ax1.scatter(color_vi[good_colors], color_ub[good_colors])
-    ax1.plot(model_vi, model_ub, color='red', linewidth=2)
+    good_colors = (color_ub_ml_12 < 2) & (color_ub_ml_12 > -5.0) & (color_vi_ml_12 > -1.5) & (color_vi_ml_12 < 2.6)
+    contours(ax=ax1, x=color_vi_ml_12[good_colors * detect_nuvu_ml_12 * detect_nuvb_ml_12],
+             y=color_ub_ml_12[good_colors * detect_nuvu_ml_12 * detect_nuvb_ml_12],
+             levels=[0.3, 0.5, 0.7, 0.8, 0.95, 0.99])
+
+    ax1.text(-0.5, -2, target_name_str, fontsize=fontsize - 8, color='k')
+
+    ax1.plot(model_vi_sol, model_ub_sol, color='tab:red', linewidth=3)
     ax1.set_xlim(-1.0, 2.3)
     ax1.set_ylim(1.25, -2.5)
     ax1.axis('off')
@@ -157,7 +257,8 @@ for index in range(0, 38):
 #
 # exit()
 
-plt.savefig('plot_output/test_ms.png')
+plt.savefig('plot_output/ms_cc.png')
+plt.savefig('plot_output/ms_cc.pdf')
 
 
 exit()

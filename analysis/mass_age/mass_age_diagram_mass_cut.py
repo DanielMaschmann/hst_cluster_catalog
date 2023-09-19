@@ -16,7 +16,6 @@ data_mod = hdu_a[1].data
 age_mod = data_mod['sfh.age']
 m_star_mod = data_mod['stellar.m_star']
 flux_f555w_mod = data_mod['F555W_UVIS_CHIP2']
-
 ABmag_F555W = - 6
 f_mJy_f555w = 1.e3 * 1.e23 * 10.**((ABmag_F555W + 48.6) / -2.5)
 lower_lim_m_star = np.log10(f_mJy_f555w * m_star_mod / flux_f555w_mod)
@@ -32,6 +31,7 @@ sort = np.argsort(dist_list)
 target_list = np.array(target_list)[sort]
 dist_list = np.array(dist_list)[sort]
 
+
 catalog_access.load_hst_cc_list(target_list=target_list)
 catalog_access.load_hst_cc_list(target_list=target_list, cluster_class='class3')
 catalog_access.load_hst_cc_list(target_list=target_list, classify='ml')
@@ -40,7 +40,6 @@ catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_
 
 color_c1 = 'darkorange'
 color_c2 = 'tab:green'
-color_c3 = 'darkorange'
 
 m_star_cut = 3*1e4
 age_cut = 7*1e2
@@ -89,38 +88,54 @@ for index in range(0, 20):
 
     mask_complete_hum = (m_star_hum > m_star_cut) & (age_hum < age_cut)
     mask_complete_ml = (m_star_ml > m_star_cut) & (age_ml < age_cut)
-    mask_qual_ml = cluster_class_qual_ml >= 0.9
 
     # plotting
     ax_hum[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=2)
-    ax_hum[row_index, col_index].plot([np.log10(age_cut) + 1, np.log10(age_cut) + 6], [np.log10(m_star_cut), np.log10(m_star_cut)], color='k', linestyle='--', linewidth=1)
-    ax_hum[row_index, col_index].plot([np.log10(age_cut) + 6, np.log10(age_cut) + 6], [np.log10(m_star_cut), np.log10(m_star_cut) + 5], color='k', linestyle='--', linewidth=1)
+    ax_hum[row_index, col_index].plot([np.log10(age_cut) + 1, np.log10(age_cut) + 6],
+                                      [np.log10(m_star_cut), np.log10(m_star_cut)],
+                                      color='k', linestyle='--', linewidth=1)
+    ax_hum[row_index, col_index].plot([np.log10(age_cut) + 6, np.log10(age_cut) + 6],
+                                      [np.log10(m_star_cut), np.log10(m_star_cut) + 5],
+                                      color='k', linestyle='--', linewidth=1)
 
     ax_ml[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=2)
-    ax_ml[row_index, col_index].plot([np.log10(age_cut) + 1, np.log10(age_cut) + 6], [np.log10(m_star_cut), np.log10(m_star_cut)], color='k', linestyle='--', linewidth=1)
-    ax_ml[row_index, col_index].plot([np.log10(age_cut) + 6, np.log10(age_cut) + 6], [np.log10(m_star_cut), np.log10(m_star_cut) + 5], color='k', linestyle='--', linewidth=1)
+    ax_ml[row_index, col_index].plot([np.log10(age_cut) + 1, np.log10(age_cut) + 6],
+                                     [np.log10(m_star_cut), np.log10(m_star_cut)],
+                                     color='k', linestyle='--', linewidth=1)
+    ax_ml[row_index, col_index].plot([np.log10(age_cut) + 6, np.log10(age_cut) + 6],
+                                     [np.log10(m_star_cut), np.log10(m_star_cut) + 5],
+                                     color='k', linestyle='--', linewidth=1)
+
+    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_1_hum*mask_complete_hum],
+                                         np.log10(m_star_hum)[class_1_hum*mask_complete_hum], c=color_c1, s=20, alpha=0.5)
+    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_1_hum*~mask_complete_hum],
+                                         np.log10(m_star_hum)[class_1_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
+
+    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_2_hum*mask_complete_hum],
+                                         np.log10(m_star_hum)[class_2_hum*mask_complete_hum], c=color_c2, s=20, alpha=0.5)
+    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_2_hum*~mask_complete_hum],
+                                         np.log10(m_star_hum)[class_2_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
+
+    # ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_3_hum*mask_complete_hum],
+    #                                      np.log10(m_star_hum)[class_3_hum*mask_complete_hum], c=color_c3, s=20, alpha=0.5)
+    # ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_3_hum*~mask_complete_hum],
+    #                                      np.log10(m_star_hum)[class_3_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
 
 
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_1_hum*mask_complete_hum], np.log10(m_star_hum)[class_1_hum*mask_complete_hum], c=color_c1, s=20, alpha=0.5)
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_1_hum*~mask_complete_hum], np.log10(m_star_hum)[class_1_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_2_ml*mask_complete_ml],
+                                        np.log10(m_star_ml)[class_2_ml*mask_complete_ml], c=color_c2, s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_2_ml*~mask_complete_ml],
+                                        np.log10(m_star_ml)[class_2_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
 
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_2_hum*mask_complete_hum], np.log10(m_star_hum)[class_2_hum*mask_complete_hum], c=color_c2, s=20, alpha=0.5)
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_2_hum*~mask_complete_hum], np.log10(m_star_hum)[class_2_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_1_ml*mask_complete_ml],
+                                        np.log10(m_star_ml)[class_1_ml*mask_complete_ml], c=color_c1, s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_1_ml*~mask_complete_ml],
+                                        np.log10(m_star_ml)[class_1_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
 
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_3_hum*mask_complete_hum], np.log10(m_star_hum)[class_3_hum*mask_complete_hum], c=color_c3, s=20, alpha=0.5)
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_3_hum*~mask_complete_hum], np.log10(m_star_hum)[class_3_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
-
-
-    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_2_ml*mask_complete_ml], np.log10(m_star_ml)[class_2_ml*mask_complete_ml], c=color_c2, s=20, alpha=0.5)
-    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_2_ml*~mask_complete_ml], np.log10(m_star_ml)[class_2_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
-
-    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_1_ml*mask_complete_ml], np.log10(m_star_ml)[class_1_ml*mask_complete_ml], c=color_c1, s=20, alpha=0.5)
-    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_1_ml*~mask_complete_ml], np.log10(m_star_ml)[class_1_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
-
-
-    # ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_3_ml*mask_complete_ml], np.log10(m_star_ml)[class_3_ml*mask_complete_ml], c=color_c3, s=20, alpha=0.5)
-    # ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_3_ml*~mask_complete_ml], np.log10(m_star_ml)[class_3_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
-
+    # ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_3_ml*mask_complete_ml],
+    # np.log10(m_star_ml)[class_3_ml*mask_complete_ml], c=color_c3, s=20, alpha=0.5)
+    # ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_3_ml*~mask_complete_ml],
+    # np.log10(m_star_ml)[class_3_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
 
     anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
                                  frameon=False, prop=dict(size=fontsize-4))
@@ -209,31 +224,47 @@ for index in range(20, 39):
 
     # plotting
     ax_hum[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=2)
-    ax_hum[row_index, col_index].plot([np.log10(age_cut) + 1, np.log10(age_cut) + 6], [np.log10(m_star_cut), np.log10(m_star_cut)], color='k', linestyle='--', linewidth=1)
-    ax_hum[row_index, col_index].plot([np.log10(age_cut) + 6, np.log10(age_cut) + 6], [np.log10(m_star_cut), np.log10(m_star_cut) + 5], color='k', linestyle='--', linewidth=1)
+    ax_hum[row_index, col_index].plot([np.log10(age_cut) + 1, np.log10(age_cut) + 6],
+                                      [np.log10(m_star_cut), np.log10(m_star_cut)], color='k', linestyle='--', linewidth=1)
+    ax_hum[row_index, col_index].plot([np.log10(age_cut) + 6, np.log10(age_cut) + 6],
+                                      [np.log10(m_star_cut), np.log10(m_star_cut) + 5], color='k', linestyle='--', linewidth=1)
 
     ax_ml[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=2)
-    ax_ml[row_index, col_index].plot([np.log10(age_cut) + 1, np.log10(age_cut) + 6], [np.log10(m_star_cut), np.log10(m_star_cut)], color='k', linestyle='--', linewidth=1)
-    ax_ml[row_index, col_index].plot([np.log10(age_cut) + 6, np.log10(age_cut) + 6], [np.log10(m_star_cut), np.log10(m_star_cut) + 5], color='k', linestyle='--', linewidth=1)
+    ax_ml[row_index, col_index].plot([np.log10(age_cut) + 1, np.log10(age_cut) + 6],
+                                     [np.log10(m_star_cut), np.log10(m_star_cut)], color='k', linestyle='--', linewidth=1)
+    ax_ml[row_index, col_index].plot([np.log10(age_cut) + 6, np.log10(age_cut) + 6],
+                                     [np.log10(m_star_cut), np.log10(m_star_cut) + 5], color='k', linestyle='--', linewidth=1)
 
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_1_hum*mask_complete_hum], np.log10(m_star_hum)[class_1_hum*mask_complete_hum], c=color_c1, s=20, alpha=0.5)
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_1_hum*~mask_complete_hum], np.log10(m_star_hum)[class_1_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
+    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_1_hum*mask_complete_hum],
+                                         np.log10(m_star_hum)[class_1_hum*mask_complete_hum], c=color_c1, s=20, alpha=0.5)
+    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_1_hum*~mask_complete_hum],
+                                         np.log10(m_star_hum)[class_1_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
 
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_2_hum*mask_complete_hum], np.log10(m_star_hum)[class_2_hum*mask_complete_hum], c=color_c2, s=20, alpha=0.5)
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_2_hum*~mask_complete_hum], np.log10(m_star_hum)[class_2_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
+    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_2_hum*mask_complete_hum],
+                                         np.log10(m_star_hum)[class_2_hum*mask_complete_hum], c=color_c2, s=20, alpha=0.5)
+    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_2_hum*~mask_complete_hum],
+                                         np.log10(m_star_hum)[class_2_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
 
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_3_hum*mask_complete_hum], np.log10(m_star_hum)[class_3_hum*mask_complete_hum], c=color_c3, s=20, alpha=0.5)
-    ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_3_hum*~mask_complete_hum], np.log10(m_star_hum)[class_3_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
+    # ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_3_hum*mask_complete_hum],
+    #                                      np.log10(m_star_hum)[class_3_hum*mask_complete_hum], c=color_c3, s=20, alpha=0.5)
+    # ax_hum[row_index, col_index].scatter((np.log10(age_hum) + 6)[class_3_hum*~mask_complete_hum],
+    #                                      np.log10(m_star_hum)[class_3_hum*~mask_complete_hum], c='grey', s=20, alpha=0.5)
 
-    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_2_ml*mask_complete_ml], np.log10(m_star_ml)[class_2_ml*mask_complete_ml], c=color_c2, s=20, alpha=0.5)
-    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_2_ml*~mask_complete_ml], np.log10(m_star_ml)[class_2_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_2_ml*mask_complete_ml],
+                                        np.log10(m_star_ml)[class_2_ml*mask_complete_ml], c=color_c2, s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_2_ml*~mask_complete_ml],
+                                        np.log10(m_star_ml)[class_2_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
 
-    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_1_ml*mask_complete_ml], np.log10(m_star_ml)[class_1_ml*mask_complete_ml], c=color_c1, s=20, alpha=0.5)
-    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_1_ml*~mask_complete_ml], np.log10(m_star_ml)[class_1_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_1_ml*mask_complete_ml],
+                                        np.log10(m_star_ml)[class_1_ml*mask_complete_ml], c=color_c1, s=20, alpha=0.5)
+    ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_1_ml*~mask_complete_ml],
+                                        np.log10(m_star_ml)[class_1_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
 
 
-    # ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_3_ml*mask_complete_ml], np.log10(m_star_ml)[class_3_ml*mask_complete_ml], c=color_c3, s=20, alpha=0.5)
-    # ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_3_ml*~mask_complete_ml], np.log10(m_star_ml)[class_3_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
+    # ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_3_ml*mask_complete_ml],
+    # np.log10(m_star_ml)[class_3_ml*mask_complete_ml], c=color_c3, s=20, alpha=0.5)
+    # ax_ml[row_index, col_index].scatter((np.log10(age_ml) + 6)[class_3_ml*~mask_complete_ml],
+    # np.log10(m_star_ml)[class_3_ml*~mask_complete_ml], c='grey', s=20, alpha=0.5)
 
 
     anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,

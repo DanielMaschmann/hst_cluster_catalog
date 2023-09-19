@@ -11,7 +11,7 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path)
 
 # get model
-hdu_a = fits.open('../cigale_model/sfh2exp/no_dust/out/models-block-0.fits')
+hdu_a = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
 data_mod = hdu_a[1].data
 age_mod = data_mod['sfh.age']
 m_star_mod = data_mod['stellar.m_star']
@@ -69,21 +69,31 @@ for index in range(0, 20):
     class_2_ml = (cluster_class_12_ml == 2) & (cluster_class_qual_12_ml >= 0.9)
     class_3_ml = (cluster_class_3_ml == 3) & (cluster_class_qual_3_ml >= 0.9)
 
+    # random dots
+    random_x_12_hum = np.random.uniform(low=-0.1, high=0.1, size=len(age_12_hum))
+    random_x_3_hum = np.random.uniform(low=-0.1, high=0.1, size=len(age_3_hum))
+
     ax_hum[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=1.2)
-    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum[cluster_class_3_hum == 3]) + 6),
+    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum) + random_x_3_hum + 6)[cluster_class_3_hum == 3],
                                          np.log10(m_star_3_hum[cluster_class_3_hum == 3]), c='royalblue', s=1)
-    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + 6)[cluster_class_12_hum == 1],
-                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 1], c='forestgreen', s=1)
-    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + 6)[cluster_class_12_hum == 2],
-                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 2], c='darkorange', s=1)
+    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[cluster_class_12_hum == 1],
+                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 1], c='darkorange', s=1)
+    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[cluster_class_12_hum == 2],
+                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 2], c='forestgreen', s=1)
+
+
+    # random dots
+    random_x_12_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_12_ml))
+    random_x_3_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_3_ml))
 
     ax_ml[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=1.2)
-    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml[class_3_ml]) + 6), np.log10(m_star_3_ml[class_3_ml]),
-                                        c='royalblue', s=1)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_1_ml], np.log10(m_star_12_ml)[class_1_ml],
-                                        c='forestgreen', s=1)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_2_ml], np.log10(m_star_12_ml)[class_2_ml],
-                                        c='darkorange', s=1)
+    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml) + random_x_3_ml + 6)[cluster_class_3_ml == 3],
+                                         np.log10(m_star_3_ml[cluster_class_3_ml == 3]), c='royalblue', s=1)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[cluster_class_12_ml == 1],
+                                         np.log10(m_star_12_ml)[cluster_class_12_ml == 1], c='darkorange', s=1)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[cluster_class_12_ml == 2],
+                                         np.log10(m_star_12_ml)[cluster_class_12_ml == 2], c='forestgreen', s=1)
+
 
     anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
                                  frameon=False, prop=dict(size=fontsize-4))
@@ -104,22 +114,22 @@ for index in range(0, 20):
 
 ax_hum[0, 0].set_xlim(5.7, 10.3)
 ax_hum[0, 0].set_ylim(1.9, 8.7)
-fig_hum.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
+fig_hum.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
 fig_hum.text(0.08, 0.5, 'log(M$_{*}$/M$_{\odot}$)', va='center', rotation='vertical', fontsize=fontsize)
 
 ax_ml[0, 0].set_xlim(5.7, 10.3)
 ax_ml[0, 0].set_ylim(1.9, 8.7)
-fig_ml.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
+fig_ml.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
 fig_ml.text(0.08, 0.5, 'log(M$_{*}$/M$_{\odot}$)', va='center', rotation='vertical', fontsize=fontsize)
 
 # plt.tight_layout()
 fig_hum.subplots_adjust(wspace=0, hspace=0)
 fig_hum.savefig('plot_output/age_m_star_hum_1.png', bbox_inches='tight', dpi=300)
-fig_hum.savefig('plot_output/age_m_star_hum_1.pdf', bbox_inches='tight', dpi=300)
+# fig_hum.savefig('plot_output/age_m_star_hum_1.pdf', bbox_inches='tight', dpi=300)
 
 fig_ml.subplots_adjust(wspace=0, hspace=0)
 fig_ml.savefig('plot_output/age_m_star_ml_1.png', bbox_inches='tight', dpi=300)
-fig_ml.savefig('plot_output/age_m_star_ml_1.pdf', bbox_inches='tight', dpi=300)
+# fig_ml.savefig('plot_output/age_m_star_ml_1.pdf', bbox_inches='tight', dpi=300)
 
 
 
@@ -154,21 +164,31 @@ for index in range(20, 39):
     class_2_ml = (cluster_class_12_ml == 2) & (cluster_class_qual_12_ml >= 0.9)
     class_3_ml = (cluster_class_3_ml == 3) & (cluster_class_qual_3_ml >= 0.9)
 
+    # random dots
+    random_x_12_hum = np.random.uniform(low=-0.1, high=0.1, size=len(age_12_hum))
+    random_x_3_hum = np.random.uniform(low=-0.1, high=0.1, size=len(age_3_hum))
+
     ax_hum[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=1.2)
-    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum[cluster_class_3_hum == 3]) + 6),
+    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum) + random_x_3_hum + 6)[cluster_class_3_hum == 3],
                                          np.log10(m_star_3_hum[cluster_class_3_hum == 3]), c='royalblue', s=1)
-    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + 6)[cluster_class_12_hum == 1],
-                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 1], c='forestgreen', s=1)
-    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + 6)[cluster_class_12_hum == 2],
-                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 2], c='darkorange', s=1)
+    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[cluster_class_12_hum == 1],
+                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 1], c='darkorange', s=1)
+    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[cluster_class_12_hum == 2],
+                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 2], c='forestgreen', s=1)
+
+
+    # random dots
+    random_x_12_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_12_ml))
+    random_x_3_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_3_ml))
 
     ax_ml[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=1.2)
-    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml[class_3_ml]) + 6), np.log10(m_star_3_ml[class_3_ml]),
-                                        c='royalblue', s=1)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_1_ml], np.log10(m_star_12_ml)[class_1_ml],
-                                        c='forestgreen', s=1)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + 6)[class_2_ml], np.log10(m_star_12_ml)[class_2_ml],
-                                        c='darkorange', s=1)
+    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml) + random_x_3_ml + 6)[cluster_class_3_ml == 3],
+                                         np.log10(m_star_3_ml[cluster_class_3_ml == 3]), c='royalblue', s=1)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[cluster_class_12_ml == 1],
+                                         np.log10(m_star_12_ml)[cluster_class_12_ml == 1], c='darkorange', s=1)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[cluster_class_12_ml == 2],
+                                         np.log10(m_star_12_ml)[cluster_class_12_ml == 2], c='forestgreen', s=1)
+
 
     anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
                                  frameon=False, prop=dict(size=fontsize-4))
@@ -189,21 +209,29 @@ for index in range(20, 39):
 
 ax_hum[0, 0].set_xlim(5.7, 10.3)
 ax_hum[0, 0].set_ylim(1.9, 8.7)
-fig_hum.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
+fig_hum.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
 fig_hum.text(0.08, 0.5, 'log(M$_{*}$/M$_{\odot}$)', va='center', rotation='vertical', fontsize=fontsize)
+ax_hum[4, 3].scatter([], [], c='darkorange', s=30, label='Class 1')
+ax_hum[4, 3].scatter([], [], c='forestgreen', s=30, label='Class 2')
+ax_hum[4, 3].scatter([], [], c='royalblue', s=30, label='Compact Associations')
+ax_hum[4, 3].legend(frameon=False, fontsize=fontsize-3)
 ax_hum[4, 3].axis('off')
 
 ax_ml[0, 0].set_xlim(5.7, 10.3)
 ax_ml[0, 0].set_ylim(1.9, 8.7)
-fig_ml.text(0.5, 0.08, 'log(Age/yr)', ha='center', fontsize=fontsize)
+fig_ml.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
 fig_ml.text(0.08, 0.5, 'log(M$_{*}$/M$_{\odot}$)', va='center', rotation='vertical', fontsize=fontsize)
+ax_ml[4, 3].scatter([], [], c='darkorange', s=30, label='Class 1')
+ax_ml[4, 3].scatter([], [], c='forestgreen', s=30, label='Class 2')
+ax_ml[4, 3].scatter([], [], c='royalblue', s=30, label='Compact Associations')
+ax_ml[4, 3].legend(frameon=False, fontsize=fontsize-3)
 ax_ml[4, 3].axis('off')
 
 fig_hum.subplots_adjust(wspace=0, hspace=0)
 fig_hum.savefig('plot_output/age_m_star_hum_2.png', bbox_inches='tight', dpi=300)
-fig_hum.savefig('plot_output/age_m_star_hum_2.pdf', bbox_inches='tight', dpi=300)
+# fig_hum.savefig('plot_output/age_m_star_hum_2.pdf', bbox_inches='tight', dpi=300)
 
 fig_ml.subplots_adjust(wspace=0, hspace=0)
 fig_ml.savefig('plot_output/age_m_star_ml_2.png', bbox_inches='tight', dpi=300)
-fig_ml.savefig('plot_output/age_m_star_ml_2.pdf', bbox_inches='tight', dpi=300)
+# fig_ml.savefig('plot_output/age_m_star_ml_2.pdf', bbox_inches='tight', dpi=300)
 

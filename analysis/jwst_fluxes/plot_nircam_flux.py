@@ -4,8 +4,7 @@ Extract Nircam flux of HST clusters if possible
 import numpy as np
 import photometry_tools
 import matplotlib.pyplot as plt
-from astropy.coordinates import SkyCoord
-import astropy.units as u
+
 from photometry_tools.analysis_tools import AnalysisTools
 from photometry_tools import helper_func as hf
 from photometry_tools.plotting_tools import DensityContours
