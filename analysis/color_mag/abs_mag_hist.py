@@ -97,10 +97,20 @@ print(np.nanmedian(abs_v_band_mag_ml[dist_array_ml < 14]))
 print(np.nanmedian(abs_v_band_mag_ml[dist_array_ml > 14]))
 
 
+bins = np.linspace(-14.5, -3.5, 30)
+center_of_bins = (bins[:-1] + bins[1:]) / 2
 
-bins = np.linspace(-14.5, -3.5, 24)
+hist_hum, bins = np.histogram(abs_v_band_mag_hum, bins=bins)
+hist_ml, bins = np.histogram(abs_v_band_mag_ml, bins=bins)
+max_hum = np.where(hist_hum == np.max(hist_hum))
+max_ml = np.where(hist_ml == np.max(hist_ml))
+print('max of hum ', center_of_bins[max_hum[0]])
+print('max of ml ', center_of_bins[max_ml[0]])
+
+
+
 fig, ax = plt.subplots(nrows=1, sharex=True, figsize=(13, 6))
-fontsize = 15
+fontsize = 25
 
 ax.hist(abs_v_band_mag_ml, bins=bins, linewidth=2, color='tab:grey', histtype='step')
 ax.hist(abs_v_band_mag_hum, bins=bins, linewidth=2, color='tab:red', histtype='step')
@@ -125,7 +135,7 @@ ax.legend(frameon=False, fontsize=fontsize)
 
 ax.set_xlim(-3.4, -14.9)
 ax.set_ylabel('# Clusters', fontsize=fontsize)
-ax.set_xlabel('Abs. V mag', fontsize=fontsize)
+ax.set_xlabel(r'M$_{\rm V}$ [mag]', fontsize=fontsize)
 # ax[1].set_ylabel('# Clusters', fontsize=fontsize)
 
 # ax.text(-4.5, 1, 'Full galaxy sample', fontsize=fontsize + 3)

@@ -1,17 +1,7 @@
 """ bla bla bla """
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
-import seaborn as sns
 import photometry_tools
-from photometry_tools.analysis_tools import AnalysisTools
-from astropy.wcs import WCS
-from astropy.io import fits
-from astropy.coordinates import SkyCoord
-import astropy.units as u
-from matplotlib.colors import Normalize, LogNorm
-from astroquery.skyview import SkyView
-from astroquery.simbad import Simbad
 
 
 # get access to HST cluster catalog
@@ -43,7 +33,7 @@ catalog_access.load_hst_cc_list(target_list=cc_target_list, cluster_class='class
 catalog_access.load_hst_cc_list(target_list=cc_target_list, classify='ml')
 catalog_access.load_hst_cc_list(target_list=cc_target_list, classify='ml', cluster_class='class3')
 
-
+array_f555w_abs_mag_hum_12 = np.array([])
 max_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
 min_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
 mean_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
@@ -51,6 +41,8 @@ median_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
 p16_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
 p84_f555w_abs_mag_hum_12 = np.zeros(len(cc_target_list))
 
+
+array_f555w_abs_mag_ml_12 = np.array([])
 max_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
 min_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
 mean_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
@@ -58,7 +50,7 @@ median_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
 p16_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
 p84_f555w_abs_mag_ml_12 = np.zeros(len(cc_target_list))
 
-
+array_mstar_hum_12 = np.array([])
 p99_mstar_hum_12 = np.zeros(len(cc_target_list))
 p1_mstar_hum_12 = np.zeros(len(cc_target_list))
 max_mstar_hum_12 = np.zeros(len(cc_target_list))
@@ -68,6 +60,7 @@ median_mstar_hum_12 = np.zeros(len(cc_target_list))
 p16_mstar_hum_12 = np.zeros(len(cc_target_list))
 p84_mstar_hum_12 = np.zeros(len(cc_target_list))
 
+array_mstar_ml_12 = np.array([])
 p99_mstar_ml_12 = np.zeros(len(cc_target_list))
 p1_mstar_ml_12 = np.zeros(len(cc_target_list))
 max_mstar_ml_12 = np.zeros(len(cc_target_list))
@@ -78,8 +71,11 @@ p16_mstar_ml_12 = np.zeros(len(cc_target_list))
 p84_mstar_ml_12 = np.zeros(len(cc_target_list))
 
 mask_deep = np.zeros(len(cc_target_list), dtype=bool)
+array_dist_hum_12 = np.array([])
+array_dist_ml_12 = np.array([])
 
 for index, target in enumerate(cc_target_list):
+    print(cc_target_list[index])
     cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
     cluster_class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
 
@@ -91,6 +87,15 @@ for index, target in enumerate(cc_target_list):
 
     f555w_abs_mag_hum_12 = f555w_mag_hum_12 - 5*np.log10(dist_list[index] * 1e6) + 5
     f555w_abs_mag_ml_12 = f555w_mag_ml_12 - 5*np.log10(dist_list[index] * 1e6) + 5
+
+    array_f555w_abs_mag_hum_12 = np.concatenate([array_f555w_abs_mag_hum_12, f555w_abs_mag_hum_12])
+    array_f555w_abs_mag_ml_12 = np.concatenate([array_f555w_abs_mag_ml_12, f555w_abs_mag_ml_12])
+
+    array_mstar_hum_12 = np.concatenate([array_mstar_hum_12, mstar_hum_12])
+    array_mstar_ml_12 = np.concatenate([array_mstar_ml_12, mstar_ml_12])
+
+    array_dist_hum_12 = np.concatenate([array_dist_hum_12, np.ones(len(f555w_abs_mag_hum_12)) * dist_list[index]])
+    array_dist_ml_12 = np.concatenate([array_dist_ml_12, np.ones(len(f555w_abs_mag_ml_12)) * dist_list[index]])
 
     median_f555w_mag_ml_12 = np.nanmedian(f555w_mag_ml_12[(f555w_mag_ml_12 > 18) & (f555w_mag_ml_12 < 26)])
     faintest_f555w_band_mag_hum_12 = np.nanmax(f555w_mag_hum_12[(f555w_mag_hum_12 > 18) & (f555w_mag_hum_12 < 26)])
@@ -133,25 +138,65 @@ for index, target in enumerate(cc_target_list):
     p16_mstar_ml_12[index] = np.percentile(mstar_ml_12, 16)
     p84_mstar_ml_12[index] = np.percentile(mstar_ml_12, 84)
 
+    print(sum(f555w_abs_mag_hum_12 < - 12), sum(f555w_abs_mag_ml_12 < - 12))
+    print(sum(f555w_abs_mag_hum_12 < - 10), sum(f555w_abs_mag_ml_12 < - 10))
+    print(sum(f555w_abs_mag_hum_12 < - 9), sum(f555w_abs_mag_ml_12 < - 9))
+    print(np.max(f555w_abs_mag_hum_12), np.max(f555w_abs_mag_ml_12))
+
+# print some statistics
+mask_close_hum = array_dist_hum_12 < 14
+mask_far_hum = array_dist_hum_12 > 14
+mask_close_ml = array_dist_ml_12 < 14
+mask_far_ml = array_dist_ml_12 > 14
+
+
+print('below 14 Mpc Hum 12 Mean V-mag', np.nanmean(array_f555w_abs_mag_hum_12[mask_close_hum]))
+print('above 14 Mpc Hum 12 Mean V-mag', np.nanmean(array_f555w_abs_mag_hum_12[mask_far_hum]))
+
+print('below 14 Mpc ML 12 Mean V-mag', np.nanmean(array_f555w_abs_mag_ml_12[mask_close_ml]))
+print('above 14 Mpc ML 12 Mean V-mag', np.nanmean(array_f555w_abs_mag_ml_12[mask_far_ml]))
+
+print('below 14 Mpc Hum 12 Mean Mstar', np.nanmean(array_mstar_hum_12[mask_close_hum]))
+print('above 14 Mpc Hum 12 Mean Mstar', np.nanmean(array_mstar_hum_12[mask_far_hum]))
+
+print('below 14 Mpc ML 12 Mean Mstar', np.nanmean(array_mstar_ml_12[mask_close_ml]))
+print('above 14 Mpc ML 12 Mean Mstar', np.nanmean(array_mstar_ml_12[mask_far_ml]))
+
+print('--------------------------------')
+
+print('below 14 Mpc Hum 12 Median V-mag', np.nanmedian(array_f555w_abs_mag_hum_12[mask_close_hum]))
+print('above 14 Mpc Hum 12 Median V-mag', np.nanmedian(array_f555w_abs_mag_hum_12[mask_far_hum]))
+
+print('below 14 Mpc ML 12 Median V-mag', np.nanmedian(array_f555w_abs_mag_ml_12[mask_close_ml]))
+print('above 14 Mpc ML 12 Median V-mag', np.nanmedian(array_f555w_abs_mag_ml_12[mask_far_ml]))
+
+print('below 14 Mpc Hum 12 Median Mstar', np.log10(np.nanmedian(array_mstar_hum_12[mask_close_hum])))
+print('above 14 Mpc Hum 12 Median Mstar', np.log10(np.nanmedian(array_mstar_hum_12[mask_far_hum])))
+
+print('below 14 Mpc ML 12 Median Mstar', np.log10(np.nanmedian(array_mstar_ml_12[mask_close_ml])))
+print('above 14 Mpc ML 12 Median Mstar', np.log10(np.nanmedian(array_mstar_ml_12[mask_far_ml])))
+
 
 fig, ax = plt.subplots(nrows=2, ncols=2, sharex=True, sharey='row', figsize=(28, 15))
 fontsize = 30
 
 scatter_dot_size = 140
-scatter_star_size = 400
+scatter_star_size = 140
 
 err_bar_dot_size = 12
-err_bar_star_size = 21
+err_bar_star_size = 12
 
 
 for index in range(len(dist_list)):
     if not mask_deep[index]:
-        ax[0, 0].scatter(dist_list[index], min_f555w_abs_mag_hum_12[index], s=scatter_star_size,  marker='*', color='tab:blue')
+        ax[0, 0].scatter(dist_list[index], min_f555w_abs_mag_hum_12[index], s=scatter_star_size, linewidth=2,  marker='o',
+                         facecolor='None', color='tab:blue')
         ax[0, 0].errorbar(dist_list[index], median_f555w_abs_mag_hum_12[index],
                           yerr=np.array([[median_f555w_abs_mag_hum_12[index] - p16_f555w_abs_mag_hum_12[index]],
                                          [p84_f555w_abs_mag_hum_12[index] - median_f555w_abs_mag_hum_12[index]]]),
-                          fmt='*', ms=err_bar_star_size, color='darkslategrey')
-        ax[0, 0].scatter(dist_list[index], max_f555w_abs_mag_hum_12[index], s=scatter_star_size,  marker='*', color='tab:red')
+                          fmt='o', mfc='w', ms=err_bar_star_size, color='darkslategrey')
+        ax[0, 0].scatter(dist_list[index], max_f555w_abs_mag_hum_12[index], s=scatter_star_size, linewidth=2,  marker='o',
+                         facecolor='None', color='tab:red')
 
     else:
         ax[0, 0].scatter(dist_list[index], min_f555w_abs_mag_hum_12[index], s=scatter_dot_size, color='tab:blue')
@@ -197,21 +242,11 @@ ax[1, 1].errorbar(dist_list, median_mstar_ml_12,
 ax[1, 1].scatter(dist_list, min_mstar_ml_12, s=scatter_dot_size, color='tab:green')
 
 
-# for i, target in enumerate(cc_target_list):
-#     if target in ['ngc4826', 'ngc5068', 'ic5332', 'ngc4548', 'ngc4564', 'ngc0685', 'ngc2835']:
-#         ax[0, 0].text(dist_list[i], max_f555w_abs_mag_hum_12[i], target,
-#                       horizontalalignment='left', verticalalignment='top', fontsize=fontsize)
-# for i, target in enumerate(cc_target_list):
-#     if target in ['ngc4826', 'ngc5068', 'ic5332', 'ngc4548', 'ngc4564', 'ngc0685', 'ngc2835']:
-#         ax[0, 1].text(dist_list[i], max_f555w_abs_mag_ml_12[i], target,
-#                    horizontalalignment='left', verticalalignment='bottom', fontsize=fontsize)
-
 ax[0, 0].set_title('Human Class 1, 2', fontsize=fontsize+4)
 ax[0, 1].set_title('ML Class 1, 2', fontsize=fontsize+4)
 ax[0, 0].legend(frameon=False, fontsize=fontsize - 6)
 ax[1, 0].legend(frameon=False, fontsize=fontsize - 6)
 
-# ax[0, 0].set_ylim(-3.5, -17.1)
 ax[0, 0].invert_yaxis()
 ax[1, 0].set_yscale('log')
 
@@ -224,58 +259,9 @@ ax[0, 1].tick_params(axis='both', which='both', width=3, length=6, right=True, t
 ax[1, 0].tick_params(axis='both', which='both', width=3, length=6, right=True, top=True, direction='in', labelsize=fontsize)
 ax[1, 1].tick_params(axis='both', which='both', width=3, length=6, right=True, top=True, direction='in', labelsize=fontsize)
 
-# plt.show()
-# exit()
-plt.tight_layout()
-plt.subplots_adjust(hspace=0.01, wspace=0.01)
+# plt.tight_layout()
+# plt.subplots_adjust(hspace=0.01, wspace=0.01)
+fig.subplots_adjust(left=0.055, bottom=0.07, right=0.995, top=0.965, wspace=0.005, hspace=0.01)
 plt.savefig('plot_output/mag_mstar.png')
 plt.savefig('plot_output/mag_mstar.pdf')
 
-
-exit()
-
-
-
-print('number_hum_12 ', number_hum_12)
-print('number_ml_12 ', number_ml_12)
-
-mean_err_frac = np.mean(ssfr_err/ssfr)
-
-fig, ax = plt.subplots(nrows=2, sharex=True, figsize=(17, 13))
-fontsize = 19
-
-for i, target in enumerate(cc_target_list):
-    ax[0].plot([ssfr[i], ssfr[i]], [number_ml_12[i], number_hum_12[i]], color='grey', linestyle='--', linewidth=3)
-    ax[0].text(ssfr[i], number_ml_12[i], target, horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[0].scatter(ssfr, number_hum_12, s=120, color='darkslategrey', label='Human-classified', zorder=10)
-ax[0].scatter(ssfr, number_ml_12, s=120, color='yellowgreen', label='ML-classified', zorder=10)
-ax[0].errorbar(10**(-11), 500, xerr=10**(-11) * mean_err_frac, fmt='o', color='k')
-ax[0].text(10**(-11), 600, 'Mean uncertainty', horizontalalignment='center', verticalalignment='center', fontsize=fontsize)
-
-for i in range(len(ssfr)):
-    ax[1].plot([ssfr[i], ssfr[i]], [number_ml_3[i], number_hum_3[i]], color='grey', linestyle='--', linewidth=3)
-ax[1].scatter(ssfr, number_ml_3, s=120, color='darkslategrey', zorder=10)
-ax[1].scatter(ssfr, number_hum_3, s=120, color='yellowgreen', zorder=10)
-
-
-ax[0].set_xscale('log')
-ax[0].set_yscale('log')
-ax[1].set_xscale('log')
-ax[1].set_yscale('log')
-
-
-exit()
-
-
-
-
-dss_cutout_size = {'ngc4826': 18, 'ngc5068': 18, 'ngc3621': 18, 'ic5332': 18,
-                   'ngc6744': 18, 'ngc2903': 18, 'ngc0628': 18, 'ngc3351': 18,
-                   'ngc3627': 18, 'ngc2835': 18, 'ic1954': 18, 'ngc4254': 18,
-                   'ngc1097': 18, 'ngc5248': 18, 'ngc4571': 18, 'ngc4298': 18,
-                   'ngc4689': 18, 'ngc4321': 18, 'ngc4569': 18, 'ngc4535': 18,
-                   'ngc1087': 18, 'ngc1792': 18, 'ngc4548': 18, 'ngc4536': 18,
-                   'ngc4303': 18, 'ngc1385': 18, 'ngc1566': 18, 'ngc1512': 18,
-                   'ngc7496': 18, 'ngc1433': 18, 'ngc1300': 18, 'ngc1317': 18,
-                   'ngc1672': 18, 'ngc1559': 18, 'ngc1365': 18, 'ngc0685': 18,
-                   'ngc4654': 18, 'ngc2775': 18}

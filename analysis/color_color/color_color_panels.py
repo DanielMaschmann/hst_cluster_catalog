@@ -49,18 +49,25 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
 model_nuvb_sol = np.load('../color_color/data_output/model_nuvb_sol.npy')
 model_ub_sol = np.load('../color_color/data_output/model_ub_sol.npy')
 model_vi_sol = np.load('../color_color/data_output/model_vi_sol.npy')
+age_mod_sol = np.load('../color_color/data_output/age_mod_sol.npy')
 
 
 
 target_list = catalog_access.target_hst_cc
 dist_list = []
+delta_ms_list = []
 for target in target_list:
     if (target == 'ngc0628c') | (target == 'ngc0628e'):
         target = 'ngc0628'
     dist_list.append(catalog_access.dist_dict[target]['dist'])
-sort = np.argsort(dist_list)
+    delta_ms_list.append(catalog_access.get_target_delta_ms(target=target))
+
+
+
+sort = np.argsort(delta_ms_list)[::-1]
 target_list = np.array(target_list)[sort]
 dist_list = np.array(dist_list)[sort]
+delta_ms_list = np.array(delta_ms_list)[sort]
 
 catalog_access.load_hst_cc_list(target_list=target_list, classify='human')
 catalog_access.load_hst_cc_list(target_list=target_list, classify='human', cluster_class='class3')
@@ -68,13 +75,12 @@ catalog_access.load_hst_cc_list(target_list=target_list, classify='ml')
 catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_class='class3')
 
 
-color_c1 = 'darkorange'
-color_c2 = 'tab:green'
-color_c3 = 'darkorange'
+color_c1 = 'tab:green'
+color_c2 = 'mediumblue'
+# color_c3 = 'darkorange'
 
-
-vi_int = 0.8
-ub_int = -2.2
+vi_int = 1.2
+ub_int = -1.9
 nuvb_int = -3.0
 av_value = 1
 
@@ -91,6 +97,7 @@ col_index = 0
 for index in range(0, 20):
     target = target_list[index]
     dist = dist_list[index]
+    delta_ms = delta_ms_list[index]
     print('target ', target, 'dist ', dist)
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
         b_band = 'F438W'
@@ -131,29 +138,30 @@ for index in range(0, 20):
                                    detect_vi_ml_12 & detect_ub_ml_12)
     contours(ax=ax[row_index, col_index], x=color_vi_ml_12[good_colors_ml], y=color_ub_ml_12[good_colors_ml], levels=None)
 
+    hf.display_models(ax=ax[row_index, col_index], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol,
+                      age_sol=age_mod_sol, display_age_dots=False, color_sol='tab:red', linewidth_sol=3, size_age_dots=40,)
 
-    ax[row_index, col_index].plot(model_vi_sol, model_ub_sol, color='tab:red', linewidth=2, zorder=10)
-
-    ax[row_index, col_index].scatter(color_vi_hum_12[class_1_hum * good_colors_hum],
-                                     color_ub_hum_12[class_1_hum * good_colors_hum], c=color_c1, s=10)
     ax[row_index, col_index].scatter(color_vi_hum_12[class_2_hum * good_colors_hum],
-                                     color_ub_hum_12[class_2_hum * good_colors_hum], c=color_c2, s=10)
+                                     color_ub_hum_12[class_2_hum * good_colors_hum], c=color_c2, s=20, alpha=0.7)
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_1_hum * good_colors_hum],
+                                     color_ub_hum_12[class_1_hum * good_colors_hum], c=color_c1, s=20, alpha=0.7)
 
     if (row_index == 0) & (col_index == 0):
         text_flag = True
     else:
         text_flag = False
+
     hf.plot_reddening_vect(ax=ax[row_index, col_index], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
                        x_color_int=vi_int, y_color_int=ub_int, av_val=1,
-                       linewidth=3, line_color='k', text=text_flag, fontsize=fontsize)
+                       linewidth=2, line_color='k', text=text_flag, fontsize=fontsize-4, x_text_offset=-0.1, y_text_offset=-0.2)
 
 
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
-        anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',
+        anchored_left = AnchoredText(target.upper()+ r'  ($\Delta$MS=%.2f)'%delta_ms +'\nd='+str(dist)+' Mpc',
                                      loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
         ax[row_index, col_index].add_artist(anchored_left)
     else:
-        anchored_left = AnchoredText(target.upper()+'$^*$'+'\nd='+str(dist)+' Mpc',
+        anchored_left = AnchoredText(target.upper()+'$^*$'+ r'  ($\Delta$MS=%.2f)'%delta_ms +'\nd='+str(dist)+' Mpc',
                                      loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
         ax[row_index, col_index].add_artist(anchored_left)
 
@@ -165,11 +173,19 @@ for index in range(0, 20):
         row_index += 1
         col_index = 0
 
+
+ax[0, 0].scatter([], [], c=color_c1, s=30, label='class 1 (Hum)')
+ax[0, 0].scatter([], [], c=color_c2, s=30, label='class 2 (Hum)')
+ax[0, 0].legend(frameon=True, ncols=3, bbox_to_anchor=[1.23, 1.16], fontsize=fontsize-6)
+
+ax[0, 3].plot([], [], color='k', label='ML')
+ax[0, 3].legend(frameon=True, ncols=1, bbox_to_anchor=[0.3, 1.16], fontsize=fontsize-6)
+
 ax[0, 0].set_ylim(y_lim_ub)
 ax[0, 0].set_xlim(x_lim_vi)
 fig.text(0.5, 0.08, 'V (F555W) - I (F814W)', ha='center', fontsize=fontsize)
 fig.text(0.08, 0.5, 'U (F336W) - B (F438W/F435W'+'$^*$'+')', va='center', rotation='vertical', fontsize=fontsize)
-fig.text(0.5, 0.89, 'Class 1|2', ha='center', fontsize=fontsize)
+fig.text(0.5, 0.89, 'Class 1+2 Clusters', ha='center', fontsize=fontsize)
 
 fig.subplots_adjust(wspace=0, hspace=0)
 fig.savefig('plot_output/ub_vi_panel_1.png', bbox_inches='tight', dpi=300)
@@ -184,6 +200,7 @@ col_index = 0
 for index in range(20, 39):
     target = target_list[index]
     dist = dist_list[index]
+    delta_ms = delta_ms_list[index]
     print('target ', target, 'dist ', dist)
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
         b_band = 'F438W'
@@ -223,13 +240,13 @@ for index in range(20, 39):
 
     contours(ax=ax[row_index, col_index], x=color_vi_ml_12[good_colors_ml], y=color_ub_ml_12[good_colors_ml], levels=None)
 
+    hf.display_models(ax=ax[row_index, col_index], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol,
+                      age_sol=age_mod_sol, display_age_dots=False, color_sol='tab:red', linewidth_sol=3, size_age_dots=40,)
 
-    ax[row_index, col_index].plot(model_vi_sol, model_ub_sol, color='tab:red', linewidth=2, zorder=10)
-
-    ax[row_index, col_index].scatter(color_vi_hum_12[class_1_hum * good_colors_hum],
-                                     color_ub_hum_12[class_1_hum * good_colors_hum], c=color_c1, s=10)
     ax[row_index, col_index].scatter(color_vi_hum_12[class_2_hum * good_colors_hum],
-                                     color_ub_hum_12[class_2_hum * good_colors_hum], c=color_c2, s=10)
+                                     color_ub_hum_12[class_2_hum * good_colors_hum], c=color_c2, s=20, alpha=0.7)
+    ax[row_index, col_index].scatter(color_vi_hum_12[class_1_hum * good_colors_hum],
+                                     color_ub_hum_12[class_1_hum * good_colors_hum], c=color_c1, s=20, alpha=0.7)
 
     if (row_index == 0) & (col_index == 0):
         text_flag = True
@@ -237,14 +254,15 @@ for index in range(20, 39):
         text_flag = False
     hf.plot_reddening_vect(ax=ax[row_index, col_index], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
                        x_color_int=vi_int, y_color_int=ub_int, av_val=1,
-                       linewidth=3, line_color='k', text=text_flag, fontsize=fontsize)
+                       linewidth=2, line_color='k', text=text_flag, fontsize=fontsize-4, x_text_offset=-0.1, y_text_offset=-0.2)
+
 
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
-        anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',
+        anchored_left = AnchoredText(target.upper()+ r'  ($\Delta$MS=%.2f)'%delta_ms +'\nd='+str(dist)+' Mpc',
                                      loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
         ax[row_index, col_index].add_artist(anchored_left)
     else:
-        anchored_left = AnchoredText(target.upper()+'$^*$'+'\nd='+str(dist)+' Mpc',
+        anchored_left = AnchoredText(target.upper()+'$^*$'+ r'  ($\Delta$MS=%.2f)'%delta_ms +'\nd='+str(dist)+' Mpc',
                                      loc='upper left', borderpad=0.1, frameon=False, prop=dict(size=fontsize-4))
         ax[row_index, col_index].add_artist(anchored_left)
 
@@ -260,7 +278,7 @@ ax[0, 0].set_ylim(y_lim_ub)
 ax[0, 0].set_xlim(x_lim_vi)
 fig.text(0.5, 0.08, 'V (F555W) - I (F814W)', ha='center', fontsize=fontsize)
 fig.text(0.08, 0.5, 'U (F336W) - B (F438W/F435W'+'$^*$'+')', va='center', rotation='vertical', fontsize=fontsize)
-fig.text(0.5, 0.89, 'Class 1|2', ha='center', fontsize=fontsize)
+fig.text(0.5, 0.89, 'Class 1+2 Clusters', ha='center', fontsize=fontsize)
 
 
 ax[4, 3].scatter([], [], c=color_c1, s=30, label='Human class 1')

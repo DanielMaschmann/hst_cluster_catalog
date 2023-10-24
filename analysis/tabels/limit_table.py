@@ -9,7 +9,8 @@ cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'
 hst_obs_hdr_file_path = '/home/benutzer/data/PHANGS_products/tables'
 catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=cluster_catalog_data_path,
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path,
-                                                            hst_cc_ver='IR4')
+                                                            #hst_cc_ver='IR4'
+                                                            )
 
 
 target_list = catalog_access.target_hst_cc

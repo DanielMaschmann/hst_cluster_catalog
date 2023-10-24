@@ -105,6 +105,7 @@ catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_
 
 
 target_name_hum = np.array([], dtype=str)
+incl_hum = np.array([])
 index_hum = np.array([])
 phangs_id_hum = np.array([])
 color_vi_hum = np.array([])
@@ -137,6 +138,7 @@ y_hum = np.array([])
 
 
 target_name_ml = np.array([], dtype=str)
+incl_ml = np.array([])
 index_ml = np.array([])
 phangs_id_ml = np.array([])
 color_vi_ml = np.array([])
@@ -172,7 +174,12 @@ mag_mask_ml = np.array([], dtype=bool)
 for index in range(0, len(target_list)):
     target = target_list[index]
     dist = dist_list[index]
-    print('target ', target, 'dist ', dist)
+    if (target == 'ngc0628c') | (target == 'ngc0628e'):
+        galaxy_name_str = 'ngc0628'
+    else:
+        galaxy_name_str = target
+    inclination = catalog_access.get_target_incl(target=galaxy_name_str)
+    print('target ', target, 'dist ', dist, 'inclination ', inclination)
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
         b_band = 'F438W'
     else:
@@ -284,6 +291,10 @@ for index in range(0, len(target_list)):
     target_name_hum_12 = np.array([target]*len(cluster_class_hum_12))
     target_name_hum_3 = np.array([target]*len(cluster_class_hum_3))
     target_name_hum = np.concatenate([target_name_hum, target_name_hum_12, target_name_hum_3])
+    incl_hum_12 = np.array([inclination]*len(cluster_class_hum_12))
+    incl_hum_3 = np.array([inclination]*len(cluster_class_hum_3))
+    incl_hum = np.concatenate([incl_hum, incl_hum_12, incl_hum_3])
+
 
     age_hum = np.concatenate([age_hum, age_hum_12, age_hum_3])
     ebv_hum = np.concatenate([ebv_hum, ebv_hum_12, ebv_hum_3])
@@ -403,6 +414,9 @@ for index in range(0, len(target_list)):
     target_name_ml_12 = np.array([target]*len(cluster_class_ml_12))
     target_name_ml_3 = np.array([target]*len(cluster_class_ml_3))
     target_name_ml = np.concatenate([target_name_ml, target_name_ml_12, target_name_ml_3])
+    incl_ml_12 = np.array([inclination]*len(cluster_class_ml_12))
+    incl_ml_3 = np.array([inclination]*len(cluster_class_ml_3))
+    incl_ml = np.concatenate([incl_ml, incl_ml_12, incl_ml_3])
 
     age_ml = np.concatenate([age_ml, age_ml_12, age_ml_3])
     ebv_ml = np.concatenate([ebv_ml, ebv_ml_12, ebv_ml_3])
@@ -411,6 +425,9 @@ for index in range(0, len(target_list)):
     dec_ml = np.concatenate([dec_ml, dec_ml_12, dec_ml_3])
     x_ml = np.concatenate([x_ml, x_ml_12, x_ml_3])
     y_ml = np.concatenate([y_ml, y_ml_12, y_ml_3])
+
+
+    print('max ebv', np.max(np.concatenate([ebv_ml_12, ebv_ml_3])))
 
     # now get magnitude cuts
     v_mag_hum_12 = catalog_access.get_hst_cc_band_vega_mag(target=target, band='F555W')
@@ -431,6 +448,7 @@ for index in range(0, len(target_list)):
     mag_mask_ml = np.concatenate([mag_mask_ml, selected_mag_ml])
 
 np.save('data_output/target_name_hum.npy', target_name_hum)
+np.save('data_output/incl_hum.npy', incl_hum)
 np.save('data_output/color_vi_hum.npy', color_vi_hum)
 np.save('data_output/color_ub_hum.npy', color_ub_hum)
 np.save('data_output/color_bv_hum.npy', color_bv_hum)
@@ -461,6 +479,7 @@ np.save('data_output/y_hum.npy', y_hum)
 
 
 np.save('data_output/target_name_ml.npy', target_name_ml)
+np.save('data_output/incl_ml.npy', incl_ml)
 np.save('data_output/color_vi_ml.npy', color_vi_ml)
 np.save('data_output/color_ub_ml.npy', color_ub_ml)
 np.save('data_output/color_bv_ml.npy', color_bv_ml)

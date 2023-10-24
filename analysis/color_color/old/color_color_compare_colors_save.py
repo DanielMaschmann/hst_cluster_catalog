@@ -286,17 +286,17 @@ hf.plot_reddening_vect(ax=ax[2, 2], x_color_1='v', x_color_2='i',  y_color_1='b'
                        linewidth=4, line_color='k', text=False, fontsize=fontsize)
 
 
-display_models(ax=ax[0, 0], age_label_fontsize=fontsize+2, label_sol=r'BC03, Z$_{\odot}$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
-display_models(ax=ax[0, 1], age_label_fontsize=fontsize+2)
-display_models(ax=ax[0, 2], age_label_fontsize=fontsize+2, age_labels=True)
+display_models(ax=ax[0, 0], age_label_fontsize=fontsize+2, age_labels=True)
+display_models(ax=ax[0, 1], age_label_fontsize=fontsize+2, label_sol=r'BC03, Z$_{\odot}$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
+display_models(ax=ax[0, 2], age_label_fontsize=fontsize+2)
 
-display_models(ax=ax[1, 0], age_label_fontsize=fontsize+2, y_color='ub')
+display_models(ax=ax[1, 0], age_label_fontsize=fontsize+2, y_color='ub', age_labels=True)
 display_models(ax=ax[1, 1], age_label_fontsize=fontsize+2, y_color='ub')
-display_models(ax=ax[1, 2], age_label_fontsize=fontsize+2, y_color='ub', age_labels=True)
+display_models(ax=ax[1, 2], age_label_fontsize=fontsize+2, y_color='ub')
 
-display_models(ax=ax[2, 0], age_label_fontsize=fontsize+2, y_color='bv')
+display_models(ax=ax[2, 0], age_label_fontsize=fontsize+2, y_color='bv', age_labels=True)
 display_models(ax=ax[2, 1], age_label_fontsize=fontsize+2, y_color='bv')
-display_models(ax=ax[2, 2], age_label_fontsize=fontsize+2, y_color='bv', age_labels=True)
+display_models(ax=ax[2, 2], age_label_fontsize=fontsize+2, y_color='bv')
 
 
 xedges = np.linspace(x_lim_vi[0], x_lim_vi[1], n_bins)
@@ -305,14 +305,14 @@ kernal_rad_width = (xedges[1] - xedges[0]) * kernal_std
 kernal_rad_hight = (yedges[1] - yedges[0]) * kernal_std
 # plot_kernel_std
 ellipse = Ellipse(xy=(-0.5, 2.8), width=kernal_rad_width, height=kernal_rad_hight, angle=0, edgecolor='r', fc='None', lw=2)
-ax[0, 1].add_patch(ellipse)
-ax[0, 1].text(-0.4, 2.8, 'Smoothing', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
+ax[0, 0].add_patch(ellipse)
+ax[0, 0].text(-0.4, 2.8, 'Smoothing', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
 
 
-ax[0, 0].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.23,
+ax[0, 0].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.15,
               'N=%i' % (sum(mask_class_1_hum * mask_good_colors_nuvbvi_hum)),
               horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[0, 1].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.15,
+ax[0, 1].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.23,
               'N=%i' % (sum(mask_class_2_hum * mask_good_colors_nuvbvi_hum)),
               horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
 ax[0, 2].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.05,
@@ -339,7 +339,7 @@ ax[2, 2].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_bv[0] + (y_lim
               'N=%i' % (sum(mask_class_3_hum * mask_good_colors_bvvi_hum)),
               horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
 
-ax[0, 0].legend(frameon=False, loc=3, #bbox_to_anchor=(0, 0.05),
+ax[0, 1].legend(frameon=False, loc=3, #bbox_to_anchor=(0, 0.05),
                 fontsize=fontsize-2)
 
 ax[0, 0].set_title('Class 1 (Human)', fontsize=fontsize)

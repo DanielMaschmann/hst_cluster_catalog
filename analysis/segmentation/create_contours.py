@@ -35,7 +35,7 @@ def fit_and_plot_line(ax, x_data, y_data, x_data_err, y_data_err, n_digits=2):
     dummy_y_data = helper_func.lin_func((lin_fit_result['gradient'], lin_fit_result['intersect']), x=dummy_x_data)
     ax.plot(dummy_x_data, dummy_y_data, color='k', linewidth=2, linestyle='--')
 
-    x_text_pos = 0.7
+    x_text_pos = 0.95
 
     text_anle = np.arctan(lin_fit_result['gradient']) * 180/np.pi
 
@@ -221,8 +221,10 @@ gauss_dict_ubvi_ml_3 = helper_func.gauss_weight_map(x_data=color_vi_ml[mask_clas
                                             x_lim=x_lim_vi, y_lim=y_lim_ub, n_bins=n_bins_ubvi,
                                             kernal_std=kernal_std)
 
-fig, ax = plt.subplots(ncols=3, nrows=4, figsize=(30, 40))
-fontsize = 35
+
+fig_nuvb, ax_nuvb = plt.subplots(ncols=3, nrows=2, figsize=(30, 20))
+fig_ub, ax_ub = plt.subplots(ncols=3, nrows=2, figsize=(30, 20))
+fontsize = 28
 
 contour_index_young = 2
 contour_index_mid = 3
@@ -232,7 +234,7 @@ contour_index_ogc_ubvi_hum_1 = 2
 contour_index_ogc_ubvi_ml_1 = 3
 
 cont_lvls_nuvbvi_hum_1 = [0.2, 0.24, 0.32, 0.5, 0.68, 0.95, 0.99]
-cont_lvls_nuvbvi_ml_1 = [0.2, 0.32, 0.435, 0.5, 0.68, 0.95, 0.99]
+cont_lvls_nuvbvi_ml_1 = [0.2, 0.32, 0.44, 0.5, 0.68, 0.95, 0.99]
 cont_lvls_ubvi_hum_1 = [0.2, 0.32, 0.37, 0.5, 0.68, 0.95, 0.99]
 cont_lvls_ubvi_ml_1 = [0.2, 0.32, 0.45, 0.5, 0.68, 0.95, 0.99]
 cont_lvls_3 = [0.2, 0.32, 0.5, 0.68, 0.95, 0.99]
@@ -240,21 +242,21 @@ cont_lvls_3 = [0.2, 0.32, 0.5, 0.68, 0.95, 0.99]
 
 
 
-plot_contour_map(ax=ax[0, 0], gauss_dict=gauss_dict_nuvbvi_hum_1, levels=cont_lvls_nuvbvi_hum_1)
-plot_contour_map(ax=ax[0, 1], gauss_dict=gauss_dict_nuvbvi_hum_2, plot_contours=False)
-plot_contour_map(ax=ax[0, 2], gauss_dict=gauss_dict_nuvbvi_hum_3, levels=cont_lvls_3)
+plot_contour_map(ax=ax_nuvb[0, 0], gauss_dict=gauss_dict_nuvbvi_hum_1, levels=cont_lvls_nuvbvi_hum_1)
+plot_contour_map(ax=ax_nuvb[0, 1], gauss_dict=gauss_dict_nuvbvi_hum_2, plot_contours=False)
+plot_contour_map(ax=ax_nuvb[0, 2], gauss_dict=gauss_dict_nuvbvi_hum_3, levels=cont_lvls_3)
 
-plot_contour_map(ax=ax[1, 0], gauss_dict=gauss_dict_nuvbvi_ml_1, levels=cont_lvls_nuvbvi_ml_1)
-plot_contour_map(ax=ax[1, 1], gauss_dict=gauss_dict_nuvbvi_ml_2, plot_contours=False)
-plot_contour_map(ax=ax[1, 2], gauss_dict=gauss_dict_nuvbvi_ml_3, levels=cont_lvls_3)
+plot_contour_map(ax=ax_nuvb[1, 0], gauss_dict=gauss_dict_nuvbvi_ml_1, levels=cont_lvls_nuvbvi_ml_1)
+plot_contour_map(ax=ax_nuvb[1, 1], gauss_dict=gauss_dict_nuvbvi_ml_2, plot_contours=False)
+plot_contour_map(ax=ax_nuvb[1, 2], gauss_dict=gauss_dict_nuvbvi_ml_3, levels=cont_lvls_3)
 
-plot_contour_map(ax=ax[2, 0], gauss_dict=gauss_dict_ubvi_hum_1, levels=cont_lvls_ubvi_hum_1)
-plot_contour_map(ax=ax[2, 1], gauss_dict=gauss_dict_ubvi_hum_2, plot_contours=False)
-plot_contour_map(ax=ax[2, 2], gauss_dict=gauss_dict_ubvi_hum_3, levels=cont_lvls_3)
+plot_contour_map(ax=ax_ub[0, 0], gauss_dict=gauss_dict_ubvi_hum_1, levels=cont_lvls_ubvi_hum_1)
+plot_contour_map(ax=ax_ub[0, 1], gauss_dict=gauss_dict_ubvi_hum_2, plot_contours=False)
+plot_contour_map(ax=ax_ub[0, 2], gauss_dict=gauss_dict_ubvi_hum_3, levels=cont_lvls_3)
 
-plot_contour_map(ax=ax[3, 0], gauss_dict=gauss_dict_ubvi_ml_1, levels=cont_lvls_ubvi_ml_1)
-plot_contour_map(ax=ax[3, 1], gauss_dict=gauss_dict_ubvi_ml_2, plot_contours=False)
-plot_contour_map(ax=ax[3, 2], gauss_dict=gauss_dict_ubvi_ml_3, levels=cont_lvls_3)
+plot_contour_map(ax=ax_ub[1, 0], gauss_dict=gauss_dict_ubvi_ml_1, levels=cont_lvls_ubvi_ml_1)
+plot_contour_map(ax=ax_ub[1, 1], gauss_dict=gauss_dict_ubvi_ml_2, plot_contours=False)
+plot_contour_map(ax=ax_ub[1, 2], gauss_dict=gauss_dict_ubvi_ml_3, levels=cont_lvls_3)
 
 
 vi_hull_ogc_nuvbvi_hum_1, nuvb_hull_ogc_nuvbvi_hum_1 = helper_func.contour2hulll(gauss_dict_nuvbvi_hum_1, levels=cont_lvls_nuvbvi_hum_1,
@@ -298,55 +300,55 @@ in_hull_young_ubvi_ml_3 = helper_func.points_in_hull(np.array([color_vi_ml, colo
 
 
 
-ax[0, 0].plot(vi_hull_ogc_nuvbvi_hum_1, nuvb_hull_ogc_nuvbvi_hum_1, linewidth=4, color='r')
-ax[1, 0].plot(vi_hull_ogc_nuvbvi_ml_1, nuvb_hull_ogc_nuvbvi_ml_1, linewidth=4, color='r')
-ax[2, 0].plot(vi_hull_ogc_ubvi_hum_1, ub_hull_ogc_ubvi_hum_1, linewidth=4, color='r')
-ax[3, 0].plot(vi_hull_ogc_ubvi_ml_1, ub_hull_ogc_ubvi_ml_1, linewidth=4, color='r')
+ax_nuvb[0, 0].plot(vi_hull_ogc_nuvbvi_hum_1, nuvb_hull_ogc_nuvbvi_hum_1, linewidth=4, color='r')
+ax_nuvb[1, 0].plot(vi_hull_ogc_nuvbvi_ml_1, nuvb_hull_ogc_nuvbvi_ml_1, linewidth=4, color='r')
+ax_ub[0, 0].plot(vi_hull_ogc_ubvi_hum_1, ub_hull_ogc_ubvi_hum_1, linewidth=4, color='r')
+ax_ub[1, 0].plot(vi_hull_ogc_ubvi_ml_1, ub_hull_ogc_ubvi_ml_1, linewidth=4, color='r')
 
-ax[0, 0].plot(vi_hull_mid_nuvbvi_hum_1, nuvb_hull_mid_nuvbvi_hum_1, linewidth=4, color='g')
-ax[1, 0].plot(vi_hull_mid_nuvbvi_ml_1, nuvb_hull_mid_nuvbvi_ml_1, linewidth=4, color='g')
-ax[2, 0].plot(vi_hull_mid_ubvi_hum_1, ub_hull_mid_ubvi_hum_1, linewidth=4, color='g')
-ax[3, 0].plot(vi_hull_mid_ubvi_ml_1, ub_hull_mid_ubvi_ml_1, linewidth=4, color='g')
+ax_nuvb[0, 0].plot(vi_hull_mid_nuvbvi_hum_1, nuvb_hull_mid_nuvbvi_hum_1, linewidth=4, color='g')
+ax_nuvb[1, 0].plot(vi_hull_mid_nuvbvi_ml_1, nuvb_hull_mid_nuvbvi_ml_1, linewidth=4, color='g')
+ax_ub[0, 0].plot(vi_hull_mid_ubvi_hum_1, ub_hull_mid_ubvi_hum_1, linewidth=4, color='g')
+ax_ub[1, 0].plot(vi_hull_mid_ubvi_ml_1, ub_hull_mid_ubvi_ml_1, linewidth=4, color='g')
 
-ax[0, 2].plot(vi_hull_young_nuvbvi_hum_3, nuvb_hull_young_nuvbvi_hum_3, linewidth=4, color='b')
-ax[1, 2].plot(vi_hull_young_nuvbvi_ml_3, nuvb_hull_young_nuvbvi_ml_3, linewidth=4, color='b')
-ax[2, 2].plot(vi_hull_young_ubvi_hum_3, ub_hull_young_ubvi_hum_3, linewidth=4, color='b')
-ax[3, 2].plot(vi_hull_young_ubvi_ml_3, ub_hull_young_ubvi_ml_3, linewidth=4, color='b')
-
-
-ax[0, 1].plot(vi_hull_ogc_nuvbvi_hum_1, nuvb_hull_ogc_nuvbvi_hum_1, linewidth=4, color='r')
-ax[1, 1].plot(vi_hull_ogc_nuvbvi_ml_1, nuvb_hull_ogc_nuvbvi_ml_1, linewidth=4, color='r')
-ax[2, 1].plot(vi_hull_ogc_ubvi_hum_1, ub_hull_ogc_ubvi_hum_1, linewidth=4, color='r')
-ax[3, 1].plot(vi_hull_ogc_ubvi_ml_1, ub_hull_ogc_ubvi_ml_1, linewidth=4, color='r')
-
-ax[0, 1].plot(vi_hull_mid_nuvbvi_hum_1, nuvb_hull_mid_nuvbvi_hum_1, linewidth=4, color='g')
-ax[1, 1].plot(vi_hull_mid_nuvbvi_ml_1, nuvb_hull_mid_nuvbvi_ml_1, linewidth=4, color='g')
-ax[2, 1].plot(vi_hull_mid_ubvi_hum_1, ub_hull_mid_ubvi_hum_1, linewidth=4, color='g')
-ax[3, 1].plot(vi_hull_mid_ubvi_ml_1, ub_hull_mid_ubvi_ml_1, linewidth=4, color='g')
-
-ax[0, 1].plot(vi_hull_young_nuvbvi_hum_3, nuvb_hull_young_nuvbvi_hum_3, linewidth=4, color='b')
-ax[1, 1].plot(vi_hull_young_nuvbvi_ml_3, nuvb_hull_young_nuvbvi_ml_3, linewidth=4, color='b')
-ax[2, 1].plot(vi_hull_young_ubvi_hum_3, ub_hull_young_ubvi_hum_3, linewidth=4, color='b')
-ax[3, 1].plot(vi_hull_young_ubvi_ml_3, ub_hull_young_ubvi_ml_3, linewidth=4, color='b')
+ax_nuvb[0, 2].plot(vi_hull_young_nuvbvi_hum_3, nuvb_hull_young_nuvbvi_hum_3, linewidth=4, color='b')
+ax_nuvb[1, 2].plot(vi_hull_young_nuvbvi_ml_3, nuvb_hull_young_nuvbvi_ml_3, linewidth=4, color='b')
+ax_ub[0, 2].plot(vi_hull_young_ubvi_hum_3, ub_hull_young_ubvi_hum_3, linewidth=4, color='b')
+ax_ub[1, 2].plot(vi_hull_young_ubvi_ml_3, ub_hull_young_ubvi_ml_3, linewidth=4, color='b')
 
 
+ax_nuvb[0, 1].plot(vi_hull_ogc_nuvbvi_hum_1, nuvb_hull_ogc_nuvbvi_hum_1, linewidth=4, color='r')
+ax_nuvb[1, 1].plot(vi_hull_ogc_nuvbvi_ml_1, nuvb_hull_ogc_nuvbvi_ml_1, linewidth=4, color='r')
+ax_ub[0, 1].plot(vi_hull_ogc_ubvi_hum_1, ub_hull_ogc_ubvi_hum_1, linewidth=4, color='r')
+ax_ub[1, 1].plot(vi_hull_ogc_ubvi_ml_1, ub_hull_ogc_ubvi_ml_1, linewidth=4, color='r')
 
-fit_and_plot_line(ax=ax[0, 2],
+ax_nuvb[0, 1].plot(vi_hull_mid_nuvbvi_hum_1, nuvb_hull_mid_nuvbvi_hum_1, linewidth=4, color='g')
+ax_nuvb[1, 1].plot(vi_hull_mid_nuvbvi_ml_1, nuvb_hull_mid_nuvbvi_ml_1, linewidth=4, color='g')
+ax_ub[0, 1].plot(vi_hull_mid_ubvi_hum_1, ub_hull_mid_ubvi_hum_1, linewidth=4, color='g')
+ax_ub[1, 1].plot(vi_hull_mid_ubvi_ml_1, ub_hull_mid_ubvi_ml_1, linewidth=4, color='g')
+
+ax_nuvb[0, 1].plot(vi_hull_young_nuvbvi_hum_3, nuvb_hull_young_nuvbvi_hum_3, linewidth=4, color='b')
+ax_nuvb[1, 1].plot(vi_hull_young_nuvbvi_ml_3, nuvb_hull_young_nuvbvi_ml_3, linewidth=4, color='b')
+ax_ub[0, 1].plot(vi_hull_young_ubvi_hum_3, ub_hull_young_ubvi_hum_3, linewidth=4, color='b')
+ax_ub[1, 1].plot(vi_hull_young_ubvi_ml_3, ub_hull_young_ubvi_ml_3, linewidth=4, color='b')
+
+
+
+fit_and_plot_line(ax=ax_nuvb[0, 2],
                   x_data=color_vi_hum[mask_class_3_hum * mask_good_colors_nuvbvi_hum * in_hull_young_nuvbvi_hum_3],
                   y_data=color_nuvb_hum[mask_class_3_hum * mask_good_colors_nuvbvi_hum * in_hull_young_nuvbvi_hum_3],
                   x_data_err=color_vi_err_hum[mask_class_3_hum * mask_good_colors_nuvbvi_hum * in_hull_young_nuvbvi_hum_3],
                   y_data_err=color_nuvb_err_hum[mask_class_3_hum * mask_good_colors_nuvbvi_hum * in_hull_young_nuvbvi_hum_3])
-fit_and_plot_line(ax=ax[1, 2],
+fit_and_plot_line(ax=ax_nuvb[1, 2],
                   x_data=color_vi_ml[mask_class_3_ml * mask_good_colors_nuvbvi_ml * in_hull_young_nuvbvi_ml_3],
                   y_data=color_nuvb_ml[mask_class_3_ml * mask_good_colors_nuvbvi_ml * in_hull_young_nuvbvi_ml_3],
                   x_data_err=color_vi_err_ml[mask_class_3_ml * mask_good_colors_nuvbvi_ml * in_hull_young_nuvbvi_ml_3],
                   y_data_err=color_nuvb_err_ml[mask_class_3_ml * mask_good_colors_nuvbvi_ml * in_hull_young_nuvbvi_ml_3])
-fit_and_plot_line(ax=ax[2, 2],
+fit_and_plot_line(ax=ax_ub[0, 2],
                   x_data=color_vi_hum[mask_class_3_hum * mask_good_colors_ubvi_hum * in_hull_young_ubvi_hum_3],
                   y_data=color_ub_hum[mask_class_3_hum * mask_good_colors_ubvi_hum * in_hull_young_ubvi_hum_3],
                   x_data_err=color_vi_err_hum[mask_class_3_hum * mask_good_colors_ubvi_hum * in_hull_young_ubvi_hum_3],
                   y_data_err=color_ub_err_hum[mask_class_3_hum * mask_good_colors_ubvi_hum * in_hull_young_ubvi_hum_3])
-fit_and_plot_line(ax=ax[3, 2],
+fit_and_plot_line(ax=ax_ub[1, 2],
                   x_data=color_vi_ml[mask_class_3_ml * mask_good_colors_ubvi_ml * in_hull_young_ubvi_ml_3],
                   y_data=color_ub_ml[mask_class_3_ml * mask_good_colors_ubvi_ml * in_hull_young_ubvi_ml_3],
                   x_data_err=color_vi_err_ml[mask_class_3_ml * mask_good_colors_ubvi_ml * in_hull_young_ubvi_ml_3],
@@ -380,203 +382,257 @@ print('slope_av_vector_ubvi ', slope_av_vector_ubvi)
 print('angle_av_vector_ubvi ', angle_av_vector_ubvi)
 
 
-ax[0, 2].text(vi_int-0.12, nuvb_int+0.05,
-              r'slope = %.2f' % (slope_av_vector_nuvbvi),
-              horizontalalignment='left', verticalalignment='center', transform_rotates_text=True, rotation_mode='anchor',
-              rotation=angle_av_vector_nuvbvi, fontsize=fontsize - 5)
-ax[2, 2].text(vi_int-0.12, ub_int+0.05,
-              r'slope = %.2f' % (slope_av_vector_ubvi),
-              horizontalalignment='left', verticalalignment='center', transform_rotates_text=True, rotation_mode='anchor',
-              rotation=angle_av_vector_ubvi, fontsize=fontsize - 5)
+ax_nuvb[0, 2].text(vi_int - 0.12, nuvb_int + 0.05, r'slope = %.2f' % slope_av_vector_nuvbvi,
+                   horizontalalignment='left', verticalalignment='center', transform_rotates_text=True,
+                   rotation_mode='anchor', rotation=angle_av_vector_nuvbvi, fontsize=fontsize - 5)
+ax_ub[0, 2].text(vi_int - 0.12, ub_int + 0.05, r'slope = %.2f' % slope_av_vector_ubvi,
+                 horizontalalignment='left', verticalalignment='center', transform_rotates_text=True,
+                 rotation_mode='anchor', rotation=angle_av_vector_ubvi, fontsize=fontsize - 5)
 
 
+helper_func.plot_reddening_vect(ax=ax_nuvb[0, 0], y_color_1='nuv', x_color_int=vi_int, y_color_int=nuvb_int,
+                                linewidth=4, text=True, fontsize=fontsize - 4, x_text_offset=-0.0, y_text_offset=-0.2)
+helper_func.plot_reddening_vect(ax=ax_nuvb[0, 1], y_color_1='nuv', x_color_int=vi_int, y_color_int=nuvb_int,
+                                linewidth=4, fontsize=fontsize)
+helper_func.plot_reddening_vect(ax=ax_nuvb[0, 2], y_color_1='nuv', x_color_int=vi_int, y_color_int=nuvb_int,
+                                linewidth=4, fontsize=fontsize)
+helper_func.plot_reddening_vect(ax=ax_nuvb[1, 0], y_color_1='nuv', x_color_int=vi_int, y_color_int=nuvb_int,
+                                linewidth=4,)
+helper_func.plot_reddening_vect(ax=ax_nuvb[1, 1], y_color_1='nuv', x_color_int=vi_int, y_color_int=nuvb_int,
+                                linewidth=4, fontsize=fontsize)
+helper_func.plot_reddening_vect(ax=ax_nuvb[1, 2], y_color_1='nuv', x_color_int=vi_int, y_color_int=nuvb_int,
+                                linewidth=4, fontsize=fontsize)
+helper_func.plot_reddening_vect(ax=ax_ub[0, 0], x_color_int=vi_int, y_color_int=ub_int, linewidth=4, fontsize=fontsize-4,
+                                text=True, x_text_offset=-+0.05, y_text_offset=-0.2)
+helper_func.plot_reddening_vect(ax=ax_ub[0, 1], x_color_int=vi_int, y_color_int=ub_int, linewidth=4, fontsize=fontsize)
+helper_func.plot_reddening_vect(ax=ax_ub[0, 2], x_color_int=vi_int, y_color_int=ub_int, linewidth=4, fontsize=fontsize)
+helper_func.plot_reddening_vect(ax=ax_ub[1, 0], x_color_int=vi_int, y_color_int=ub_int, linewidth=4, fontsize=fontsize)
+helper_func.plot_reddening_vect(ax=ax_ub[1, 1], x_color_int=vi_int, y_color_int=ub_int, linewidth=4, fontsize=fontsize)
+helper_func.plot_reddening_vect(ax=ax_ub[1, 2], x_color_int=vi_int, y_color_int=ub_int, linewidth=4, fontsize=fontsize)
 
 
-
-
-
-helper_func.plot_reddening_vect(ax=ax[0, 0], x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
-                       linewidth=4, line_color='k', text=True, fontsize=fontsize-4, x_text_offset=-0.1, y_text_offset=-0.3)
-helper_func.plot_reddening_vect(ax=ax[0, 1], x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-helper_func.plot_reddening_vect(ax=ax[0, 2], x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-helper_func.plot_reddening_vect(ax=ax[1, 0], x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize-4, x_text_offset=-0.1, y_text_offset=-0.3)
-helper_func.plot_reddening_vect(ax=ax[1, 1], x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-helper_func.plot_reddening_vect(ax=ax[1, 2], x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-helper_func.plot_reddening_vect(ax=ax[2, 0], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-helper_func.plot_reddening_vect(ax=ax[2, 1], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-helper_func.plot_reddening_vect(ax=ax[2, 2], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-helper_func.plot_reddening_vect(ax=ax[3, 0], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-helper_func.plot_reddening_vect(ax=ax[3, 1], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-helper_func.plot_reddening_vect(ax=ax[3, 2], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
-                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
-                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
-
-
-helper_func.display_models(ax=ax[0, 0], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_nuvb[0, 0], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_nuvb_sol50, age_sol50=age_mod_sol50,
                            age_label_fontsize=fontsize+2, label_sol=r'BC03, Z$_{\odot}$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
-helper_func.display_models(ax=ax[0, 1], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_nuvb[0, 1], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_nuvb_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[0, 2], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_nuvb[0, 2], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_nuvb_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[1, 0], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_nuvb[1, 0], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_nuvb_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[1, 1], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_nuvb[1, 1], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_nuvb_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[1, 2], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_nuvb[1, 2], x_color_sol=model_vi_sol, y_color_sol=model_nuvb_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_nuvb_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[2, 0], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
+
+helper_func.display_models(ax=ax_ub[0, 0], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
+                           x_color_sol50=model_vi_sol50, y_color_sol50=model_ub_sol50, age_sol50=age_mod_sol50,
+                           age_label_fontsize=fontsize+2, label_sol=r'BC03, Z$_{\odot}$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
+helper_func.display_models(ax=ax_ub[0, 1], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_ub_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[2, 1], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_ub[0, 2], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_ub_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[2, 2], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_ub[1, 0], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_ub_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[3, 0], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_ub[1, 1], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_ub_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[3, 1], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
-                           x_color_sol50=model_vi_sol50, y_color_sol50=model_ub_sol50, age_sol50=age_mod_sol50,)
-helper_func.display_models(ax=ax[3, 2], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
+helper_func.display_models(ax=ax_ub[1, 2], x_color_sol=model_vi_sol, y_color_sol=model_ub_sol, age_sol=age_mod_sol,
                            x_color_sol50=model_vi_sol50, y_color_sol50=model_ub_sol50, age_sol50=age_mod_sol50,)
 
 
-ax[0, 0].set_title('Class 1', fontsize=fontsize)
-ax[0, 1].set_title('Class 2', fontsize=fontsize)
-ax[0, 2].set_title('Compact Association', fontsize=fontsize)
+ax_nuvb[0, 0].text(0.02, 0.95, 'a)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_nuvb[0, 0].transAxes)
+ax_nuvb[0, 1].text(0.02, 0.95, 'b)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_nuvb[0, 1].transAxes)
+ax_nuvb[0, 2].text(0.02, 0.95, 'c)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_nuvb[0, 2].transAxes)
+ax_nuvb[1, 0].text(0.02, 0.95, 'd)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_nuvb[1, 0].transAxes)
+ax_nuvb[1, 1].text(0.02, 0.95, 'e)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_nuvb[1, 1].transAxes)
+ax_nuvb[1, 2].text(0.02, 0.95, 'f)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_nuvb[1, 2].transAxes)
 
-ax[3, 0].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
-ax[3, 1].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
-ax[3, 2].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax_ub[0, 0].text(0.02, 0.95, 'a)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_ub[0, 0].transAxes)
+ax_ub[0, 1].text(0.02, 0.95, 'b)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_ub[0, 1].transAxes)
+ax_ub[0, 2].text(0.02, 0.95, 'c)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_ub[0, 2].transAxes)
+ax_ub[1, 0].text(0.02, 0.95, 'd)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_ub[1, 0].transAxes)
+ax_ub[1, 1].text(0.02, 0.95, 'e)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_ub[1, 1].transAxes)
+ax_ub[1, 2].text(0.02, 0.95, 'f)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax_ub[1, 2].transAxes)
 
-ax[0, 0].set_ylabel('NUV (F275W) - B (F438W/F435W'+'$^*$'+')',labelpad=30, fontsize=fontsize)
-ax[1, 0].set_ylabel('NUV (F275W) - B (F438W/F435W'+'$^*$'+')',labelpad=30, fontsize=fontsize)
-ax[2, 0].set_ylabel('U (F336W) - B (F438W/F435W'+'$^*$'+')',labelpad=0, fontsize=fontsize)
-ax[3, 0].set_ylabel('U (F336W) - B (F438W/F435W'+'$^*$'+')',labelpad=0, fontsize=fontsize)
+
+ax_nuvb[0, 0].set_title('Class 1 \n Symmetric Clusters', fontsize=fontsize)
+ax_nuvb[0, 1].set_title('Class 2 \n Asymmetric Clusters', fontsize=fontsize)
+ax_nuvb[0, 2].set_title('Class 3 \n Compact Association', fontsize=fontsize)
+
+ax_ub[0, 0].set_title('Class 1 \n Symmetric Clusters', fontsize=fontsize)
+ax_ub[0, 1].set_title('Class 2 \n Asymmetric Clusters', fontsize=fontsize)
+ax_ub[0, 2].set_title('Class 3 \n Compact Association', fontsize=fontsize)
 
 
-ax[0, 0].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.23,
-              'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[0, 1].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.15,
-              'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[0, 2].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.05,
-              'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[1, 0].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.05,
-              'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[1, 1].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.05,
-              'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[1, 2].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_nuvb[0] + (y_lim_nuvb[1]-y_lim_nuvb[0])*0.05,
-              'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
+ax_nuvb[1, 0].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax_nuvb[1, 1].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax_nuvb[1, 2].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
 
-ax[2, 0].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_ub[0] + (y_lim_ub[1]-y_lim_ub[0])*0.05,
-              'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[2, 1].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_ub[0] + (y_lim_ub[1]-y_lim_ub[0])*0.05,
-              'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[2, 2].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_ub[0] + (y_lim_ub[1]-y_lim_ub[0])*0.05,
-              'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[3, 0].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_ub[0] + (y_lim_ub[1]-y_lim_ub[0])*0.05,
-              'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[3, 1].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_ub[0] + (y_lim_ub[1]-y_lim_ub[0])*0.05,
-              'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
-ax[3, 2].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_ub[0] + (y_lim_ub[1]-y_lim_ub[0])*0.05,
-              'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
+ax_ub[1, 0].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax_ub[1, 1].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
+ax_ub[1, 2].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
 
-xedges = np.linspace(x_lim_vi[0], x_lim_vi[1], n_bins_nuvbvi)
-yedges = np.linspace(y_lim_nuvb[0], y_lim_nuvb[1], n_bins_nuvbvi)
-kernal_rad_width = (xedges[1] - xedges[0]) * kernal_std
-kernal_rad_hight = (yedges[1] - yedges[0]) * kernal_std
+ax_nuvb[0, 0].set_ylabel('NUV (F275W) - B (F438W/F435W'+'$^*$'+')',labelpad=30, fontsize=fontsize)
+ax_nuvb[1, 0].set_ylabel('NUV (F275W) - B (F438W/F435W'+'$^*$'+')',labelpad=30, fontsize=fontsize)
+ax_ub[0, 0].set_ylabel('U (F336W) - B (F438W/F435W'+'$^*$'+')',labelpad=0, fontsize=fontsize)
+ax_ub[1, 0].set_ylabel('U (F336W) - B (F438W/F435W'+'$^*$'+')',labelpad=0, fontsize=fontsize)
+
+
+ax_nuvb[0, 0].text(0.03, 0.18, 'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_nuvb[0, 0].transAxes)
+ax_nuvb[0, 1].text(0.03, 0.15, 'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_nuvb[0, 1].transAxes)
+ax_nuvb[0, 2].text(0.03, 0.05, 'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_nuvb[0, 2].transAxes)
+ax_nuvb[1, 0].text(0.03, 0.05, 'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_nuvb[1, 0].transAxes)
+ax_nuvb[1, 1].text(0.03, 0.05, 'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_nuvb[1, 1].transAxes)
+ax_nuvb[1, 2].text(0.03, 0.05, 'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_nuvb[1, 2].transAxes)
+
+ax_ub[0, 0].text(0.03, 0.18, 'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_ub[0, 0].transAxes)
+ax_ub[0, 1].text(0.03, 0.15, 'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_ub[0, 1].transAxes)
+ax_ub[0, 2].text(0.03, 0.05, 'Hum', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_ub[0, 2].transAxes)
+ax_ub[1, 0].text(0.03, 0.05, 'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_ub[1, 0].transAxes)
+ax_ub[1, 1].text(0.03, 0.05, 'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_ub[1, 1].transAxes)
+ax_ub[1, 2].text(0.03, 0.05, 'ML', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+                   transform=ax_ub[1, 2].transAxes)
+
+
+xedges_vi = np.linspace(x_lim_vi[0], x_lim_vi[1], n_bins_nuvbvi)
+yedges_nuvb = np.linspace(y_lim_nuvb[0], y_lim_nuvb[1], n_bins_nuvbvi)
+yedges_ub = np.linspace(y_lim_ub[0], y_lim_ub[1], n_bins_nuvbvi)
+kernal_rad_width = (xedges_vi[1] - xedges_vi[0]) * kernal_std
+kernal_rad_hight_nuvb = (yedges_nuvb[1] - yedges_nuvb[0]) * kernal_std
+kernal_rad_hight_ub = (yedges_ub[1] - yedges_ub[0]) * kernal_std
 # plot_kernel_std
-ellipse = Ellipse(xy=(-0.5, 2.0), width=kernal_rad_width, height=kernal_rad_hight, angle=0, edgecolor='k', fc='None', lw=2)
-ax[0, 1].add_patch(ellipse)
-ax[0, 1].text(-0.4, 2.0, 'Smoothing', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
+ellipse = Ellipse(xy=(-0.58, 2.0), width=kernal_rad_width, height=kernal_rad_hight_nuvb, angle=0., edgecolor='k',
+                  fc='None', lw=2)
+ax_nuvb[0, 1].add_patch(ellipse)
+ax_nuvb[0, 1].text(-0.48, 2.0, 'Smoothing', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
+ax_nuvb[0, 0].legend(frameon=False, loc=3, fontsize=fontsize-2)
 
-ax[0, 0].legend(frameon=False, loc=3, #bbox_to_anchor=(0, 0.05),
-                fontsize=fontsize-2)
-
-
-ax[0, 0].set_xticks([])
-ax[0, 1].set_xticks([])
-ax[0, 2].set_xticks([])
-ax[1, 0].set_xticks([])
-ax[1, 1].set_xticks([])
-ax[1, 2].set_xticks([])
-ax[2, 0].set_xticks([])
-ax[2, 1].set_xticks([])
-ax[2, 2].set_xticks([])
+# plot_kernel_std
+ellipse = Ellipse(xy=(-0.58, 1.0), width=kernal_rad_width, height=kernal_rad_hight_ub, angle=0., edgecolor='k',
+                  fc='None', lw=2)
+ax_ub[0, 1].add_patch(ellipse)
+ax_ub[0, 1].text(-0.48, 1.0, 'Smoothing', horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
+ax_ub[0, 0].legend(frameon=False, loc=3, fontsize=fontsize-2)
 
 
-ax[0, 1].set_yticks([])
-ax[0, 2].set_yticks([])
-ax[1, 1].set_yticks([])
-ax[1, 2].set_yticks([])
-ax[2, 1].set_yticks([])
-ax[2, 2].set_yticks([])
-ax[3, 1].set_yticks([])
-ax[3, 2].set_yticks([])
+ax_nuvb[0, 0].set_xticklabels([])
+ax_nuvb[0, 1].set_xticklabels([])
+ax_nuvb[0, 2].set_xticklabels([])
+ax_ub[0, 0].set_xticklabels([])
+ax_ub[0, 1].set_xticklabels([])
+ax_ub[0, 2].set_xticklabels([])
 
 
-ax[0, 0].set_xlim(x_lim_vi)
-ax[0, 1].set_xlim(x_lim_vi)
-ax[0, 2].set_xlim(x_lim_vi)
-ax[1, 0].set_xlim(x_lim_vi)
-ax[1, 1].set_xlim(x_lim_vi)
-ax[1, 2].set_xlim(x_lim_vi)
-ax[2, 0].set_xlim(x_lim_vi)
-ax[2, 1].set_xlim(x_lim_vi)
-ax[2, 2].set_xlim(x_lim_vi)
-ax[3, 0].set_xlim(x_lim_vi)
-ax[3, 1].set_xlim(x_lim_vi)
-ax[3, 2].set_xlim(x_lim_vi)
-
-ax[0, 0].set_ylim(y_lim_nuvb)
-ax[0, 1].set_ylim(y_lim_nuvb)
-ax[0, 2].set_ylim(y_lim_nuvb)
-ax[1, 0].set_ylim(y_lim_nuvb)
-ax[1, 1].set_ylim(y_lim_nuvb)
-ax[1, 2].set_ylim(y_lim_nuvb)
-ax[2, 0].set_ylim(y_lim_ub)
-ax[2, 1].set_ylim(y_lim_ub)
-ax[2, 2].set_ylim(y_lim_ub)
-ax[3, 0].set_ylim(y_lim_ub)
-ax[3, 1].set_ylim(y_lim_ub)
-ax[3, 2].set_ylim(y_lim_ub)
-
-ax[0, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[0, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[0, 2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[1, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[1, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[1, 2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[2, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[2, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[2, 2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[3, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[3, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax[3, 2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_nuvb[0, 1].set_yticklabels([])
+ax_nuvb[0, 2].set_yticklabels([])
+ax_nuvb[1, 1].set_yticklabels([])
+ax_nuvb[1, 2].set_yticklabels([])
+ax_ub[0, 1].set_yticklabels([])
+ax_ub[0, 2].set_yticklabels([])
+ax_ub[1, 1].set_yticklabels([])
+ax_ub[1, 2].set_yticklabels([])
 
 
-fig.subplots_adjust(left=0.06, bottom=0.04, right=0.995, top=0.98, wspace=0.01, hspace=0.01)
-fig.savefig('plot_output/contour_maps.pdf')
-fig.savefig('plot_output/contour_maps.png')
+ax_nuvb[0, 0].set_xlim(x_lim_vi)
+ax_nuvb[0, 1].set_xlim(x_lim_vi)
+ax_nuvb[0, 2].set_xlim(x_lim_vi)
+ax_nuvb[1, 0].set_xlim(x_lim_vi)
+ax_nuvb[1, 1].set_xlim(x_lim_vi)
+ax_nuvb[1, 2].set_xlim(x_lim_vi)
+ax_ub[0, 0].set_xlim(x_lim_vi)
+ax_ub[0, 1].set_xlim(x_lim_vi)
+ax_ub[0, 2].set_xlim(x_lim_vi)
+ax_ub[1, 0].set_xlim(x_lim_vi)
+ax_ub[1, 1].set_xlim(x_lim_vi)
+ax_ub[1, 2].set_xlim(x_lim_vi)
+
+ax_nuvb[0, 0].set_ylim(y_lim_nuvb)
+ax_nuvb[0, 1].set_ylim(y_lim_nuvb)
+ax_nuvb[0, 2].set_ylim(y_lim_nuvb)
+ax_nuvb[1, 0].set_ylim(y_lim_nuvb)
+ax_nuvb[1, 1].set_ylim(y_lim_nuvb)
+ax_nuvb[1, 2].set_ylim(y_lim_nuvb)
+ax_ub[0, 0].set_ylim(y_lim_ub)
+ax_ub[0, 1].set_ylim(y_lim_ub)
+ax_ub[0, 2].set_ylim(y_lim_ub)
+ax_ub[1, 0].set_ylim(y_lim_ub)
+ax_ub[1, 1].set_ylim(y_lim_ub)
+ax_ub[1, 2].set_ylim(y_lim_ub)
+
+ax_nuvb[0, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_nuvb[0, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_nuvb[0, 2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_nuvb[1, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_nuvb[1, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_nuvb[1, 2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_ub[0, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_ub[0, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_ub[0, 2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_ub[1, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_ub[1, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax_ub[1, 2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+
+
+fig_nuvb.subplots_adjust(left=0.05, bottom=0.05, right=0.995, top=0.95, wspace=0.01, hspace=0.01)
+fig_nuvb.savefig('plot_output/contour_maps_nuvbvi.pdf')
+fig_nuvb.savefig('plot_output/contour_maps_nuvbvi.png')
+
+fig_ub.subplots_adjust(left=0.05, bottom=0.05, right=0.995, top=0.95, wspace=0.01, hspace=0.01)
+fig_ub.savefig('plot_output/contour_maps_ubvi.pdf')
+fig_ub.savefig('plot_output/contour_maps_ubvi.png')
+
+
+# save hulls
+np.save('data_output/vi_hull_ogc_nuvbvi_hum_1.npy', vi_hull_ogc_nuvbvi_hum_1)
+np.save('data_output/nuvb_hull_ogc_nuvbvi_hum_1.npy', nuvb_hull_ogc_nuvbvi_hum_1)
+np.save('data_output/vi_hull_ogc_nuvbvi_ml_1.npy', vi_hull_ogc_nuvbvi_ml_1)
+np.save('data_output/nuvb_hull_ogc_nuvbvi_ml_1.npy', nuvb_hull_ogc_nuvbvi_ml_1)
+np.save('data_output/vi_hull_ogc_ubvi_hum_1.npy', vi_hull_ogc_ubvi_hum_1)
+np.save('data_output/ub_hull_ogc_ubvi_hum_1.npy', ub_hull_ogc_ubvi_hum_1)
+np.save('data_output/vi_hull_ogc_ubvi_ml_1.npy', vi_hull_ogc_ubvi_ml_1)
+np.save('data_output/ub_hull_ogc_ubvi_ml_1.npy', ub_hull_ogc_ubvi_ml_1)
+np.save('data_output/vi_hull_mid_nuvbvi_hum_1.npy', vi_hull_mid_nuvbvi_hum_1)
+np.save('data_output/nuvb_hull_mid_nuvbvi_hum_1.npy', nuvb_hull_mid_nuvbvi_hum_1)
+np.save('data_output/vi_hull_mid_nuvbvi_ml_1.npy', vi_hull_mid_nuvbvi_ml_1)
+np.save('data_output/nuvb_hull_mid_nuvbvi_ml_1.npy', nuvb_hull_mid_nuvbvi_ml_1)
+np.save('data_output/vi_hull_mid_ubvi_hum_1.npy', vi_hull_mid_ubvi_hum_1)
+np.save('data_output/ub_hull_mid_ubvi_hum_1.npy', ub_hull_mid_ubvi_hum_1)
+np.save('data_output/vi_hull_mid_ubvi_ml_1.npy', vi_hull_mid_ubvi_ml_1)
+np.save('data_output/ub_hull_mid_ubvi_ml_1.npy', ub_hull_mid_ubvi_ml_1)
+np.save('data_output/vi_hull_young_nuvbvi_hum_3.npy', vi_hull_young_nuvbvi_hum_3)
+np.save('data_output/nuvb_hull_young_nuvbvi_hum_3.npy', nuvb_hull_young_nuvbvi_hum_3)
+np.save('data_output/vi_hull_young_nuvbvi_ml_3.npy', vi_hull_young_nuvbvi_ml_3)
+np.save('data_output/nuvb_hull_young_nuvbvi_ml_3.npy', nuvb_hull_young_nuvbvi_ml_3)
+np.save('data_output/vi_hull_young_ubvi_hum_3.npy', vi_hull_young_ubvi_hum_3)
+np.save('data_output/ub_hull_young_ubvi_hum_3.npy', ub_hull_young_ubvi_hum_3)
+np.save('data_output/vi_hull_young_ubvi_ml_3.npy', vi_hull_young_ubvi_ml_3)
+np.save('data_output/ub_hull_young_ubvi_ml_3.npy', ub_hull_young_ubvi_ml_3)
+
+
+
 
 
 

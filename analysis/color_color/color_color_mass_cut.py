@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 from photometry_tools import helper_func
+from matplotlib import patheffects
 
 nuvb_label_dict = {
     1: {'offsets': [0.1, -0.1], 'ha':'center', 'va':'bottom', 'label': r'1,2,3 Myr'},
@@ -10,7 +11,7 @@ nuvb_label_dict = {
     100: {'offsets': [-0.1, 0.0], 'ha':'right', 'va':'center', 'label': r'100 Myr'}
 }
 ub_label_dict = {
-    1: {'offsets': [0.1, -0.1], 'ha':'center', 'va':'bottom', 'label': r'1,2,3 Myr'},
+    1: {'offsets': [0.2, -0.1], 'ha':'center', 'va':'bottom', 'label': r'1,2,3 Myr'},
     5: {'offsets': [0.05, 0.1], 'ha':'right', 'va':'top', 'label': r'5 Myr'},
     10: {'offsets': [0.1, -0.2], 'ha':'left', 'va':'bottom', 'label': r'10 Myr'},
     100: {'offsets': [-0.1, 0.0], 'ha':'right', 'va':'center', 'label': r'100 Myr'}
@@ -70,35 +71,45 @@ def display_models(ax, y_color='nuvb',
 
     if age_labels:
         label_dict = globals()['%s_label_dict' % y_color]
+        pe = [patheffects.withStroke(linewidth=3, foreground="w")]
         for age in label_dict.keys():
+
             ax.text(model_vi_sol[age_mod_sol == age]+label_dict[age]['offsets'][0],
                     y_model_sol[age_mod_sol == age]+label_dict[age]['offsets'][1],
                     label_dict[age]['label'], horizontalalignment=label_dict[age]['ha'], verticalalignment=label_dict[age]['va'],
-                    color=age_label_color, fontsize=age_label_fontsize)
-
+                    color=age_label_color, fontsize=age_label_fontsize,
+                    path_effects=pe)
 
         annotation_dict = globals()['%s_annotation_dict' % y_color]
         for age in annotation_dict.keys():
 
-            ax.annotate(' ', #annotation_dict[age]['label'],
+            txt_sol = ax.annotate(' ', #annotation_dict[age]['label'],
                         xy=(model_vi_sol[age_mod_sol == age], y_model_sol[age_mod_sol == age]),
                         xytext=(model_vi_sol[age_mod_sol == age]+annotation_dict[age]['offset'][0],
                                 y_model_sol[age_mod_sol == age]+annotation_dict[age]['offset'][1]),
                         fontsize=age_label_fontsize, xycoords='data', textcoords='data', color=age_label_color,
                         ha=annotation_dict[age]['ha'], va=annotation_dict[age]['va'], zorder=30,
-                              arrowprops=dict(arrowstyle='-|>', color='darkcyan', lw=3, ls='-'))
-            ax.annotate(' ',
+                              arrowprops=dict(arrowstyle='-|>', color='darkcyan', lw=3, ls='-'),
+                        path_effects=[patheffects.withStroke(linewidth=3,
+                                                        foreground="w")])
+            txt_sol.arrow_patch.set_path_effects([patheffects.Stroke(linewidth=5, foreground="w"),
+                                                  patheffects.Normal()])
+            txt_sol50 = ax.annotate(' ',
                         xy=(model_vi_sol50[age_mod_sol50 == age], y_model_sol50[age_mod_sol50 == age]),
                         xytext=(model_vi_sol[age_mod_sol == age]+annotation_dict[age]['offset'][0],
                                 y_model_sol[age_mod_sol == age]+annotation_dict[age]['offset'][1]),
                         fontsize=age_label_fontsize, xycoords='data', textcoords='data',
                         ha=annotation_dict[age]['ha'], va=annotation_dict[age]['va'], zorder=30,
-                              arrowprops=dict(arrowstyle='-|>', color='darkviolet', lw=3, ls='-'))
+                              arrowprops=dict(arrowstyle='-|>', color='darkviolet', lw=3, ls='-'),
+                        path_effects=[patheffects.withStroke(linewidth=3,
+                                                        foreground="w")])
+            txt_sol50.arrow_patch.set_path_effects([patheffects.Stroke(linewidth=5, foreground="w"),
+                                                  patheffects.Normal()])
             ax.text(model_vi_sol[age_mod_sol == age]+annotation_dict[age]['offset'][0],
                     y_model_sol[age_mod_sol == age]+annotation_dict[age]['offset'][1],
                     annotation_dict[age]['label'],
                     horizontalalignment=annotation_dict[age]['ha'], verticalalignment=annotation_dict[age]['va'],
-                    color=age_label_color, fontsize=age_label_fontsize, zorder=40)
+                    color=age_label_color, fontsize=age_label_fontsize, zorder=40, path_effects=pe)
 
 
 age_mod_sol = np.load('data_output/age_mod_sol.npy')
@@ -196,12 +207,12 @@ mask_mass_3_hum = mass_hum < 5000
 # print('ML C1 + C2 ', sum((mass_ml < 1e4)*mask_class_ml_12), ' of ', sum(mask_class_ml_12), ' have masses < 1e4 M_sol. in fraction this is: ', sum((mass_ml < 1e4)*mask_class_ml_12) / sum(mask_class_ml_12))
 # exit()
 
-print('HUM C1 + C2 + C3 ', sum(mass_hum < 1e5), ' of ',  len(mass_hum), ' have masses < 1e5 M_sol. in fraction this is: ', sum(mass_hum < 1e5) / len(mass_hum))
-print('ML C1 + C2 + C3 ', sum(mass_ml < 1e5), ' of ',  len(mass_ml), ' have masses < 1e5 M_sol. in fraction this is: ', sum(mass_ml < 1e5) / len(mass_ml))
-
-print('HUM C1 + C2 ', sum((mass_hum < 1e5)*mask_class_hum_12), ' of ', sum(mask_class_hum_12), ' have masses < 1e5 M_sol. in fraction this is: ', sum((mass_hum < 1e5)*mask_class_hum_12) / sum(mask_class_hum_12))
-print('ML C1 + C2 ', sum((mass_ml < 1e5)*mask_class_ml_12), ' of ', sum(mask_class_ml_12), ' have masses < 1e5 M_sol. in fraction this is: ', sum((mass_ml < 1e5)*mask_class_ml_12) / sum(mask_class_ml_12))
-exit()
+# print('HUM C1 + C2 + C3 ', sum(mass_hum < 1e5), ' of ',  len(mass_hum), ' have masses < 1e5 M_sol. in fraction this is: ', sum(mass_hum < 1e5) / len(mass_hum))
+# print('ML C1 + C2 + C3 ', sum(mass_ml < 1e5), ' of ',  len(mass_ml), ' have masses < 1e5 M_sol. in fraction this is: ', sum(mass_ml < 1e5) / len(mass_ml))
+#
+# print('HUM C1 + C2 ', sum((mass_hum < 1e5)*mask_class_hum_12), ' of ', sum(mask_class_hum_12), ' have masses < 1e5 M_sol. in fraction this is: ', sum((mass_hum < 1e5)*mask_class_hum_12) / sum(mask_class_hum_12))
+# print('ML C1 + C2 ', sum((mass_ml < 1e5)*mask_class_ml_12), ' of ', sum(mask_class_ml_12), ' have masses < 1e5 M_sol. in fraction this is: ', sum((mass_ml < 1e5)*mask_class_ml_12) / sum(mask_class_ml_12))
+# exit()
 
 fig, ax = plt.subplots(ncols=3, nrows=1, sharex='all', sharey='row', figsize=(22, 8))
 fontsize = 23
@@ -222,12 +233,12 @@ helper_func.density_with_points(ax=ax[2], x=color_vi_ml[mask_class_ml_12 * mask_
                     biny=np.linspace(y_lim_ub[1], y_lim_ub[0], n_bins),
                     kernel_std=kernal_std)
 
-display_models(ax=ax[0], y_color='ub')
+display_models(ax=ax[0], y_color='ub', age_labels=True, age_label_fontsize=fontsize)
 display_models(ax=ax[1], y_color='ub')
 display_models(ax=ax[2], y_color='ub', label_sol=r'BC03, Z$_{\odot}$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
 
 vi_int = 1.5
-ub_int = -1.9
+ub_int = -1.3
 av_value = 1
 
 helper_func.plot_reddening_vect(ax=ax[0], x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
@@ -256,10 +267,25 @@ ax[0].text(-0.6, 1.85, 'N=%i' % (sum(mask_class_ml_12 * mask_mass_1_ml)), horizo
 ax[1].text(-0.6, 1.55, 'N=%i' % (sum(mask_class_ml_12 * mask_mass_2_ml)), horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
 ax[2].text(-0.6, 1.2, 'N=%i' % (sum(mask_class_ml_12 * mask_mass_3_ml)), horizontalalignment='left', verticalalignment='center', fontsize=fontsize)
 
+pe = [patheffects.withStroke(linewidth=3, foreground="w")]
+ax[0].text(0.02, 0.95, 'a)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[0].transAxes, path_effects=pe)
+ax[1].text(0.02, 0.95, 'b)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[1].transAxes, path_effects=pe)
+ax[2].text(0.02, 0.95, 'c)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[2].transAxes, path_effects=pe)
 
-ax[0].set_title(r'ML Class 1|2,     M$_{*}$ > 10$^{4} {\rm M_{\odot}}$', fontsize=fontsize)
-ax[1].set_title(r'ML Class 1|2,     5 x 10$^{3} {\rm M_{\odot}}$ < M$_{*}$ < 10$^{4} {\rm M_{\odot}}$', fontsize=fontsize)
-ax[2].set_title(r'ML Class 1|2,     M$_{*}$ < 5 x 10$^{3} {\rm M_{\odot}}$', fontsize=fontsize)
+ax[0].text(0.95, 0.95, r'M$_{*}$ > 10$^{4} {\rm M_{\odot}}$', horizontalalignment='right', verticalalignment='center', fontsize=fontsize,
+              transform=ax[0].transAxes, path_effects=pe)
+ax[1].text(0.95, 0.95, r'5 x 10$^{3} {\rm M_{\odot}}$ < M$_{*}$ < 10$^{4} {\rm M_{\odot}}$', horizontalalignment='right', verticalalignment='center', fontsize=fontsize,
+              transform=ax[1].transAxes, path_effects=pe)
+ax[2].text(0.95, 0.95, r'M$_{*}$ < 5 x 10$^{3} {\rm M_{\odot}}$', horizontalalignment='right', verticalalignment='center', fontsize=fontsize,
+              transform=ax[2].transAxes, path_effects=pe)
+
+
+ax[0].set_title(r'Class 1+2 Clusters (ML)', fontsize=fontsize)
+ax[1].set_title(r'Class 1+2 Clusters (ML)', fontsize=fontsize)
+ax[2].set_title(r'Class 1+2 Clusters (ML)', fontsize=fontsize)
 
 ax[0].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
 ax[1].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)

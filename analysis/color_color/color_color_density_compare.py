@@ -2,25 +2,26 @@ import numpy as np
 from photometry_tools import helper_func as hf
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
+from matplotlib import patheffects
 
 
 nuvb_label_dict = {
-    1: {'offsets': [0.1, -0.1], 'ha':'center', 'va':'bottom', 'label': r'1,2,3 Myr'},
-    5: {'offsets': [0.05, 0.1], 'ha':'right', 'va':'top', 'label': r'5 Myr'},
-    10: {'offsets': [0.1, -0.2], 'ha':'left', 'va':'bottom', 'label': r'10 Myr'},
-    100: {'offsets': [-0.1, 0.0], 'ha':'right', 'va':'center', 'label': r'100 Myr'}
+    1: {'offsets': [0.25, -0.1], 'ha': 'center', 'va': 'bottom', 'label': r'1,2,3 Myr'},
+    5: {'offsets': [0.05, 0.1], 'ha': 'right', 'va': 'top', 'label': r'5 Myr'},
+    10: {'offsets': [0.1, -0.2], 'ha': 'left', 'va': 'bottom', 'label': r'10 Myr'},
+    100: {'offsets': [-0.1, 0.0], 'ha': 'right', 'va': 'center', 'label': r'100 Myr'}
 }
 ub_label_dict = {
-    1: {'offsets': [0.1, -0.1], 'ha':'center', 'va':'bottom', 'label': r'1,2,3 Myr'},
-    5: {'offsets': [0.05, 0.1], 'ha':'right', 'va':'top', 'label': r'5 Myr'},
-    10: {'offsets': [0.1, -0.2], 'ha':'left', 'va':'bottom', 'label': r'10 Myr'},
-    100: {'offsets': [-0.1, 0.0], 'ha':'right', 'va':'center', 'label': r'100 Myr'}
+    1: {'offsets': [0.2, -0.1], 'ha': 'center', 'va': 'bottom', 'label': r'1,2,3 Myr'},
+    5: {'offsets': [0.05, 0.1], 'ha': 'right', 'va': 'top', 'label': r'5 Myr'},
+    10: {'offsets': [0.1, -0.2], 'ha': 'left', 'va': 'bottom', 'label': r'10 Myr'},
+    100: {'offsets': [-0.1, 0.0], 'ha': 'right', 'va': 'center', 'label': r'100 Myr'}
 }
 bv_label_dict = {
-    1: {'offsets': [0.1, -0.1], 'ha':'center', 'va':'bottom', 'label': r'1,2,3 Myr'},
-    5: {'offsets': [0.05, 0.1], 'ha':'right', 'va':'top', 'label': r'5 Myr'},
-    10: {'offsets': [0.1, -0.1], 'ha':'left', 'va':'bottom', 'label': r'10 Myr'},
-    100: {'offsets': [-0.1, 0.1], 'ha':'right', 'va':'center', 'label': r'100 Myr'}
+    1: {'offsets': [0.2, -0.1], 'ha': 'center', 'va': 'bottom', 'label': r'1,2,3 Myr'},
+    5: {'offsets': [0.05, 0.1], 'ha': 'right', 'va': 'top', 'label': r'5 Myr'},
+    10: {'offsets': [0.1, -0.1], 'ha': 'left', 'va': 'bottom', 'label': r'10 Myr'},
+    100: {'offsets': [-0.1, 0.1], 'ha': 'right', 'va': 'center', 'label': r'100 Myr'}
 }
 
 nuvb_annotation_dict = {
@@ -38,7 +39,6 @@ bv_annotation_dict = {
     1000: {'offset': [-0.5, +0.5], 'label': '1 Gyr', 'ha': 'right', 'va': 'center'},
     13750: {'offset': [-0.0, -0.7], 'label': '13.8 Gyr', 'ha': 'left', 'va': 'center'}
 }
-
 
 def display_models(ax, y_color='nuvb',
                    age_cut_sol50=5e2,
@@ -293,10 +293,39 @@ ax[0, 0].legend(frameon=False, loc=3, bbox_to_anchor=(0, 0.0), fontsize=fontsize
 
 
 
-ax[0, 0].set_title('Class 1', fontsize=fontsize)
-ax[0, 1].set_title('Class 2', fontsize=fontsize)
-ax[0, 2].set_title('Class 1|2', fontsize=fontsize)
-ax[0, 3].set_title('Compact associations', fontsize=fontsize)
+
+ax[0, 0].set_title('Class 1 \n Symmetric Clusters', fontsize=fontsize)
+ax[0, 1].set_title('Class 2 \n Asymmetric Clusters', fontsize=fontsize)
+ax[0, 2].set_title('Class 1+2 \n Clusters', fontsize=fontsize)
+ax[0, 3].set_title('Class 3 \n Compact Associations', fontsize=fontsize)
+
+pe = [patheffects.withStroke(linewidth=3, foreground="w")]
+ax[0, 0].text(0.02, 0.95, 'a)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[0, 0].transAxes, path_effects=pe)
+ax[0, 1].text(0.02, 0.95, 'b)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[0, 1].transAxes, path_effects=pe)
+ax[0, 2].text(0.02, 0.95, 'c)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[0, 2].transAxes, path_effects=pe)
+ax[0, 3].text(0.02, 0.95, 'd)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[0, 3].transAxes, path_effects=pe)
+
+ax[1, 0].text(0.02, 0.95, 'e)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[1, 0].transAxes, path_effects=pe)
+ax[1, 1].text(0.02, 0.95, 'f)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[1, 1].transAxes, path_effects=pe)
+ax[1, 2].text(0.02, 0.95, 'g)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[1, 2].transAxes, path_effects=pe)
+ax[1, 3].text(0.02, 0.95, 'h)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[1, 3].transAxes, path_effects=pe)
+
+ax[2, 0].text(0.02, 0.95, 'i)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[2, 0].transAxes, path_effects=pe)
+ax[2, 1].text(0.02, 0.95, 'j)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[2, 1].transAxes, path_effects=pe)
+ax[2, 2].text(0.02, 0.95, 'k)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[2, 2].transAxes, path_effects=pe)
+ax[2, 3].text(0.02, 0.95, 'l)', horizontalalignment='left', verticalalignment='center', fontsize=fontsize,
+              transform=ax[2, 3].transAxes, path_effects=pe)
 
 
 ax[0, 0].text(x_lim_vi[0] + (x_lim_vi[1]-x_lim_vi[0])*0.05, y_lim_ub[0] + (y_lim_ub[1]-y_lim_ub[0])*0.3,
@@ -390,7 +419,7 @@ ax[2, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True,
 ax[2, 2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
 ax[2, 3].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
 
-fig.subplots_adjust(left=0.045, bottom=0.04, right=0.995, top=0.98, wspace=0.01, hspace=0.01)
+fig.subplots_adjust(left=0.045, bottom=0.04, right=0.995, top=0.96, wspace=0.01, hspace=0.01)
 # fig.set_tight_layout(True)
 fig.savefig('plot_output/ub_vi_compare_density.png')
 fig.savefig('plot_output/ub_vi_compare_density.pdf')
