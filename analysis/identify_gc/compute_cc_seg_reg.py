@@ -87,7 +87,9 @@ mask_class_2_hum = clcl_color_hum == 2
 mask_class_3_hum = clcl_color_hum == 3
 
 
-for threshold_fact in [2, 3, 4, 5, 6, 7, 8, 9, 10]:
+seg_index_ubvi_hum = [2, 2, 2, 3, 2, 3, 3, 3, 2]
+
+for index, threshold_fact in enumerate([2, 3, 4, 5, 6, 7, 8, 9, 10]):
 
     gauss_dict_ubvi_hum_1 = hf.calc_seg(x_data=color_vi_hum[mask_class_1_hum * mask_good_colors_ubvi_hum],
                                      y_data=color_ub_hum[mask_class_1_hum * mask_good_colors_ubvi_hum],
@@ -122,7 +124,7 @@ for threshold_fact in [2, 3, 4, 5, 6, 7, 8, 9, 10]:
     seg_map_bvvi_ml_1 = gauss_dict_bvvi_ml_1['seg_deb_map']
 
     vi_hull_ubvi_hum_1, ub_hull_ubvi_hum_1 = hf.seg2hull(seg_map_ubvi_hum_1, x_lim=x_lim_vi, y_lim=y_lim_ub,
-                                                         n_bins=n_bins_ubvi, seg_index=2, contour_index=0,
+                                                         n_bins=n_bins_ubvi, seg_index=seg_index_ubvi_hum[index], contour_index=0,
                                                          save_str='gc_ubvi_thres%i_hum' % threshold_fact,
                                                          x_label='vi', y_label='ub')
     vi_hull_ubvi_ml_1, ub_hull_ubvi_ml_1 = hf.seg2hull(seg_map_ubvi_ml_1, x_lim=x_lim_vi, y_lim=y_lim_ub,

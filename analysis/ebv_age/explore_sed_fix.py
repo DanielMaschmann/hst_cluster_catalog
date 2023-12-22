@@ -59,7 +59,7 @@ for index in range(0, len(target_list)):
     ra_ml = np.concatenate([ra_12_ml, ra_3_ml])
     dec_ml = np.concatenate([dec_12_ml, dec_3_ml])
 
-    mask_problematic_values = (age_ml > 100) & (ebv_ml > 1.3)
+    mask_problematic_values = (age_ml > 10) & (ebv_ml > 1.4)
     print(sum(mask_problematic_values))
     if sum(mask_problematic_values) > 0:
         if (target == 'ngc0628e') | (target == 'ngc0628c'):
@@ -77,16 +77,26 @@ for index in range(0, len(target_list)):
                                 )
         visualization_access.load_hst_nircam_miri_bands(flux_unit='MJy/sr', load_err=False)
 
-        for ra, dec, cluster_id, ml_class, hum_class in zip(ra_ml[mask_problematic_values], dec_ml[mask_problematic_values],
-                                                            index_ml[mask_problematic_values],
-                                                            ml_class_ml[mask_problematic_values],
-                                                            hum_class_ml[mask_problematic_values]):
+        for ra, dec, cluster_id, ml_class, hum_class, age, ebv in zip(ra_ml[mask_problematic_values],
+                                                                      dec_ml[mask_problematic_values],
+                                                                      index_ml[mask_problematic_values],
+                                                                      ml_class_ml[mask_problematic_values],
+                                                                      hum_class_ml[mask_problematic_values],
+                                                                      age_ml[mask_problematic_values],
+                                                                      ebv_ml[mask_problematic_values]):
 
-            fig = visualization_access.plot_multi_band_artifacts(target=target, ra=ra, dec=dec,
-                                                                 cluster_id=cluster_id,
-                                                                 new_class='None',
-                                                                 ml_class=ml_class,
-                                                                 hum_class=hum_class)
+            str_line_1 = ('%s, '
+                          'ID_PHANGS_CLUSTERS_v1p2 = %i, '
+                          'HUM_CLASS = %s, '
+                          'ML_CLASS = %s, '
+                          % (target, cluster_id, hum_class, ml_class))
+                          # add V-I color to the
+            str_line_2 = ('age= %i, E(B-V)=%.2f ' % (age, ebv))
+
+            fig = visualization_access.plot_multi_band_artifacts(ra=ra, dec=dec,
+                                                                 str_line_1=str_line_1,
+                                                                 str_line_2=str_line_2)
+
 
             fig.savefig('plot_output/problematic_sed_fit/obj_in_%s_%i.png' % (target, cluster_id))
             plt.clf()

@@ -1,0 +1,15 @@
+\begin{figure*}
+\includegraphics[width=\textwidth]{Figures/modelregion_v3.png}
+\caption{Star cluster candidate selection regions defined in the multiple concentration index plane (MCI; see Equation \ref{eq:mci}) based on synthetic star clusters (large contours) for four galaxies at increasing distances from left to right (NGC~3627, NGC~1792, NGC~1559, NGC~1365). Selection regions are also defined semi-empirically (polygon; see also Figure~\ref{fig:empiricalregion}).  Candidates are selected from detections which satisfy basic signal-to-noise criteria (grey), and exclude those in the stellar (point source dominated) region (small red contours).  Candidates within the empirical selection region are slated for visual inspection to a V-band magnitude limit of $\sim24$ mag. The classification of the much larger samples of candidates identified with outermost model contours is automated using convolutional neural network models. In all panels, visually classified class 1 (blue) and class 2 (green) clusters, are shown.   Some clusters appear outside the polygon -- these result from ad-hoc human inspection to confirm that the density of clusters rapidly declines outside this selection region, as well as from the inspection of sources brighter than the Humpherys-Davidson limit.}
+%\caption{Selection regions defined in the multiple concentration index (MCI; see Equation \ref{eq:mci}) plane using synthetic star clusters (large contours) for four galaxies (NGC~628 east pointing, NGC~4535, NGC~1566, NGC~1365) at increasing distances from left to right.  The empirical selection region (polygon) are shown for comparison.  Candidates are selected from source lists which satisfy basic signal-to-noise criteria (grey), and exclude sources in the stellar (point source dominated) region (small contour; yellow).  Candidates within the empirical selection region are slated for visual inspection to a V-band magnitude limit of $\sim24$ mag, while the larger samples of candidates identified with the synthetic cluster MCI selection regions will be inspected by convolutional neural network models.  NGC~628 and NGC~1566 are also in the LEGUS sample, and previously published, visually verified class 1 (blue) and class 2 (green) clusters, are also shown for those galaxies.}
+
+%NGC 628 and NGC 1566 are also in the LEGUS sample, and previously published, visually verified class 1 (blue) and class 2 (green) clusters, are also shown for those galaxies.}
+%For reference the 'general conditions' (grey points) are enforced as --- note that mci errors and v-band s/n only come in for the 'morphological conditions':
+%erroknumnotv>=2 & errokv==1 & ((dolphot_s2n>=5. & dolphot_crowd<=0.667) | (daofind_id>=1)) & doubleflag==0
+%and the binned stars used for the empirical stellar region are selected as:
+%dolphot_s2n>=40. & mci_in_err <=0.1 & pow(dolphot_sharp,2)<=0.001 & dolphot_chi <= 1.6
+%with the cut on dolphot_chi sometimes raised to 1.7 or 1.8 to garner more sources.
+%Cheers, Dave
+
+\label{fig:modelregion}
+\end{figure*}

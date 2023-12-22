@@ -6,18 +6,29 @@ from matplotlib.offsetbox import AnchoredText
 
 cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'
 hst_obs_hdr_file_path = '/home/benutzer/data/PHANGS_products/tables'
+morph_mask_path = '/home/benutzer/data/PHANGS_products/environment_masks'
+sample_table_path = '/home/benutzer/data/PHANGS_products/sample_table'
 catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=cluster_catalog_data_path,
-                                                            hst_obs_hdr_file_path=hst_obs_hdr_file_path)
+                                                            hst_obs_hdr_file_path=hst_obs_hdr_file_path,
+                                                            morph_mask_path=morph_mask_path,
+                                                            sample_table_path=sample_table_path)
 
 target_list = catalog_access.target_hst_cc
 dist_list = []
+delta_ms_list = []
+mass_list = []
 for target in target_list:
     if (target == 'ngc0628c') | (target == 'ngc0628e'):
         target = 'ngc0628'
     dist_list.append(catalog_access.dist_dict[target]['dist'])
-sort = np.argsort(dist_list)
+    delta_ms_list.append(catalog_access.get_target_delta_ms(target=target))
+    mass_list.append(catalog_access.get_target_mstar(target=target))
+
+sort = np.argsort(delta_ms_list)[::-1]
 target_list = np.array(target_list)[sort]
 dist_list = np.array(dist_list)[sort]
+delta_ms_list = np.array(delta_ms_list)[sort]
+mass_list = np.array(mass_list)[sort]
 
 
 catalog_access.load_hst_cc_list(target_list=target_list)
@@ -26,9 +37,10 @@ catalog_access.load_hst_cc_list(target_list=target_list, classify='ml')
 catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_class='class3')
 
 
-color_c1 = 'darkorange'
-color_c2 = 'forestgreen'
-color_c3 = 'royalblue'
+
+color_c1 = 'tab:green'
+color_c2 = 'mediumblue'
+color_c3 = 'darkorange'
 
 fig_hum, ax_hum = plt.subplots(5, 4, sharex=True, sharey=True, figsize=(16, 18))
 fig_ml, ax_ml = plt.subplots(5, 4, sharex=True, sharey=True, figsize=(16, 18))
@@ -39,6 +51,8 @@ col_index = 0
 for index in range(0, 20):
     target = target_list[index]
     dist = dist_list[index]
+    delta_ms = delta_ms_list[index]
+    mass = mass_list[index]
     print('target ', target, 'dist ', dist)
     cluster_class_12_hum = catalog_access.get_hst_cc_class_human(target=target)
     age_12_hum = catalog_access.get_hst_cc_age(target=target)
@@ -75,29 +89,37 @@ for index in range(0, 20):
     random_y_hum = np.random.uniform(low=-0.05, high=0.05, size=len(age_hum))
 
     ax_hum[row_index, col_index].scatter((np.log10(age_hum) + random_x_hum + 6)[cluster_class_hum == 3],
-                                         (ebv_hum + random_y_hum)[cluster_class_hum == 3], c=color_c3, s=20)
+                                         (ebv_hum + random_y_hum)[cluster_class_hum == 3], c=color_c3, s=20, alpha=0.7)
     ax_hum[row_index, col_index].scatter((np.log10(age_hum) + random_x_hum + 6)[cluster_class_hum == 2],
-                                         (ebv_hum + random_y_hum)[cluster_class_hum == 2], c=color_c2, s=20)
+                                         (ebv_hum + random_y_hum)[cluster_class_hum == 2], c=color_c2, s=20, alpha=0.7)
     ax_hum[row_index, col_index].scatter((np.log10(age_hum) + random_x_hum + 6)[cluster_class_hum == 1],
-                                         (ebv_hum + random_y_hum)[cluster_class_hum == 1], c=color_c1, s=20)
+                                         (ebv_hum + random_y_hum)[cluster_class_hum == 1], c=color_c1, s=20, alpha=0.7)
 
     # random dots
     random_x_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_ml))
     random_y_ml = np.random.uniform(low=-0.05, high=0.05, size=len(age_ml))
 
     ax_ml[row_index, col_index].scatter((np.log10(age_ml) + random_x_ml + 6)[cluster_class_ml == 3],
-                                         (ebv_ml + random_y_ml)[cluster_class_ml == 3], c=color_c3, s=20)
+                                         (ebv_ml + random_y_ml)[cluster_class_ml == 3], c=color_c3, s=20, alpha=0.7)
     ax_ml[row_index, col_index].scatter((np.log10(age_ml) + random_x_ml + 6)[cluster_class_ml == 2],
-                                         (ebv_ml + random_y_ml)[cluster_class_ml == 2], c=color_c2, s=20)
+                                         (ebv_ml + random_y_ml)[cluster_class_ml == 2], c=color_c2, s=20, alpha=0.7)
     ax_ml[row_index, col_index].scatter((np.log10(age_ml) + random_x_ml + 6)[cluster_class_ml == 1],
-                                         (ebv_ml + random_y_ml)[cluster_class_ml == 1], c=color_c1, s=20)
+                                         (ebv_ml + random_y_ml)[cluster_class_ml == 1], c=color_c1, s=20, alpha=0.7)
 
-    anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
+    # anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
+    #                              frameon=False, prop=dict(size=fontsize-4))
+    anchored_left = AnchoredText(target.upper() +
+                                 ' ($\Delta$MS=%.2f)' % delta_ms +
+                                 '\nlog(M$_{*}$/M$_{\odot})$=%.1f, d=' % np.log10(mass) + str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
                                  frameon=False, prop=dict(size=fontsize-4))
     ax_hum[row_index, col_index].add_artist(anchored_left)
     ax_hum[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
                                              direction='in', labelsize=fontsize)
-    anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
+    # anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
+    #                              frameon=False, prop=dict(size=fontsize-4))
+    anchored_left = AnchoredText(target.upper() +
+                                 ' ($\Delta$MS=%.2f)' % delta_ms +
+                                 '\nlog(M$_{*}$/M$_{\odot})$=%.1f, d=' % np.log10(mass) + str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
                                  frameon=False, prop=dict(size=fontsize-4))
     ax_ml[row_index, col_index].add_artist(anchored_left)
     ax_ml[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
@@ -108,25 +130,38 @@ for index in range(0, 20):
         row_index += 1
         col_index = 0
 
+
 ax_hum[0, 0].set_xlim(5.7, 10.3)
 ax_hum[0, 0].set_ylim(-0.1, 2.1)
-fig_hum.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
-fig_hum.text(0.08, 0.5, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
+fig_hum.text(0.55, 0.087, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', va='center', fontsize=fontsize)
+fig_hum.text(0.08, 0.55, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
 
 ax_ml[0, 0].set_xlim(5.7, 10.3)
 ax_ml[0, 0].set_ylim(-0.1, 2.1)
-fig_ml.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
-fig_ml.text(0.08, 0.5, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
+fig_ml.text(0.55, 0.087, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', va='center', fontsize=fontsize)
+fig_ml.text(0.08, 0.55, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
+
+ax_hum[0, 0].scatter([], [], c=color_c1, s=30, label='C1 cluster (Hum)')
+ax_hum[0, 0].scatter([], [], c=color_c2, s=30, label='C2 cluster (Hum)')
+ax_hum[0, 0].scatter([], [], c=color_c3, s=30, label='C3 compact association (Hum)')
+ax_hum[0, 0].legend(frameon=True, ncols=3, loc="upper center", bbox_to_anchor=[2.005, 1.16], fontsize=fontsize-4)
+# fig_hum.text(0.55, 1.01, 'Class 1+2 Clusters', ha='center', va='center', fontsize=fontsize)
+
+ax_ml[0, 0].scatter([], [], c=color_c1, s=30, label='C1 cluster (ML)')
+ax_ml[0, 0].scatter([], [], c=color_c2, s=30, label='C2 cluster (ML)')
+ax_ml[0, 0].scatter([], [], c=color_c3, s=30, label='C3 compact association (ML)')
+ax_ml[0, 0].legend(frameon=True, ncols=3, loc="upper center", bbox_to_anchor=[2.005, 1.16], fontsize=fontsize-4)
+# fig_ml.text(0.55, 1.01, 'Class 1+2 Clusters', ha='center', va='center', fontsize=fontsize)
+
 
 # plt.tight_layout()
-fig_hum.subplots_adjust(wspace=0, hspace=0)
-fig_hum.savefig('plot_output/age_ebv_hum_1.png', bbox_inches='tight', dpi=300)
-# fig_hum.savefig('plot_output/age_ebv_hum_1.pdf', bbox_inches='tight', dpi=300)
+fig_hum.subplots_adjust(left=0.13, bottom=0.11, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
+fig_hum.savefig('plot_output/age_ebv_hum_1_c123.png', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_ebv_hum_1_c123.pdf', bbox_inches='tight', dpi=300)
 
-fig_ml.subplots_adjust(wspace=0, hspace=0)
-fig_ml.savefig('plot_output/age_ebv_ml_1.png', bbox_inches='tight', dpi=300)
-# fig_ml.savefig('plot_output/age_ebv_ml_1.pdf', bbox_inches='tight', dpi=300)
-
+fig_ml.subplots_adjust(left=0.13, bottom=0.11, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
+fig_ml.savefig('plot_output/age_ebv_ml_1_c123.png', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_ebv_ml_1_c123.pdf', bbox_inches='tight', dpi=300)
 
 
 fig_hum, ax_hum = plt.subplots(5, 4, sharex=True, sharey=True)
@@ -140,6 +175,8 @@ col_index = 0
 for index in range(20, 39):
     target = target_list[index]
     dist = dist_list[index]
+    delta_ms = delta_ms_list[index]
+    mass = mass_list[index]
     print('target ', target, 'dist ', dist)
     cluster_class_12_hum = catalog_access.get_hst_cc_class_human(target=target)
     age_12_hum = catalog_access.get_hst_cc_age(target=target)
@@ -176,29 +213,37 @@ for index in range(20, 39):
     random_y_hum = np.random.uniform(low=-0.05, high=0.05, size=len(age_hum))
 
     ax_hum[row_index, col_index].scatter((np.log10(age_hum) + random_x_hum + 6)[cluster_class_hum == 3],
-                                         (ebv_hum + random_y_hum)[cluster_class_hum == 3], c=color_c3, s=20)
+                                         (ebv_hum + random_y_hum)[cluster_class_hum == 3], c=color_c3, s=20, alpha=0.7)
     ax_hum[row_index, col_index].scatter((np.log10(age_hum) + random_x_hum + 6)[cluster_class_hum == 2],
-                                         (ebv_hum + random_y_hum)[cluster_class_hum == 2], c=color_c2, s=20)
+                                         (ebv_hum + random_y_hum)[cluster_class_hum == 2], c=color_c2, s=20, alpha=0.7)
     ax_hum[row_index, col_index].scatter((np.log10(age_hum) + random_x_hum + 6)[cluster_class_hum == 1],
-                                         (ebv_hum + random_y_hum)[cluster_class_hum == 1], c=color_c1, s=20)
+                                         (ebv_hum + random_y_hum)[cluster_class_hum == 1], c=color_c1, s=20, alpha=0.7)
 
     # random dots
     random_x_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_ml))
     random_y_ml = np.random.uniform(low=-0.05, high=0.05, size=len(age_ml))
 
     ax_ml[row_index, col_index].scatter((np.log10(age_ml) + random_x_ml + 6)[cluster_class_ml == 3],
-                                         (ebv_ml + random_y_ml)[cluster_class_ml == 3], c=color_c3, s=20)
+                                         (ebv_ml + random_y_ml)[cluster_class_ml == 3], c=color_c3, s=20, alpha=0.7)
     ax_ml[row_index, col_index].scatter((np.log10(age_ml) + random_x_ml + 6)[cluster_class_ml == 2],
-                                         (ebv_ml + random_y_ml)[cluster_class_ml == 2], c=color_c2, s=20)
+                                         (ebv_ml + random_y_ml)[cluster_class_ml == 2], c=color_c2, s=20, alpha=0.7)
     ax_ml[row_index, col_index].scatter((np.log10(age_ml) + random_x_ml + 6)[cluster_class_ml == 1],
-                                         (ebv_ml + random_y_ml)[cluster_class_ml == 1], c=color_c1, s=20)
+                                         (ebv_ml + random_y_ml)[cluster_class_ml == 1], c=color_c1, s=20, alpha=0.7)
 
-    anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
+    # anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
+    #                              frameon=False, prop=dict(size=fontsize-4))
+    anchored_left = AnchoredText(target.upper() +
+                                 ' ($\Delta$MS=%.2f)' % delta_ms +
+                                 '\nlog(M$_{*}$/M$_{\odot})$=%.1f, d=' % np.log10(mass) + str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
                                  frameon=False, prop=dict(size=fontsize-4))
     ax_hum[row_index, col_index].add_artist(anchored_left)
     ax_hum[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
                                              direction='in', labelsize=fontsize)
-    anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
+    # anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
+    #                              frameon=False, prop=dict(size=fontsize-4))
+    anchored_left = AnchoredText(target.upper() +
+                                 ' ($\Delta$MS=%.2f)' % delta_ms +
+                                 '\nlog(M$_{*}$/M$_{\odot})$=%.1f, d=' % np.log10(mass) + str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
                                  frameon=False, prop=dict(size=fontsize-4))
     ax_ml[row_index, col_index].add_artist(anchored_left)
     ax_ml[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
@@ -209,13 +254,48 @@ for index in range(20, 39):
         row_index += 1
         col_index = 0
 
+
+
+
+ax_hum[0, 0].set_xlim(5.7, 10.3)
+ax_hum[0, 0].set_ylim(-0.1, 2.1)
+fig_hum.text(0.55, 0.087, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', va='center', fontsize=fontsize)
+fig_hum.text(0.08, 0.55, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
+
+ax_ml[0, 0].set_xlim(5.7, 10.3)
+ax_ml[0, 0].set_ylim(-0.1, 2.1)
+fig_ml.text(0.55, 0.087, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', va='center', fontsize=fontsize)
+fig_ml.text(0.08, 0.55, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
+
+ax_hum[4, 3].scatter([], [], c=color_c1, s=30, label='C1 (Hum)')
+ax_hum[4, 3].scatter([], [], c=color_c2, s=30, label='C2 (Hum)')
+ax_hum[4, 3].scatter([], [], c=color_c3, s=30, label='C3 (Hum)')
+ax_hum[4, 3].legend(frameon=False, fontsize=fontsize-3)
+ax_hum[4, 3].axis('off')
+
+ax_ml[4, 3].scatter([], [], c=color_c1, s=30, label='C1 (ML)')
+ax_ml[4, 3].scatter([], [], c=color_c2, s=30, label='C2 (ML)')
+ax_ml[4, 3].scatter([], [], c=color_c3, s=30, label='C3 (ML)')
+ax_ml[4, 3].legend(frameon=False, fontsize=fontsize-3)
+ax_ml[4, 3].axis('off')
+
+# plt.tight_layout()
+fig_hum.subplots_adjust(left=0.13, bottom=0.11, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
+fig_hum.savefig('plot_output/age_ebv_hum_2_c123.png', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_ebv_hum_2_c123.pdf', bbox_inches='tight', dpi=300)
+
+fig_ml.subplots_adjust(left=0.13, bottom=0.11, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
+fig_ml.savefig('plot_output/age_ebv_ml_2_c123.png', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_ebv_ml_2_c123.pdf', bbox_inches='tight', dpi=300)
+
+
 ax_hum[0, 0].set_xlim(5.7, 10.3)
 ax_hum[0, 0].set_ylim(-0.1, 2.1)
 fig_hum.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
 fig_hum.text(0.08, 0.5, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
-ax_hum[4, 3].scatter([], [], c='darkorange', s=30, label='Class 1')
-ax_hum[4, 3].scatter([], [], c='forestgreen', s=30, label='Class 2')
-ax_hum[4, 3].scatter([], [], c='royalblue', s=30, label='Compact Associations')
+ax_hum[4, 3].scatter([], [], c=color_c1, s=30, label='Class 1')
+ax_hum[4, 3].scatter([], [], c=color_c2, s=30, label='Class 2')
+ax_hum[4, 3].scatter([], [], c=color_c3, s=30, label='Compact Associations')
 ax_hum[4, 3].legend(frameon=False, fontsize=fontsize-3)
 ax_hum[4, 3].axis('off')
 
@@ -231,11 +311,11 @@ ax_ml[4, 3].legend(frameon=False, fontsize=fontsize-3)
 ax_ml[4, 3].axis('off')
 # plt.tight_layout()
 fig_hum.subplots_adjust(wspace=0, hspace=0)
-fig_hum.savefig('plot_output/age_ebv_hum_2.png', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_ebv_hum_2_c12.png', bbox_inches='tight', dpi=300)
 # fig_hum.savefig('plot_output/age_ebv_hum_2.pdf', bbox_inches='tight', dpi=300)
 
 fig_ml.subplots_adjust(wspace=0, hspace=0)
-fig_ml.savefig('plot_output/age_ebv_ml_2.png', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_ebv_ml_2_c12.png', bbox_inches='tight', dpi=300)
 # fig_ml.savefig('plot_output/age_ebv_ml_2.pdf', bbox_inches='tight', dpi=300)
 
 

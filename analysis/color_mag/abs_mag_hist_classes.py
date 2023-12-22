@@ -26,6 +26,9 @@ catalog_access.load_hst_cc_list(target_list=target_list, classify='ml')
 catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_class='class3')
 
 
+apparent_v_band_mag_hum = np.array([])
+apparent_v_band_mag_ml = np.array([])
+
 abs_v_band_mag_hum = np.array([])
 abs_v_band_mag_ml = np.array([])
 
@@ -58,6 +61,7 @@ for target in target_list:
     abs_v_mag_hum_3 = hf.conv_mag2abs_mag(mag=v_mag_hum_3, dist=dist)
     hum_class_hum = np.concatenate([hum_class_hum, cluster_class_hum_12, cluster_class_hum_3])
     abs_v_band_mag_hum = np.concatenate([abs_v_band_mag_hum, abs_v_mag_hum_12, abs_v_mag_hum_3])
+    apparent_v_band_mag_hum = np.concatenate([apparent_v_band_mag_hum, v_mag_hum_12, v_mag_hum_3])
 
     vgg_class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
     vgg_class_ml_3 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
@@ -76,6 +80,8 @@ for target in target_list:
     hum_class_ml = np.concatenate([hum_class_ml, hum_class_ml_12, hum_class_ml_3])
     vgg_class_qual_ml = np.concatenate([vgg_class_qual_ml, vgg_class_qual_ml_12, vgg_class_qual_ml_3])
     abs_v_band_mag_ml = np.concatenate([abs_v_band_mag_ml, abs_v_mag_ml_12, abs_v_mag_ml_3])
+    apparent_v_band_mag_ml = np.concatenate([apparent_v_band_mag_ml, v_mag_ml_12, v_mag_ml_3])
+
 
     dist_array_ml = np.concatenate([dist_array_ml, np.ones(len(abs_v_mag_ml_12)+len(abs_v_mag_ml_3))*dist])
 
@@ -91,6 +97,14 @@ abs_v_mag_ex_ml_12 = hf.conv_mag2abs_mag(mag=v_mag_ex_ml_12, dist=catalog_access
 abs_v_mag_ex_ml_3 = hf.conv_mag2abs_mag(mag=v_mag_ex_ml_3, dist=catalog_access.dist_dict['ngc3621']['dist'])
 abs_v_band_mag_ex_ml = np.concatenate([abs_v_mag_ex_ml_12, abs_v_mag_ex_ml_3])
 
+
+
+print(np.nanmedian(apparent_v_band_mag_hum))
+print(np.nanmedian(apparent_v_band_mag_ml))
+print(np.nanmin(apparent_v_band_mag_ml))
+print(np.nanmax(apparent_v_band_mag_ml))
+
+exit()
 
 fig, ax = plt.subplots(ncols=1, sharex=True, figsize=(13, 10))
 fontsize = 25
@@ -126,7 +140,7 @@ print('mask_hum_artefacts ', sum(mask_hum_artefacts*mask_vgg_cl3) / sum(mask_hum
 
 
 print('mask_hum_classified ', sum(mask_hum_classified))
-
+#
 exit()
 
 print('mask_classified * mask_class_3 ', sum(mask_classified * mask_class_3))

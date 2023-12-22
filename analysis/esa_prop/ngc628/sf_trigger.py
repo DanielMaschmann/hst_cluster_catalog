@@ -24,10 +24,10 @@ age_hum = np.load('../../color_color/data_output/age_hum.npy')
 mass_hum = np.load('../../color_color/data_output/mass_hum.npy')
 
 
-print(sum((mass_ml > 1e5) & (age_ml < 10)))
-print(sum((mass_hum > 1e5) & (age_hum < 10)))
-
-exit()
+# print(sum((mass_ml > 1e5) & (age_ml < 10)))
+# print(sum((mass_hum > 1e5) & (age_hum < 10)))
+#
+# exit()
 
 
 target = 'ngc0628c'

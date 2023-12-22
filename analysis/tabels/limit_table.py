@@ -9,7 +9,7 @@ cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'
 hst_obs_hdr_file_path = '/home/benutzer/data/PHANGS_products/tables'
 catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=cluster_catalog_data_path,
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path,
-                                                            #hst_cc_ver='IR4'
+                                                            hst_cc_ver='IR4'
                                                             )
 
 
@@ -62,7 +62,12 @@ for index in range(0, len(target_list)):
     print('target ', target, 'dist ', dist)
     cluster_class_candidates = catalog_access.get_hst_cc_class_human(target=target, classify='', cluster_class='candidates')
     number_candidates = len(catalog_access.hst_cc_data[target + '_' + '_' + 'candidates'])
-    number_inspected = sum(np.invert(np.isnan(cluster_class_candidates)))
+    # print(cluster_class_candidates)
+    # print(np.isnan(cluster_class_candidates))
+    print(np.ma.count(cluster_class_candidates))
+
+    # number_inspected = sum(np.invert(np.isnan(cluster_class_candidates)))
+    number_inspected = np.ma.count(cluster_class_candidates)
 
 
     cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
@@ -116,11 +121,11 @@ for index in range(0, len(target_list)):
 print("")
 print('\multicolumn{1}{c}{Galaxy} & '
       '\multicolumn{2}{c}{Candidates} & '
-      '\multicolumn{4}{c}{Human} & '
-      '\multicolumn{4}{c}{ML} & '
+      '\multicolumn{4}{c}{Human-classified} & '
+      '\multicolumn{4}{c}{ML-classified} & '
       
-      '\multicolumn{1}{c}{Abs. V mag$^{\\rm Hum}$} & '
-      '\multicolumn{1}{c}{Abs. V mag$^{\\rm ML}$} \\\\ ')
+      '\multicolumn{1}{c}{$M_V^{\\rm Hum}$} & '
+      '\multicolumn{1}{c}{$M_V^{\\rm ML}$} \\\\ ')
 print('\\hline')
 print('\multicolumn{1}{c}{} & '
       '\multicolumn{1}{c}{N$_{\\rm Cand}$} & '
@@ -136,8 +141,8 @@ print('\multicolumn{1}{c}{} & '
       '\multicolumn{1}{c}{C3} & '
       '\multicolumn{1}{c}{C1+2+3} & '
       
-      '\multicolumn{1}{c}{min$\\vert$ med$\\vert$ max} & '      
-      '\multicolumn{1}{c}{min$\\vert$ med$\\vert$ max} \\\\ ')
+      '\multicolumn{1}{c}{min$\\vert$med$\\vert$max} & '      
+      '\multicolumn{1}{c}{min$\\vert$med$\\vert$max} \\\\ ')
 print('\\hline')
 print('\multicolumn{1}{c}{} & '
       '\multicolumn{1}{c}{} & '
@@ -162,6 +167,31 @@ for index in range(0, len(target_list)):
         target_string = target_list[index]
     target_string = target_string.upper()
 
+    # print(target_string,
+    #       n_candidates[index],
+    #       n_insp[index],
+    #       n_hum_1[index],
+    #       n_hum_2[index],
+    #       n_hum_3[index],
+    #       n_hum_1[index] + n_hum_2[index] + n_hum_3[index],
+    #
+    #       n_ml_1[index],
+    #       n_ml_2[index],
+    #       n_ml_3[index],
+    #       n_ml_1[index] + n_ml_2[index] + n_ml_3[index],
+    #
+    #       min_abs_vmag_hum[index],
+    #       median_abs_vmag_hum[index],
+    #       max_abs_vmag_hum[index],
+    #
+    #        min_abs_vmag_ml[index],
+    #        median_abs_vmag_ml[index],
+    #        max_abs_vmag_ml[index]
+    # )
+
+
+
+
     print(
         '%s & '
         '%i & '
@@ -177,9 +207,9 @@ for index in range(0, len(target_list)):
         '%i & '
         '%i & '
 
-        '%.1f$\\vert$ %.1f$\\vert$ %.1f & '
+        '%.1f$\\vert$%.1f$\\vert$%.1f & '
 
-        '%.1f$\\vert$ %.1f$\\vert$ %.1f \\\\ '
+        '%.1f$\\vert$%.1f$\\vert$%.1f \\\\ '
         % (target_string,
            n_candidates[index],
            n_insp[index],

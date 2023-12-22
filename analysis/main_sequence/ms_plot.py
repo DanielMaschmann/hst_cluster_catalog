@@ -12,6 +12,11 @@ from matplotlib.patches import ConnectionPatch
 from matplotlib import patheffects
 
 # import os
+from astropy.convolution import convolve
+
+from photutils.segmentation import make_2dgaussian_kernel
+from astropy.table import Table
+from matplotlib.legend_handler import HandlerTuple
 # os.system('firefox https://www.youtube.com/watch?v=F8AIydIusUQ')
 
 
@@ -76,8 +81,8 @@ y_lim_high = 1.4
 len_x = x_lim_high - x_lim_low
 len_y = y_lim_high - y_lim_low
 
-print('len_x ', len_x)
-print('len_y ', len_y)
+# print('len_x ', len_x)
+# print('len_y ', len_y)
 fig = plt.figure(figsize=(20, 20 * len_y / len_x))
 fontsize = 26
 
@@ -94,33 +99,73 @@ ax_ms = fig.add_axes([ms_x_pos, ms_y_pos, ms_x_len, ms_y_len])
 ax_ms.set_xlim(x_lim_low, x_lim_high)
 ax_ms.set_ylim(y_lim_low, y_lim_high)
 
-from astropy.convolution import convolve
-
-from photutils.segmentation import make_2dgaussian_kernel
-
 # plot contours
-gswlc_access = analysis_tools.AnalysisTools(object_type='gswlc_d_v1', writable_table=True)
+gswlc_access = analysis_tools.AnalysisTools(object_type='gswlc_a_v1', writable_table=True)
+# gswlc_access = analysis_tools.AnalysisTools(object_type='mpa', writable_table=True)
 gswlc_access.cross_match_table(cross_match='rcsed')
 log_sfr = gswlc_access.get_log_sed_sfr()
 log_stellar_mass = gswlc_access.get_log_sed_stellar_mass()
-redshift = gswlc_access.get_redshift()
+flag_sed_fit = (gswlc_access.table['FLAG_SED'] == 0) & (gswlc_access.table['FLAG_MGS'] == 1) & (gswlc_access.table['REDCHISQ'] < 5)
+# log_sfr = gswlc_access.get_log_mpa_sfr()
+# log_stellar_mass = gswlc_access.get_log_mpa_stellar_mass()
 
-good_values = (log_sfr > -2.5) & (log_sfr < 3.2) & (log_stellar_mass > 6.5) & (log_stellar_mass < 12.5) & (redshift < 0.2)
+redshift = gswlc_access.get_redshift()
+good_values = (log_sfr > -2.5) & (log_sfr < 3.2) & (log_stellar_mass > 6.5) & (log_stellar_mass < 12.5) & (redshift < 0.05)
+good_values_sloan = (log_sfr > -2.5) & (log_sfr < 3.2) & (log_stellar_mass > 6.5) & (log_stellar_mass < 12.5) & (redshift < 0.15)
+# good_values_sloan = (log_sfr > -2.5) & (log_sfr < 3.2) & (log_stellar_mass > 6.5) & (log_stellar_mass < 12.5) & (flag_sed_fit) & (redshift > 0.01) & (redshift < 0.2)
+
+# plot contours
+xcoldgass_access = analysis_tools.AnalysisTools(object_type='xcoldgass', writable_table=True)
+log_sfr_xcoldgass = xcoldgass_access.table['LOGSFR_SED']
+log_stellar_mass_xcoldgass = xcoldgass_access.table['LOGMSTAR']
+redshift_xcoldgass = xcoldgass_access.table['Z_SDSS']
+
+
+# leroy_table = Table.read('J_ApJS_244_24/table4.dat', readme='J_ApJS_244_24/ReadMe', format="ascii.cds")
+# dist_leroy = leroy_table['Dist']
+# log_stellar_mass_leroy = leroy_table['logM*']
+# logsfr_leroy = leroy_table['logSFR']
+
+# get all Phangs alma
+log_stellar_mass_phangs_alma = []
+log_sfr_phangs_alma = []
+catalog_access.load_sample_table()
+for phangs_target in catalog_access.sample_table['target_names']:
+    # if phangs_target in catalog_access.phangs_galaxy_list:
+    #     continue
+    sfr = catalog_access.get_target_sfr(target=phangs_target)
+    mstar = catalog_access.get_target_mstar(target=phangs_target)
+    log_stellar_mass_phangs_alma.append(np.log10(mstar))
+    log_sfr_phangs_alma.append(np.log10(sfr))
+
+
+
 
 dummy_m_star = np.linspace(7, 13, 50)
-dummy_sfr = gswlc_access.main_sequence_sf(redshift=0, log_stellar_mass=dummy_m_star, ref='Whitaker+12', output='sfr')
-upper_dummy_sfr = dummy_sfr + 0.34
-lower_dummy_sfr = dummy_sfr - 0.34
+# take from Leroy 2019
+
+dummy_sfr = -0.32 * (dummy_m_star - 10.0) - 10.17 + dummy_m_star
+dummy_sfr_polynome = -2.332 * dummy_m_star + 0.4156 * dummy_m_star**2 - 0.01828 * dummy_m_star**3
 
 
-hist, x_bin, y_bin = np.histogram2d(log_stellar_mass[good_values], log_sfr[good_values],
+# taken from Catinella 2018
+dumy_sfr_std = 0.088*(dummy_m_star - 9) + 0.188
+
+upper_dummy_sfr = dummy_sfr + dumy_sfr_std
+lower_dummy_sfr = dummy_sfr - dumy_sfr_std
+
+
+
+
+hist, x_bin, y_bin = np.histogram2d(log_stellar_mass[good_values_sloan], log_sfr[good_values_sloan],
                                     bins=(np.linspace(x_lim_low, x_lim_high, 70),
                                           np.linspace(y_lim_low, y_lim_high, 70)))
 
 ax_ms.fill_between(dummy_m_star, upper_dummy_sfr, lower_dummy_sfr, color='grey', alpha=0.3)
 ax_ms.plot(dummy_m_star, dummy_sfr, linewidth=2, color='k', linestyle='--')
+# ax_ms.plot(dummy_m_star, dummy_sfr_polynome, linewidth=2, color='g', linestyle='-')
 
-kernel = make_2dgaussian_kernel(3.0, size=9)  # FWHM = 3.0
+kernel = make_2dgaussian_kernel(2.0, size=9)  # FWHM = 3.0
 hist = convolve(hist, kernel)
 
 # hist[hist < 10] = np.nan
@@ -129,11 +174,26 @@ norm_ms = matplotlib.colors.Normalize(vmin=0, vmax=np.nanmax(hist)/1.1)
 
 
 ax_ms.imshow(hist.T, extent=(x_lim_low, x_lim_high, y_lim_low, y_lim_high), origin='lower', cmap=cmap_ms, norm=norm_ms)
-
+# ax_ms.scatter(log_stellar_mass_phangs_alma, log_sfr_phangs_alma, color='dodgerblue', linewidth=3, marker='o', s=130, facecolor='None')
+# ax_ms.scatter(log_stellar_mass_xcoldgass, log_sfr_xcoldgass, color='tab:orange', marker='o', s=80)
 ax_ms.set_xlabel('log(M$_{*}$/M$_{\odot}$)', fontsize=fontsize+5)
 ax_ms.set_ylabel('log(SFR/M$_{\odot}$ yr$^{-1}$)', labelpad=-33, fontsize=fontsize+5)
 ax_ms.tick_params(axis='both', which='both',
                   width=5, length=10, right=True, top=True, direction='in', labelsize=fontsize+5)
+
+#
+# p1 = ax_ms.scatter([], [], color='r', s=80)
+# p2 = ax_ms.scatter([], [], color='r', marker='*', s=200)
+# p3 = ax_ms.scatter([], [], color='dodgerblue', linewidth=3, marker='o', s=130, facecolor='None')
+# # p4 = ax_ms.scatter([], [], color='tab:orange', marker='o', s=80)
+
+# Assign two of the handles to the same legend entry by putting them in a tuple
+# and using a generic handler map (which would be used for any additional
+# tuples of handles like (p1, p3)).
+# l = ax_ms.legend([(p1, p2), p3], ['PHANGS-HST', 'PHANGS-ALMA'],
+#                  handler_map={tuple: HandlerTuple(ndivide=None)}, loc=2, fontsize=fontsize)
+
+
 
 
 offset_dict = {
@@ -222,8 +282,8 @@ for index in range(len(target_list)):
 
     ms_x_pos_cc = ms_x_pos + (ms_x_len / (x_lim_high - x_lim_low)) * (np.log10(mstar) - x_lim_low) - contour_width/2
     ms_y_pos_cc = ms_y_pos + (ms_y_len / (y_lim_high - y_lim_low)) * (np.log10(sfr) - y_lim_low) - contour_hight / 2
-    print('ms_x_pos_cc ', ms_x_pos_cc)
-    print('ms_y_pos_cc ', ms_y_pos_cc)
+    # print('ms_x_pos_cc ', ms_x_pos_cc)
+    # print('ms_y_pos_cc ', ms_y_pos_cc)
 
     ax1 = fig.add_axes([ms_x_pos_cc + offset_dict[target][0], ms_y_pos_cc + offset_dict[target][1], contour_width, contour_hight])
     ax1.patch.set_alpha(0.5)
@@ -258,12 +318,13 @@ for index in range(len(target_list)):
 
 
 pseudo_ax_ms = fig.add_axes([ms_x_pos, ms_y_pos, ms_x_len, ms_y_len])
-
+#
 pseudo_ax_ms.set_xlim(ax_ms.get_xlim())
 pseudo_ax_ms.set_ylim(ax_ms.get_ylim())
-
+#
 pseudo_ax_ms.axis('off')
-
+#
+# pseudo_ax_ms.scatter(log_stellar_mass_list, log_sfr_list, color='dodgerblue', linewidth=3, marker='o', s=130, facecolor='None')
 pseudo_ax_ms.scatter(log_stellar_mass_list, log_sfr_list, color='r', marker='*', s=200)
 
 # plt.show()

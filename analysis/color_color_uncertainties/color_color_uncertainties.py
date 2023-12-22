@@ -262,7 +262,7 @@ for x_index in range(len(x_bins_vi)-1):
 figure = plt.figure(figsize=(30, 20))
 fontsize = 27
 
-cmap_vi = matplotlib.cm.get_cmap('Purples')
+cmap_vi = matplotlib.cm.get_cmap('viridis')
 norm_vi = matplotlib.colors.Normalize(vmin=0, vmax=0.11)
 
 # cmap_vi_ub = matplotlib.cm.get_cmap('plasma')
@@ -371,6 +371,42 @@ ax_cc_sn_ub_hum_ub.text(0.95, 0.95, 'Class 1 + 2 (Hum)', horizontalalignment='ri
 ax_cc_sn_ub_ml_ub.text(0.95, 0.95, 'Class 1 + 2 (ML)', horizontalalignment='right', verticalalignment='center',
                           fontsize=fontsize, transform=ax_cc_sn_ub_ml_ub.transAxes)
 
+vi_int = 1.65
+nuvb_int = -1.8
+ub_int = -1.5
+bv_int = -0.5
+av_value = 1
+
+hf.plot_reddening_vect(ax=ax_cc_sn_vi_hum_nuvb, x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
+                       linewidth=4, line_color='k', text=True, fontsize=fontsize-4, x_text_offset=-0.1, y_text_offset=-0.3)
+hf.plot_reddening_vect(ax=ax_cc_sn_vi_ml_nuvb, x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
+                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
+
+hf.plot_reddening_vect(ax=ax_cc_sn_vi_hum_ub, x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
+                       linewidth=4, line_color='k', text=False, fontsize=fontsize-4, x_text_offset=-0.1, y_text_offset=-0.3)
+hf.plot_reddening_vect(ax=ax_cc_sn_vi_ml_ub, x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
+                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
+
+hf.plot_reddening_vect(ax=ax_cc_sn_nuvb_hum_nuvb, x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
+                       linewidth=4, line_color='k', text=False, fontsize=fontsize-4, x_text_offset=-0.1, y_text_offset=-0.3)
+hf.plot_reddening_vect(ax=ax_cc_sn_nuvb_ml_nuvb, x_color_1='v', x_color_2='i',  y_color_1='nuv', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=nuvb_int, av_val=1,
+                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
+
+hf.plot_reddening_vect(ax=ax_cc_sn_ub_hum_ub, x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
+                       linewidth=4, line_color='k', text=False, fontsize=fontsize-4, x_text_offset=-0.1, y_text_offset=-0.3)
+hf.plot_reddening_vect(ax=ax_cc_sn_ub_ml_ub, x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
+                       x_color_int=vi_int, y_color_int=ub_int, av_val=1,
+                       linewidth=4, line_color='k', text=False, fontsize=fontsize)
+
+
+
 ax_cc_sn_vi_hum_nuvb.set_xlim(x_lim_vi)
 ax_cc_sn_vi_ml_nuvb.set_xlim(x_lim_vi)
 ax_cc_sn_nuvb_hum_nuvb.set_xlim(x_lim_vi)
@@ -396,10 +432,10 @@ ax_cc_sn_vi_ml_nuvb.set_yticklabels([])
 ax_cc_sn_nuvb_hum_nuvb.set_yticklabels([])
 ax_cc_sn_nuvb_ml_nuvb.set_yticklabels([])
 
-ax_cc_sn_vi_hum_ub.set_yticks([-2, 1, 0, 1, 2])
-ax_cc_sn_vi_ml_ub.set_yticks([-2, 1, 0, 1, 2])
-ax_cc_sn_ub_hum_ub.set_yticks([-2, 1, 0, 1, 2])
-ax_cc_sn_ub_ml_ub.set_yticks([-2, 1, 0, 1, 2])
+ax_cc_sn_vi_hum_ub.set_yticks([-2, -1, 0, 1, 2])
+ax_cc_sn_vi_ml_ub.set_yticks([-2, -1, 0, 1, 2])
+ax_cc_sn_ub_hum_ub.set_yticks([-2, -1, 0, 1, 2])
+ax_cc_sn_ub_ml_ub.set_yticks([-2, -1, 0, 1, 2])
 
 ax_cc_sn_vi_ml_ub.set_yticklabels([])
 ax_cc_sn_ub_hum_ub.set_yticklabels([])

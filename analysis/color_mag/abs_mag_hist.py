@@ -87,6 +87,8 @@ abs_v_band_mag_ex_ml = np.concatenate([abs_v_mag_ex_ml_12, abs_v_mag_ex_ml_3])
 print(sum(abs_v_band_mag_ml < -10))
 print(sum(abs_v_band_mag_hum < -10))
 
+print('diff ', sum(abs_v_band_mag_hum < -10) - sum(abs_v_band_mag_ml < -10))
+
 print('median ML', np.nanmedian(abs_v_band_mag_ml))
 print('median Human', np.nanmedian(abs_v_band_mag_hum))
 

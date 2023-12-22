@@ -81,6 +81,10 @@ detect_i_hum = np.load('../color_color/data_output/detect_i_hum.npy')
 clcl_color_hum = np.load('../color_color/data_output/clcl_color_hum.npy')
 age_hum = np.load('../color_color/data_output/age_hum.npy')
 ebv_hum = np.load('../color_color/data_output/ebv_hum.npy')
+mass_hum = np.load('../color_color/data_output/mass_hum.npy')
+target_name_hum = np.load('../color_color/data_output/target_name_hum.npy')
+
+
 color_vi_ml = np.load('../color_color/data_output/color_vi_ml.npy')
 color_ub_ml = np.load('../color_color/data_output/color_ub_ml.npy')
 color_bv_ml = np.load('../color_color/data_output/color_bv_ml.npy')
@@ -102,16 +106,92 @@ clcl_color_ml = np.load('../color_color/data_output/clcl_color_ml.npy')
 clcl_qual_color_ml = np.load('../color_color/data_output/clcl_qual_color_ml.npy')
 age_ml = np.load('../color_color/data_output/age_ml.npy')
 ebv_ml = np.load('../color_color/data_output/ebv_ml.npy')
-mag_mask_ml = np.load('../color_color/data_output/mag_mask_ml.npy')
+mass_ml = np.load('../color_color/data_output/mass_ml.npy')
+target_name_ml = np.load('../color_color/data_output/target_name_ml.npy')
 
+mag_mask_ml = np.load('../color_color/data_output/mag_mask_ml.npy')
 # color range limitations
 mask_class_1_hum = clcl_color_hum == 1
 mask_class_2_hum = clcl_color_hum == 2
 mask_class_3_hum = clcl_color_hum == 3
+mask_class_12_hum = mask_class_1_hum + mask_class_2_hum
 
 mask_class_1_ml = clcl_color_ml == 1
 mask_class_2_ml = clcl_color_ml == 2
 mask_class_3_ml = clcl_color_ml == 3
+mask_class_12_ml = mask_class_1_ml + mask_class_2_ml
+
+print('N C1+C2 Hum cluster < 1 Gyr ', sum((age_hum < 1000) * mask_class_12_hum), ' of ', sum(mask_class_12_hum), ' (%.1f percent)' % (sum((age_hum < 1000) * mask_class_12_hum)/sum(mask_class_12_hum)*100))
+print('N C1+C2 ML cluster < 1 Gyr ', sum((age_ml < 1000)*mask_class_12_ml), ' of ', sum(mask_class_12_ml), ' (%.1f percent)' % (sum((age_ml < 1000)*mask_class_12_ml)/sum(mask_class_12_ml)*100))
+
+print('N C1+C2 Hum cluster > 1 Gyr ', sum((age_hum > 1000) * mask_class_12_hum), ' of ', sum(mask_class_12_hum), ' (%.1f percent)' % (sum((age_hum > 1000) * mask_class_12_hum)/sum(mask_class_12_hum)*100))
+print('N C1+C2 ML cluster > 1 Gyr ', sum((age_ml > 1000)*mask_class_12_ml), ' of ', sum(mask_class_12_ml), ' (%.1f percent)' % (sum((age_ml > 1000)*mask_class_12_ml)/sum(mask_class_12_ml)*100))
+
+print('N C1+C2 Hum cluster > 300 Msun ', sum((mass_hum > 300)*mask_class_12_hum), ' of ', sum(mask_class_12_hum), ' (%.1f percent)' % (sum((mass_hum > 300)*mask_class_12_hum)/sum(mask_class_12_hum)*100))
+print('N C1+C2 ML cluster > 300 Msun ', sum((mass_ml > 300)*mask_class_12_ml), ' of ', sum(mask_class_12_ml), ' (%.1f percent)' % (sum((mass_ml > 300)*mask_class_12_ml)/sum(mask_class_12_ml)*100))
+
+print('N C1+C2 Hum cluster < 300 Msun ', sum((mass_hum < 300)*mask_class_12_hum), ' of ', sum(mask_class_12_hum), ' (%.1f percent)' % (sum((mass_hum < 300)*mask_class_12_hum)/sum(mask_class_12_hum)*100))
+print('N C1+C2 ML cluster < 300 Msun ', sum((mass_ml < 300)*mask_class_12_ml), ' of ', sum(mask_class_12_ml), ' (%.1f percent)' % (sum((mass_ml < 300)*mask_class_12_ml)/sum(mask_class_12_ml)*100))
+
+#
+# print(age_hum[target_name_hum == 'ngc1566'])
+#
+# fig, ax = plt.subplots(ncols=2, nrows=2, figsize=(17, 17))
+#
+# fontsize = 23
+#
+#
+# ax[0, 0].scatter(age_hum[(target_name_hum == 'ngc1566') * (mask_class_12_hum)],
+#               mass_hum[(target_name_hum == 'ngc1566') * (mask_class_12_hum)])
+# ax[0, 1].scatter(age_ml[(target_name_ml == 'ngc1566') * (mask_class_12_ml)],
+#               mass_ml[(target_name_ml == 'ngc1566') * (mask_class_12_ml)])
+#
+# ax[1, 0].scatter(age_hum[(target_name_hum == 'ngc1433') * (mask_class_12_hum)],
+#               mass_hum[(target_name_hum == 'ngc1433') * (mask_class_12_hum)])
+# ax[1, 1].scatter(age_ml[(target_name_ml == 'ngc1433') * (mask_class_12_ml)],
+#               mass_ml[(target_name_ml == 'ngc1433') * (mask_class_12_ml)])
+#
+#
+#
+# ax[0, 0].set_xscale('log')
+# ax[0, 1].set_xscale('log')
+# ax[0, 0].set_yscale('log')
+# ax[0, 1].set_yscale('log')
+#
+# ax[1, 0].set_xscale('log')
+# ax[1, 1].set_xscale('log')
+# ax[1, 0].set_yscale('log')
+# ax[1, 1].set_yscale('log')
+#
+# ax[0, 0].set_ylabel('log(M$_*$ / M$_{\odot}$)', fontsize=fontsize)
+# ax[1, 0].set_ylabel('log(M$_*$ / M$_{\odot}$)', fontsize=fontsize)
+# ax[1, 0].set_xlabel('log(Age / Myr)', fontsize=fontsize)
+# ax[1, 1].set_xlabel('log(Age / Myr)', fontsize=fontsize)
+#
+#
+# ax[0, 1].set_yticklabels([])
+# ax[1, 1].set_yticklabels([])
+#
+# ax[0, 0].set_xticklabels([])
+# ax[0, 1].set_xticklabels([])
+#
+# ax[0, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+# ax[0, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+# ax[1, 0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+# ax[1, 1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+#
+# ax[0, 0].set_title('NGC 1544 C1+C2 Hum', fontsize=fontsize)
+# ax[0, 1].set_title('NGC 1544 C1+C2 Ml', fontsize=fontsize)
+# ax[1, 0].set_title('NGC 1433 C1+C2 Hum', fontsize=fontsize)
+# ax[1, 1].set_title('NGC 1433 C1+C2 Ml', fontsize=fontsize)
+#
+# # plt.show()
+# fig.subplots_adjust(left=0.07, bottom=0.05, right=0.995, top=0.95, wspace=0.01, hspace=0.05)
+# plt.savefig('plot_output/age_mass.png')
+#
+# exit()
+
+
 
 mask_detect_nuvbvi_hum = detect_nuv_hum * detect_b_hum * detect_v_hum * detect_i_hum
 mask_detect_ubvi_hum = detect_u_hum * detect_b_hum * detect_v_hum * detect_i_hum

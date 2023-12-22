@@ -2,5 +2,15 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../PHANGS_HST_cluster_cat_release" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../dust_analysis" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../phangs_photometry_tools" vcs="Git" />
+    <mapping directory="$USER_HOME$/software/python_packages/MegaTable" vcs="Git" />
+    <mapping directory="$USER_HOME$/software/python_packages/PHANGS_utils" vcs="Git" />
+    <mapping directory="$USER_HOME$/software/python_packages/cluster_detection" vcs="Git" />
+    <mapping directory="$USER_HOME$/software/python_packages/jwst_scripts" vcs="Git" />
+    <mapping directory="$USER_HOME$/software/python_packages/xgalimgtool" vcs="Git" />
+    <mapping directory="$USER_HOME$/software/python_packages/xgalspectool" vcs="Git" />
+    <mapping directory="$USER_HOME$/software/python_packages/xgaltool" vcs="Git" />
   </component>
 </project>

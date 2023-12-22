@@ -34,7 +34,11 @@ catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_
 
 
 
-abs_v_mag_bins = np.linspace(19, 26, 15)
+abs_v_mag_bins = np.linspace(15, 26, 19)
+center_of_abs_v_mag_bins = (abs_v_mag_bins[:-1] + abs_v_mag_bins[1:]) / 2
+print('abs_v_mag_bins ', abs_v_mag_bins)
+print('center_of_abs_v_mag_bins ', center_of_abs_v_mag_bins)
+
 fontsize = 21
 
 
@@ -58,8 +62,20 @@ for index in range(0, 39):
     abs_v_mag_ml_3 = hf.conv_mag2abs_mag(mag=v_mag_ml_3, dist=dist)
     v_mag_ml = np.concatenate([v_mag_ml_12, v_mag_ml_3])
 
-    ax[row_index, col_index].hist(v_mag_ml, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:grey', linewidth=3)
-    ax[row_index, col_index].hist(v_mag_hum, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:red', linewidth=3)
+    hist_hum = np.histogram(v_mag_hum, bins=abs_v_mag_bins)[0]
+    hist_ml = np.histogram(v_mag_ml, bins=abs_v_mag_bins)[0]
+
+    hist_hum = np.array(hist_hum, dtype=float)
+    hist_ml = np.array(hist_ml, dtype=float)
+
+    hist_hum[hist_hum == 0] = np.nan
+    hist_ml[hist_ml == 0] = np.nan
+    print(center_of_abs_v_mag_bins, hist_ml / np.nanmax(hist_ml))
+    ax[row_index, col_index].step(center_of_abs_v_mag_bins, hist_ml / np.nanmax(hist_ml), where='mid', color='tab:grey', linewidth=3)
+    ax[row_index, col_index].step(center_of_abs_v_mag_bins, hist_hum / np.nanmax(hist_ml), where='mid', color='tab:red', linewidth=3)
+
+    # ax[row_index, col_index].hist(v_mag_ml, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:grey', linewidth=3)
+    # ax[row_index, col_index].hist(v_mag_hum, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:red', linewidth=3)
 
     median_v_mag_ml = np.nanmedian(v_mag_ml[(v_mag_ml > 18) & (v_mag_ml < 26)])
     faintest_v_band_mag_hum = np.nanmax(v_mag_hum[(v_mag_hum > 18) & (v_mag_hum < 26)])
@@ -97,9 +113,11 @@ ax[7, 4].plot([], [], color='tab:red', linewidth=2, label='Human')
 ax[7, 4].plot([], [], color='tab:grey', linewidth=2, label='ML')
 ax[7, 4].legend(frameon=False, fontsize=fontsize)
 
-ax[0, 0].set_yticks([0.2, 0.4, 0.6, 0.8])
+# ax[0, 0].set_yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
 ax[0, 0].set_xticks([24, 22, 20])
-ax[0, 0].set_xlim(25.9, 15.5)
+# ax[0, 0].set_ylim(-0.1, 1.1)
+# ax[0, 0].set_xlim(25.9, 15.5)
+ax[0, 0].set_xlim(26.0, 15.5)
 
 ax[7, 4].axis('off')
 

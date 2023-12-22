@@ -3,9 +3,6 @@ from photometry_tools import helper_func as hf, plotting_tools
 from photometry_tools.data_access import CatalogAccess
 import matplotlib.pyplot as plt
 from astropy.io import fits
-from astropy.stats import sigma_clipped_stats
-from astropy.stats import SigmaClip
-from photutils.background import Background2D, MedianBackground
 from photutils.segmentation import make_2dgaussian_kernel
 from astropy.convolution import convolve
 import multicolorfits as mcf

@@ -43,6 +43,8 @@ number_ml_all = np.zeros(len(target_list))
 
 sfr = np.zeros(len(target_list))
 sfr_err = np.zeros(len(target_list))
+mstar = np.zeros(len(target_list))
+mstar_err = np.zeros(len(target_list))
 ssfr = np.zeros(len(target_list))
 ssfr_err = np.zeros(len(target_list))
 log_ssfr = np.zeros(len(target_list))
@@ -91,7 +93,7 @@ print('number_ml_12 ', number_ml_12)
 mean_err_frac = np.mean(ssfr_err/ssfr)
 
 fig, ax = plt.subplots(nrows=2, sharex=True, figsize=(13, 11))
-fontsize = 17
+fontsize = 26
 
 for i, target in enumerate(target_list):
     ax[0].plot([sfr[i], sfr[i]], [number_ml_12[i], number_hum_12[i]], color='grey', linestyle='--', linewidth=3)

@@ -181,7 +181,7 @@ print('glob SFR # ml 3', np.corrcoef(x=np.log10(glob_sfr), y=np.log10(number_ml_
 
 
 fig, ax = plt.subplots(nrows=2, sharex=True, figsize=(13, 10))
-fontsize = 17
+fontsize = 26
 
 for i, target in enumerate(target_list):
     ax[0].plot([glob_sfr[i], glob_sfr[i]], [number_ml_12[i], number_hum_12[i]], color='grey', linestyle='--', linewidth=3)
@@ -231,7 +231,7 @@ plt.close("all")
 
 
 fig, ax = plt.subplots(nrows=2, sharex=True, figsize=(13, 10))
-fontsize = 17
+fontsize = 26
 
 for i, target in enumerate(target_list):
     ax[0].plot([area_ssfr[i], area_ssfr[i]], [number_ml_12[i], number_hum_12[i]], color='grey', linestyle='--', linewidth=3)
@@ -251,20 +251,20 @@ ax[1].set_yscale('log')
 # ax[0].text(6*10**(-12), 2700, 'Class 1, 2', horizontalalignment='left', verticalalignment='center', fontsize=fontsize+4)
 # ax[1].text(6*10**(-12), 4000, 'Compact Associations', horizontalalignment='left', verticalalignment='center', fontsize=fontsize+4)
 
-ax[0].text(0.02, 0.95, 'Class 1, 2', horizontalalignment='left', verticalalignment='top', fontsize=fontsize+4, transform=ax[0].transAxes)
-ax[1].text(0.02, 0.95, 'Compact Associations', horizontalalignment='left', verticalalignment='top', fontsize=fontsize+4, transform=ax[1].transAxes)
+ax[0].text(0.02, 0.95, 'Class 1, 2', horizontalalignment='left', verticalalignment='top', fontsize=fontsize, transform=ax[0].transAxes)
+ax[1].text(0.02, 0.95, 'Class 3 Compact Associations', horizontalalignment='left', verticalalignment='top', fontsize=fontsize, transform=ax[1].transAxes)
 
 
-ax[0].legend(frameon=False, fontsize=fontsize, loc=4)
+ax[0].legend(frameon=False, fontsize=fontsize-4, loc=4)
 
-ax[0].set_ylabel('# Clusters', fontsize=fontsize)
-ax[1].set_ylabel('# Clusters', fontsize=fontsize)
-ax[1].set_xlabel('log(SFR/M$_{*}$) [yr$^{-1}$] | HST Footprint', fontsize=fontsize)
+ax[0].set_ylabel('# Clusters', labelpad=-1, fontsize=fontsize)
+ax[1].set_ylabel('# Clusters', labelpad=-1, fontsize=fontsize)
+ax[1].set_xlabel('log(SFR/M$_{*}$) [yr$^{-1}$] | HST Footprint', labelpad=-1, fontsize=fontsize)
 # ax[1].set_xlabel('log(SFR) [M$_{\odot}$yr$^{-1}$]', fontsize=fontsize)
 ax[0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
 ax[1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
 
-fig.subplots_adjust(left=0.06, bottom=0.07, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
+fig.subplots_adjust(left=0.08, bottom=0.082, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
 plt.savefig('plot_output/n_cluster_ssfr.png')
 plt.savefig('plot_output/n_cluster_ssfr.pdf')
 plt.clf()

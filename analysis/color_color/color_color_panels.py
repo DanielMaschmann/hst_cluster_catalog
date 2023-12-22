@@ -62,8 +62,6 @@ for target in target_list:
     dist_list.append(catalog_access.dist_dict[target]['dist'])
     delta_ms_list.append(catalog_access.get_target_delta_ms(target=target))
 
-
-
 sort = np.argsort(delta_ms_list)[::-1]
 target_list = np.array(target_list)[sort]
 dist_list = np.array(dist_list)[sort]
@@ -99,6 +97,7 @@ for index in range(0, 20):
     dist = dist_list[index]
     delta_ms = delta_ms_list[index]
     print('target ', target, 'dist ', dist)
+
     if 'F438W' in catalog_access.hst_targets[target]['wfc3_uvis_observed_bands']:
         b_band = 'F438W'
     else:

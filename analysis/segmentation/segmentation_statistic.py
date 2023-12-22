@@ -72,12 +72,13 @@ color_ub_hum = np.array([])
 color_vi_hum = np.array([])
 detect_ub_hum = np.array([])
 detect_vi_hum = np.array([])
+class_hum  = np.array([])
 
 color_ub_ml = np.array([])
 color_vi_ml = np.array([])
 detect_ub_ml = np.array([])
 detect_vi_ml = np.array([])
-
+class_ml = np.array([])
 
 for index in range(len(target_list)):
     target = target_list[index]
@@ -109,6 +110,7 @@ for index in range(len(target_list)):
         b_band = 'F438W'
     else:
         b_band = 'F435W'
+    class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
     age_hum_12 = catalog_access.get_hst_cc_age(target=target)
     color_ub_hum_12 = catalog_access.get_hst_color_ub_vega(target=target)
     color_vi_hum_12 = catalog_access.get_hst_color_vi_vega(target=target)
@@ -117,6 +119,7 @@ for index in range(len(target_list)):
     detect_vi_hum_12 = ((catalog_access.get_hst_cc_band_flux(target=target, band='F555W') > 0) &
                           (catalog_access.get_hst_cc_band_flux(target=target, band='F814W') > 0))
 
+    class_hum_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
     age_hum_3 = catalog_access.get_hst_cc_age(target=target, cluster_class='class3')
     color_ub_hum_3 = catalog_access.get_hst_color_ub_vega(target=target, cluster_class='class3')
     color_vi_hum_3 = catalog_access.get_hst_color_vi_vega(target=target, cluster_class='class3')
@@ -128,7 +131,9 @@ for index in range(len(target_list)):
     color_vi_hum = np.concatenate([color_vi_hum, color_vi_hum_12, color_vi_hum_3])
     detect_ub_hum = np.concatenate([detect_ub_hum, detect_ub_hum_12, detect_ub_hum_3])
     detect_vi_hum = np.concatenate([detect_vi_hum, detect_vi_hum_12, detect_vi_hum_3])
+    class_hum = np.concatenate([class_hum, class_hum_12, class_hum_3])
 
+    class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
     age_ml_12 = catalog_access.get_hst_cc_age(target=target, classify='ml')
     color_ub_ml_12 = catalog_access.get_hst_color_ub_vega(target=target, classify='ml')
     color_vi_ml_12 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml')
@@ -136,6 +141,8 @@ for index in range(len(target_list)):
                           (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F336W') > 0))
     detect_vi_ml_12 = ((catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F555W') > 0) &
                           (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F814W') > 0))
+
+    class_ml_3 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
     age_ml_3 = catalog_access.get_hst_cc_age(target=target, classify='ml', cluster_class='class3')
     color_ub_ml_3 = catalog_access.get_hst_color_ub_vega(target=target, classify='ml', cluster_class='class3')
     color_vi_ml_3 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml', cluster_class='class3')
@@ -147,6 +154,7 @@ for index in range(len(target_list)):
     color_vi_ml = np.concatenate([color_vi_ml, color_vi_ml_12, color_vi_ml_3])
     detect_ub_ml = np.concatenate([detect_ub_ml, detect_ub_ml_12, detect_ub_ml_3])
     detect_vi_ml = np.concatenate([detect_vi_ml, detect_vi_ml_12, detect_vi_ml_3])
+    class_ml = np.concatenate([class_ml, class_ml_12, class_ml_3])
 
 
 
@@ -161,4 +169,13 @@ in_hull_young_ml = hf.points_in_hull(np.array([color_vi_ml, color_ub_ml]).T, hul
 
 print(sum(in_hull_gc_hum + in_hull_cascade_hum + in_hull_young_hum) / len(color_vi_hum))
 print(sum(in_hull_gc_ml + in_hull_cascade_ml + in_hull_young_ml) / len(color_vi_ml))
+
+print(sum(in_hull_young_hum * (class_hum == 1)), sum(in_hull_young_hum * (class_hum == 1)) / sum(class_hum == 1))
+print(sum(in_hull_young_ml * (class_ml == 1)), sum(in_hull_young_ml * (class_ml == 1)) / sum(class_ml == 1))
+
+print(sum(in_hull_young_hum * (class_hum == 2)), sum(in_hull_young_hum * (class_hum == 2)) / sum(class_hum == 2))
+print(sum(in_hull_young_ml * (class_ml == 2)), sum(in_hull_young_ml * (class_ml == 2)) / sum(class_ml == 2))
+
+print(sum(in_hull_young_hum * (class_hum == 3)), sum(in_hull_young_hum * (class_hum == 3)) / sum(class_hum == 3))
+print(sum(in_hull_young_ml * (class_ml == 3)), sum(in_hull_young_ml * (class_ml == 3)) / sum(class_ml == 3))
 
