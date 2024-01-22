@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from astropy.io import fits
 
+np.random.seed(1234)
+
 
 cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'
 hst_obs_hdr_file_path = '/home/benutzer/data/PHANGS_products/tables'
@@ -38,7 +40,8 @@ for target in target_list:
     delta_ms_list.append(catalog_access.get_target_delta_ms(target=target))
     mass_list.append(catalog_access.get_target_mstar(target=target))
 
-sort = np.argsort(delta_ms_list)[::-1]
+# sort = np.argsort(delta_ms_list)[::-1]
+sort = np.argsort(dist_list)
 target_list = np.array(target_list)[sort]
 dist_list = np.array(dist_list)[sort]
 delta_ms_list = np.array(delta_ms_list)[sort]
@@ -77,46 +80,57 @@ for index in range(0, 20):
     cluster_class_12_hum = catalog_access.get_hst_cc_class_human(target=target)
     age_12_hum = catalog_access.get_hst_cc_age(target=target)
     m_star_12_hum = catalog_access.get_hst_cc_stellar_m(target=target)
+    non_det_flag_12_hum = catalog_access.get_hst_cc_det_flag(target=target)
+    cov_flag_12_hum = catalog_access.get_hst_cc_cov_flag(target=target)
     cluster_class_3_hum = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
     age_3_hum = catalog_access.get_hst_cc_age(target=target, cluster_class='class3')
     m_star_3_hum = catalog_access.get_hst_cc_stellar_m(target=target, cluster_class='class3')
+    non_det_flag_3_hum = catalog_access.get_hst_cc_det_flag(target=target, cluster_class='class3')
+    cov_flag_3_hum = catalog_access.get_hst_cc_cov_flag(target=target, cluster_class='class3')
 
     cluster_class_12_ml = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
     cluster_class_qual_12_ml = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml')
     age_12_ml = catalog_access.get_hst_cc_age(target=target, classify='ml')
     m_star_12_ml = catalog_access.get_hst_cc_stellar_m(target=target, classify='ml')
+    non_det_flag_12_ml = catalog_access.get_hst_cc_det_flag(target=target, classify='ml')
+    cov_flag_12_ml = catalog_access.get_hst_cc_cov_flag(target=target, classify='ml')
     cluster_class_3_ml = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
     cluster_class_qual_3_ml = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml', cluster_class='class3')
     age_3_ml = catalog_access.get_hst_cc_age(target=target, classify='ml', cluster_class='class3')
     m_star_3_ml = catalog_access.get_hst_cc_stellar_m(target=target, classify='ml', cluster_class='class3')
-    class_1_ml = (cluster_class_12_ml == 1) & (cluster_class_qual_12_ml >= 0.9)
-    class_2_ml = (cluster_class_12_ml == 2) & (cluster_class_qual_12_ml >= 0.9)
-    class_3_ml = (cluster_class_3_ml == 3) & (cluster_class_qual_3_ml >= 0.9)
+    non_det_flag_3_ml = catalog_access.get_hst_cc_det_flag(target=target, classify='ml', cluster_class='class3')
+    cov_flag_3_ml = catalog_access.get_hst_cc_cov_flag(target=target, classify='ml', cluster_class='class3')
+
+    clean_mask_12_hum = (non_det_flag_12_hum < 2) & (cov_flag_12_hum < 2)
+    clean_mask_3_hum = (non_det_flag_3_hum < 2) & (cov_flag_3_hum < 2)
+    clean_mask_12_ml = (non_det_flag_12_ml < 2) & (cov_flag_12_ml < 2)
+    clean_mask_3_ml = (non_det_flag_3_ml < 2) & (cov_flag_3_ml < 2)
 
     # random dots
     random_x_12_hum = np.random.uniform(low=-0.1, high=0.1, size=len(age_12_hum))
     random_x_3_hum = np.random.uniform(low=-0.1, high=0.1, size=len(age_3_hum))
     ax_hum[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=1.2)
-    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum) + random_x_3_hum + 6)[cluster_class_3_hum == 3],
-                                         np.log10(m_star_3_hum[cluster_class_3_hum == 3]), c=color_c3, s=20, alpha=0.7)
-    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[cluster_class_12_hum == 2],
-                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 2], c=color_c2, s=20,
+    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum) + random_x_3_hum + 6)[(cluster_class_3_hum == 3)*clean_mask_3_hum],
+                                         np.log10(m_star_3_hum[(cluster_class_3_hum == 3)*clean_mask_3_hum]), c=color_c3, s=20, alpha=0.7)
+    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[(cluster_class_12_hum == 2)*clean_mask_12_hum],
+                                         np.log10(m_star_12_hum)[(cluster_class_12_hum == 2)*clean_mask_12_hum], c=color_c2, s=20,
                                          alpha=0.7)
-    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[cluster_class_12_hum == 1],
-                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 1], c=color_c1, s=20,
+    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[(cluster_class_12_hum == 1)*clean_mask_12_hum],
+                                         np.log10(m_star_12_hum)[(cluster_class_12_hum == 1)*clean_mask_12_hum], c=color_c1, s=20,
                                          alpha=0.7)
 
     # random dots
     random_x_12_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_12_ml))
     random_x_3_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_3_ml))
     ax_ml[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=1.2)
-    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml) + random_x_3_ml + 6)[cluster_class_3_ml == 3],
-                                         np.log10(m_star_3_ml[cluster_class_3_ml == 3]), c=color_c3, s=20,alpha=0.7)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[cluster_class_12_ml == 2],
-                                         np.log10(m_star_12_ml)[cluster_class_12_ml == 2], c=color_c2, s=20, alpha=0.7)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[cluster_class_12_ml == 1],
-                                         np.log10(m_star_12_ml)[cluster_class_12_ml == 1], c=color_c1, s=20, alpha=0.7)
-
+    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml) + random_x_3_ml + 6)[(cluster_class_3_ml == 3)*clean_mask_3_ml],
+                                         np.log10(m_star_3_ml[(cluster_class_3_ml == 3)*clean_mask_3_ml]), c=color_c3, s=20, alpha=0.7)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[(cluster_class_12_ml == 2)*clean_mask_12_ml],
+                                         np.log10(m_star_12_ml)[(cluster_class_12_ml == 2)*clean_mask_12_ml], c=color_c2, s=20,
+                                         alpha=0.7)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[(cluster_class_12_ml == 1)*clean_mask_12_ml],
+                                         np.log10(m_star_12_ml)[(cluster_class_12_ml == 1)*clean_mask_12_ml], c=color_c1, s=20,
+                                         alpha=0.7)
     anchored_left = AnchoredText(target.upper() +
                                  ' ($\Delta$MS=%.2f)' % delta_ms +
                                  '\nlog(M$_{*}$/M$_{\odot})$=%.1f, d=' % np.log10(mass) + str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
@@ -191,48 +205,57 @@ for index in range(20, 39):
     cluster_class_12_hum = catalog_access.get_hst_cc_class_human(target=target)
     age_12_hum = catalog_access.get_hst_cc_age(target=target)
     m_star_12_hum = catalog_access.get_hst_cc_stellar_m(target=target)
+    non_det_flag_12_hum = catalog_access.get_hst_cc_det_flag(target=target)
+    cov_flag_12_hum = catalog_access.get_hst_cc_cov_flag(target=target)
     cluster_class_3_hum = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
     age_3_hum = catalog_access.get_hst_cc_age(target=target, cluster_class='class3')
     m_star_3_hum = catalog_access.get_hst_cc_stellar_m(target=target, cluster_class='class3')
+    non_det_flag_3_hum = catalog_access.get_hst_cc_det_flag(target=target, cluster_class='class3')
+    cov_flag_3_hum = catalog_access.get_hst_cc_cov_flag(target=target, cluster_class='class3')
 
     cluster_class_12_ml = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
     cluster_class_qual_12_ml = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml')
     age_12_ml = catalog_access.get_hst_cc_age(target=target, classify='ml')
     m_star_12_ml = catalog_access.get_hst_cc_stellar_m(target=target, classify='ml')
+    non_det_flag_12_ml = catalog_access.get_hst_cc_det_flag(target=target, classify='ml')
+    cov_flag_12_ml = catalog_access.get_hst_cc_cov_flag(target=target, classify='ml')
     cluster_class_3_ml = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
     cluster_class_qual_3_ml = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml', cluster_class='class3')
     age_3_ml = catalog_access.get_hst_cc_age(target=target, classify='ml', cluster_class='class3')
     m_star_3_ml = catalog_access.get_hst_cc_stellar_m(target=target, classify='ml', cluster_class='class3')
-    class_1_ml = (cluster_class_12_ml == 1) & (cluster_class_qual_12_ml >= 0.9)
-    class_2_ml = (cluster_class_12_ml == 2) & (cluster_class_qual_12_ml >= 0.9)
-    class_3_ml = (cluster_class_3_ml == 3) & (cluster_class_qual_3_ml >= 0.9)
+    non_det_flag_3_ml = catalog_access.get_hst_cc_det_flag(target=target, classify='ml', cluster_class='class3')
+    cov_flag_3_ml = catalog_access.get_hst_cc_cov_flag(target=target, classify='ml', cluster_class='class3')
+
+    clean_mask_12_hum = (non_det_flag_12_hum < 2) & (cov_flag_12_hum < 2)
+    clean_mask_3_hum = (non_det_flag_3_hum < 2) & (cov_flag_3_hum < 2)
+    clean_mask_12_ml = (non_det_flag_12_ml < 2) & (cov_flag_12_ml < 2)
+    clean_mask_3_ml = (non_det_flag_3_ml < 2) & (cov_flag_3_ml < 2)
 
     # random dots
     random_x_12_hum = np.random.uniform(low=-0.1, high=0.1, size=len(age_12_hum))
     random_x_3_hum = np.random.uniform(low=-0.1, high=0.1, size=len(age_3_hum))
     ax_hum[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=1.2)
-    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum) + random_x_3_hum + 6)[cluster_class_3_hum == 3],
-                                         np.log10(m_star_3_hum[cluster_class_3_hum == 3]), c=color_c3,  s=20,
+    ax_hum[row_index, col_index].scatter((np.log10(age_3_hum) + random_x_3_hum + 6)[(cluster_class_3_hum == 3)*clean_mask_3_hum],
+                                         np.log10(m_star_3_hum[(cluster_class_3_hum == 3)*clean_mask_3_hum]), c=color_c3, s=20, alpha=0.7)
+    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[(cluster_class_12_hum == 2)*clean_mask_12_hum],
+                                         np.log10(m_star_12_hum)[(cluster_class_12_hum == 2)*clean_mask_12_hum], c=color_c2, s=20,
                                          alpha=0.7)
-    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[cluster_class_12_hum == 2],
-                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 2], c=color_c2, s=20,
-                                         alpha=0.7)
-    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[cluster_class_12_hum == 1],
-                                         np.log10(m_star_12_hum)[cluster_class_12_hum == 1], c=color_c1, s=20,
+    ax_hum[row_index, col_index].scatter((np.log10(age_12_hum) + random_x_12_hum + 6)[(cluster_class_12_hum == 1)*clean_mask_12_hum],
+                                         np.log10(m_star_12_hum)[(cluster_class_12_hum == 1)*clean_mask_12_hum], c=color_c1, s=20,
                                          alpha=0.7)
 
     # random dots
     random_x_12_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_12_ml))
     random_x_3_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_3_ml))
     ax_ml[row_index, col_index].plot(np.log10(age_mod) + 6, lower_lim_m_star, color='r', linewidth=1.2)
-    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml) + random_x_3_ml + 6)[cluster_class_3_ml == 3],
-                                         np.log10(m_star_3_ml[cluster_class_3_ml == 3]), c=color_c3, s=20,
+    ax_ml[row_index, col_index].scatter((np.log10(age_3_ml) + random_x_3_ml + 6)[(cluster_class_3_ml == 3)*clean_mask_3_ml],
+                                         np.log10(m_star_3_ml[(cluster_class_3_ml == 3)*clean_mask_3_ml]), c=color_c3, s=20, alpha=0.7)
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[(cluster_class_12_ml == 2)*clean_mask_12_ml],
+                                         np.log10(m_star_12_ml)[(cluster_class_12_ml == 2)*clean_mask_12_ml], c=color_c2, s=20,
                                          alpha=0.7)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[cluster_class_12_ml == 2],
-                                         np.log10(m_star_12_ml)[cluster_class_12_ml == 2], c=color_c2, s=20, alpha=0.7)
-    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[cluster_class_12_ml == 1],
-                                         np.log10(m_star_12_ml)[cluster_class_12_ml == 1], c=color_c1, s=20, alpha=0.7)
-
+    ax_ml[row_index, col_index].scatter((np.log10(age_12_ml) + random_x_12_ml + 6)[(cluster_class_12_ml == 1)*clean_mask_12_ml],
+                                         np.log10(m_star_12_ml)[(cluster_class_12_ml == 1)*clean_mask_12_ml], c=color_c1, s=20,
+                                         alpha=0.7)
     anchored_left = AnchoredText(target.upper() +
                                  ' ($\Delta$MS=%.2f)' % delta_ms +
                                  '\nlog(M$_{*}$/M$_{\odot})$=%.1f, d=' % np.log10(mass) + str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
@@ -241,6 +264,7 @@ for index in range(20, 39):
     ax_hum[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
                                              direction='in', labelsize=fontsize)
 
+
     anchored_left = AnchoredText(target.upper() +
                                  ' ($\Delta$MS=%.2f)' % delta_ms +
                                  '\nlog(M$_{*}$/M$_{\odot})$=%.1f, d=' % np.log10(mass) + str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
@@ -248,6 +272,7 @@ for index in range(20, 39):
     ax_ml[row_index, col_index].add_artist(anchored_left)
     ax_ml[row_index, col_index].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True,
                                              direction='in', labelsize=fontsize)
+
 
     col_index += 1
     if col_index == 4:

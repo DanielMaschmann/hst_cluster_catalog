@@ -1,5 +1,3 @@
-import os.path
-
 import numpy as np
 import photometry_tools
 from photometry_tools import helper_func as hf
@@ -7,9 +5,9 @@ import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from astropy.io import fits
 from scipy.stats import gaussian_kde
-import dust_tools.extinction_tools
 from matplotlib.colorbar import ColorbarBase
 import matplotlib
+from matplotlib.lines import Line2D
 
 
 def contours(ax, x, y, levels=None, axis_offse=(-0.2, 0.1, -0.55, 0.6)):
@@ -45,7 +43,6 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path,
                                                             morph_mask_path=morph_mask_path,
                                                             sample_table_path=sample_table_path)
-
 
 # get model
 hdu_a_sol = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
@@ -192,12 +189,14 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
             row_index += 1
             col_index = 0
 
+    fig_1.subplots_adjust(left=0.055, bottom=0.035, right=0.995, top=0.93, wspace=0.0, hspace=0.0)
+
     ax_1[0, 0].set_ylim(y_lim_ub)
     ax_1[0, 0].set_xlim(x_lim_vi)
     x_label = 'V-I [mag]'
     y_label = 'U-B [mag]'
-    fig_1.text(0.5, 0.08, x_label, ha='center', fontsize=fontsize)
-    fig_1.text(0.08, 0.5, y_label, va='center', rotation='vertical', fontsize=fontsize)
+    fig_1.text(0.5, 0.01, x_label, ha='center', fontsize=fontsize)
+    fig_1.text(0.01, 0.5, y_label, va='center', ha='left', rotation='vertical', fontsize=fontsize)
 
     if cluster_class == 'class12':
         classify_str = '%s Class 1+2 Clusters ' % classify.upper()
@@ -205,17 +204,24 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
         classify_str = '%s Class 3 Compact Association' % classify.upper()
     else:
         classify_str = ''
-    fig_1.text(0.5, 0.89, r'%s   H$\alpha$ > %.1f 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$' %
+    fig_1.text(0.055, 0.935, r'%s, H$\alpha$>%.1f 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$' %
                (classify_str, h_alpha_cut),
-               ha='center', fontsize=fontsize)
+               ha='left', va='bottom', fontsize=fontsize + 4)
 
-    fig_1.subplots_adjust(wspace=0, hspace=0)
+    ax_cbar = fig_1.add_axes([0.78, 0.95, 0.2, 0.012])
+    ColorbarBase(ax_cbar, orientation='horizontal', cmap=cmap, norm=norm, extend='neither', ticks=None)
+    ax_cbar.set_xlabel(r'S(H$\alpha$) 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$', labelpad=3, fontsize=fontsize)
+    ax_cbar.tick_params(axis='both', which='both', width=2, direction='in', top=True, labelbottom=False,
+                        labeltop=True, labelsize=fontsize)
 
     fig_name_str = '%s_%s_panel_1_%s_c%s_h%s' % (x_color, y_color, classify, cluster_class[5:], h_alpha_cut)
     fig_1.savefig('plot_output/' + fig_name_str + '.png', bbox_inches='tight', dpi=300)
     if save_pdf:
         fig_1.savefig('plot_output/' + fig_name_str + '.pdf', bbox_inches='tight', dpi=300)
 
+    #
+    #
+    #
 
     row_index = 0
     col_index = 0
@@ -291,12 +297,14 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
             row_index += 1
             col_index = 0
 
+    fig_2.subplots_adjust(left=0.055, bottom=0.035, right=0.995, top=0.93, wspace=0.0, hspace=0.0)
+
     ax_2[0, 0].set_ylim(y_lim_ub)
     ax_2[0, 0].set_xlim(x_lim_vi)
     x_label = 'V-I [mag]'
     y_label = 'U-B [mag]'
-    fig_2.text(0.5, 0.08, x_label, ha='center', fontsize=fontsize)
-    fig_2.text(0.08, 0.5, y_label, va='center', rotation='vertical', fontsize=fontsize)
+    fig_2.text(0.5, 0.01, x_label, ha='center', fontsize=fontsize)
+    fig_2.text(0.01, 0.5, y_label, va='center', ha='left', rotation='vertical', fontsize=fontsize)
 
     if cluster_class == 'class12':
         classify_str = '%s Class 1+2 Clusters ' % classify.upper()
@@ -304,22 +312,34 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
         classify_str = '%s Class 3 Compact Association' % classify.upper()
     else:
         classify_str = ''
-
-    fig_2.text(0.5, 0.89, r'%s   H$\alpha$ > %.1f 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$' %
+    fig_2.text(0.055, 0.935, r'%s, H$\alpha$>%.1f 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$' %
                (classify_str, h_alpha_cut),
-               ha='center', fontsize=fontsize)
+               ha='left', va='bottom', fontsize=fontsize + 4)
 
-    ax_2[4, 3].plot([], [], color='k', label='ML Class 1|2')
-    ax_2[4, 3].legend(frameon=False, fontsize=fontsize)
-    ax_2[4, 3].axis('off')
+    # ax_cbar = fig_2.add_axes([0.795, 0.14, 0.17, 0.012])
+    # ColorbarBase(ax_cbar, orientation='horizontal', cmap=cmap, norm=norm, extend='neither', ticks=None)
+    # ax_cbar.set_xlabel(r'S(H$\alpha$) 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$', labelpad=0, fontsize=fontsize)
+    # ax_cbar.tick_params(axis='both', which='both', width=2, direction='in', top=True, labelbottom=False,
+    #                     labeltop=True, labelsize=fontsize)
 
-    fig_2.subplots_adjust(wspace=0, hspace=0)
-
-    ax_cbar = fig_2.add_axes([0.73, 0.16, 0.15, 0.015])
+    ax_cbar = fig_2.add_axes([0.78, 0.95, 0.2, 0.012])
     ColorbarBase(ax_cbar, orientation='horizontal', cmap=cmap, norm=norm, extend='neither', ticks=None)
-    ax_cbar.set_xlabel(r'$\Sigma$ H$\alpha$ 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$', labelpad=0, fontsize=fontsize-3)
+    ax_cbar.set_xlabel(r'S(H$\alpha$) 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$', labelpad=3, fontsize=fontsize)
     ax_cbar.tick_params(axis='both', which='both', width=2, direction='in', top=True, labelbottom=False,
                         labeltop=True, labelsize=fontsize)
+
+    # handles, labels = ax_2[4, 3].get_legend_handles_labels()
+    # point = Line2D([0], [0], label='ML Class 1|2', marker='s', markersize=30,
+    #          markeredgecolor='k', markerfacecolor='None', linestyle='')
+    # # add manual symbols to auto legend
+    # handles.extend([point])
+    # ax_2[4, 3].legend(handles=handles, frameon=False, fontsize=fontsize)
+
+    # ax_2[4, 3].plot([], [], color='k', label='ML Class 1|2')
+    # ax_2[4, 3].hist([], color='k', histtype='step', label='ML Class 1|2')
+    # ax_2[4, 3].legend(frameon=False, fontsize=fontsize)
+    ax_2[4, 3].axis('off')
+
 
     fig_name_str = '%s_%s_panel_2_%s_h%s_c%s' % (x_color, y_color, classify, h_alpha_cut,cluster_class[5:])
     fig_2.savefig('plot_output/' + fig_name_str + '.png', bbox_inches='tight', dpi=300)
@@ -338,7 +358,6 @@ plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12
 plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=3, save_pdf=True)
 plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=5, save_pdf=True)
 plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=10, save_pdf=True)
-
 
 
 plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=1, save_pdf=True)

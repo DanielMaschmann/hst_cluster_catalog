@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 
 
+np.random.seed(1234)
+
+
 cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'
 hst_obs_hdr_file_path = '/home/benutzer/data/PHANGS_products/tables'
 morph_mask_path = '/home/benutzer/data/PHANGS_products/environment_masks'
@@ -36,7 +39,14 @@ catalog_access.load_hst_cc_list(target_list=target_list, cluster_class='class3')
 catalog_access.load_hst_cc_list(target_list=target_list, classify='ml')
 catalog_access.load_hst_cc_list(target_list=target_list, classify='ml', cluster_class='class3')
 
+line_84p_age = [0.30, 0.47, 0.68, 0.81, 0.91, 0.95, 0.99, 1.01, 1.06, 1.12, 1.17, 1.22, 1.29, 1.37, 1.49, 1.64, 1.71,
+                1.81, 1.88, 2.06, 2.18, 2.31, 2.38, 2.52, 2.66, 2.75, 2.81, 2.90, 2.98, 3.11, 3.20, 3.30]
 
+line_84p_ebv = [1.196, 1.176, 1.091, 1.033, 0.937, 0.847, 0.791, 0.780, 0.788, 0.788, 0.774, 0.727, 0.649, 0.570, 0.526,
+                0.488, 0.480, 0.485, 0.485, 0.474, 0.439, 0.398, 0.375, 0.351, 0.340, 0.317, 0.282, 0.209, 0.162, 0.124,
+                0.116, 0.113]
+line_84p_age = np.array(line_84p_age) + 6
+line_84p_ebv = np.array(line_84p_ebv)
 
 color_c1 = 'tab:green'
 color_c2 = 'mediumblue'
@@ -94,6 +104,9 @@ for index in range(0, 20):
                                          (ebv_hum + random_y_hum)[cluster_class_hum == 2], c=color_c2, s=20, alpha=0.7)
     ax_hum[row_index, col_index].scatter((np.log10(age_hum) + random_x_hum + 6)[cluster_class_hum == 1],
                                          (ebv_hum + random_y_hum)[cluster_class_hum == 1], c=color_c1, s=20, alpha=0.7)
+    ax_hum[row_index, col_index].plot(line_84p_age, line_84p_ebv, linewidth=1.2, color='red')
+    if target == 'ngc1365':
+        ax_hum[row_index, col_index].plot([6, 9], [1, 0.1], linewidth=1.6, linestyle='--', color='red')
 
     # random dots
     random_x_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_ml))
@@ -105,6 +118,10 @@ for index in range(0, 20):
                                          (ebv_ml + random_y_ml)[cluster_class_ml == 2], c=color_c2, s=20, alpha=0.7)
     ax_ml[row_index, col_index].scatter((np.log10(age_ml) + random_x_ml + 6)[cluster_class_ml == 1],
                                          (ebv_ml + random_y_ml)[cluster_class_ml == 1], c=color_c1, s=20, alpha=0.7)
+
+    ax_ml[row_index, col_index].plot(line_84p_age, line_84p_ebv, linewidth=1.2, color='red')
+    if target == 'ngc1365':
+        ax_ml[row_index, col_index].plot([6, 9], [1, 0.1], linewidth=1.6, linestyle='--', color='red')
 
     # anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
     #                              frameon=False, prop=dict(size=fontsize-4))
@@ -156,12 +173,12 @@ ax_ml[0, 0].legend(frameon=True, ncols=3, loc="upper center", bbox_to_anchor=[2.
 
 # plt.tight_layout()
 fig_hum.subplots_adjust(left=0.13, bottom=0.11, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
-fig_hum.savefig('plot_output/age_ebv_hum_1_c123.png', bbox_inches='tight', dpi=300)
-fig_hum.savefig('plot_output/age_ebv_hum_1_c123.pdf', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_ebv_hum_1_no_fix_c123.png', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_ebv_hum_1_no_fix_c123.pdf', bbox_inches='tight', dpi=300)
 
 fig_ml.subplots_adjust(left=0.13, bottom=0.11, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
-fig_ml.savefig('plot_output/age_ebv_ml_1_c123.png', bbox_inches='tight', dpi=300)
-fig_ml.savefig('plot_output/age_ebv_ml_1_c123.pdf', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_ebv_ml_1_no_fix_c123.png', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_ebv_ml_1_no_fix_c123.pdf', bbox_inches='tight', dpi=300)
 
 
 fig_hum, ax_hum = plt.subplots(5, 4, sharex=True, sharey=True)
@@ -218,6 +235,9 @@ for index in range(20, 39):
                                          (ebv_hum + random_y_hum)[cluster_class_hum == 2], c=color_c2, s=20, alpha=0.7)
     ax_hum[row_index, col_index].scatter((np.log10(age_hum) + random_x_hum + 6)[cluster_class_hum == 1],
                                          (ebv_hum + random_y_hum)[cluster_class_hum == 1], c=color_c1, s=20, alpha=0.7)
+    ax_hum[row_index, col_index].plot(line_84p_age, line_84p_ebv, linewidth=1.2, color='red')
+    if target == 'ngc1365':
+        ax_hum[row_index, col_index].plot([6, 9], [1, 0.1], linewidth=1.6, linestyle='--', color='red')
 
     # random dots
     random_x_ml = np.random.uniform(low=-0.1, high=0.1, size=len(age_ml))
@@ -229,6 +249,9 @@ for index in range(20, 39):
                                          (ebv_ml + random_y_ml)[cluster_class_ml == 2], c=color_c2, s=20, alpha=0.7)
     ax_ml[row_index, col_index].scatter((np.log10(age_ml) + random_x_ml + 6)[cluster_class_ml == 1],
                                          (ebv_ml + random_y_ml)[cluster_class_ml == 1], c=color_c1, s=20, alpha=0.7)
+    ax_ml[row_index, col_index].plot(line_84p_age, line_84p_ebv, linewidth=1.2, color='red')
+    if target == 'ngc1365':
+        ax_ml[row_index, col_index].plot([6, 9], [1, 0.1], linewidth=1.6, linestyle='--', color='red')
 
     # anchored_left = AnchoredText(target.upper()+'\nd='+str(dist)+' Mpc',  loc='upper left', borderpad=0.1,
     #                              frameon=False, prop=dict(size=fontsize-4))
@@ -281,42 +304,42 @@ ax_ml[4, 3].axis('off')
 
 # plt.tight_layout()
 fig_hum.subplots_adjust(left=0.13, bottom=0.11, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
-fig_hum.savefig('plot_output/age_ebv_hum_2_c123.png', bbox_inches='tight', dpi=300)
-fig_hum.savefig('plot_output/age_ebv_hum_2_c123.pdf', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_ebv_hum_2_no_fix_c123.png', bbox_inches='tight', dpi=300)
+fig_hum.savefig('plot_output/age_ebv_hum_2_no_fix_c123.pdf', bbox_inches='tight', dpi=300)
 
 fig_ml.subplots_adjust(left=0.13, bottom=0.11, right=0.995, top=0.995, wspace=0.01, hspace=0.01)
-fig_ml.savefig('plot_output/age_ebv_ml_2_c123.png', bbox_inches='tight', dpi=300)
-fig_ml.savefig('plot_output/age_ebv_ml_2_c123.pdf', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_ebv_ml_2_no_fix_c123.png', bbox_inches='tight', dpi=300)
+fig_ml.savefig('plot_output/age_ebv_ml_2_no_fix_c123.pdf', bbox_inches='tight', dpi=300)
 
 
-ax_hum[0, 0].set_xlim(5.7, 10.3)
-ax_hum[0, 0].set_ylim(-0.1, 2.1)
-fig_hum.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
-fig_hum.text(0.08, 0.5, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
-ax_hum[4, 3].scatter([], [], c=color_c1, s=30, label='Class 1')
-ax_hum[4, 3].scatter([], [], c=color_c2, s=30, label='Class 2')
-ax_hum[4, 3].scatter([], [], c=color_c3, s=30, label='Compact Associations')
-ax_hum[4, 3].legend(frameon=False, fontsize=fontsize-3)
-ax_hum[4, 3].axis('off')
-
-
-ax_ml[0, 0].set_xlim(5.7, 10.3)
-ax_ml[0, 0].set_ylim(-0.1, 2.1)
-fig_ml.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
-fig_ml.text(0.08, 0.5, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
-ax_ml[4, 3].scatter([], [], c='darkorange', s=30, label='Class 1')
-ax_ml[4, 3].scatter([], [], c='forestgreen', s=30, label='Class 2')
-ax_ml[4, 3].scatter([], [], c='royalblue', s=30, label='Compact Associations')
-ax_ml[4, 3].legend(frameon=False, fontsize=fontsize-3)
-ax_ml[4, 3].axis('off')
-# plt.tight_layout()
-fig_hum.subplots_adjust(wspace=0, hspace=0)
-fig_hum.savefig('plot_output/age_ebv_hum_2_c12.png', bbox_inches='tight', dpi=300)
-# fig_hum.savefig('plot_output/age_ebv_hum_2.pdf', bbox_inches='tight', dpi=300)
-
-fig_ml.subplots_adjust(wspace=0, hspace=0)
-fig_ml.savefig('plot_output/age_ebv_ml_2_c12.png', bbox_inches='tight', dpi=300)
-# fig_ml.savefig('plot_output/age_ebv_ml_2.pdf', bbox_inches='tight', dpi=300)
-
-
+# ax_hum[0, 0].set_xlim(5.7, 10.3)
+# ax_hum[0, 0].set_ylim(-0.1, 2.1)
+# fig_hum.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
+# fig_hum.text(0.08, 0.5, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
+# ax_hum[4, 3].scatter([], [], c=color_c1, s=30, label='Class 1')
+# ax_hum[4, 3].scatter([], [], c=color_c2, s=30, label='Class 2')
+# ax_hum[4, 3].scatter([], [], c=color_c3, s=30, label='Compact Associations')
+# ax_hum[4, 3].legend(frameon=False, fontsize=fontsize-3)
+# ax_hum[4, 3].axis('off')
+#
+#
+# ax_ml[0, 0].set_xlim(5.7, 10.3)
+# ax_ml[0, 0].set_ylim(-0.1, 2.1)
+# fig_ml.text(0.5, 0.08, 'log(Age/yr) + random.uniform(-0.1, 0.1)', ha='center', fontsize=fontsize)
+# fig_ml.text(0.08, 0.5, 'E(B-V) + random.uniform(-0.05, 0.05)', va='center', rotation='vertical', fontsize=fontsize)
+# ax_ml[4, 3].scatter([], [], c='darkorange', s=30, label='Class 1')
+# ax_ml[4, 3].scatter([], [], c='forestgreen', s=30, label='Class 2')
+# ax_ml[4, 3].scatter([], [], c='royalblue', s=30, label='Compact Associations')
+# ax_ml[4, 3].legend(frameon=False, fontsize=fontsize-3)
+# ax_ml[4, 3].axis('off')
+# # plt.tight_layout()
+# fig_hum.subplots_adjust(wspace=0, hspace=0)
+# fig_hum.savefig('plot_output/age_ebv_hum_2_c12.png', bbox_inches='tight', dpi=300)
+# # fig_hum.savefig('plot_output/age_ebv_hum_2.pdf', bbox_inches='tight', dpi=300)
+#
+# fig_ml.subplots_adjust(wspace=0, hspace=0)
+# fig_ml.savefig('plot_output/age_ebv_ml_2_c12.png', bbox_inches='tight', dpi=300)
+# # fig_ml.savefig('plot_output/age_ebv_ml_2.pdf', bbox_inches='tight', dpi=300)
+#
+#
 

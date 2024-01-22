@@ -12,7 +12,144 @@ from matplotlib.colors import Normalize, LogNorm
 from matplotlib.colorbar import ColorbarBase
 from matplotlib.collections import LineCollection
 import dust_tools.extinction_tools
+from matplotlib import patheffects
 
+
+nuvb_label_dict = {
+    1: {'offsets': [0.25, -0.1], 'ha': 'center', 'va': 'bottom', 'label': r'1,2,3 Myr'},
+    5: {'offsets': [0.05, 0.1], 'ha': 'right', 'va': 'top', 'label': r'5 Myr'},
+    10: {'offsets': [0.1, -0.2], 'ha': 'left', 'va': 'bottom', 'label': r'10 Myr'},
+    100: {'offsets': [-0.1, 0.0], 'ha': 'right', 'va': 'center', 'label': r'100 Myr'}
+}
+ub_label_dict = {
+    1: {'offsets': [0.2, -0.1], 'ha': 'center', 'va': 'bottom', 'label': r'1,2,3 Myr'},
+    5: {'offsets': [0.05, 0.1], 'ha': 'right', 'va': 'top', 'label': r'5 Myr'},
+    10: {'offsets': [0.05, 0.1], 'ha': 'left', 'va': 'bottom', 'label': r'10 Myr'},
+    100: {'offsets': [0.1, 0.0], 'ha': 'left', 'va': 'center', 'label': r'100 Myr'}
+}
+bv_label_dict = {
+    1: {'offsets': [0.2, -0.1], 'ha': 'center', 'va': 'bottom', 'label': r'1,2,3 Myr'},
+    5: {'offsets': [0.05, 0.1], 'ha': 'right', 'va': 'top', 'label': r'5 Myr'},
+    10: {'offsets': [0.1, -0.1], 'ha': 'left', 'va': 'bottom', 'label': r'10 Myr'},
+    100: {'offsets': [-0.1, 0.1], 'ha': 'right', 'va': 'center', 'label': r'100 Myr'}
+}
+
+nuvb_annotation_dict = {
+    500: {'offset': [-0.5, +0.0], 'label': '500 Myr', 'ha': 'right', 'va': 'center'},
+    1000: {'offset': [-0.7, +0.5], 'label': '1 Gyr', 'ha': 'right', 'va': 'center'},
+    13750: {'offset': [+0.05, 0.9], 'label': '13.8 Gyr', 'ha': 'left', 'va': 'center'}
+}
+ub_annotation_dict = {
+    500: {'offset': [-0.5, +0.0], 'label': '500 Myr', 'ha': 'right', 'va': 'center'},
+    1000: {'offset': [-0.5, +0.5], 'label': '1 Gyr', 'ha': 'right', 'va': 'center'},
+    13750: {'offset': [-0.1, 0.4], 'label': '13.8 Gyr', 'ha': 'right', 'va': 'center'}
+}
+bv_annotation_dict = {
+    500: {'offset': [-0.5, +0.3], 'label': '500 Myr', 'ha': 'right', 'va': 'center'},
+    1000: {'offset': [-0.5, +0.4], 'label': '1 Gyr', 'ha': 'right', 'va': 'center'},
+    13750: {'offset': [-0.0, 0.2], 'label': '13.8 Gyr', 'ha': 'left', 'va': 'center'}
+}
+
+def display_models(ax, y_color='nuvb',
+                   age_cut_sol50=5e2,
+                   age_dots_sol=None,
+                   age_dots_sol50=None,
+                   age_labels=False,
+                   age_label_color='red',
+                   age_label_fontsize=30,
+                   color_sol='tab:cyan', linewidth_sol=4, linestyle_sol='-', color_arrow_sol='darkcyan', arrow_linestyle_sol='--',
+                   color_sol50='m', linewidth_sol50=4, linestyle_sol50='-', color_arrow_sol50='darkviolet', arrow_linestyle_sol50='--',
+                   label_sol=None, label_sol50=None):
+
+    y_model_sol = globals()['model_%s_sol' % y_color]
+    y_model_sol50 = globals()['model_%s_sol50' % y_color]
+
+    ax.plot(model_vi_sol, y_model_sol, color=color_sol, linewidth=linewidth_sol, linestyle=linestyle_sol, zorder=10,
+            label=label_sol)
+    ax.plot(model_vi_sol50[age_mod_sol50 > age_cut_sol50], y_model_sol50[age_mod_sol50 > age_cut_sol50],
+            color=color_sol50, linewidth=linewidth_sol50, linestyle=linestyle_sol50, zorder=10, label=label_sol50)
+
+    ax.plot(model_vi_sol50[age_mod_sol50 <= age_cut_sol50], y_model_sol50[age_mod_sol50 <= age_cut_sol50],
+            color=color_sol50, linewidth=linewidth_sol50, linestyle='--', zorder=10)
+
+
+    if age_dots_sol is None:
+        age_dots_sol = [1, 5, 10, 100, 500, 1000, 13750]
+    for age in age_dots_sol:
+        ax.scatter(model_vi_sol[age_mod_sol == age], y_model_sol[age_mod_sol == age], color='b', s=80, zorder=20)
+
+    if age_dots_sol50 is None:
+        age_dots_sol50 = [500, 1000, 13750]
+    for age in age_dots_sol50:
+        ax.scatter(model_vi_sol50[age_mod_sol50 == age], y_model_sol50[age_mod_sol50 == age], color='tab:pink', s=80, zorder=20)
+
+    if age_labels:
+        label_dict = globals()['%s_label_dict' % y_color]
+        pe = [patheffects.withStroke(linewidth=3, foreground="w")]
+        for age in label_dict.keys():
+
+            ax.text(model_vi_sol[age_mod_sol == age]+label_dict[age]['offsets'][0],
+                    y_model_sol[age_mod_sol == age]+label_dict[age]['offsets'][1],
+                    label_dict[age]['label'], horizontalalignment=label_dict[age]['ha'], verticalalignment=label_dict[age]['va'],
+                    color=age_label_color, fontsize=age_label_fontsize,
+                    path_effects=pe)
+
+        annotation_dict = globals()['%s_annotation_dict' % y_color]
+        for age in annotation_dict.keys():
+
+            # txt_sol = ax.annotate(' ', #annotation_dict[age]['label'],
+            #             xy=(model_vi_sol[age_mod_sol == age], y_model_sol[age_mod_sol == age]),
+            #             xytext=(model_vi_sol[age_mod_sol == age]+annotation_dict[age]['offset'][0],
+            #                     y_model_sol[age_mod_sol == age]+annotation_dict[age]['offset'][1]),
+            #             fontsize=age_label_fontsize, xycoords='data', textcoords='data', color=age_label_color,
+            #             ha=annotation_dict[age]['ha'], va=annotation_dict[age]['va'], zorder=30,
+            #                   arrowprops=dict(arrowstyle='-|>', shrinkA=0, shrinkB=0,edgecolor="none",
+            #                                   facecolor=color_arrow_sol, lw=3, ls='-'))
+            # txt_sol.arrow_patch.set_path_effects([patheffects.Stroke(linewidth=5, foreground="w"),
+            #                                       patheffects.Normal()])
+            txt_sol = ax.annotate(' ',
+                                  xy=(model_vi_sol[age_mod_sol == age], y_model_sol[age_mod_sol == age]),
+                        xytext=(model_vi_sol[age_mod_sol == age]+annotation_dict[age]['offset'][0],
+                                y_model_sol[age_mod_sol == age]+annotation_dict[age]['offset'][1]),
+                        fontsize=age_label_fontsize, xycoords='data', textcoords='data', color=age_label_color,
+                        ha=annotation_dict[age]['ha'], va=annotation_dict[age]['va'], zorder=30,
+                              arrowprops=dict(arrowstyle='-|>', color=color_arrow_sol, lw=3, ls=arrow_linestyle_sol))
+            txt_sol.arrow_patch.set_path_effects([patheffects.Stroke(linewidth=5, foreground="w"),
+                                                  patheffects.Normal()])
+            txt_sol50 = ax.annotate(' ',
+                        xy=(model_vi_sol50[age_mod_sol50 == age], y_model_sol50[age_mod_sol50 == age]),
+                        xytext=(model_vi_sol[age_mod_sol == age]+annotation_dict[age]['offset'][0],
+                                y_model_sol[age_mod_sol == age]+annotation_dict[age]['offset'][1]),
+                        fontsize=age_label_fontsize, xycoords='data', textcoords='data',
+                        ha=annotation_dict[age]['ha'], va=annotation_dict[age]['va'], zorder=30,
+                              arrowprops=dict(arrowstyle='-|>', color=color_arrow_sol50, lw=3, ls=arrow_linestyle_sol50),
+                        path_effects=[patheffects.withStroke(linewidth=3,
+                                                        foreground="w")])
+            txt_sol50.arrow_patch.set_path_effects([patheffects.Stroke(linewidth=5, foreground="w"),
+                                                  patheffects.Normal()])
+            ax.text(model_vi_sol[age_mod_sol == age]+annotation_dict[age]['offset'][0],
+                    y_model_sol[age_mod_sol == age]+annotation_dict[age]['offset'][1],
+                    annotation_dict[age]['label'],
+                    horizontalalignment=annotation_dict[age]['ha'], verticalalignment=annotation_dict[age]['va'],
+                    color=age_label_color, fontsize=age_label_fontsize, zorder=40, path_effects=pe)
+
+
+
+age_mod_sol = np.load('../color_color/data_output/age_mod_sol.npy')
+model_nuvu_sol = np.load('../color_color/data_output/model_nuvu_sol.npy')
+model_nuvb_sol = np.load('../color_color/data_output/model_nuvb_sol.npy')
+model_ub_sol = np.load('../color_color/data_output/model_ub_sol.npy')
+model_bv_sol = np.load('../color_color/data_output/model_bv_sol.npy')
+model_bi_sol = np.load('../color_color/data_output/model_bi_sol.npy')
+model_vi_sol = np.load('../color_color/data_output/model_vi_sol.npy')
+
+age_mod_sol50 = np.load('../color_color/data_output/age_mod_sol50.npy')
+model_nuvu_sol50 = np.load('../color_color/data_output/model_nuvu_sol50.npy')
+model_nuvb_sol50 = np.load('../color_color/data_output/model_nuvb_sol50.npy')
+model_ub_sol50 = np.load('../color_color/data_output/model_ub_sol50.npy')
+model_bv_sol50 = np.load('../color_color/data_output/model_bv_sol50.npy')
+model_bi_sol50 = np.load('../color_color/data_output/model_bi_sol50.npy')
+model_vi_sol50 = np.load('../color_color/data_output/model_vi_sol50.npy')
 
 def plot_age_ebv(ax, age, mass, ebv=0.0, color='k', linestyle='-', linewidth=3):
     """
@@ -112,94 +249,97 @@ ax_cc.set_xlim(-0.9, 1.8)
 
 index_1_gyr = np.where(age_mod_sol50 == 500)
 
-ax_cc.plot(model_vi_sol, model_ub_sol, color='darkred', linewidth=3, label='BC03, Z=Z$_{\odot}$')
-ax_cc.plot(model_vi_sol50, model_ub_sol50, color='darkorange', linewidth=3, linestyle='--')
-ax_cc.plot(model_vi_sol50[index_1_gyr[0][0]:], model_ub_sol50[index_1_gyr[0][0]:], color='darkorange', linewidth=3, linestyle='-', label='BC03, Z=Z$_{\odot}$/50')
+# ax_cc.plot(model_vi_sol, model_ub_sol, color='tab:cyan', linewidth=3, label='BC03, Z=Z$_{\odot}$')
+# ax_cc.plot(model_vi_sol50, model_ub_sol50, color='m', linewidth=3, linestyle='--')
+# ax_cc.plot(model_vi_sol50[index_1_gyr[0][0]:], model_ub_sol50[index_1_gyr[0][0]:], color='m', linewidth=3,
+#            linestyle='-', label='BC03, Z=Z$_{\odot}$/50')
+
+display_models(ax=ax_cc, age_label_fontsize=fontsize+2, age_labels=True, y_color='ub', color_arrow_sol='grey',
+               label_sol=r'BC03, Z$_{\odot}$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
 
 
-
-
-vi_1_my = model_vi_sol[age_mod_sol == 1][0]
-ub_1_my = model_ub_sol[age_mod_sol == 1][0]
-nuvb_1_my = model_nuvb_sol[age_mod_sol == 1][0]
-
-vi_2_my = model_vi_sol[age_mod_sol == 2][0]
-ub_2_my = model_ub_sol[age_mod_sol == 2][0]
-nuvb_2_my = model_nuvb_sol[age_mod_sol == 2][0]
-
-vi_3_my = model_vi_sol[age_mod_sol == 3][0]
-ub_3_my = model_ub_sol[age_mod_sol == 3][0]
-nuvb_3_my = model_nuvb_sol[age_mod_sol == 3][0]
-
-vi_4_my = model_vi_sol[age_mod_sol == 4][0]
-ub_4_my = model_ub_sol[age_mod_sol == 4][0]
-nuvb_4_my = model_nuvb_sol[age_mod_sol == 4][0]
-
-vi_5_my = model_vi_sol[age_mod_sol == 5][0]
-ub_5_my = model_ub_sol[age_mod_sol == 5][0]
-nuvb_5_my = model_nuvb_sol[age_mod_sol == 5][0]
-
-vi_10_my = model_vi_sol[age_mod_sol == 10][0]
-ub_10_my = model_ub_sol[age_mod_sol == 10][0]
-nuvb_10_my = model_nuvb_sol[age_mod_sol == 10][0]
-
-vi_100_my = model_vi_sol[age_mod_sol == 102][0]
-ub_100_my = model_ub_sol[age_mod_sol == 102][0]
-nuvb_100_my = model_nuvb_sol[age_mod_sol == 102][0]
-
-vi_1000_my = model_vi_sol[age_mod_sol == 1028][0]
-ub_1000_my = model_ub_sol[age_mod_sol == 1028][0]
-nuvb_1000_my = model_nuvb_sol[age_mod_sol == 1028][0]
-
-vi_10000_my = model_vi_sol[age_mod_sol == 10308][0]
-ub_10000_my = model_ub_sol[age_mod_sol == 10308][0]
-nuvb_10000_my = model_nuvb_sol[age_mod_sol == 10308][0]
-
-vi_1000_my_sol50 = model_vi_sol50[age_mod_sol50 == 1028][0]
-ub_1000_my_sol50 = model_ub_sol50[age_mod_sol50 == 1028][0]
-nuvb_1000_my_sol50 = model_nuvb_sol50[age_mod_sol50 == 1028][0]
-
-vi_10000_my_sol50 = model_vi_sol50[age_mod_sol50 == 10308][0]
-ub_10000_my_sol50 = model_ub_sol50[age_mod_sol50 == 10308][0]
-nuvb_10000_my_sol50 = model_nuvb_sol50[age_mod_sol50 == 10308][0]
-
-
-
-ax_cc.scatter(vi_1_my, ub_1_my, c='k', s=scatter_size, zorder=10)
-ax_cc.scatter(vi_2_my, ub_2_my, c='k', s=scatter_size, zorder=10)
-ax_cc.scatter(vi_3_my, ub_3_my, c='k', s=scatter_size, zorder=10)
-ax_cc.scatter(vi_4_my, ub_4_my, c='k', s=scatter_size, zorder=10)
-ax_cc.scatter(vi_5_my, ub_5_my, c='k', s=scatter_size, zorder=10)
-ax_cc.scatter(vi_10_my, ub_10_my, c='k', s=scatter_size, zorder=10)
-ax_cc.scatter(vi_100_my, ub_100_my, c='k', s=scatter_size, zorder=10)
-ax_cc.scatter(vi_1000_my, ub_1000_my, c='k', s=scatter_size, zorder=10)
-ax_cc.scatter(vi_10000_my, ub_10000_my, c='k', s=scatter_size, zorder=10)
-
-ax_cc.scatter(vi_1000_my_sol50, ub_1000_my_sol50, c='k', s=scatter_size, zorder=10)
-ax_cc.scatter(vi_10000_my_sol50, ub_10000_my_sol50, c='k', s=scatter_size, zorder=10)
-
-
-ax_cc.annotate('1,2,3 Myr', xy=(vi_1_my, ub_1_my), xycoords='data', xytext=(vi_1_my - 0.1, ub_1_my - 0.3), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_cc.annotate('4 Myr', xy=(vi_4_my, ub_4_my), xycoords='data', xytext=(vi_4_my - 0.5, ub_4_my), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_cc.annotate('5 Myr', xy=(vi_5_my, ub_5_my), xycoords='data', xytext=(vi_5_my - 0.5, ub_5_my + 0.5), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_cc.annotate('10 Myr', xy=(vi_10_my, ub_10_my), xycoords='data', xytext=(vi_10_my + 0.1, ub_10_my + 0.5), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_cc.annotate('100 Myr', xy=(vi_100_my, ub_100_my), xycoords='data', xytext=(vi_100_my - 0.5, ub_100_my + 0.5), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-
-ax_cc.annotate('1 Gyr', xy=(vi_1000_my, ub_1000_my), xycoords='data', xytext=(vi_1000_my - 0.5, ub_1000_my + 0.5), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_cc.annotate('1 Gyr', xy=(vi_1000_my_sol50, ub_1000_my_sol50), xycoords='data', xytext=(vi_1000_my - 0.5, ub_1000_my + 0.5), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_cc.annotate('10 Gyr', xy=(vi_10000_my, ub_10000_my), xycoords='data',
-                    xytext=(vi_10000_my + 0.0, ub_10000_my - 0.7), textcoords='data', fontsize=fontsize,
-                    arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_cc.annotate('10 Gyr', xy=(vi_10000_my_sol50, ub_10000_my_sol50), xycoords='data',
-                    xytext=(vi_10000_my + 0.0, ub_10000_my - 0.7), textcoords='data', fontsize=fontsize,
-                    arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+#
+# vi_1_my = model_vi_sol[age_mod_sol == 1][0]
+# ub_1_my = model_ub_sol[age_mod_sol == 1][0]
+# nuvb_1_my = model_nuvb_sol[age_mod_sol == 1][0]
+#
+# vi_2_my = model_vi_sol[age_mod_sol == 2][0]
+# ub_2_my = model_ub_sol[age_mod_sol == 2][0]
+# nuvb_2_my = model_nuvb_sol[age_mod_sol == 2][0]
+#
+# vi_3_my = model_vi_sol[age_mod_sol == 3][0]
+# ub_3_my = model_ub_sol[age_mod_sol == 3][0]
+# nuvb_3_my = model_nuvb_sol[age_mod_sol == 3][0]
+#
+# vi_4_my = model_vi_sol[age_mod_sol == 4][0]
+# ub_4_my = model_ub_sol[age_mod_sol == 4][0]
+# nuvb_4_my = model_nuvb_sol[age_mod_sol == 4][0]
+#
+# vi_5_my = model_vi_sol[age_mod_sol == 5][0]
+# ub_5_my = model_ub_sol[age_mod_sol == 5][0]
+# nuvb_5_my = model_nuvb_sol[age_mod_sol == 5][0]
+#
+# vi_10_my = model_vi_sol[age_mod_sol == 10][0]
+# ub_10_my = model_ub_sol[age_mod_sol == 10][0]
+# nuvb_10_my = model_nuvb_sol[age_mod_sol == 10][0]
+#
+# vi_100_my = model_vi_sol[age_mod_sol == 102][0]
+# ub_100_my = model_ub_sol[age_mod_sol == 102][0]
+# nuvb_100_my = model_nuvb_sol[age_mod_sol == 102][0]
+#
+# vi_1000_my = model_vi_sol[age_mod_sol == 1028][0]
+# ub_1000_my = model_ub_sol[age_mod_sol == 1028][0]
+# nuvb_1000_my = model_nuvb_sol[age_mod_sol == 1028][0]
+#
+# vi_10000_my = model_vi_sol[age_mod_sol == 10308][0]
+# ub_10000_my = model_ub_sol[age_mod_sol == 10308][0]
+# nuvb_10000_my = model_nuvb_sol[age_mod_sol == 10308][0]
+#
+# vi_1000_my_sol50 = model_vi_sol50[age_mod_sol50 == 1028][0]
+# ub_1000_my_sol50 = model_ub_sol50[age_mod_sol50 == 1028][0]
+# nuvb_1000_my_sol50 = model_nuvb_sol50[age_mod_sol50 == 1028][0]
+#
+# vi_10000_my_sol50 = model_vi_sol50[age_mod_sol50 == 10308][0]
+# ub_10000_my_sol50 = model_ub_sol50[age_mod_sol50 == 10308][0]
+# nuvb_10000_my_sol50 = model_nuvb_sol50[age_mod_sol50 == 10308][0]
+#
+#
+#
+# ax_cc.scatter(vi_1_my, ub_1_my, c='k', s=scatter_size, zorder=10)
+# ax_cc.scatter(vi_2_my, ub_2_my, c='k', s=scatter_size, zorder=10)
+# ax_cc.scatter(vi_3_my, ub_3_my, c='k', s=scatter_size, zorder=10)
+# ax_cc.scatter(vi_4_my, ub_4_my, c='k', s=scatter_size, zorder=10)
+# ax_cc.scatter(vi_5_my, ub_5_my, c='k', s=scatter_size, zorder=10)
+# ax_cc.scatter(vi_10_my, ub_10_my, c='k', s=scatter_size, zorder=10)
+# ax_cc.scatter(vi_100_my, ub_100_my, c='k', s=scatter_size, zorder=10)
+# ax_cc.scatter(vi_1000_my, ub_1000_my, c='k', s=scatter_size, zorder=10)
+# ax_cc.scatter(vi_10000_my, ub_10000_my, c='k', s=scatter_size, zorder=10)
+#
+# ax_cc.scatter(vi_1000_my_sol50, ub_1000_my_sol50, c='k', s=scatter_size, zorder=10)
+# ax_cc.scatter(vi_10000_my_sol50, ub_10000_my_sol50, c='k', s=scatter_size, zorder=10)
+#
+#
+# ax_cc.annotate('1,2,3 Myr', xy=(vi_1_my, ub_1_my), xycoords='data', xytext=(vi_1_my - 0.1, ub_1_my - 0.3), fontsize=fontsize,
+#                     textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+# ax_cc.annotate('4 Myr', xy=(vi_4_my, ub_4_my), xycoords='data', xytext=(vi_4_my - 0.5, ub_4_my), fontsize=fontsize,
+#                     textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+# ax_cc.annotate('5 Myr', xy=(vi_5_my, ub_5_my), xycoords='data', xytext=(vi_5_my - 0.5, ub_5_my + 0.5), fontsize=fontsize,
+#                     textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+# ax_cc.annotate('10 Myr', xy=(vi_10_my, ub_10_my), xycoords='data', xytext=(vi_10_my + 0.1, ub_10_my + 0.5), fontsize=fontsize,
+#                     textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+# ax_cc.annotate('100 Myr', xy=(vi_100_my, ub_100_my), xycoords='data', xytext=(vi_100_my - 0.5, ub_100_my + 0.5), fontsize=fontsize,
+#                     textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+#
+# ax_cc.annotate('1 Gyr', xy=(vi_1000_my, ub_1000_my), xycoords='data', xytext=(vi_1000_my - 0.5, ub_1000_my + 0.5), fontsize=fontsize,
+#                     textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+# ax_cc.annotate('1 Gyr', xy=(vi_1000_my_sol50, ub_1000_my_sol50), xycoords='data', xytext=(vi_1000_my - 0.5, ub_1000_my + 0.5), fontsize=fontsize,
+#                     textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+# ax_cc.annotate('10 Gyr', xy=(vi_10000_my, ub_10000_my), xycoords='data',
+#                     xytext=(vi_10000_my + 0.0, ub_10000_my - 0.7), textcoords='data', fontsize=fontsize,
+#                     arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
+# ax_cc.annotate('10 Gyr', xy=(vi_10000_my_sol50, ub_10000_my_sol50), xycoords='data',
+#                     xytext=(vi_10000_my + 0.0, ub_10000_my - 0.7), textcoords='data', fontsize=fontsize,
+#                     arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
 
 
 
@@ -218,6 +358,12 @@ distance_Mpc = 10 * u.Mpc
 def plot_age_only(ax, age, mass, color='k', linestyle='-', linewidth=3):
 
     id = np.where(age_mod_sol == age)[0][0]
+    cigale_wrapper_obj.plot_cigale_model(ax=ax, model_file_name='../cigale_model/sfh2exp/no_dust/sol_met_50/out/%i_best_model.fits'%id,
+                                            cluster_mass=mass, distance_Mpc=distance_Mpc,
+                                             color=color, linestyle=linestyle, linewidth=linewidth)
+def plot_age_only_sol50(ax, age, mass, color='k', linestyle='-', linewidth=3):
+
+    id = np.where(age_mod_sol == age)[0][0]
     cigale_wrapper_obj.plot_cigale_model(ax=ax, model_file_name='../cigale_model/sfh2exp/no_dust/sol_met/out/%i_best_model.fits'%id,
                                             cluster_mass=mass, distance_Mpc=distance_Mpc,
                                              color=color, linestyle=linestyle, linewidth=linewidth)
@@ -228,13 +374,13 @@ def plot_age_only(ax, age, mass, color='k', linestyle='-', linewidth=3):
 # av_list = [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55,
 #            0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0, 1.05,
 #            1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55]
-av_list = [0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2]
+av_list = [0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6]
 # av_list = [0, 2.2]
 
 
 # dust_list = [0, 1.05]
 
-cmap = matplotlib.cm.get_cmap('Spectral_r')
+cmap = matplotlib.cm.get_cmap('autumn_r')
 
 # rgba = cmap(0.5)
 # norm = matplotlib.colors.Normalize(vmin=1.0, vmax=10000)
@@ -242,7 +388,8 @@ norm = matplotlib.colors.Normalize(vmin=0, vmax=av_list[-1])
 
 # set star cluster mass to scale the model SEDs
 cluster_mass_young = 3E4 * u.Msun
-cluster_mass_old = 1E5 * u.Msun
+cluster_mass_old_1 = 1E5 * u.Msun
+cluster_mass_old_2 = 1E6 * u.Msun
 
 for av in av_list:
     print(av)
@@ -251,10 +398,11 @@ for av in av_list:
     plot_age_ebv(ax=ax_sed, age=5, mass=cluster_mass_young, ebv=ebv, color=color, linestyle='-', linewidth=3)
 
 
-plot_age_only(ax=ax_sed, age=100, mass=cluster_mass_old, color='k', linestyle='--', linewidth=4)
+plot_age_only(ax=ax_sed, age=100, mass=cluster_mass_old_1, color='k', linestyle='--', linewidth=4)
+plot_age_only(ax=ax_sed, age=10000, mass=cluster_mass_old_2, color='k', linestyle=':', linewidth=4)
 
 
-ColorbarBase(ax_cbar, orientation='vertical', cmap=cmap, norm=norm, extend='neither', ticks=[0., 0.5, 1.0, 1.5, 2.0])
+ColorbarBase(ax_cbar, orientation='vertical', cmap=cmap, norm=norm, extend='neither', ticks=[0., 0.5, 1.0, 1.5, 2.0, 2.5])
 ax_cbar.set_ylabel(r'A$_{\rm V}$ [mag]', labelpad=0, fontsize=fontsize)
 ax_cbar.tick_params(axis='both', which='both', width=2, direction='in', top=True, labelbottom=False,
                     labeltop=True, labelsize=fontsize)
@@ -308,6 +456,7 @@ ax_cc.annotate("", xy=(vi_int+max_color_ext_vi_arr, ub_int+max_color_ext_ub_arr)
 # ax_sed.plot([], [], color=cmap(norm(0)), linestyle='-', linewidth=3, label=r'Age = 5 Myr, Z=Z$_{\odot}$, M$_{*}$ = 3 $\times$ 10$^{4}$ M$_{\odot}$, E(B-V) = 0-1.05')
 ax_sed.plot([], [], color='gray', linestyle='-', linewidth=3, label=r'Age = 5 Myr, Z=Z$_{\odot}$, M$_{*}$ = 3 $\times$ 10$^{4}$ M$_{\odot}$,A$_{\rm V}$ = 0-2.2')
 ax_sed.plot([], [], color='k', linestyle='--', linewidth=4, label=r'Age = 100 Myr, Z=Z$_{\odot}$, M$_{*}$ = 10$^{5}$ M$_{\odot}$, A$_{\rm V}$ = 0')
+ax_sed.plot([], [], color='k', linestyle=':', linewidth=4, label=r'Age = 10 Gyr, Z=Z$_{\odot}$/50, M$_{*}$ = 10$^{6}$ M$_{\odot}$, A$_{\rm V}$ = 0')
 ax_sed.legend(loc='upper left', fontsize=fontsize, frameon=False)
 # ax_sed.text(500, 2, r'Z=Z$_{\odot}$, M$_{*}$ = 10$^{5}$ M$_{\odot}$, D = 10 Mpc', fontsize=fontsize)
 ax_sed.text(700, 0.8, r'D = 10 Mpc', fontsize=fontsize)

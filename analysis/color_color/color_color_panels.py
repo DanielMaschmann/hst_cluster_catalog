@@ -4,7 +4,7 @@ from photometry_tools import helper_func as hf
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from astropy.io import fits
-from xgaltool import analysis_tools
+# from xgaltool import analysis_tools
 from scipy.stats import gaussian_kde
 import matplotlib.mlab as mlab
 import scipy.ndimage
