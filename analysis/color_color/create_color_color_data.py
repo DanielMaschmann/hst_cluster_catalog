@@ -11,7 +11,8 @@ sample_table_path = '/home/benutzer/data/PHANGS_products/sample_table'
 catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=cluster_catalog_data_path,
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path,
                                                             morph_mask_path=morph_mask_path,
-                                                            sample_table_path=sample_table_path)
+                                                            sample_table_path=sample_table_path,
+                                                            hst_cc_ver='phangs_hst_cc_dr4_cr3_ground_based_ha')
 
 # get model
 hdu_a_sol = fits.open('../cigale_model/sfh2exp/no_dust/sol_met/out/models-block-0.fits')
@@ -84,6 +85,86 @@ np.save('data_output/model_bi_sol50.npy', model_bi_sol50)
 np.save('data_output/model_vi_sol50.npy', model_vi_sol50)
 
 
+# get model
+hdu_a_sol5 = fits.open('../cigale_model/sfh2exp/no_dust/sol_met_5/out/models-block-0.fits')
+data_mod_sol5 = hdu_a_sol5[1].data
+age_mod_sol5 = data_mod_sol5['sfh.age']
+flux_f275w_sol5 = data_mod_sol5['F275W_UVIS_CHIP2']
+flux_f336w_sol5 = data_mod_sol5['F336W_UVIS_CHIP2']
+flux_f555w_sol5 = data_mod_sol5['F555W_UVIS_CHIP2']
+flux_f814w_sol5 = data_mod_sol5['F814W_UVIS_CHIP2']
+flux_f438w_sol5 = data_mod_sol5['F438W_UVIS_CHIP2']
+mag_nuv_sol5 = hf.conv_mjy2vega(flux=flux_f275w_sol5, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F275W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F275W'))
+mag_u_sol5 = hf.conv_mjy2vega(flux=flux_f336w_sol5, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
+mag_b_sol5 = hf.conv_mjy2vega(flux=flux_f438w_sol5, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
+mag_v_sol5 = hf.conv_mjy2vega(flux=flux_f555w_sol5, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
+mag_i_sol5 = hf.conv_mjy2vega(flux=flux_f814w_sol5, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
+model_nuvu_sol5 = mag_nuv_sol5 - mag_u_sol5
+model_nuvb_sol5 = mag_nuv_sol5 - mag_b_sol5
+model_ub_sol5 = mag_u_sol5 - mag_b_sol5
+model_bv_sol5 = mag_b_sol5 - mag_v_sol5
+model_bi_sol5 = mag_b_sol5 - mag_i_sol5
+model_vi_sol5 = mag_v_sol5 - mag_i_sol5
+
+np.save('data_output/age_mod_sol5.npy', age_mod_sol5)
+np.save('data_output/model_nuvu_sol5.npy', model_nuvu_sol5)
+np.save('data_output/model_nuvb_sol5.npy', model_nuvb_sol5)
+np.save('data_output/model_ub_sol5.npy', model_ub_sol5)
+np.save('data_output/model_bv_sol5.npy', model_bv_sol5)
+np.save('data_output/model_bi_sol5.npy', model_bi_sol5)
+np.save('data_output/model_vi_sol5.npy', model_vi_sol5)
+
+
+# get model
+hdu_a_sol_neb = fits.open('/home/benutzer/Documents/projects/hst_cluster_catalog/analysis/cigale_model/sfh2exp/no_dust/sol_met_gas/out/models-block-0.fits')
+data_mod_sol_neb = hdu_a_sol_neb[1].data
+# print(data_mod_sol_neb.names)
+
+ew_h_alpha = data_mod_sol_neb['param.EW(656.3/1.0)']
+age_mod_sol_neb = data_mod_sol_neb['sfh.age']
+logu_mod_sol_neb = data_mod_sol_neb['nebular.logU']
+ne_mod_sol_neb = data_mod_sol_neb['nebular.ne']
+
+flux_f275w_sol_neb = data_mod_sol_neb['F275W_UVIS_CHIP2']
+flux_f336w_sol_neb = data_mod_sol_neb['F336W_UVIS_CHIP2']
+flux_f438w_sol_neb = data_mod_sol_neb['F438W_UVIS_CHIP2']
+flux_f555w_sol_neb = data_mod_sol_neb['F555W_UVIS_CHIP2']
+flux_f814w_sol_neb = data_mod_sol_neb['F814W_UVIS_CHIP2']
+
+
+mag_nuv_sol_neb = hf.conv_mjy2vega(flux=flux_f275w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F275W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F275W'))
+mag_u_sol_neb = hf.conv_mjy2vega(flux=flux_f336w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
+mag_b_sol_neb = hf.conv_mjy2vega(flux=flux_f438w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
+mag_v_sol_neb = hf.conv_mjy2vega(flux=flux_f555w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
+mag_i_sol_neb = hf.conv_mjy2vega(flux=flux_f814w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
+model_nuvu_sol_neb = mag_nuv_sol_neb - mag_u_sol_neb
+model_nuvb_sol_neb = mag_nuv_sol_neb - mag_b_sol_neb
+model_ub_sol_neb = mag_u_sol_neb - mag_b_sol_neb
+model_bv_sol_neb = mag_b_sol_neb - mag_v_sol_neb
+model_bi_sol_neb = mag_b_sol_neb - mag_i_sol_neb
+model_vi_sol_neb = mag_v_sol_neb - mag_i_sol_neb
+
+
+np.save('data_output/age_mod_sol_neb.npy', age_mod_sol_neb)
+np.save('data_output/model_nuvu_sol_neb.npy', model_nuvu_sol_neb)
+np.save('data_output/model_nuvb_sol_neb.npy', model_nuvb_sol_neb)
+np.save('data_output/model_ub_sol_neb.npy', model_ub_sol_neb)
+np.save('data_output/model_bv_sol_neb.npy', model_bv_sol_neb)
+np.save('data_output/model_bi_sol_neb.npy', model_bi_sol_neb)
+np.save('data_output/model_vi_sol_neb.npy', model_vi_sol_neb)
+
+
+
 target_list = catalog_access.target_hst_cc
 dist_list = []
 for target in target_list:
@@ -127,6 +208,9 @@ detect_b_hum = np.array([], dtype=bool)
 detect_v_hum = np.array([], dtype=bool)
 detect_i_hum = np.array([], dtype=bool)
 
+abs_v_mag_hum = np.array([])
+
+
 clcl_color_hum = np.array([])
 age_hum = np.array([])
 ebv_hum = np.array([])
@@ -160,6 +244,8 @@ detect_b_ml = np.array([], dtype=bool)
 detect_v_ml = np.array([], dtype=bool)
 detect_i_ml = np.array([], dtype=bool)
 
+abs_v_mag_ml = np.array([])
+
 clcl_color_ml = np.array([])
 clcl_qual_color_ml = np.array([])
 age_ml = np.array([])
@@ -186,7 +272,7 @@ for index in range(0, len(target_list)):
         b_band = 'F435W'
 
     index_hum_12 = catalog_access.get_hst_cc_index(target=target)
-    phangs_id_hum_12 = catalog_access.get_hst_cc_phangs_id(target=target)
+    phangs_id_hum_12 = catalog_access.get_hst_cc_phangs_cluster_id(target=target)
     cluster_class_hum_12 = catalog_access.get_hst_cc_class_human(target=target)
     color_vi_hum_12 = catalog_access.get_hst_color_vi_vega(target=target)
     color_ub_hum_12 = catalog_access.get_hst_color_ub_vega(target=target)
@@ -218,6 +304,9 @@ for index in range(0, len(target_list)):
                        (catalog_access.get_hst_cc_band_flux(target=target, band='F814W') >
                         3*catalog_access.get_hst_cc_band_flux_err(target=target, band='F814W')))
 
+    v_mag_hum_12 = catalog_access.get_hst_cc_band_vega_mag(target=target, band='F555W')
+    abs_v_mag_hum_12 = hf.conv_mag2abs_mag(mag=v_mag_hum_12, dist=dist)
+
     age_hum_12 = catalog_access.get_hst_cc_age(target=target)
     ebv_hum_12 = catalog_access.get_hst_cc_ebv(target=target)
     mass_hum_12 = catalog_access.get_hst_cc_stellar_m(target=target)
@@ -226,7 +315,7 @@ for index in range(0, len(target_list)):
 
 
     index_hum_3 = catalog_access.get_hst_cc_index(target=target, cluster_class='class3')
-    phangs_id_hum_3 = catalog_access.get_hst_cc_phangs_id(target=target, cluster_class='class3')
+    phangs_id_hum_3 = catalog_access.get_hst_cc_phangs_cluster_id(target=target, cluster_class='class3')
     cluster_class_hum_3 = catalog_access.get_hst_cc_class_human(target=target, cluster_class='class3')
     color_vi_hum_3 = catalog_access.get_hst_color_vi_vega(target=target, cluster_class='class3')
     color_ub_hum_3 = catalog_access.get_hst_color_ub_vega(target=target, cluster_class='class3')
@@ -258,6 +347,8 @@ for index in range(0, len(target_list)):
                        (catalog_access.get_hst_cc_band_flux(target=target, cluster_class='class3', band='F814W') >
                         3*catalog_access.get_hst_cc_band_flux_err(target=target, cluster_class='class3', band='F814W')))
 
+    v_mag_hum_3 = catalog_access.get_hst_cc_band_vega_mag(target=target, band='F555W', cluster_class='class3')
+    abs_v_mag_hum_3 = hf.conv_mag2abs_mag(mag=v_mag_hum_3, dist=dist)
 
     age_hum_3 = catalog_access.get_hst_cc_age(target=target, cluster_class='class3')
     ebv_hum_3 = catalog_access.get_hst_cc_ebv(target=target, cluster_class='class3')
@@ -285,6 +376,8 @@ for index in range(0, len(target_list)):
     detect_v_hum = np.concatenate([detect_v_hum, detect_v_hum_12, detect_v_hum_3])
     detect_i_hum = np.concatenate([detect_i_hum, detect_i_hum_12, detect_i_hum_3])
 
+    abs_v_mag_hum = np.concatenate([abs_v_mag_hum, abs_v_mag_hum_12, abs_v_mag_hum_3])
+
     index_hum = np.concatenate([index_hum, index_hum_12, index_hum_3])
     phangs_id_hum = np.concatenate([phangs_id_hum, phangs_id_hum_12, phangs_id_hum_3])
     clcl_color_hum = np.concatenate([clcl_color_hum, cluster_class_hum_12, cluster_class_hum_3])
@@ -308,7 +401,7 @@ for index in range(0, len(target_list)):
 
 
     index_ml_12= catalog_access.get_hst_cc_index(target=target, classify='ml')
-    phangs_id_ml_12= catalog_access.get_hst_cc_phangs_id(target=target, classify='ml')
+    phangs_id_ml_12= catalog_access.get_hst_cc_phangs_cluster_id(target=target, classify='ml')
     cluster_class_ml_12 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml')
     cluster_class_qual_ml_12 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml')
     color_vi_ml_12 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml')
@@ -341,6 +434,9 @@ for index in range(0, len(target_list)):
                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', band='F814W') >
                         catalog_access.get_hst_cc_band_flux_err(target=target, classify='ml', band='F814W')))
 
+    v_mag_ml_12 = catalog_access.get_hst_cc_band_vega_mag(target=target, classify='ml', band='F555W')
+    abs_v_mag_ml_12 = hf.conv_mag2abs_mag(mag=v_mag_ml_12, dist=dist)
+
     age_ml_12 = catalog_access.get_hst_cc_age(target=target, classify='ml')
     ebv_ml_12 = catalog_access.get_hst_cc_ebv(target=target, classify='ml')
     mass_ml_12 = catalog_access.get_hst_cc_stellar_m(target=target, classify='ml')
@@ -348,7 +444,7 @@ for index in range(0, len(target_list)):
     x_ml_12, y_ml_12 = catalog_access.get_hst_cc_coords_pix(target=target, classify='ml')
 
     index_ml_3 = catalog_access.get_hst_cc_index(target=target, classify='ml', cluster_class='class3')
-    phangs_id_ml_3 = catalog_access.get_hst_cc_phangs_id(target=target, classify='ml', cluster_class='class3')
+    phangs_id_ml_3 = catalog_access.get_hst_cc_phangs_cluster_id(target=target, classify='ml', cluster_class='class3')
     cluster_class_ml_3 = catalog_access.get_hst_cc_class_ml_vgg(target=target, classify='ml', cluster_class='class3')
     cluster_class_qual_ml_3 = catalog_access.get_hst_cc_class_ml_vgg_qual(target=target, classify='ml', cluster_class='class3')
     color_vi_ml_3 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml', cluster_class='class3')
@@ -381,6 +477,9 @@ for index in range(0, len(target_list)):
                        (catalog_access.get_hst_cc_band_flux(target=target, classify='ml', cluster_class='class3', band='F814W') >
                         catalog_access.get_hst_cc_band_flux_err(target=target, classify='ml', cluster_class='class3', band='F814W')))
 
+    v_mag_ml_3 = catalog_access.get_hst_cc_band_vega_mag(target=target, classify='ml', band='F555W', cluster_class='class3')
+    abs_v_mag_ml_3 = hf.conv_mag2abs_mag(mag=v_mag_ml_3, dist=dist)
+
     age_ml_3 = catalog_access.get_hst_cc_age(target=target, classify='ml', cluster_class='class3')
     ebv_ml_3 = catalog_access.get_hst_cc_ebv(target=target, classify='ml', cluster_class='class3')
     mass_ml_3 = catalog_access.get_hst_cc_stellar_m(target=target, classify='ml', cluster_class='class3')
@@ -406,6 +505,8 @@ for index in range(0, len(target_list)):
     detect_b_ml = np.concatenate([detect_b_ml, detect_b_ml_12, detect_b_ml_3])
     detect_v_ml = np.concatenate([detect_v_ml, detect_v_ml_12, detect_v_ml_3])
     detect_i_ml = np.concatenate([detect_i_ml, detect_i_ml_12, detect_i_ml_3])
+
+    abs_v_mag_ml = np.concatenate([abs_v_mag_ml, abs_v_mag_ml_12, abs_v_mag_ml_3])
 
     index_ml = np.concatenate([index_ml, index_ml_12, index_ml_3])
     phangs_id_ml = np.concatenate([phangs_id_ml, phangs_id_ml_12, phangs_id_ml_3])
@@ -466,6 +567,7 @@ np.save('data_output/detect_u_hum.npy', detect_u_hum)
 np.save('data_output/detect_b_hum.npy', detect_b_hum)
 np.save('data_output/detect_v_hum.npy', detect_v_hum)
 np.save('data_output/detect_i_hum.npy', detect_i_hum)
+np.save('data_output/abs_v_mag_hum.npy', abs_v_mag_hum)
 np.save('data_output/index_hum.npy', index_hum)
 np.save('data_output/phangs_id_hum.npy', phangs_id_hum)
 np.save('data_output/clcl_color_hum.npy', clcl_color_hum)
@@ -497,6 +599,7 @@ np.save('data_output/detect_u_ml.npy', detect_u_ml)
 np.save('data_output/detect_b_ml.npy', detect_b_ml)
 np.save('data_output/detect_v_ml.npy', detect_v_ml)
 np.save('data_output/detect_i_ml.npy', detect_i_ml)
+np.save('data_output/abs_v_mag_ml.npy', abs_v_mag_ml)
 np.save('data_output/index_ml.npy', index_ml)
 np.save('data_output/phangs_id_ml.npy', phangs_id_ml)
 np.save('data_output/clcl_color_ml.npy', clcl_color_ml)

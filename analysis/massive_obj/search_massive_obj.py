@@ -38,7 +38,6 @@ dist_list = np.array(dist_list)[sort]
 catalog_access.load_hst_cc_list(target_list=target_list, classify='human')
 
 
-
 for index in range(0, len(target_list)):
     target = target_list[index]
     dist = dist_list[index]

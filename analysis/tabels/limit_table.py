@@ -9,7 +9,7 @@ cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'
 hst_obs_hdr_file_path = '/home/benutzer/data/PHANGS_products/tables'
 catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=cluster_catalog_data_path,
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path,
-                                                            hst_cc_ver='IR4'
+                                                            # hst_cc_ver='IR4'
                                                             )
 
 
@@ -264,12 +264,12 @@ print(
         np.median(n_ml_2),
         np.median(n_ml_3),
         np.median(np.array(n_ml_1) + np.array(n_ml_2) + np.array(n_ml_3)),
-        np.nanmin(abs_vmag_array_hum),
+        np.nanmedian(min_abs_vmag_hum),
         np.nanmedian(abs_vmag_array_hum),
-        np.nanmax(abs_vmag_array_hum),
-        np.nanmin(abs_vmag_array_ml),
+        np.nanmedian(max_abs_vmag_hum),
+        np.nanmedian(min_abs_vmag_ml),
         np.nanmedian(abs_vmag_array_ml),
-        np.nanmax(abs_vmag_array_ml)
+        np.nanmedian(max_abs_vmag_ml)
 
     )
 )

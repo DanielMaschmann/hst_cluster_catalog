@@ -155,20 +155,27 @@ for index in range(len(target_list)):
     delta_ms = catalog_access.get_target_delta_ms(target=target_str)
     delta_ms_list.append(delta_ms)
 
-    p20_age_list_hum.append(np.nanpercentile(np.log10(age_hum_12) + 6, 20))
-    mean_age_list_hum.append(np.nanmean(np.log10(age_hum_12) + 6))
-    p80_age_list_hum.append(np.nanpercentile(np.log10(age_hum_12) + 6, 80))
-    mean_age_mass_weighted_list_hum.append(np.average(np.log10(age_hum_12) + 6, weights=mass_hum_12))
 
-    p20_age_list_ml.append(np.nanpercentile(np.log10(age_ml_12) + 6, 20))
-    mean_age_list_ml.append(np.nanmean(np.log10(age_ml_12) + 6))
-    p80_age_list_ml.append(np.nanpercentile(np.log10(age_ml_12) + 6, 80))
-    mean_age_mass_weighted_list_ml.append(np.average(np.log10(age_ml_12) + 6, weights=mass_ml_12))
+    good_values_hum_12 = np.invert(np.isnan(np.log10(age_hum_12)))
+    p20_age_list_hum.append(np.nanpercentile(np.log10(age_hum_12[good_values_hum_12]) + 6, 20))
+    mean_age_list_hum.append(np.nanmean(np.log10(age_hum_12[good_values_hum_12]) + 6))
+    p80_age_list_hum.append(np.nanpercentile(np.log10(age_hum_12[good_values_hum_12]) + 6, 80))
+    mean_age_mass_weighted_list_hum.append(np.average(np.log10(age_hum_12[good_values_hum_12]) + 6, weights=mass_hum_12[good_values_hum_12]))
+
+    good_values_ml_12 = np.invert(np.isnan(np.log10(age_ml_12)))
+    p20_age_list_ml.append(np.nanpercentile(np.log10(age_ml_12[good_values_ml_12]) + 6, 20))
+    mean_age_list_ml.append(np.nanmean(np.log10(age_ml_12[good_values_ml_12]) + 6))
+    p80_age_list_ml.append(np.nanpercentile(np.log10(age_ml_12[good_values_ml_12]) + 6, 80))
+    mean_age_mass_weighted_list_ml.append(np.average(np.log10(age_ml_12[good_values_ml_12]) + 6, weights=mass_ml_12[good_values_ml_12]))
 
     mask_bar_sf.append(morph_dict[target_str]['sf_bar'] + morph_dict[target_str]['sf_end_bars'])
     mask_global_arms.append(morph_dict[target_str]['glob_arms'])
     mask_bulge.append(morph_dict[target_str]['bulge'])
     mask_flocculent.append(morph_dict[target_str]['flocc'] + morph_dict[target_str]['quiescent'])
+
+print(mean_age_mass_weighted_list_hum)
+
+print(mean_age_mass_weighted_list_ml)
 
 delta_ms_list = np.array(delta_ms_list, dtype=float)
 
@@ -278,8 +285,8 @@ ax[1, 0].annotate('NGC1566', xycoords='data', fontsize=fontsize-5,
 ax[1, 0].annotate('NGC628C', xycoords='data', fontsize=fontsize-5,
                   xy=(delta_ms_list[target_list == 'ngc0628c'],
                       mean_age_mass_weighted_list_hum[target_list == 'ngc0628c']),
-                  xytext=(delta_ms_list[target_list == 'ngc0628c'] - 0.2,
-                          mean_age_mass_weighted_list_hum[target_list == 'ngc0628c'] + 0.3),
+                  xytext=(delta_ms_list[target_list == 'ngc0628c'] - 0.1,
+                          mean_age_mass_weighted_list_hum[target_list == 'ngc0628c'] + 0.15),
                   textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
 
 

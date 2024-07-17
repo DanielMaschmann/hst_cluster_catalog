@@ -68,11 +68,40 @@ for index in range(0, 39):
     hist_hum = np.array(hist_hum, dtype=float)
     hist_ml = np.array(hist_ml, dtype=float)
 
-    hist_hum[hist_hum == 0] = np.nan
-    hist_ml[hist_ml == 0] = np.nan
-    print(center_of_abs_v_mag_bins, hist_ml / np.nanmax(hist_ml))
-    ax[row_index, col_index].step(center_of_abs_v_mag_bins, hist_ml / np.nanmax(hist_ml), where='mid', color='tab:grey', linewidth=3)
-    ax[row_index, col_index].step(center_of_abs_v_mag_bins, hist_hum / np.nanmax(hist_ml), where='mid', color='tab:red', linewidth=3)
+    first_zero_point_index_hum = np.where(np.invert(hist_hum == 0))[0][-1]
+    first_zero_point_index_ml = np.where(np.invert(hist_ml == 0))[0][-1]
+
+    last_zero_point_index_hum = np.where(np.invert(hist_hum == 0))[0][0]
+    last_zero_point_index_ml = np.where(np.invert(hist_ml == 0))[0][0]
+    hist_hum[first_zero_point_index_hum + 2:] = np.nan
+    hist_hum[0: last_zero_point_index_hum] = np.nan
+    hist_ml[first_zero_point_index_ml + 2:] = np.nan
+    hist_ml[0: last_zero_point_index_ml] = np.nan
+
+    ax[row_index, col_index].step(abs_v_mag_bins[1:], hist_ml / np.nanmax(hist_ml), where='pre', color='tab:grey', linewidth=3)
+    ax[row_index, col_index].step(abs_v_mag_bins[1:], hist_hum / np.nanmax(hist_ml), where='pre', color='tab:red', linewidth=3)
+
+
+    # if first_zero_point_index_ml == len(center_of_abs_v_mag_bins) - 1:
+    #     print(target)
+    #     ax[row_index, col_index].plot([abs_v_mag_bins[first_zero_point_index_ml+1], abs_v_mag_bins[first_zero_point_index_ml+1]],
+    #                                   [0, hist_ml[first_zero_point_index_ml] / np.nanmax(hist_ml)], color='tab:grey', linewidth=3)
+    #     ax[row_index, col_index].plot([abs_v_mag_bins[first_zero_point_index_ml+1], center_of_abs_v_mag_bins[first_zero_point_index_ml]],
+    #                                   [hist_ml[first_zero_point_index_ml] / np.nanmax(hist_ml), hist_ml[first_zero_point_index_ml] / np.nanmax(hist_ml)], color='tab:grey', linewidth=3)
+    #
+    # else:
+    #     ax[row_index, col_index].plot([abs_v_mag_bins[first_zero_point_index_ml+1], abs_v_mag_bins[first_zero_point_index_ml+1]],
+    #                                   [0, hist_ml[first_zero_point_index_ml] / np.nanmax(hist_ml)], color='tab:grey', linewidth=3)
+    # if first_zero_point_index_hum == len(center_of_abs_v_mag_bins) - 1:
+    #     ax[row_index, col_index].plot([abs_v_mag_bins[first_zero_point_index_hum+1], abs_v_mag_bins[first_zero_point_index_hum+1]],
+    #                                   [0, hist_hum[first_zero_point_index_hum] / np.nanmax(hist_ml)], color='tab:red', linewidth=3)
+    #     ax[row_index, col_index].plot([abs_v_mag_bins[first_zero_point_index_hum+1], center_of_abs_v_mag_bins[first_zero_point_index_hum]],
+    #                                   [hist_hum[first_zero_point_index_hum] / np.nanmax(hist_ml), hist_hum[first_zero_point_index_hum] / np.nanmax(hist_ml)], color='tab:grey', linewidth=3)
+    #
+    # else:
+    #     ax[row_index, col_index].plot([abs_v_mag_bins[first_zero_point_index_hum+1], abs_v_mag_bins[first_zero_point_index_hum+1]],
+    #                                   [0, hist_hum[first_zero_point_index_hum] / np.nanmax(hist_ml)], color='tab:red', linewidth=3)
+
 
     # ax[row_index, col_index].hist(v_mag_ml, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:grey', linewidth=3)
     # ax[row_index, col_index].hist(v_mag_hum, bins=abs_v_mag_bins, density=True, histtype='step', color='tab:red', linewidth=3)
@@ -80,7 +109,7 @@ for index in range(0, 39):
     median_v_mag_ml = np.nanmedian(v_mag_ml[(v_mag_ml > 18) & (v_mag_ml < 26)])
     faintest_v_band_mag_hum = np.nanmax(v_mag_hum[(v_mag_hum > 18) & (v_mag_hum < 26)])
     faintest_v_band_mag_ml = np.nanmax(v_mag_ml[(v_mag_ml > 18) & (v_mag_ml < 26)])
-    print('median_v_mag_ml ', median_v_mag_ml,  ' faintest_v_band_mag_hum ', faintest_v_band_mag_hum)
+    # print('median_v_mag_ml ', median_v_mag_ml,  ' faintest_v_band_mag_hum ', faintest_v_band_mag_hum)
     # get the apparent mag limit of M_v = -6
     mag_lim = -6 + 25 + 5*np.log10(dist)
     ax[row_index, col_index].plot([median_v_mag_ml, median_v_mag_ml], [0, 0.9], color='tab:grey', linestyle='--', linewidth=3)

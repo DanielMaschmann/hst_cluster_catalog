@@ -4,7 +4,6 @@ from photometry_tools import helper_func as hf
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from astropy.io import fits
-from xgaltool import analysis_tools
 
 
 cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'

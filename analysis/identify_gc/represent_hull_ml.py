@@ -47,7 +47,7 @@ nuvb_annotation_dict = {
 }
 ub_annotation_dict = {
     500: {'offset': [-0.5, +0.0], 'label': '500 Myr', 'ha': 'right', 'va': 'center'},
-    1000: {'offset': [-0.5, +0.5], 'label': '1 Gyr', 'ha': 'right', 'va': 'center'},
+    1000: {'offset': [-0.4, +0.3], 'label': '1 Gyr', 'ha': 'right', 'va': 'center'},
     13750: {'offset': [-0.1, 0.4], 'label': '13.8 Gyr', 'ha': 'right', 'va': 'center'}
 }
 bv_annotation_dict = {
@@ -58,27 +58,45 @@ bv_annotation_dict = {
 
 def display_models(ax, y_color='nuvb',
                    age_cut_sol50=5e2,
+                   age_cut_sol5=5e2,
                    age_dots_sol=None,
+                   age_dots_sol5=None,
                    age_dots_sol50=None,
                    age_labels=False,
                    age_label_color='red',
                    age_label_fontsize=30,
                    color_sol='tab:cyan', linewidth_sol=4, linestyle_sol='-', color_arrow_sol='darkcyan', arrow_linestyle_sol='--',
+                   color_sol5='tab:orange', linewidth_sol5=4, linestyle_sol5='-', color_arrow_sol5='darkcyan', arrow_linestyle_sol5='--',
                    color_sol50='m', linewidth_sol50=4, linestyle_sol50='-', color_arrow_sol50='darkviolet', arrow_linestyle_sol50='--',
-                   label_sol=None, label_sol50=None):
+                   label_sol=None, label_sol5=None, label_sol50=None):
 
     y_model_sol = globals()['model_%s_sol' % y_color]
+    y_model_sol5 = globals()['model_%s_sol5' % y_color]
     y_model_sol50 = globals()['model_%s_sol50' % y_color]
 
     ax.plot(model_vi_sol, y_model_sol, color=color_sol, linewidth=linewidth_sol, linestyle=linestyle_sol, zorder=10,
             label=label_sol)
+
+    ax.plot(model_vi_sol5[age_mod_sol5 > age_cut_sol5], y_model_sol5[age_mod_sol5 > age_cut_sol5],
+            color=color_sol5, linewidth=linewidth_sol5, linestyle=linestyle_sol5, zorder=10, label=label_sol5)
+    ax.plot(model_vi_sol5[age_mod_sol5 <= age_cut_sol5], y_model_sol5[age_mod_sol5 <= age_cut_sol5],
+            color=color_sol5, linewidth=linewidth_sol5, linestyle='--', zorder=10)
+
     ax.plot(model_vi_sol50[age_mod_sol50 > age_cut_sol50], y_model_sol50[age_mod_sol50 > age_cut_sol50],
             color=color_sol50, linewidth=linewidth_sol50, linestyle=linestyle_sol50, zorder=10, label=label_sol50)
+    ax.plot(model_vi_sol50[age_mod_sol50 <= age_cut_sol50], y_model_sol50[age_mod_sol50 <= age_cut_sol50],
+            color=color_sol50, linewidth=linewidth_sol50, linestyle='--', zorder=10)
+
 
     if age_dots_sol is None:
         age_dots_sol = [1, 5, 10, 100, 500, 1000, 13750]
     for age in age_dots_sol:
         ax.scatter(model_vi_sol[age_mod_sol == age], y_model_sol[age_mod_sol == age], color='b', s=80, zorder=20)
+
+    if age_dots_sol5 is None:
+        age_dots_sol5 = [1, 5, 10, 100, 500, 1000, 13750]
+    for age in age_dots_sol5:
+        ax.scatter(model_vi_sol5[age_mod_sol5 == age], y_model_sol5[age_mod_sol5 == age], color='darkorange', s=80, zorder=20)
 
     if age_dots_sol50 is None:
         age_dots_sol50 = [500, 1000, 13750]
@@ -141,6 +159,11 @@ age_mod_sol = np.load('../color_color/data_output/age_mod_sol.npy')
 model_vi_sol = np.load('../color_color/data_output/model_vi_sol.npy')
 model_ub_sol = np.load('../color_color/data_output/model_ub_sol.npy')
 model_bv_sol = np.load('../color_color/data_output/model_bv_sol.npy')
+
+age_mod_sol5 = np.load('../color_color/data_output/age_mod_sol5.npy')
+model_vi_sol5 = np.load('../color_color/data_output/model_vi_sol5.npy')
+model_ub_sol5 = np.load('../color_color/data_output/model_ub_sol5.npy')
+model_bv_sol5 = np.load('../color_color/data_output/model_bv_sol5.npy')
 
 age_mod_sol50 = np.load('../color_color/data_output/age_mod_sol50.npy')
 model_vi_sol50 = np.load('../color_color/data_output/model_vi_sol50.npy')
@@ -273,7 +296,7 @@ bkg_map_bvvi_ml_1[seg_map_bvvi_ml_1._data != 0] = np.nan
 gc_map_bvvi_ml_1[seg_map_bvvi_ml_1._data != 2] = np.nan
 cascade_map_bvvi_ml_1[seg_map_bvvi_ml_1._data != 1] = np.nan
 
-fig, ax = plt.subplots(ncols=1, nrows=2, figsize=(12, 20))
+fig, ax = plt.subplots(ncols=2, nrows=1, figsize=(25, 12))
 fontsize = 27
 
 scale_ubvi_ml_1 = np.nanmax(gauss_dict_ubvi_ml_1['gauss_map'])
@@ -325,7 +348,8 @@ ax[1].plot(vi_hull_gc_bvvi_ml_1_thresh_3, bv_hull_gc_bvvi_ml_1_thresh_3, color='
 # ax[1].plot(model_vi_sol50, model_bv_sol50, color='k', linewidth=4, linestyle='--')
 
 display_models(ax=ax[0], age_label_fontsize=fontsize+2, age_labels=True, y_color='ub', color_arrow_sol='grey',
-               label_sol=r'BC03, Z$_{\odot}$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
+               label_sol=r'BC03, Z$_{\odot}$', label_sol5=r'BC03, Z$_{\odot}/5\,(> 500\,{\rm Myr})$',
+               label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
 display_models(ax=ax[1], age_label_fontsize=fontsize+2, age_labels=True, y_color='bv', color_arrow_sol='grey')
 
 
@@ -401,14 +425,16 @@ ax[1].set_xlim(-0.6, 1.8)
 ax[0].set_ylim(1.1, -2.2)
 ax[1].set_ylim(1.3, -0.6)
 
-ax[0].set_xticklabels([])
+# ax[0].set_xticklabels([])
 
-ax[0].set_ylabel('U (F336W) - B (F438W/F435W'+'$^*$'+')', labelpad=20, fontsize=fontsize)
-ax[1].set_ylabel('B (F438W/F435W'+'$^*$'+') - V (F555W)', fontsize=fontsize)
+ax[0].set_ylabel('U (F336W) - B (F438W/F435W'+'$^*$'+')', labelpad=0, fontsize=fontsize)
+ax[1].set_ylabel('B (F438W/F435W'+'$^*$'+') - V (F555W)', labelpad=-10, fontsize=fontsize)
+ax[0].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
 ax[1].set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
 
 
 ax[0].set_title('Class 1 (ML)', fontsize=fontsize)
+ax[1].set_title('Class 1 (ML)', fontsize=fontsize)
 
 ax[0].legend(frameon=False, loc=3, fontsize=fontsize)
 
@@ -418,7 +444,7 @@ ax[1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, to
 # plt.show()
 # plt.subplots_adjust(wspace=0.01, hspace=0.01)
 # plt.tight_layout()
-fig.subplots_adjust(left=0.15, bottom=0.06, right=0.995, top=0.97, wspace=0.01, hspace=0.01)
+fig.subplots_adjust(left=0.06, bottom=0.07, right=0.995, top=0.96, wspace=0.15, hspace=0.05)
 plt.savefig('plot_output/represent_gc_region_ml.png')
 plt.savefig('plot_output/represent_gc_region_ml.pdf')
 fig.clf()

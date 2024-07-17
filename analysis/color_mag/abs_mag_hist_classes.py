@@ -4,7 +4,6 @@ from photometry_tools import helper_func as hf
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from astropy.io import fits
-from xgaltool import analysis_tools
 
 
 cluster_catalog_data_path = '/home/benutzer/data/PHANGS_products/HST_catalogs'
@@ -16,7 +15,8 @@ catalog_access = photometry_tools.data_access.CatalogAccess(hst_cc_data_path=clu
                                                             hst_obs_hdr_file_path=hst_obs_hdr_file_path,
                                                             morph_mask_path=morph_mask_path,
                                                             sample_table_path=sample_table_path,
-                                                            hst_cc_ver='IR4')
+                                                            #hst_cc_ver='IR4'
+                                                            )
 
 target_list = catalog_access.target_hst_cc
 
@@ -85,95 +85,98 @@ for target in target_list:
 
     dist_array_ml = np.concatenate([dist_array_ml, np.ones(len(abs_v_mag_ml_12)+len(abs_v_mag_ml_3))*dist])
 
-v_mag_ex_hum_12 = catalog_access.get_hst_cc_band_vega_mag(target='ngc3621', band='F555W')
-v_mag_ex_hum_3 = catalog_access.get_hst_cc_band_vega_mag(target='ngc3621', band='F555W', cluster_class='class3')
-abs_v_mag_ex_hum_12 = hf.conv_mag2abs_mag(mag=v_mag_ex_hum_12, dist=catalog_access.dist_dict['ngc3621']['dist'])
-abs_v_mag_ex_hum_3 = hf.conv_mag2abs_mag(mag=v_mag_ex_hum_3, dist=catalog_access.dist_dict['ngc3621']['dist'])
-abs_v_band_mag_ex_hum = np.concatenate([abs_v_mag_ex_hum_12, abs_v_mag_ex_hum_3])
 
-v_mag_ex_ml_12 = catalog_access.get_hst_cc_band_vega_mag(target='ngc3621', classify='ml', band='F555W')
-v_mag_ex_ml_3 = catalog_access.get_hst_cc_band_vega_mag(target='ngc3621', classify='ml', band='F555W', cluster_class='class3')
-abs_v_mag_ex_ml_12 = hf.conv_mag2abs_mag(mag=v_mag_ex_ml_12, dist=catalog_access.dist_dict['ngc3621']['dist'])
-abs_v_mag_ex_ml_3 = hf.conv_mag2abs_mag(mag=v_mag_ex_ml_3, dist=catalog_access.dist_dict['ngc3621']['dist'])
-abs_v_band_mag_ex_ml = np.concatenate([abs_v_mag_ex_ml_12, abs_v_mag_ex_ml_3])
+mask_hum_classified = (hum_class_ml > 0)
+mask_vgg_cl1_ml = vgg_class_ml == 1
+mask_vgg_cl2_ml = vgg_class_ml == 2
+mask_vgg_cl3_ml = vgg_class_ml == 3
+
+mask_hum_cl1_hum = hum_class_hum == 1
+mask_hum_cl2_hum = hum_class_hum == 2
+mask_hum_cl3_hum = hum_class_hum == 3
 
 
 
-print(np.nanmedian(apparent_v_band_mag_hum))
-print(np.nanmedian(apparent_v_band_mag_ml))
-print(np.nanmin(apparent_v_band_mag_ml))
-print(np.nanmax(apparent_v_band_mag_ml))
-
-exit()
-
-fig, ax = plt.subplots(ncols=1, sharex=True, figsize=(13, 10))
+fig, ax = plt.subplots(ncols=1, nrows=3, sharex=True, figsize=(13, 17))
 fontsize = 25
 bins = np.linspace(-14.5, -3.5, 30)
 
-mask_hum_classified = (hum_class_ml > 0)
-mask_vgg_cl1 = vgg_class_ml == 1
-mask_vgg_cl2 = vgg_class_ml == 2
-mask_vgg_cl3 = vgg_class_ml == 3
 
-mask_hum_cl1 = hum_class_ml == 1
-mask_hum_cl2 = hum_class_ml == 2
-mask_hum_cl3 = hum_class_ml == 3
+ax[0].hist(abs_v_band_mag_hum, bins=bins, linewidth=3, linestyle=':', color='tab:red', histtype='step')
+ax[0].hist(abs_v_band_mag_ml, bins=bins, linewidth=3, linestyle=':', color='tab:gray', histtype='step')
 
-mask_hum_artefacts = hum_class_ml > 3
+ax[1].hist(abs_v_band_mag_hum, bins=bins, linewidth=3, linestyle=':', color='tab:red', histtype='step')
+ax[1].hist(abs_v_band_mag_ml, bins=bins, linewidth=3, linestyle=':', color='tab:gray', histtype='step')
 
-print('mask_vgg_cl1 ', sum(mask_vgg_cl1))
-print('mask_vgg_cl2 ', sum(mask_vgg_cl2))
-print('mask_vgg_cl3 ', sum(mask_vgg_cl3))
+ax[2].hist(abs_v_band_mag_hum, bins=bins, linewidth=3, linestyle=':', color='tab:red', histtype='step')
+ax[2].hist(abs_v_band_mag_ml, bins=bins, linewidth=3, linestyle=':', color='tab:gray', histtype='step')
 
-print('!!!!!')
-print('mask_hum_cl1 ', sum(mask_hum_cl1) / sum(mask_hum_classified))
-print('mask_hum_cl2 ', sum(mask_hum_cl2) / sum(mask_hum_classified))
-print('mask_hum_cl3 ', sum(mask_hum_cl3) / sum(mask_hum_classified))
-print('mask_hum_artefacts ', sum(mask_hum_artefacts) / sum(mask_hum_classified))
+ax[0].hist(abs_v_band_mag_hum[mask_hum_cl1_hum], bins=bins, linewidth=3, linestyle='-', color='tab:red', histtype='step')
+ax[0].hist(abs_v_band_mag_ml[mask_vgg_cl1_ml], bins=bins, linewidth=3, linestyle='-', color='tab:gray', histtype='step')
+
+ax[1].hist(abs_v_band_mag_hum[mask_hum_cl2_hum], bins=bins, linewidth=3, linestyle='-', color='tab:red', histtype='step')
+ax[1].hist(abs_v_band_mag_ml[mask_vgg_cl2_ml], bins=bins, linewidth=3, linestyle='-', color='tab:gray', histtype='step')
+
+ax[2].hist(abs_v_band_mag_hum[mask_hum_cl3_hum], bins=bins, linewidth=3, linestyle='-', color='tab:red', histtype='step')
+ax[2].hist(abs_v_band_mag_ml[mask_vgg_cl3_ml], bins=bins, linewidth=3, linestyle='-', color='tab:gray', histtype='step')
 
 
-print('#########')
-# print('mask_hum_artefacts ', sum(mask_hum_artefacts) / sum(mask_hum_classified))
-print('mask_hum_artefacts ', sum(mask_hum_artefacts*mask_vgg_cl1) / sum(mask_hum_artefacts))
-print('mask_hum_artefacts ', sum(mask_hum_artefacts*mask_vgg_cl2) / sum(mask_hum_artefacts))
-print('mask_hum_artefacts ', sum(mask_hum_artefacts*mask_vgg_cl3) / sum(mask_hum_artefacts))
+ax[0].plot([], [], color='tab:red', linewidth=3, linestyle=':', label='Hum (N = %i)' % len(abs_v_band_mag_hum))
+ax[0].plot([], [], color='tab:grey', linewidth=3, linestyle=':', label='ML (N = %i)' % len(abs_v_band_mag_ml))
+
+ax[0].plot([], [], color='tab:red', linewidth=3, linestyle='-', label='Hum Class 1 (N = %i)' % np.sum(mask_hum_cl1_hum))
+ax[0].plot([], [], color='tab:grey', linewidth=3, linestyle='-', label='ML Class 1 (N = %i)' % np.sum(mask_vgg_cl1_ml))
+
+ax[1].plot([], [], color='tab:red', linewidth=3, linestyle='-', label='Hum Class 2 (N = %i)' % np.sum(mask_hum_cl2_hum))
+ax[1].plot([], [], color='tab:grey', linewidth=3, linestyle='-', label='ML Class 2 (N = %i)' % np.sum(mask_vgg_cl2_ml))
+
+ax[2].plot([], [], color='tab:red', linewidth=3, linestyle='-', label='Hum Class 3 (N = %i)' % np.sum(mask_hum_cl3_hum))
+ax[2].plot([], [], color='tab:grey', linewidth=3, linestyle='-', label='ML Class 3 (N = %i)' % np.sum(mask_vgg_cl3_ml))
+
+ax[0].legend(frameon=False, loc='lower center', fontsize=fontsize)
+ax[1].legend(frameon=False, loc='lower center', fontsize=fontsize)
+ax[2].legend(frameon=False, loc='lower center', fontsize=fontsize)
 
 
-print('mask_hum_classified ', sum(mask_hum_classified))
-#
-exit()
+ax[0].set_yscale('log')
+ax[1].set_yscale('log')
+ax[2].set_yscale('log')
 
-print('mask_classified * mask_class_3 ', sum(mask_classified * mask_class_3))
-print('mask_classified * mask_correct ', sum(mask_classified * mask_correct))
-print('mask_classified * mask_artefacts * mask_class_3 ', sum(mask_classified * mask_artefacts * mask_class_3))
+ax[0].set_xlim(-3.4, -14.9)
 
+ax[0].set_ylabel('# Clusters', fontsize=fontsize)
+ax[1].set_ylabel('# Clusters', fontsize=fontsize)
+ax[2].set_ylabel('# Clusters', fontsize=fontsize)
 
-ax.hist(abs_v_band_mag_ml[mask_class_3], bins=bins, linewidth=2, color='k', histtype='step')
-ax.hist(abs_v_band_mag_ml[mask_classified * mask_class_3], bins=bins, linewidth=2, color='tab:grey', histtype='step')
-ax.hist(abs_v_band_mag_ml[mask_classified * mask_correct], bins=bins, linewidth=2, color='tab:red', histtype='step')
-ax.hist(abs_v_band_mag_ml[mask_classified * mask_artefacts * mask_class_3], bins=bins, linewidth=2, color='tab:blue', histtype='step')
+ax[2].set_xlabel(r'M$_{\rm V}$ [mag]', fontsize=fontsize)
 
-ax.plot([], [], color='k', linewidth=2, label='all ML class 3 classified (N = %i)' % sum(mask_class_3))
-ax.plot([], [], color='tab:grey', linewidth=2, label='ML class 3 also hum classified (N = %i)' % sum(mask_classified * mask_class_3))
-ax.plot([], [], color='tab:red', linewidth=2, label='ML class 3 also hum and correct classified (N = %i)' % sum(mask_classified * mask_correct))
-ax.plot([], [], color='tab:blue', linewidth=2, label='ML class 3 also hum but artefact (N = %i)' % sum(mask_classified * mask_artefacts * mask_class_3))
-
-
-ax.set_yscale('log')
-ax.legend(frameon=False, fontsize=fontsize-10)
-
-ax.set_title('Class 3', fontsize=fontsize)
-
-ax.set_xlim(-3.4, -14.9)
-
-ax.set_ylabel('# Clusters', fontsize=fontsize)
-ax.set_xlabel(r'M$_{\rm V}$ [mag]', fontsize=fontsize)
-ax.tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax[0].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax[1].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
+ax[2].tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
 
 
 plt.tight_layout()
-# fig.subplots_adjust(wspace=0, hspace=0)
-fig.savefig('plot_output/abs_v_mag_hist_class_3_artefacts.png', bbox_inches='tight', dpi=300)
+fig.subplots_adjust(wspace=0, hspace=0.01)
+fig.savefig('plot_output/abs_v_mag_hist_classes.png', bbox_inches='tight', dpi=300)
+fig.savefig('plot_output/abs_v_mag_hist_classes.pdf', bbox_inches='tight', dpi=300)
+
+
+print(sum(abs_v_band_mag_ml < -10))
+print(sum(abs_v_band_mag_hum < -10))
+
+print('diff ', sum(abs_v_band_mag_hum < -10) - sum(abs_v_band_mag_ml < -10))
+
+print('median ML', np.nanmedian(abs_v_band_mag_ml))
+print('median Human', np.nanmedian(abs_v_band_mag_hum))
+
+print('percentile 99 ML', np.nanpercentile(abs_v_band_mag_ml, 99))
+print('percentile 99 Human', np.nanpercentile(abs_v_band_mag_hum, 99))
+
+print(np.nanmedian(abs_v_band_mag_ml[dist_array_ml < 14]))
+print(np.nanmedian(abs_v_band_mag_ml[dist_array_ml > 14]))
+
+
+
 
 exit()
 

@@ -52,23 +52,32 @@ bv_annotation_dict = {
 
 def display_models(ax, y_color='nuvb',
                    age_cut_sol50=5e2,
+                   age_cut_sol5=5e2,
                    age_dots_sol=None,
+                   age_dots_sol5=None,
                    age_dots_sol50=None,
                    age_labels=False,
                    age_label_color='red',
                    age_label_fontsize=30,
                    color_sol='tab:cyan', linewidth_sol=4, linestyle_sol='-', color_arrow_sol='darkcyan', arrow_linestyle_sol='--',
+                   color_sol5='tab:green', linewidth_sol5=4, linestyle_sol5='-', color_arrow_sol5='darkcyan', arrow_linestyle_sol5='--',
                    color_sol50='m', linewidth_sol50=4, linestyle_sol50='-', color_arrow_sol50='darkviolet', arrow_linestyle_sol50='--',
-                   label_sol=None, label_sol50=None):
+                   label_sol=None, label_sol5=None, label_sol50=None):
 
     y_model_sol = globals()['model_%s_sol' % y_color]
+    y_model_sol5 = globals()['model_%s_sol5' % y_color]
     y_model_sol50 = globals()['model_%s_sol50' % y_color]
 
     ax.plot(model_vi_sol, y_model_sol, color=color_sol, linewidth=linewidth_sol, linestyle=linestyle_sol, zorder=10,
             label=label_sol)
+
+    ax.plot(model_vi_sol5[age_mod_sol5 > age_cut_sol5], y_model_sol5[age_mod_sol5 > age_cut_sol5],
+            color=color_sol5, linewidth=linewidth_sol5, linestyle=linestyle_sol5, zorder=10, label=label_sol5)
+    ax.plot(model_vi_sol5[age_mod_sol5 <= age_cut_sol5], y_model_sol5[age_mod_sol5 <= age_cut_sol5],
+            color=color_sol5, linewidth=linewidth_sol5, linestyle='--', zorder=10)
+
     ax.plot(model_vi_sol50[age_mod_sol50 > age_cut_sol50], y_model_sol50[age_mod_sol50 > age_cut_sol50],
             color=color_sol50, linewidth=linewidth_sol50, linestyle=linestyle_sol50, zorder=10, label=label_sol50)
-
     ax.plot(model_vi_sol50[age_mod_sol50 <= age_cut_sol50], y_model_sol50[age_mod_sol50 <= age_cut_sol50],
             color=color_sol50, linewidth=linewidth_sol50, linestyle='--', zorder=10)
 
@@ -77,6 +86,11 @@ def display_models(ax, y_color='nuvb',
         age_dots_sol = [1, 5, 10, 100, 500, 1000, 13750]
     for age in age_dots_sol:
         ax.scatter(model_vi_sol[age_mod_sol == age], y_model_sol[age_mod_sol == age], color='b', s=80, zorder=20)
+
+    if age_dots_sol5 is None:
+        age_dots_sol5 = [1, 5, 10, 100, 500, 1000, 13750]
+    for age in age_dots_sol5:
+        ax.scatter(model_vi_sol5[age_mod_sol5 == age], y_model_sol5[age_mod_sol5 == age], color='darkgreen', s=80, zorder=20)
 
     if age_dots_sol50 is None:
         age_dots_sol50 = [500, 1000, 13750]
@@ -150,6 +164,14 @@ model_ub_sol50 = np.load('../color_color/data_output/model_ub_sol50.npy')
 model_bv_sol50 = np.load('../color_color/data_output/model_bv_sol50.npy')
 model_bi_sol50 = np.load('../color_color/data_output/model_bi_sol50.npy')
 model_vi_sol50 = np.load('../color_color/data_output/model_vi_sol50.npy')
+
+age_mod_sol5 = np.load('../color_color/data_output/age_mod_sol5.npy')
+model_nuvu_sol5 = np.load('../color_color/data_output/model_nuvu_sol5.npy')
+model_nuvb_sol5 = np.load('../color_color/data_output/model_nuvb_sol5.npy')
+model_ub_sol5 = np.load('../color_color/data_output/model_ub_sol5.npy')
+model_bv_sol5 = np.load('../color_color/data_output/model_bv_sol5.npy')
+model_bi_sol5 = np.load('../color_color/data_output/model_bi_sol5.npy')
+model_vi_sol5 = np.load('../color_color/data_output/model_vi_sol5.npy')
 
 def plot_age_ebv(ax, age, mass, ebv=0.0, color='k', linestyle='-', linewidth=3):
     """
@@ -255,7 +277,7 @@ index_1_gyr = np.where(age_mod_sol50 == 500)
 #            linestyle='-', label='BC03, Z=Z$_{\odot}$/50')
 
 display_models(ax=ax_cc, age_label_fontsize=fontsize+2, age_labels=True, y_color='ub', color_arrow_sol='grey',
-               label_sol=r'BC03, Z$_{\odot}$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
+               label_sol=r'BC03, Z$_{\odot}$', label_sol5=r'BC03, Z$_{\odot}/5\,(> 500\,{\rm Myr})$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
 
 
 #
@@ -358,13 +380,19 @@ distance_Mpc = 10 * u.Mpc
 def plot_age_only(ax, age, mass, color='k', linestyle='-', linewidth=3):
 
     id = np.where(age_mod_sol == age)[0][0]
-    cigale_wrapper_obj.plot_cigale_model(ax=ax, model_file_name='../cigale_model/sfh2exp/no_dust/sol_met_50/out/%i_best_model.fits'%id,
+    cigale_wrapper_obj.plot_cigale_model(ax=ax, model_file_name='../cigale_model/sfh2exp/no_dust/sol_met/out/%i_best_model.fits'%id,
                                             cluster_mass=mass, distance_Mpc=distance_Mpc,
                                              color=color, linestyle=linestyle, linewidth=linewidth)
 def plot_age_only_sol50(ax, age, mass, color='k', linestyle='-', linewidth=3):
 
-    id = np.where(age_mod_sol == age)[0][0]
-    cigale_wrapper_obj.plot_cigale_model(ax=ax, model_file_name='../cigale_model/sfh2exp/no_dust/sol_met/out/%i_best_model.fits'%id,
+    id = np.where(age_mod_sol50 == age)[0][0]
+    cigale_wrapper_obj.plot_cigale_model(ax=ax, model_file_name='../cigale_model/sfh2exp/no_dust/sol_met_50/out/%i_best_model.fits'%id,
+                                            cluster_mass=mass, distance_Mpc=distance_Mpc,
+                                             color=color, linestyle=linestyle, linewidth=linewidth)
+def plot_age_only_sol5(ax, age, mass, color='k', linestyle='-', linewidth=3):
+
+    id = np.where(age_mod_sol5 == age)[0][0]
+    cigale_wrapper_obj.plot_cigale_model(ax=ax, model_file_name='../cigale_model/sfh2exp/no_dust/sol_met_5/out/%i_best_model.fits'%id,
                                             cluster_mass=mass, distance_Mpc=distance_Mpc,
                                              color=color, linestyle=linestyle, linewidth=linewidth)
 
@@ -399,7 +427,8 @@ for av in av_list:
 
 
 plot_age_only(ax=ax_sed, age=100, mass=cluster_mass_old_1, color='k', linestyle='--', linewidth=4)
-plot_age_only(ax=ax_sed, age=10000, mass=cluster_mass_old_2, color='k', linestyle=':', linewidth=4)
+plot_age_only_sol50(ax=ax_sed, age=10000, mass=cluster_mass_old_2, color='k', linestyle=':', linewidth=4)
+plot_age_only_sol5(ax=ax_sed, age=10000, mass=cluster_mass_old_2, color='tab:green', linestyle='-.', linewidth=4)
 
 
 ColorbarBase(ax_cbar, orientation='vertical', cmap=cmap, norm=norm, extend='neither', ticks=[0., 0.5, 1.0, 1.5, 2.0, 2.5])
@@ -457,6 +486,7 @@ ax_cc.annotate("", xy=(vi_int+max_color_ext_vi_arr, ub_int+max_color_ext_ub_arr)
 ax_sed.plot([], [], color='gray', linestyle='-', linewidth=3, label=r'Age = 5 Myr, Z=Z$_{\odot}$, M$_{*}$ = 3 $\times$ 10$^{4}$ M$_{\odot}$,A$_{\rm V}$ = 0-2.2')
 ax_sed.plot([], [], color='k', linestyle='--', linewidth=4, label=r'Age = 100 Myr, Z=Z$_{\odot}$, M$_{*}$ = 10$^{5}$ M$_{\odot}$, A$_{\rm V}$ = 0')
 ax_sed.plot([], [], color='k', linestyle=':', linewidth=4, label=r'Age = 10 Gyr, Z=Z$_{\odot}$/50, M$_{*}$ = 10$^{6}$ M$_{\odot}$, A$_{\rm V}$ = 0')
+ax_sed.plot([], [], color='tab:green', linestyle='-.', linewidth=4, label=r'Age = 10 Gyr, Z=Z$_{\odot}$/5, M$_{*}$ = 10$^{6}$ M$_{\odot}$, A$_{\rm V}$ = 0')
 ax_sed.legend(loc='upper left', fontsize=fontsize, frameon=False)
 # ax_sed.text(500, 2, r'Z=Z$_{\odot}$, M$_{*}$ = 10$^{5}$ M$_{\odot}$, D = 10 Mpc', fontsize=fontsize)
 ax_sed.text(700, 0.8, r'D = 10 Mpc', fontsize=fontsize)
@@ -466,7 +496,7 @@ ax_sed.text(700, 0.8, r'D = 10 Mpc', fontsize=fontsize)
 cigale_wrapper_obj.plot_hst_filters(ax=ax_sed, fontsize=fontsize-5, text_hight=5e-4, color='k', text=True)
 
 ax_sed.set_xlim(230, 0.9 * 1e3)
-ax_sed.set_ylim(3e-4, 1.5e0)
+ax_sed.set_ylim(3e-4, 2.5e0)
 
 ax_sed.set_xscale('log')
 ax_sed.set_yscale('log')

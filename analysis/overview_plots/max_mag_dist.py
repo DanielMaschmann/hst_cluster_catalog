@@ -119,24 +119,27 @@ for index, target in enumerate(cc_target_list):
     p16_f555w_abs_mag_ml_12[index] = np.percentile(f555w_abs_mag_ml_12, 16)
     p84_f555w_abs_mag_ml_12[index] = np.percentile(f555w_abs_mag_ml_12, 84)
 
+    mask_good_m_star_hum_12 = mstar_hum_12 > 0
 
-    p99_mstar_hum_12[index] = np.percentile(mstar_hum_12, 99)
-    p1_mstar_hum_12[index] = np.percentile(mstar_hum_12, 1)
-    max_mstar_hum_12[index] = np.nanmax(mstar_hum_12)
-    min_mstar_hum_12[index] = np.nanmin(mstar_hum_12)
-    mean_mstar_hum_12[index] = np.nanmean(mstar_hum_12)
-    median_mstar_hum_12[index] = np.nanmedian(mstar_hum_12)
-    p16_mstar_hum_12[index] = np.percentile(mstar_hum_12, 16)
-    p84_mstar_hum_12[index] = np.percentile(mstar_hum_12, 84)
+    p99_mstar_hum_12[index] = np.percentile(mstar_hum_12[mask_good_m_star_hum_12], 99)
+    p1_mstar_hum_12[index] = np.percentile(mstar_hum_12[mask_good_m_star_hum_12], 1)
+    max_mstar_hum_12[index] = np.nanmax(mstar_hum_12[mask_good_m_star_hum_12])
+    min_mstar_hum_12[index] = np.nanmin(mstar_hum_12[mask_good_m_star_hum_12])
+    mean_mstar_hum_12[index] = np.nanmean(mstar_hum_12[mask_good_m_star_hum_12])
+    median_mstar_hum_12[index] = np.nanmedian(mstar_hum_12[mask_good_m_star_hum_12])
+    p16_mstar_hum_12[index] = np.percentile(mstar_hum_12[mask_good_m_star_hum_12], 16)
+    p84_mstar_hum_12[index] = np.percentile(mstar_hum_12[mask_good_m_star_hum_12], 84)
 
-    p99_mstar_ml_12[index] = np.percentile(mstar_ml_12, 99)
-    p1_mstar_ml_12[index] = np.percentile(mstar_ml_12, 1)
-    max_mstar_ml_12[index] = np.nanmax(mstar_ml_12)
-    min_mstar_ml_12[index] = np.nanmin(mstar_ml_12)
-    mean_mstar_ml_12[index] = np.nanmean(mstar_ml_12)
-    median_mstar_ml_12[index] = np.nanmedian(mstar_ml_12)
-    p16_mstar_ml_12[index] = np.percentile(mstar_ml_12, 16)
-    p84_mstar_ml_12[index] = np.percentile(mstar_ml_12, 84)
+    mask_good_m_star_ml_12 = mstar_ml_12 > 0
+
+    p99_mstar_ml_12[index] = np.percentile(mstar_ml_12[mask_good_m_star_ml_12], 99)
+    p1_mstar_ml_12[index] = np.percentile(mstar_ml_12[mask_good_m_star_ml_12], 1)
+    max_mstar_ml_12[index] = np.nanmax(mstar_ml_12[mask_good_m_star_ml_12])
+    min_mstar_ml_12[index] = np.nanmin(mstar_ml_12[mask_good_m_star_ml_12])
+    mean_mstar_ml_12[index] = np.nanmean(mstar_ml_12[mask_good_m_star_ml_12])
+    median_mstar_ml_12[index] = np.nanmedian(mstar_ml_12[mask_good_m_star_ml_12])
+    p16_mstar_ml_12[index] = np.percentile(mstar_ml_12[mask_good_m_star_ml_12], 16)
+    p84_mstar_ml_12[index] = np.percentile(mstar_ml_12[mask_good_m_star_ml_12], 84)
 
     print(sum(f555w_abs_mag_hum_12 < - 12), sum(f555w_abs_mag_ml_12 < - 12))
     print(sum(f555w_abs_mag_hum_12 < - 10), sum(f555w_abs_mag_ml_12 < - 10))
@@ -150,17 +153,22 @@ mask_close_ml = array_dist_ml_12 < 14
 mask_far_ml = array_dist_ml_12 > 14
 
 
+
+mask_good_masses_hum = array_mstar_hum_12 > 0
+mask_good_masses_ml = array_mstar_ml_12 > 0
+
+
 print('below 14 Mpc Hum 12 Mean V-mag', np.nanmean(array_f555w_abs_mag_hum_12[mask_close_hum]))
 print('above 14 Mpc Hum 12 Mean V-mag', np.nanmean(array_f555w_abs_mag_hum_12[mask_far_hum]))
 
 print('below 14 Mpc ML 12 Mean V-mag', np.nanmean(array_f555w_abs_mag_ml_12[mask_close_ml]))
 print('above 14 Mpc ML 12 Mean V-mag', np.nanmean(array_f555w_abs_mag_ml_12[mask_far_ml]))
 
-print('below 14 Mpc Hum 12 Mean Mstar', np.nanmean(array_mstar_hum_12[mask_close_hum]))
-print('above 14 Mpc Hum 12 Mean Mstar', np.nanmean(array_mstar_hum_12[mask_far_hum]))
+print('below 14 Mpc Hum 12 Mean Mstar', np.log10(np.nanmean(array_mstar_hum_12[mask_close_hum * mask_good_masses_hum])))
+print('above 14 Mpc Hum 12 Mean Mstar', np.log10(np.nanmean(array_mstar_hum_12[mask_far_hum * mask_good_masses_hum])))
 
-print('below 14 Mpc ML 12 Mean Mstar', np.nanmean(array_mstar_ml_12[mask_close_ml]))
-print('above 14 Mpc ML 12 Mean Mstar', np.nanmean(array_mstar_ml_12[mask_far_ml]))
+print('below 14 Mpc ML 12 Mean Mstar', np.log10(np.nanmean(array_mstar_ml_12[mask_close_ml * mask_good_masses_ml])))
+print('above 14 Mpc ML 12 Mean Mstar', np.log10(np.nanmean(array_mstar_ml_12[mask_far_ml * mask_good_masses_ml])))
 
 print('--------------------------------')
 
@@ -170,11 +178,13 @@ print('above 14 Mpc Hum 12 Median V-mag', np.nanmedian(array_f555w_abs_mag_hum_1
 print('below 14 Mpc ML 12 Median V-mag', np.nanmedian(array_f555w_abs_mag_ml_12[mask_close_ml]))
 print('above 14 Mpc ML 12 Median V-mag', np.nanmedian(array_f555w_abs_mag_ml_12[mask_far_ml]))
 
-print('below 14 Mpc Hum 12 Median Mstar', np.log10(np.nanmedian(array_mstar_hum_12[mask_close_hum])))
-print('above 14 Mpc Hum 12 Median Mstar', np.log10(np.nanmedian(array_mstar_hum_12[mask_far_hum])))
+print('below 14 Mpc Hum 12 Median Mstar', np.log10(np.nanmedian(array_mstar_hum_12[mask_close_hum * mask_good_masses_hum])))
+print('above 14 Mpc Hum 12 Median Mstar', np.log10(np.nanmedian(array_mstar_hum_12[mask_far_hum * mask_good_masses_hum])))
 
-print('below 14 Mpc ML 12 Median Mstar', np.log10(np.nanmedian(array_mstar_ml_12[mask_close_ml])))
-print('above 14 Mpc ML 12 Median Mstar', np.log10(np.nanmedian(array_mstar_ml_12[mask_far_ml])))
+print('below 14 Mpc ML 12 Median Mstar', np.log10(np.nanmedian(array_mstar_ml_12[mask_close_ml * mask_good_masses_ml])))
+print('above 14 Mpc ML 12 Median Mstar', np.log10(np.nanmedian(array_mstar_ml_12[mask_far_ml * mask_good_masses_ml])))
+
+print('--------------------------------')
 
 
 fig, ax = plt.subplots(nrows=2, ncols=2, sharex=True, sharey='row', figsize=(28, 15))

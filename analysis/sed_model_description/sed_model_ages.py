@@ -20,7 +20,7 @@ nuvb_label_dict = {
     100: {'offsets': [-0.1, 0.0], 'ha': 'right', 'va': 'center', 'label': r'100 Myr'}
 }
 ub_label_dict = {
-    1: {'offsets': [0.2, -0.1], 'ha': 'center', 'va': 'bottom', 'label': r'1,2,3 Myr'},
+    #1: {'offsets': [0.2, -0.1], 'ha': 'center', 'va': 'bottom', 'label': r'1,2,3 Myr'},
     5: {'offsets': [0.05, 0.1], 'ha': 'right', 'va': 'top', 'label': r'5 Myr'},
     10: {'offsets': [0.05, 0.1], 'ha': 'left', 'va': 'bottom', 'label': r'10 Myr'},
     100: {'offsets': [0.1, 0.0], 'ha': 'left', 'va': 'center', 'label': r'100 Myr'}
@@ -38,8 +38,8 @@ nuvb_annotation_dict = {
     13750: {'offset': [+0.05, 0.9], 'label': '13.8 Gyr', 'ha': 'left', 'va': 'center'}
 }
 ub_annotation_dict = {
-    500: {'offset': [-0.3, +0.0], 'label': '500 Myr', 'ha': 'right', 'va': 'center'},
-    1000: {'offset': [-0.5, +0.5], 'label': '1 Gyr', 'ha': 'right', 'va': 'center'},
+    500: {'offset': [+0.3, -0.3], 'label': '500 Myr', 'ha': 'left', 'va': 'center'},
+    1000: {'offset': [-0.3, +0.5], 'label': '1 Gyr', 'ha': 'right', 'va': 'center'},
     13750: {'offset': [-0.1, 0.4], 'label': '13.8 Gyr', 'ha': 'right', 'va': 'center'}
 }
 bv_annotation_dict = {
@@ -74,7 +74,7 @@ def display_models(ax, y_color='nuvb',
     if age_dots_sol is None:
         age_dots_sol = [1, 5, 10, 100, 500, 1000, 13750]
     for age in age_dots_sol:
-        ax.scatter(model_vi_sol[age_mod_sol == age], y_model_sol[age_mod_sol == age], color='b', s=80, zorder=20)
+        ax.scatter(model_vi_sol[age_mod_sol == age], y_model_sol[age_mod_sol == age], color='k', s=80, zorder=20)
 
     # if age_dots_sol50 is None:
     #     age_dots_sol50 = [500, 1000, 13750]
@@ -175,6 +175,16 @@ def plot_age_ebv(ax, age=1, ebv=0.0, color='k', linestyle='-', linewidth=3):
                                              color=color, linestyle=linestyle, linewidth=linewidth)
 
 
+# set distance to galaxy, NGC3351 = 10 Mpc, NGC1566 = 17.7 Mpc
+distance_Mpc = 10 * u.Mpc
+
+def plot_age_only_sol50(ax, age, mass, color='k', linestyle='-', linewidth=3):
+
+    id = np.where(age_mod_sol == age)[0][0]
+    cigale_wrapper_obj.plot_cigale_model(ax=ax, model_file_name='../cigale_model/sfh2exp/no_dust/sol_met_50/out/%i_best_model.fits'%id,
+                                            cluster_mass=mass, distance_Mpc=distance_Mpc,
+                                             color=color, linestyle=linestyle, linewidth=linewidth)
+
 # set star cluster mass to scale the model SEDs
 cluster_mass = 1E5 * u.Msun
 # set distance to galaxy, NGC3351 = 10 Mpc, NGC1566 = 17.7 Mpc
@@ -262,7 +272,66 @@ index_1_gyr = np.where(age_mod_sol50 == 500)
 ax_cc_zoom.plot(model_vi_sol, model_ub_sol, color='tab:cyan', linewidth=3)
 
 display_models(ax=ax_cc, age_label_fontsize=fontsize+2, age_labels=True, y_color='ub', color_arrow_sol='grey',
-               label_sol=r'BC03, Z$_{\odot}$', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
+               label_sol=r'BC03, Z$_{\odot}$ (no neb.)', label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
+
+# get model
+hdu_a_sol_neb = fits.open('/home/benutzer/Documents/projects/hst_cluster_catalog/analysis/cigale_model/sfh2exp/no_dust/sol_met_gas/out/models-block-0.fits')
+data_mod_sol_neb = hdu_a_sol_neb[1].data
+# print(data_mod_sol_neb.names)
+
+ew_h_alpha = data_mod_sol_neb['param.EW(656.3/1.0)']
+age_mod_sol_neb = data_mod_sol_neb['sfh.age']
+logu_mod_sol_neb = data_mod_sol_neb['nebular.logU']
+ne_mod_sol_neb = data_mod_sol_neb['nebular.ne']
+f_esc_mod_sol_neb = data_mod_sol_neb['nebular.f_esc']
+
+flux_f275w_sol_neb = data_mod_sol_neb['F275W_UVIS_CHIP2']
+flux_f336w_sol_neb = data_mod_sol_neb['F336W_UVIS_CHIP2']
+flux_f438w_sol_neb = data_mod_sol_neb['F438W_UVIS_CHIP2']
+flux_f555w_sol_neb = data_mod_sol_neb['F555W_UVIS_CHIP2']
+flux_f814w_sol_neb = data_mod_sol_neb['F814W_UVIS_CHIP2']
+
+
+mag_nuv_sol_neb = hf.conv_mjy2vega(flux=flux_f275w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F275W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F275W'))
+mag_u_sol_neb = hf.conv_mjy2vega(flux=flux_f336w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F336W'))
+mag_b_sol_neb = hf.conv_mjy2vega(flux=flux_f438w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F438W'))
+mag_v_sol_neb = hf.conv_mjy2vega(flux=flux_f555w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F555W'))
+mag_i_sol_neb = hf.conv_mjy2vega(flux=flux_f814w_sol_neb, ab_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W', mag_sys='AB'),
+                             vega_zp=catalog_access.get_zp_mag(target='ngc7496', band='F814W'))
+model_nuvu_sol_neb = mag_nuv_sol_neb - mag_u_sol_neb
+model_nuvb_sol_neb = mag_nuv_sol_neb - mag_b_sol_neb
+model_ub_sol_neb = mag_u_sol_neb - mag_b_sol_neb
+model_bv_sol_neb = mag_b_sol_neb - mag_v_sol_neb
+model_bi_sol_neb = mag_b_sol_neb - mag_i_sol_neb
+model_vi_sol_neb = mag_v_sol_neb - mag_i_sol_neb
+
+mask_ne10 = (ne_mod_sol_neb == 10)
+mask_ne100 = (ne_mod_sol_neb == 100)
+mask_ne1000 = (ne_mod_sol_neb == 1000)
+
+mask_logu2 = (logu_mod_sol_neb == -2)
+mask_logu3 = (logu_mod_sol_neb == -3)
+mask_logu4 = (logu_mod_sol_neb == -4)
+
+mask_ages = ((age_mod_sol_neb == 1) | (age_mod_sol_neb == 2) | (age_mod_sol_neb == 3) | (age_mod_sol_neb == 4) | (age_mod_sol_neb == 5) | (age_mod_sol_neb == 6))
+mask_f_esc = f_esc_mod_sol_neb == 0.5
+
+ax_cc.scatter(model_vi_sol_neb[mask_ages*mask_f_esc*mask_ne10*mask_logu2], model_ub_sol_neb[mask_ages*mask_f_esc*mask_ne10*mask_logu2], marker='P', color='r', s=100, label='ne=10, logU=-2')
+ax_cc.scatter(model_vi_sol_neb[mask_ages*mask_f_esc*mask_ne10*mask_logu3], model_ub_sol_neb[mask_ages*mask_f_esc*mask_ne10*mask_logu3], marker='P', color='g', s=100, label='ne=10, logU=-3')
+ax_cc.scatter(model_vi_sol_neb[mask_ages*mask_f_esc*mask_ne10*mask_logu4], model_ub_sol_neb[mask_ages*mask_f_esc*mask_ne10*mask_logu4], marker='P', color='b', s=100, label='ne=10, logU=-4')
+
+ax_cc.scatter(model_vi_sol_neb[mask_ages*mask_f_esc*mask_ne100*mask_logu2], model_ub_sol_neb[mask_ages*mask_f_esc*mask_ne100*mask_logu2], marker='o', color='r', s=100, label='ne=100, logU=-2')
+ax_cc.scatter(model_vi_sol_neb[mask_ages*mask_f_esc*mask_ne100*mask_logu3], model_ub_sol_neb[mask_ages*mask_f_esc*mask_ne100*mask_logu3], marker='o', color='g', s=100, label='ne=100, logU=-3')
+ax_cc.scatter(model_vi_sol_neb[mask_ages*mask_f_esc*mask_ne100*mask_logu4], model_ub_sol_neb[mask_ages*mask_f_esc*mask_ne100*mask_logu4], marker='o', color='b', s=100, label='ne=100, logU=-4')
+
+ax_cc.scatter(model_vi_sol_neb[mask_ages*mask_f_esc*mask_ne1000*mask_logu2], model_ub_sol_neb[mask_ages*mask_f_esc*mask_ne1000*mask_logu2], marker='X', color='r', s=100, label='ne=1000, logU=-2')
+ax_cc.scatter(model_vi_sol_neb[mask_ages*mask_f_esc*mask_ne1000*mask_logu3], model_ub_sol_neb[mask_ages*mask_f_esc*mask_ne1000*mask_logu3], marker='X', color='g', s=100, label='ne=1000, logU=-3')
+ax_cc.scatter(model_vi_sol_neb[mask_ages*mask_f_esc*mask_ne1000*mask_logu4], model_ub_sol_neb[mask_ages*mask_f_esc*mask_ne1000*mask_logu4], marker='X', color='b', s=100, label='ne=1000, logU=-4')
+
 
 
 
@@ -414,7 +483,7 @@ ax_cc_zoom.annotate('32 Myr', color='red', xy=(vi_32_my_zoom, ub_32_my_zoom), xy
                      textcoords='data', arrowprops=dict(arrowstyle='-|>', color='grey', lw=2, ls='-'))
 
 
-ax_cc.legend(frameon=False, loc=3, fontsize=fontsize)
+ax_cc.legend(frameon=False, loc=3, fontsize=fontsize-5)
 ax_cc.tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
 
 ax_cc_zoom.yaxis.tick_right()
@@ -445,6 +514,12 @@ for age in age_list:
     color = cmap(norm(age))
     plot_age_only(ax=ax_sed, age=age, color=color, linestyle='-', linewidth=3)
 
+
+cluster_mass_old_2 = 1E6 * u.Msun
+
+plot_age_only_sol50(ax=ax_sed, age=10000, mass=cluster_mass_old_2, color='k', linestyle=':', linewidth=4)
+
+
 ColorbarBase(ax_cbar, orientation='vertical', cmap=cmap, norm=norm, extend='neither', ticks=None)
 ax_cbar.set_ylabel(r'Age [Myr]', labelpad=0, fontsize=fontsize)
 ax_cbar.tick_params(axis='both', which='both', width=2, direction='in', top=True, labelbottom=False,
@@ -452,11 +527,19 @@ ax_cbar.tick_params(axis='both', which='both', width=2, direction='in', top=True
 
 hf.plot_reddening_vect(ax=ax_cc,
                        x_color_1='v', x_color_2='i',  y_color_1='u', y_color_2='b',
-                       x_color_int=-0.6, y_color_int=0.3, av_val=1,
+                       x_color_int=0.1, y_color_int=-1.8, av_val=1,
                        linewidth=3, line_color='k', text=True, fontsize=fontsize,
                        x_text_offset=-0.05, y_text_offset=-0.1)
 
-ax_sed.text(500, 2, r'Z=Z$_{\odot}$, M$_{*}$ = 10$^{5}$ M$_{\odot}$, D = 10 Mpc', fontsize=fontsize)
+# ax_sed.text(500, 2, r'Z=Z$_{\odot}$, M$_{*}$ = 10$^{5}$ M$_{\odot}$, D = 10 Mpc', fontsize=fontsize)
+ax_sed.text(700, 0.8, r'D = 10 Mpc', fontsize=fontsize)
+
+
+ax_sed.plot([], [], color='gray', linestyle='-', linewidth=3, label=r'Age = 1 Myr - 13.8 Gyr, Z=Z$_{\odot}$, M$_{*}$ = 10$^{5}$ M$_{\odot}$,A$_{\rm V}$ = 0')
+ax_sed.plot([], [], color='k', linestyle=':', linewidth=4, label=r'Age = 10 Gyr, Z=Z$_{\odot}$/50, M$_{*}$ = 10$^{6}$ M$_{\odot}$, A$_{\rm V}$ = 0')
+
+# ax_sed.legend(loc='upper left', fontsize=fontsize-6, ncol=3, columnspacing=1, handlelength=1, handletextpad=0.6)
+ax_sed.legend(fontsize=fontsize-6, loc=4)
 
 ax_sed.set_xlim(230, 0.9* 1e3)
 ax_sed.set_ylim(7e-8, 1.5e1)
@@ -467,119 +550,10 @@ ax_sed.set_yscale('log')
 ax_sed.set_xlabel('Wavelength [nm]', labelpad=-4, fontsize=fontsize)
 ax_sed.set_ylabel(r'F$_{\nu}$ [mJy]                       ', fontsize=fontsize)
 ax_sed.tick_params(axis='both', which='both', width=2, direction='in', labelsize=fontsize)
-# ax_sed.legend(loc='upper left', fontsize=fontsize-6, ncol=3, columnspacing=1, handlelength=1, handletextpad=0.6)
 
 
 plt.savefig('plot_output/sed_color_color_ages.png')
 plt.savefig('plot_output/sed_color_color_ages.pdf')
 
 exit(9)
-
-
-ax_explain.plot(model_vi, model_ub, color='red', linewidth=3)
-x_de_red, y_dered = scale_reddening_vector(0.5, 0.43, 0.3)
-ax_explain.annotate('', xy=(1.7 - x_de_red, -1.5 - y_dered), xycoords='data', xytext=(1.7, -1.5), textcoords='data',
-                    arrowprops=dict(arrowstyle='<|-', color='k', lw=3, ls='-'))
-ax_explain.text(1.1, -1.6, 'E(B-V) = 0.5', fontsize=fontsize, rotation=-29)
-
-
-vi_1_my = model_vi[age_mod == 1][0]
-ub_1_my = model_ub[age_mod == 1][0]
-
-vi_4_my = model_vi[age_mod == 4][0]
-ub_4_my = model_ub[age_mod == 4][0]
-
-vi_5_my = model_vi[age_mod == 5][0]
-ub_5_my = model_ub[age_mod == 5][0]
-
-vi_10_my = model_vi[age_mod == 10][0]
-ub_10_my = model_ub[age_mod == 10][0]
-
-vi_100_my = model_vi[age_mod == 102][0]
-ub_100_my = model_ub[age_mod == 102][0]
-
-vi_1000_my = model_vi[age_mod == 1028][0]
-ub_1000_my = model_ub[age_mod == 1028][0]
-
-vi_10000_my = model_vi[age_mod == 10308][0]
-ub_10000_my = model_ub[age_mod == 10308][0]
-
-ax_explain.scatter(vi_1_my, ub_1_my, c='k', zorder=10)
-ax_explain.scatter(vi_4_my, ub_4_my, c='k', zorder=10)
-ax_explain.scatter(vi_5_my, ub_5_my, c='k', zorder=10)
-ax_explain.scatter(vi_10_my, ub_10_my, c='k', zorder=10)
-ax_explain.scatter(vi_100_my, ub_100_my, c='k', zorder=10)
-ax_explain.scatter(vi_1000_my, ub_1000_my, c='k', zorder=10)
-ax_explain.scatter(vi_10000_my, ub_10000_my, c='k', zorder=10)
-
-ax_explain.annotate('1 Myr', xy=(vi_1_my, ub_1_my), xycoords='data', xytext=(vi_1_my + 0.5, ub_1_my), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_explain.annotate('4 Myr', xy=(vi_4_my, ub_4_my), xycoords='data', xytext=(vi_4_my - 0.5, ub_4_my), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_explain.annotate('5 Myr', xy=(vi_5_my, ub_5_my), xycoords='data', xytext=(vi_5_my - 0.5, ub_5_my + 0.5), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_explain.annotate('10 Myr', xy=(vi_10_my, ub_10_my), xycoords='data', xytext=(vi_10_my + 0.5, ub_10_my), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_explain.annotate('100 Myr', xy=(vi_100_my, ub_100_my), xycoords='data', xytext=(vi_100_my - 0.5, ub_100_my + 0.5), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_explain.annotate('1 Gyr', xy=(vi_1000_my, ub_1000_my), xycoords='data', xytext=(vi_1000_my, ub_1000_my - 0.5), fontsize=fontsize,
-                    textcoords='data', arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-ax_explain.annotate('10 Gyr', xy=(vi_10000_my, ub_10000_my), xycoords='data',
-                    xytext=(vi_10000_my - 0.5, ub_10000_my + 0.5), textcoords='data', fontsize=fontsize,
-                    arrowprops=dict(arrowstyle='-|>', color='k', lw=2, ls='-'))
-
-ax_explain.set_ylim(1.25, -2.2)
-ax_explain.set_xlim(-1.0, 1.8)
-# ax_explain.set_xticklabels([])
-ax_explain.tick_params(axis='both', which='both', width=1.5, length=4, right=True, top=True, direction='in', labelsize=fontsize)
-ax_explain.set_ylabel('U (F336W) - B (F438W)', fontsize=fontsize)
-ax_explain.set_xlabel('V (F555W) - I (F814W)', fontsize=fontsize)
-
-
-
-
-plot_age_ebv(age=1, ebv=0.0, color='tab:green', linestyle='-')
-plot_age_ebv(age=1, ebv=1.0, color='tab:green', linestyle='--')
-plot_age_ebv(age=1, ebv=2.0, color='tab:green', linestyle=':')
-
-plot_age_ebv(age=10, ebv=0.0, color='tab:blue', linestyle='-')
-plot_age_ebv(age=10, ebv=1.0, color='tab:blue', linestyle='--')
-plot_age_ebv(age=10, ebv=2.0, color='tab:blue', linestyle=':')
-
-plot_age_ebv(age=100, ebv=0.0, color='tab:red', linestyle='-')
-plot_age_ebv(age=100, ebv=1.0, color='tab:red', linestyle='--')
-plot_age_ebv(age=100, ebv=2.0, color='tab:red', linestyle=':')
-
-plot_age_ebv(age=10000, ebv=0.0, color='tab:orange', linestyle='-')
-plot_age_ebv(age=10000, ebv=1.0, color='tab:orange', linestyle='--')
-plot_age_ebv(age=10000, ebv=2.0, color='tab:orange', linestyle=':')
-
-ax_models.plot([], [], color='k', linewidth=3, linestyle='-', label='E(B-V) = 0')
-ax_models.plot([], [], color='k', linewidth=3, linestyle='--', label='E(B-V) = 1')
-ax_models.plot([], [], color='k', linewidth=3, linestyle=':', label='E(B-V) = 2')
-
-ax_models.plot([], [], color='tab:green', linewidth=3, linestyle='-', label='Age = 1 My')
-ax_models.plot([], [], color='tab:blue', linewidth=3, linestyle='-', label='Age = 10 My')
-ax_models.plot([], [], color='tab:red', linewidth=3, linestyle='-', label='Age = 100 My')
-ax_models.plot([], [], color='tab:orange', linewidth=3, linestyle='-', label='Age = 10 Gy')
-
-
-ax_models.text(500, 100, r'Z=0.02 dex, M$_{*}$ = 10$^{5}$ M$_{\odot}$, D = 10 Mpc', fontsize=fontsize)
-
-ax_models.set_xlim(230, 0.9* 1e3)
-ax_models.set_ylim(7e-8, 1.5e3)
-
-ax_models.set_xscale('log')
-ax_models.set_yscale('log')
-
-ax_models.set_xlabel('Wavelength [nm]', labelpad=-4, fontsize=fontsize)
-ax_models.set_ylabel(r'F$_{\nu}$ [mJy]', fontsize=fontsize)
-ax_models.tick_params(axis='both', which='both', width=2, direction='in', labelsize=fontsize)
-ax_models.legend(loc='upper left', fontsize=fontsize-6, ncol=3, columnspacing=1, handlelength=1, handletextpad=0.6)
-
-# plt.figtext(0.17, 0.035, 'HST WFC3', fontsize=fontsize-4)
-
-
-plt.savefig('plot_output/model_choice.png')
-plt.savefig('plot_output/model_choice.pdf')
 

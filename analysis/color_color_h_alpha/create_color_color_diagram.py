@@ -104,10 +104,10 @@ color_c2 = 'tab:green'
 color_c3 = 'tab:gray'
 
 cmap = matplotlib.cm.get_cmap('viridis')
-norm = matplotlib.colors.LogNorm(vmin=5, vmax=100)
+norm = matplotlib.colors.LogNorm(vmin=5*1e-16, vmax=100*1e-16)
 
 
-def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=1,
+def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=1.e-16,
                    save_pdf=False):
 
     fig_1, ax_1 = plt.subplots(5, 4, sharex=True, sharey=True, figsize=(16, 18))
@@ -129,12 +129,14 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
         color_x_ml_12 = getattr(catalog_access, 'get_hst_color_%s_vega' % x_color)(target=target, classify='ml')
         color_y_ml_12 = getattr(catalog_access, 'get_hst_color_%s_vega' % y_color)(target=target, classify='ml')
 
-        h_alpha_medsub = catalog_access.get_h_alpha_medsub(target=target, classify=classify,
+        h_alpha_medsub = catalog_access.get_h_alpha_inaber_avg(target=target, classify=classify,
                                                                cluster_class=cluster_class)
-        hii_mask = catalog_access.get_h_alpha_threshold_mask(target=target, classify=classify,
-                                                             cluster_class=cluster_class, h_alpha_cut=h_alpha_cut)
 
-        h_alpha_mask = (h_alpha_medsub > h_alpha_cut) & (hii_mask > 0)
+        # hii_mask = catalog_access.get_h_alpha_threshold_mask(target=target, classify=classify,
+        #                                                      cluster_class=cluster_class, h_alpha_cut=h_alpha_cut)
+
+
+        h_alpha_mask = (h_alpha_medsub > h_alpha_cut)# & (hii_mask > 0)
 
         # plot contours, arrow and model
         good_colors_ml_12 = (color_x_ml_12 > -5) & (color_x_ml_12 < 5) & (color_y_ml_12 > -5) & (color_y_ml_12 < 5)
@@ -205,7 +207,7 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
     else:
         classify_str = ''
     fig_1.text(0.055, 0.935, r'%s, H$\alpha$>%.1f 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$' %
-               (classify_str, h_alpha_cut),
+               (classify_str, int(h_alpha_cut * 1e16)),
                ha='left', va='bottom', fontsize=fontsize + 4)
 
     ax_cbar = fig_1.add_axes([0.78, 0.95, 0.2, 0.012])
@@ -214,7 +216,7 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
     ax_cbar.tick_params(axis='both', which='both', width=2, direction='in', top=True, labelbottom=False,
                         labeltop=True, labelsize=fontsize)
 
-    fig_name_str = '%s_%s_panel_1_%s_c%s_h%s' % (x_color, y_color, classify, cluster_class[5:], h_alpha_cut)
+    fig_name_str = '%s_%s_panel_1_%s_c%s_h%s' % (x_color, y_color, classify, cluster_class[5:], int(h_alpha_cut * 1e16))
     fig_1.savefig('plot_output/' + fig_name_str + '.png', bbox_inches='tight', dpi=300)
     if save_pdf:
         fig_1.savefig('plot_output/' + fig_name_str + '.pdf', bbox_inches='tight', dpi=300)
@@ -239,12 +241,12 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
         color_x_ml_12 = getattr(catalog_access, 'get_hst_color_%s_vega' % x_color)(target=target, classify='ml')
         color_y_ml_12 = getattr(catalog_access, 'get_hst_color_%s_vega' % y_color)(target=target, classify='ml')
 
-        h_alpha_medsub = catalog_access.get_h_alpha_medsub(target=target, classify=classify,
+        h_alpha_medsub = catalog_access.get_h_alpha_inaber_avg(target=target, classify=classify,
                                                                cluster_class=cluster_class)
-        hii_mask = catalog_access.get_h_alpha_threshold_mask(target=target, classify=classify,
-                                                             cluster_class=cluster_class, h_alpha_cut=h_alpha_cut)
+        # hii_mask = catalog_access.get_h_alpha_threshold_mask(target=target, classify=classify,
+        #                                                      cluster_class=cluster_class, h_alpha_cut=h_alpha_cut)
 
-        h_alpha_mask = (h_alpha_medsub > h_alpha_cut) & (hii_mask > 0)
+        h_alpha_mask = (h_alpha_medsub > h_alpha_cut)# & (hii_mask > 0)
 
         # plot contours, arrow and model
         good_colors_ml_12 = (color_x_ml_12 > -5) & (color_x_ml_12 < 5) & (color_y_ml_12 > -5) & (color_y_ml_12 < 5)
@@ -313,7 +315,7 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
     else:
         classify_str = ''
     fig_2.text(0.055, 0.935, r'%s, H$\alpha$>%.1f 10$^{-16}$ erg/s/cm$^{2}$/arcsec$^{2}$' %
-               (classify_str, h_alpha_cut),
+               (classify_str, int(h_alpha_cut*1e16)),
                ha='left', va='bottom', fontsize=fontsize + 4)
 
     # ax_cbar = fig_2.add_axes([0.795, 0.14, 0.17, 0.012])
@@ -341,36 +343,36 @@ def plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='
     ax_2[4, 3].axis('off')
 
 
-    fig_name_str = '%s_%s_panel_2_%s_h%s_c%s' % (x_color, y_color, classify, h_alpha_cut,cluster_class[5:])
+    fig_name_str = '%s_%s_panel_2_%s_h%s_c%s' % (x_color, y_color, classify, int(h_alpha_cut*1e16),cluster_class[5:])
     fig_2.savefig('plot_output/' + fig_name_str + '.png', bbox_inches='tight', dpi=300)
     if save_pdf:
         fig_2.savefig('plot_output/' + fig_name_str + '.pdf', bbox_inches='tight', dpi=300)
 
 
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=1, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=2, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=3, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=5, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=10, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=1, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=2, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=3, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=5, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class12', h_alpha_cut=10, save_pdf=True)
 
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=1, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=2, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=3, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=5, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=10, save_pdf=True)
+plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=1.e-16, save_pdf=True)
+plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=2e-16, save_pdf=True)
+plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=3e-16, save_pdf=True)
+plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=5e-16, save_pdf=True)
+plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class12', h_alpha_cut=10e-16, save_pdf=True)
 
-
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=1, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=2, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=3, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=5, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=10, save_pdf=True)
-
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=1, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=2, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=3, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=5, save_pdf=True)
-plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=10, save_pdf=True)
+#
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=1, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=2, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=3, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=5, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='human', cluster_class='class3', h_alpha_cut=10, save_pdf=True)
+#
+# plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=1, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=2, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=3, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=5, save_pdf=True)
+# plot_cc_panels(x_color='vi', y_color='ub', classify='ml', cluster_class='class3', h_alpha_cut=10, save_pdf=True)
 
 
 

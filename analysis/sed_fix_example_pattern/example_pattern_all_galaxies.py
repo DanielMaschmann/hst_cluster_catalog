@@ -20,6 +20,7 @@ import math
 from matplotlib import patheffects, colors
 
 
+
 nuvb_label_dict = {
     1: {'offsets': [0.25, -0.1], 'ha': 'center', 'va': 'bottom', 'label': r'1,2,3 Myr'},
     5: {'offsets': [0.05, 0.1], 'ha': 'right', 'va': 'top', 'label': r'5 Myr'},
@@ -55,24 +56,47 @@ bv_annotation_dict = {
     13750: {'offset': [-0.0, 0.2], 'label': '13.8 Gyr', 'ha': 'left', 'va': 'center'}
 }
 
-def display_models(ax, y_color='nuvb', age_cut_sol50=5e2, age_dots_sol=None, age_dots_sol50=None, age_labels=False,
-                   age_label_color='darkred', age_label_fontsize=30,
-                   color_sol='darkred', linewidth_sol=9, linestyle_sol='-', color_arrow_sol='darkred', arrow_linestyle_sol='--',
-                   color_sol50='cyan', linewidth_sol50=9, linestyle_sol50='-', color_arrow_sol50='darkviolet', arrow_linestyle_sol50='--',
-                   label_sol=None, label_sol50=None):
+def display_models(ax, y_color='nuvb',
+                   age_cut_sol50=5e2,
+                   age_cut_sol5=5e2,
+                   age_dots_sol=None,
+                   age_dots_sol5=None,
+                   age_dots_sol50=None,
+                   age_labels=False,
+                   age_label_color='red',
+                   age_label_fontsize=30,
+                   color_sol='tab:cyan', linewidth_sol=10, linestyle_sol='-', color_arrow_sol='darkcyan', arrow_linestyle_sol='--',
+                   color_sol5='tab:green', linewidth_sol5=10, linestyle_sol5='-', color_arrow_sol5='darkcyan', arrow_linestyle_sol5='--',
+                   color_sol50='m', linewidth_sol50=10, linestyle_sol50='-', color_arrow_sol50='darkviolet', arrow_linestyle_sol50='--',
+                   label_sol=None, label_sol5=None, label_sol50=None):
 
     y_model_sol = globals()['model_%s_sol' % y_color]
+    y_model_sol5 = globals()['model_%s_sol5' % y_color]
     y_model_sol50 = globals()['model_%s_sol50' % y_color]
 
     ax.plot(model_vi_sol, y_model_sol, color=color_sol, linewidth=linewidth_sol, linestyle=linestyle_sol, zorder=10,
             label=label_sol)
+
+    ax.plot(model_vi_sol5[age_mod_sol5 > age_cut_sol5], y_model_sol5[age_mod_sol5 > age_cut_sol5],
+            color=color_sol5, linewidth=linewidth_sol5, linestyle=linestyle_sol5, zorder=10, label=label_sol5)
+    ax.plot(model_vi_sol5[age_mod_sol5 <= age_cut_sol5], y_model_sol5[age_mod_sol5 <= age_cut_sol5],
+            color=color_sol5, linewidth=linewidth_sol5, linestyle='--', zorder=10)
+
     ax.plot(model_vi_sol50[age_mod_sol50 > age_cut_sol50], y_model_sol50[age_mod_sol50 > age_cut_sol50],
             color=color_sol50, linewidth=linewidth_sol50, linestyle=linestyle_sol50, zorder=10, label=label_sol50)
+    ax.plot(model_vi_sol50[age_mod_sol50 <= age_cut_sol50], y_model_sol50[age_mod_sol50 <= age_cut_sol50],
+            color=color_sol50, linewidth=linewidth_sol50, linestyle='--', zorder=10)
+
 
     # if age_dots_sol is None:
     #     age_dots_sol = [1, 5, 10, 100, 500, 1000, 13750]
     # for age in age_dots_sol:
     #     ax.scatter(model_vi_sol[age_mod_sol == age], y_model_sol[age_mod_sol == age], color='b', s=80, zorder=20)
+    #
+    # if age_dots_sol5 is None:
+    #     age_dots_sol5 = [1, 5, 10, 100, 500, 1000, 13750]
+    # for age in age_dots_sol5:
+    #     ax.scatter(model_vi_sol5[age_mod_sol5 == age], y_model_sol5[age_mod_sol5 == age], color='darkgreen', s=80, zorder=20)
     #
     # if age_dots_sol50 is None:
     #     age_dots_sol50 = [500, 1000, 13750]
@@ -135,10 +159,16 @@ model_vi_sol = np.load('../color_color/data_output/model_vi_sol.npy')
 model_ub_sol = np.load('../color_color/data_output/model_ub_sol.npy')
 model_bv_sol = np.load('../color_color/data_output/model_bv_sol.npy')
 
+age_mod_sol5 = np.load('../color_color/data_output/age_mod_sol5.npy')
+model_vi_sol5 = np.load('../color_color/data_output/model_vi_sol5.npy')
+model_ub_sol5 = np.load('../color_color/data_output/model_ub_sol5.npy')
+model_bv_sol5 = np.load('../color_color/data_output/model_bv_sol5.npy')
+
 age_mod_sol50 = np.load('../color_color/data_output/age_mod_sol50.npy')
 model_vi_sol50 = np.load('../color_color/data_output/model_vi_sol50.npy')
 model_ub_sol50 = np.load('../color_color/data_output/model_ub_sol50.npy')
 model_bv_sol50 = np.load('../color_color/data_output/model_bv_sol50.npy')
+
 
 
 # gauss_dict_ubvi_ml_1 = np.load('data_output/gauss_dict_ubvi_ml_1_thresh_10.npy', allow_pickle=True).item()
@@ -176,6 +206,7 @@ catalog_access.load_hst_cc_list(target_list=target_list, classify='ml')
 
 for target in target_list:
 
+
     cluster_id = catalog_access.get_hst_cc_phangs_candidate_id(target=target, classify='ml')
     color_vi_ml_12 = catalog_access.get_hst_color_vi_vega(target=target, classify='ml')
     color_ub_ml_12 = catalog_access.get_hst_color_ub_vega(target=target, classify='ml')
@@ -190,7 +221,6 @@ for target in target_list:
     ogc_fix_ml_12 = catalog_access.get_sed_fix_flag(target=target, classify='ml', fix_type='OGC') == 1
     ra_ml_12, dec_ml_12 = catalog_access.get_hst_cc_coords_world(target=target, classify='ml')
     x_ml_12, y_ml_12 = catalog_access.get_hst_cc_coords_pix(target=target, classify='ml')
-
 
     # get CO data from extra info table
     extra_file_path = '/home/benutzer/data/PHANGS_products/HST_catalogs/Extrainfotables/'
@@ -244,8 +274,8 @@ for target in target_list:
     ax_mass_age_old = figure.add_axes([0.065, 0.03, 0.43, 0.165])
     ax_mass_age_fix = figure.add_axes([0.565, 0.03, 0.43, 0.165])
 
-    ax_ubvi.scatter(color_vi_ml_12, color_ub_ml_12, s=140, color='grey')
-    ax_bvvi.scatter(color_vi_ml_12, color_bv_ml_12, s=140, color='grey')
+    ax_ubvi.scatter(color_vi_ml_12, color_ub_ml_12, s=140, alpha=0.7, color='grey')
+    ax_bvvi.scatter(color_vi_ml_12, color_bv_ml_12, s=140, alpha=0.7, color='grey')
 
     ax_ubvi.scatter(color_vi_ml_12[yro_fix_ml_12], color_ub_ml_12[yro_fix_ml_12], s=200, color='blue')
     ax_ubvi.scatter(color_vi_ml_12[ogc_fix_ml_12], color_ub_ml_12[ogc_fix_ml_12], s=200, color='red')
@@ -254,6 +284,7 @@ for target in target_list:
 
     display_models(ax=ax_ubvi, age_label_fontsize=fontsize+2, y_color='ub',
                    label_sol=r'BC03, Z$_{\odot}$',
+                   label_sol5=r'BC03, Z$_{\odot}/5\,(> 500\,{\rm Myr})$',
                    label_sol50=r'BC03, Z$_{\odot}/50\,(> 500\,{\rm Myr})$')
     display_models(ax=ax_bvvi, age_label_fontsize=fontsize+2, y_color='bv')
     ax_ubvi.legend(frameon=False, loc=3, fontsize=fontsize)
@@ -268,10 +299,10 @@ for target in target_list:
 
     ax_ubvi.plot(vi_hull_gc_ubvi_ml_1_thresh_10, ub_hull_gc_ubvi_ml_1_thresh_10, color='red', linewidth=8)
     ax_bvvi.plot(vi_hull_gc_bvvi_ml_1_thresh_10, bv_hull_gc_bvvi_ml_1_thresh_10, color='red', linewidth=8)
-    ax_bvvi.plot([0.77295, 0.77295], [2.5, 0.6528], color='grey', linewidth=6, linestyle='--')
-    ax_bvvi.plot([1.27252, 2.9], [0.2831, 0.2831], color='grey', linewidth=6, linestyle='--')
+    ax_bvvi.plot([0.77295, 0.77295], [2.5, 0.6528], alpha=0.7, color='grey', linewidth=6, linestyle='--')
+    ax_bvvi.plot([1.27252, 2.9], [0.2831, 0.2831], alpha=0.7, color='grey', linewidth=6, linestyle='--')
 
-    ax_ubvi.text(0.02, 0.95, target.upper(), horizontalalignment='left', verticalalignment='center', fontsize=fontsize+5,
+    ax_ubvi.text(0.02, 0.95, 'NGC4321', horizontalalignment='left', verticalalignment='center', fontsize=fontsize+5,
                   transform=ax_ubvi.transAxes)
 
 
@@ -288,7 +319,7 @@ for target in target_list:
     ax_bvvi.tick_params(axis='both', which='both', width=3, length=13, right=True, top=True, direction='in', labelsize=fontsize)
 
 
-    ax_pixel.scatter(x_ml_12, y_ml_12, s=140, color='grey')
+    ax_pixel.scatter(x_ml_12, y_ml_12, s=140, alpha=0.7, color='grey')
     ax_pixel.scatter(x_ml_12[yro_fix_ml_12], y_ml_12[yro_fix_ml_12], s=200, color='blue')
     ax_pixel.scatter(x_ml_12[ogc_fix_ml_12], y_ml_12[ogc_fix_ml_12], s=200, color='red')
 
@@ -298,7 +329,7 @@ for target in target_list:
     norm_co = colors.LogNorm(vmin=0.5, vmax=580)
     # norm_age = matplotlib.colors.Normalize(vmin=6, vmax=10.5)
 
-    ax_pixel_co.scatter(x_ml_12, y_ml_12, s=140, color='grey')
+    ax_pixel_co.scatter(x_ml_12, y_ml_12, s=140, alpha=0.7, color='grey')
 
     co_intensity[co_intensity == 0] = 0.05
     ax_pixel_co.scatter(x_ml_12, y_ml_12, c=co_intensity, norm=norm_co, cmap=cmap_co, s=200)
@@ -316,15 +347,15 @@ for target in target_list:
 
     ax_pixel.set_yticklabels(ax_pixel.get_yticklabels(), rotation=90, va="center", ha='right')
     ax_pixel_co.set_yticklabels([])
-    # ax_pixel_co.set_xticks([2000, 3000, 4000, 5000, 6000, 7000, 8000])
-    # ax_pixel_co.set_xticklabels(['', '3000', '4000', '5000', '6000', '7000', '8000'])
+    ax_pixel_co.set_xticks([2000, 3000, 4000, 5000, 6000, 7000, 8000])
+    ax_pixel_co.set_xticklabels(['', '3000', '4000', '5000', '6000', '7000', '8000'])
     ax_pixel.tick_params(axis='both', which='both', width=3, length=13, right=True, top=True, direction='in', labelsize=fontsize)
     ax_pixel_co.tick_params(axis='both', which='both', width=3, length=13, right=True, top=True, direction='in', labelsize=fontsize)
 
 
     random_age = np.random.uniform(low=-0.1, high=0.1, size=len(age_ml_12))
-    ax_ebv_age_old.scatter(np.log10(age_ir4_ml_12) + 6 + random_age, ebv_ir4_ml_12, s=140, color='grey')
-    ax_ebv_age_fix.scatter(np.log10(age_ml_12) + 6 + random_age, ebv_ml_12, s=140, color='grey')
+    ax_ebv_age_old.scatter(np.log10(age_ir4_ml_12) + 6 + random_age, ebv_ir4_ml_12, s=140, alpha=0.7, color='grey')
+    ax_ebv_age_fix.scatter(np.log10(age_ml_12) + 6 + random_age, ebv_ml_12, s=140, alpha=0.7, color='grey')
 
     ax_ebv_age_old.scatter(np.log10(age_ir4_ml_12[yro_fix_ml_12]) + 6 + random_age[yro_fix_ml_12], ebv_ir4_ml_12[yro_fix_ml_12], s=200, color='blue')
     ax_ebv_age_old.scatter(np.log10(age_ir4_ml_12[ogc_fix_ml_12]) + 6 + random_age[ogc_fix_ml_12], ebv_ir4_ml_12[ogc_fix_ml_12], s=200, color='red')
@@ -346,8 +377,8 @@ for target in target_list:
     ax_ebv_age_fix.tick_params(axis='both', which='both', width=3, length=13, right=True, top=True, direction='in', labelsize=fontsize)
 
 
-    ax_mass_age_old.scatter(np.log10(age_ir4_ml_12) + 6 + random_age, mass_ir4_ml_12, s=140, color='grey')
-    ax_mass_age_fix.scatter(np.log10(age_ml_12) + 6 + random_age, mass_ml_12, s=140, color='grey')
+    ax_mass_age_old.scatter(np.log10(age_ir4_ml_12) + 6 + random_age, mass_ir4_ml_12, s=140, alpha=0.7, color='grey')
+    ax_mass_age_fix.scatter(np.log10(age_ml_12) + 6 + random_age, mass_ml_12, s=140, alpha=0.7, color='grey')
 
     ax_mass_age_old.scatter(np.log10(age_ir4_ml_12[yro_fix_ml_12]) + 6 + random_age[yro_fix_ml_12], mass_ir4_ml_12[yro_fix_ml_12], s=200, color='blue')
     ax_mass_age_old.scatter(np.log10(age_ir4_ml_12[ogc_fix_ml_12]) + 6 + random_age[ogc_fix_ml_12], mass_ir4_ml_12[ogc_fix_ml_12], s=200, color='red')
