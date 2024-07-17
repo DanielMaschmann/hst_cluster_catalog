@@ -144,6 +144,9 @@ dmypy.json
 *.tar
 *.DS_Store
 *.zip
+*.tar.xz
+*.xs
+*.tar
 *.webm
 
 # exceptions
