@@ -1,0 +1,272 @@
+Hi All – Here are comments. Sorry it got so long. That is just how my brain works. These are more notes to myself than anything. Take or leave whatever you think makes sense.
+ 
+Brad
+ 
+ 
+----------
+Comments on Daniel's paper 1 from Brad - Oct 27, 2023
+ 
+GENERAL COMMENTS
+ 
+There is more and more good stuff and this is likely to be a landmark paper. However the overal orgnaization and clarity still has a ways to go, primarily since it has refocussed itself a few time. For example, I think some of the YCL, MAP, OGCC stuff got moved to Janices letter, and that left some holes in the discussion in this paper I comment on.
+ 
+I think probably the summary is the most straightforward flow, and should be used to reorganize and remove more of the redundancy.
+ 
+The level of detail changes dramatically in different sections (e.g., section 3 seems to bog down in detail while there is no introduction to the Main Sequence of galaxies, which is needed).
+ 
+There is no image of what clusters look like. You could just point to Stephan's and my papers, but I think there needs to be at least one example for each class, and for the multiscale associations for comparison. I think I mentioned a possible figure in my last set of comments?
+ 
+ 
+An item included from below but added here since it is kind of fundamental is: ">>> The three regions work  as essentially surrogates for age, but people will be wondering why not just use age. We need to explain that this will be done in Paper 2, otherwise people might think we are doing things in a stange way."
+ 
+ 
+>>> I think we need to think about the item above a bit more. What are the advantagess / disadvantages of both approaches. If we trust our ages, which I think we now can, why not just use them all the time. The main reason for addressing the CC regions so much in my estimation are:
+ 
+1) They show the underlying  models are pretty good (and that 1/50 metallicity is needed for OGCC).
+ 
+2). They allow people to understand how the colors map into the ages, how the degeneracies work in detail, and how we are fixing that,
+ 
+3) they show that the C1, C2, C3 classifications are doing something real, since result in different but repeatable regions in CC,
+ 
+4) they show that the human and ML are robust (if compare similar magnitudes).
+ 
+5) They provide a more graphical way to see quiscent galaxies (though can be done with ages too - we should make this comparison more quantitative at some point).
+ 
+ 
+FINALLY - I think I have a good idea 3/4 of the down, with a way to discuss galaxies in subcategories, and a graphical way to show what is going on in the Main Sequence.
+ 
+Galaxies (in order of delta-MS) with:
+ 
+Bars                       Central-Rings      SF-end-of-bars   global-arms         bulges   quiescent             floculent                             
+ 
+1365                      1365                      1365                      1365                                                                     
+1672                      1672                      1672                                                                                                     
+4303                                                      4303                                                                                                     
+7496                                                      7496                                                                                                     
+1385-short                                                                                                                                                          1385                     
+1559                                                                                      1559
+.
+.
+.
+ 
+                                                                                                                                                4689
+                                                                                                                                                4571
+                                                                                                                                                1317
+4548-stellar        4548                      4548-faint            4548-short                          4548                      4548     
+                                                                                                                                2775      2775                      2775
+                                                                                                                                4826      4826     
+ 
+PEOPLE WOULD REFER TO THIS A LOT, and use to help coordinate science and write proposals. This also provides kind of a graphical way to see what is controlling the MS, since this is arranged in order of MS residuals.
+ 
+----------------
+MORE DETAILED COMMENTS - This is a bit of a chronological grabbag, with some basic and some very specific (exact wording) comments all mixed together.
+ 
+P. 5 The human inspection process in each galaxy began with the brightest candidates, generally pro- ceeded to fainter objects, AND P. 8 - "as it starts with the brightest clusters;" AND p. 10 - The human classifications were started with the most luminous clusters ...
+ 
+>>> This always catches my eye, since I think it is misleading (it is not like I classified them from brightest to faintest).. I think the way to say it is something like this
+ 
+" The first step in the human inspection process is to determine what V magnitude cutoff would result in about 1000 clusters being classified. The result is that all the bright clusters are classified in both the human and ML catalogs, but in the more populated galaxies, the faint clusters are missing from the human catalog. "
+ 
+ 
+P. 7 - "Most importantly, the ML classification is not depending on source
+crowding, the background brightness or the spatial resolu-
+tion. "
+ 
+>>> "Most importantly, the ML classification is not showing strong dependencies on source
+crowding, the background brightness, or the spatial resolution (i.e., distance). "
+ 
+P. 7 - "The most striking difference found is that the ML sam-
+ples go on average 1 mag deeper in the V-band (Whitmore
+et al. 2021)."
+ 
+>>> "The biggest difference is that the ML samples go on average 1 mag deeper in the V-band (Whitmore
+et al. 2021), but can be roughly 2 deeper in specific cases. For example, in NGC 3621 there are 20,347 candidates. We could have used all of our human classification resources to classify this single galaxy, but we instead decided to select magnitude cutoffs that limited the number of human classified clusters to around 1000 in a given galaxy. This results in 965 clusters in NGC 3621, and  mag limits of -7.8 for the human catalog and -5.4 for the ML catalog.
+ 
+P. 10 - Fig 1 - NGC 628E and NGC 1317 are outleyers -  lowest human classified for  both C1+C2 and C3
+ 
+>>> This is just because these are different. Either explain them, or remove. NGC 628e is the outskirts of a galaxy, while all the rest are the galaxy itself. NGC 1317 is a stripped galaxy right next to NGC 1316, the brightest galaxy in the fornax cluster (like M87).
+ 
+ 
+p. 11 (sec 3.3) - Rather than a caveats alone section, I. would suggest something like THE FOLLOWING. SOME OF THIS MIGHT ACTUALLY BE INCLUDED EARLIER THOUGH ?
+ 
+SECTION 3.3 - MOTIVATIONS, CAVEATS, AND COMPARISON STRATEGIES
+ 
+"An approach employing both human and machine learning classifications was choosen for three basic reasons. 1. The large number of candidate clusters makes it prohibitive to classify them all manually, 2. ) human classificaiton is not objective, 3) a training set is needed to "teach" the machine learning. In principle, it might be hoped that the agreement between human and ML classification would be so robust that the we can rely entirely on the ML catalog once it is built. While the current state of the art is quite promising (especially for C1+C2), we are not yet at a stage where  ML classification can be used blindly - care  must be taken.
+If all galaxies in our sample were at the same distance, had similar levels of crowding, the same levels of background, the same morphologies, the same levels of foreground and background contamination, ... -  training a machine learning classificaiton program would be a much easier business. For all these reasons  and more, caution is necessary when using the current generation of machine learning classificaitons. Machine learning classifications will continue to improve (e.g., see future plans in Whitmore et al, 2021 and Hannon 2023), but the subject is still in its infancy.
+With this in mind, here are some potential comparison strategies to consider.
+- Compare results obtained using both human and machine learning catalog.
+- Compare results using different magnitude limits. While the normal tendency is to maximize the size of your sample, this is where systmatic selection effects are likely to appear. In most cases the clear signal is in the bright part of the distribution, and you will end up chasing noise at the fainter levels. For example, based on Figure 3 a magnirude cutoff of Mv = -8 mag is a natural breaking point that will minimize differences between human and ML catalogs.
+- Compare samples at difference distances.
+- Compare difference parts of galaxies (e.g., exclude the inner very crowded, high background parts of the galaxy).
+- Compare using C1 vs C2 vs C1+C2, as suggested in Whitmore et al. 2021, Thilker 2024, and demonstrated in several figures in the current paper (eg., figures 5, 6, 8)
+If your primary results provide a much stronger signal than the scatter in these different comparisons, you can be sure you have a robust result.
+ Cluster classifcation is still a rather messy business, but it works well enough to produce several striking results. An example is the dramatic difference in the distributions of C1, C2, and C3, and the strong similarity of the results for the human and ML catalogs when the same V-band cut is made (i.e., the top vs.  bottom plots in Figure 6).
+See Wei et al. 2020, Whitmore et al. 2021, Perez et al. 2021, and Hannon et al. 2023 for related suggestions, more detailed advice, and other examples of how well the ML classifications are performing for specific science topics."
+ 
+ 
+ 
+p. 12 - Completeness would help  but it is almost never done right (see section 6 - Whitmore 2021). A better treatment is  part of our future plans. 
+ 
+ 
+p. 11 - "It needs to be said, that such a choice would lead to a sig-
+nificantly smaller sample and would only allow the study of
+the most massive and relatively young star clusters."
+ 
+>>> I don't think this sentence should be included. It contradicts the tone in my suggested section  3.3 above where I argue the main signal (i.e., Figure 6 top and bottom rows)  is in the bright objects, and you are just chasing noise most of the time by trying to go too deep.
+ 
+ 
+p 12 - Section 4 - There are a large number of earlier (e.g., Whitmore 2002 - fig 5, 7, ...) and other phangs papers (e.g., Deger, Turner, ...) that should be mentioned. Perhaps just say "Lee 2023, and other earlier papers referred to in that paper". 
+ 
+ 
+Fig 12  "... is in fact due to dust red-" 
+ 
+>>> is in fact due PRMARILY to dust red-
+ 
+ 
+4.2 - "This higher number is most likely due to the fact that the borders between stellar associations and compact stellar associations are challenging to separate at lower magnitudes." -
+ 
+>>> This is true, but not exactly the focus in this paper. The main reason there are 4 times more c3  is just because they tend to be fainter, and the mag cutoff is 1 - 3 mag deeper in ML. We probably need to add a figure showing mag and mass histograms for C1, C2, C3 (and multiscale associations?) that would go with fig 4?
+ 
+Figure 7 -  An interesting  feature in the upper right panel is the enhancment to the left of the 50 My position. These are probably objects with all blue stars (no red stars), just due to stochasticity. The prediction would then be that they left end will match the location of stars from Padua star models. Could look at these and see if they are all class 2 objets with no red stars (like what I see in my NGC 4449 paper when discussing stochasticity).
+ 
+>>> We should add the Padua stellar tracks on at least one color-color diagram, and point to it (and its relevance)  in Sinans and Kirstens papers. Figure 7 is perhaps the right place?
+ 
+ 
+4.4 - I think maybe some of this got moved to Janices letter paper, for example (YCL = blue), MAP = green, OGCC = red. ? Hence a disconnect between the discussion and the text, so will breeze through this section without much comment. Does seem to include a lot of  redundancy between the "We paramarterize ..." paragraph and the next one, probably for the same reason.
+ 
+ 
+>>> I still dont see a discussion anywhere of the fact that the YCL is so narrow because the models have ages 1, 2, 3 at essentially the tip of the BC03, all in the same place. This simple point needs to be made very clear, both verbally and graphically, probably in several places.
+ 
+ 
+>>> I don't know if the old debate about fast and slow star cluster formation is still around, but this could get mentioned in the context of how tight the YCL is. This shows you have to have fast star formation. This is probalby more for Janices letter paper, and could be a focus for that paper (if the debate is still relevant). I talked  to Johnathan Tan (slow star formation person) at STScI meeting 1 year ago and he, at least, was still pushing slow star formation.
+ 
+ 
+ 
+4.5.1 - You need a lead in paragraph to the Main Sequence material somewhere. 
+ 
+>>> The MS stuff should be a separate section.
+ 
+ 
+Fig 12 - Label some galaxies. This always makes the main points much clearer. In particular, where is N4862  in plot, and N1365 ? This gets people oriented. 
+ 
+ 
+Fig 12 "outside main region" as label in far right panels may be confusing if people have not read the text. They may think it is outside regions of the galaxy, rather than outside the regions in the color-color diagrams.
+ 
+>>> Perhaps "Young Cluster Locus (YCL)", etc. and then "Outside YCL, MAP, OGCC regions".
+ 
+ 
+Fig 10 - Need at least one diagram where show C3 as points in CC also. This use to be in paper? One utility is to show how fainter C3 stochastic points show up in upper right (stochastic space) like in my NGC 4449 paper.
+ 
+ 
+Figure 12 - Need table with numbers that go with Figures 10, 11 and 12.
+ 
+ 
+I think doing ratios might work well to e.g., YCL/MAP,  MAP/OGC, YCL/MAP.
+ 
+ 
+Breaking MAP into two regions might have worked better too. Perhaps try this later. Lumping 30 My with 500 My seems like we will smooth out an important part of the signal.
+ 
+ 
+>>> The three regions work  as essentially surrogates for age, but people will be wondering why not just use age. We need to explain that this will be done in Paper 2, but people might think we are doing things a stange way.
+ 
+ 
+Section 5  -  I assume we are going to come back and quantify things like statement in few places that YCL is twice as correlated with molecular  gas as MAP and OGCC. Or this will be quantified in paper 2? In either case should say more. 
+ 
+ 
+Sec 5 - Second  paragraph seems pretty speculative and hand-wavy. I think we may want to cut it for now.
+ 
+ 
+Sec 5 - My main sugestion in this section is that it should be broken into about 5 or 6 subsections, otherwise it all runs together and makes no impression. Sections might be:
+ 
+5.1 - Galaxies with bars and central star-forming rings
+ 
+5.2 - Galaxies with star-forming complexes at the outer end of bars
+ 
+5.3 - Galaxies with globl star formation density waves
+ 
+5.4 - Galaxies with prominent bulges
+ 
+5.5 - Quiescent galaxies
+ 
+5.6 - Floculent
+ 
+ 
+In a similar sense, there should be a table like below. PEOPLE WOULD REFER TO THIS A LOT, and use to help coordinate science and write proposals. This also provides kind of a graphical way to see what is controlling the MS, since this is arranged in order of MS residuals.
+ 
+Note that my classification below is quick and dirty (looking at the snapshots in paper rather than HLA or the environmental masks). Would want a way to do this more systematically at some point
+ 
+Galaxies with: (in order of delta-MS)
+ 
+Bars                       Central-Rings      SF-end-of-bars   global-arms         bulges   quiescent             floculent                             
+ 
+1365                      1365                      1365                      1365                                                                     
+1672                      1672                      1672                                                                                                     
+4303                                                      4303                                                                                                     
+7496                                                      7496                                                                                                     
+1385-short                                                                                                                                                          1385                     
+1559                                                                                      1559
+.
+.
+.
+ 
+                                                                                                                                                4689
+                                                                                                                                                4571
+                                                                                                                                                1317
+4548-stellar        4548                      4548-faint            4548-short                          4548                      4548     
+                                                                                                                                2775      2775                      2775
+                                                                                                                                4826      4826     
+ 
+ 
+>>> we should flip quiescent and floculent to improve graphical correlations.
+               
+ 
+ 
+Section 5 - 2903 Dobbs coimparison needs graphics or not worth bringing up. 
+ 
+ 
+ 
+6.1 - Discussion of time scales - Add references to Whitmore 2014 and Chevance 2016.
+ 
+6.1 "This means that it is unlikely to detect clusters younger than 5 Myr and certainly younger than 3 Myr due to dust obscuration."
+ 
+>>> This is too strong. Both Jimena and my paper both show that only about 1/3 of the strong PAH sources are completely missing, and Jimena shows that the strong PAH sources are 1 - 2 My.
+ 
+ 
+6.1 "A case study for highly dust embedded clusters has been performed for NGC7496 in Rodr ́ıguez et al. (2023) finding 67 embedded clusters (∼ 104 − 105 M⊙) of which only eight were found in the PHANGS–HST catalog. "
+ 
+>>> You are comparing apples and oranges here. Many of Jimena's sources would not pass the MCI filter (i.e., are likely stars since low CI) and/or are too faint to qualify as candidates. 
+ 
+ 
+Fig 13 - says alma yellow, but I think pink ?
+ 
+ 
+6.2 is too redundant with earlier (4.4, 4.5 )  >>> Not sure why it is here.
+ 
+ 
+>>> reference to destruction discussion should include whitmore 2007.
+ 
+ 
+6.3 is also redundant >> Turner 2022 needs to be mentioned when talking about correlations of cluters and ALMA.
+ 
+ 
+7 - "... robustness of the catalog" , AT LEAST AT THE BRIGHT END.
+ 
+ 
+ 
+Fig 13 - Make clearer that order is from residual from main sew (i.e., Delta-MS = ...
+ 
+ 
+Do we ever note that all the high points in MS are barred galaxies ?
+ 
+-------
+ 
+Some random notes from Brad mainly meant for himself:
+ 
+- More explanation of what might be driving fig 14 ?  (i.e., young clusters clear gas fast directly around it so long distance TO CO, middle cluster migrate out a bit farther to where there is random gas floating around everywhere but they are still in star formation regions rather than interarm or far out in halo, globular cluster migrate further out to where there is often no molecular gas (e.g., out in halo).
+ 
+explanation of MS - more massive galaxies more likely to form bar (true from simulations ?), which organizes the gas better to feed it into high density regions that prmote SF (end of bar, central star forming rings)
+ 
+low mass galaxies are more likely to have their gas stripped (can't hold on to it gravitationally), so SF efficency low
+ 
+--------------------------
+ 

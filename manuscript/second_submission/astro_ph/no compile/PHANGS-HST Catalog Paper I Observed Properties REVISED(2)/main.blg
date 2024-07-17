@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: aasjournal.bst
+Database file #1: bibliography.bib
+Reallocated str_pool (elt_size=1) to 130000 items from 65000.
+Database file #2: bibliography_add.bib
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Warning--empty journal in anand_distances_2020
+You've used 135 entries,
+            3168 wiz_defined-function locations,
+            1600 strings with 72395 characters,
+and the built_in function-call counts, 80105 in all, are:
+= -- 5075
+> -- 9033
+< -- 31
++ -- 2984
+- -- 3177
+* -- 8605
+:= -- 15749
+add.period$ -- 140
+call.type$ -- 135
+change.case$ -- 707
+chr.to.int$ -- 133
+cite$ -- 136
+duplicate$ -- 2254
+empty$ -- 3619
+format.name$ -- 3348
+if$ -- 15204
+int.to.chr$ -- 3
+int.to.str$ -- 0
+missing$ -- 125
+newline$ -- 418
+num.names$ -- 540
+pop$ -- 778
+preamble$ -- 1
+purify$ -- 707
+quote$ -- 0
+skip$ -- 1821
+stack$ -- 0
+substring$ -- 2220
+swap$ -- 4
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 1215
+warning$ -- 1
+while$ -- 462
+width$ -- 0
+write$ -- 1480
+(There was 1 warning)

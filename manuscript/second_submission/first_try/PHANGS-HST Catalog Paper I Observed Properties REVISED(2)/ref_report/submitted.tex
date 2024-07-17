@@ -1,0 +1,1185 @@
+\documentclass[linenumbers]{aastex63}
+
+\usepackage[flushleft]{threeparttable}
+
+\usepackage{changepage}
+\usepackage{appendix}
+\usepackage{natbib}
+% \usepackage{newtxtext,newtxmath}
+% Use vector fonts, so it zooms properly in on-screen viewing software
+% Don't change these lines unless you know what you are doing
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+%%%%% AUTHORS - PLACE YOUR OWN PACKAGES HERE %%%%%
+\usepackage{graphicx}	% Including figure files
+\usepackage{amsmath}	% Advanced maths commands
+\usepackage{amssymb}	% Extra maths symbols
+%\usepackage{lscape}
+% \hypersetup{draft} 
+% \usepackage{caption}
+%%%%% AUTHORS - PLACE YOUR OWN COMMANDS HERE %%%%%
+% Please keep new commands to a minimum, and use \newcommand not \def to avoid
+% overwriting existing commands. Example:
+
+\input{affil}
+\newcommand{\HII}{H\small{II}\normalsize{}}
+\newcommand{\nbcw}{15500}
+\newcommand{\nml}{39000}
+\newcommand{\msun}{M$_{\odot}$}
+\newcommand{\sfr}{M$_{\odot}$ yr$^{-1}$}
+\defcitealias{bruzual_stellar_2003}{BC03}
+
+% use an alias for Bruzual and charlot et al. 2003
+
+\received{November 22}
+\revised{--}
+\accepted{--}
+
+
+\submitjournal{ApJ}
+
+\shorttitle{PHANGS-HST Star Clusters and Compact Associations I: Observed Properties}
+\shortauthors{Maschmann et al.}
+
+
+%\author[D. Maschmann et al.]{Daniel~Maschmann$^{1}$\thanks{E-mail: danielmaschmann@arizona.edu}
+%Janice~C.~Lee,$^{1,2,3}$
+%David~A.~Thilker,$^{2}$
+%Bradley~C.~Whitmore,$^{3}$
+%\newauthor
+%Sinan~Deger,$^{5,6}$
+%Médéric~Boquien,$^{7}$
+%Rupali~Chandar,$^{8}$
+%Daniel~A.~Dale,$^{9}$
+%Aida Wofford,
+%\newauthor
+%Leonardo Ubeda,$^{2}$
+%Kirsten L. Larson,$^{2}$ %STScIESA
+%Adam Leroy, %(OSU)
+%Eva Schinnerer,
+%Erik Rosolowsky,
+%\newauthor
+%Kathryn Kreckel$^{12}$, %(U. Heidelberg)
+%Brent Groves, % (ANU)
+%Ashley Barnes, %(ESO)
+%Rebecca C. Levy,$^{1}$\thanks{NSF Astronomy and Astrophysics Postdoctoral Fellow}
+%\newauthor
+%Kathryn Grasha$^{10,11}$\thanks{ARC DECRA Fellow}, %
+%Eric Emsellem,
+%Francesca Pinna, %(MPIA)
+%Qiushi Tian, %Wesleyan
+%Hwihyun Kim$^{4}$
+%M. Jimena Rodriguez$^{1, 13}$
+
+%\\
+%% List of institutions
+%$^{1}$Steward Observatory, University of Arizona, Tucson, AZ USA\\
+%$^{2}$Center for Astrophysical Sciences, The Johns Hopkins University, Baltimore, MD USA\\
+%$^{3}$Space Telescope Science Institute, Baltimore, MD USA\\
+%$^{4}$Gemini Observatory/NSF’s NOIRLab, 950 N. Cherry Avenue, Tucson, AZ, USA\\
+%$^{5}$Sinan's current institution\\
+%$^{6}$TAPIR, California Institute of Technology, Pasadena, CA USA\\
+%$^{7}$Instituto de Alta Investigación, Universidad de Tarapacá, Casilla 7D, Arica, Chile\\
+%$^{8}$Department of Physics \& Astronomy, University of Toledo, Toledo, OH USA\\
+%$^{9}$Department of Physics \& Astronomy, University of Wyoming, Laramie, WY USA\\
+%$^{10}$Research School of Astronomy and Astrophysics, Australian National University, Canberra, ACT 2611, Australia; kathryn.grasha@anu.edu.au\\
+%$^{11}$ARC Centre of Excellence for All Sky Astrophysics in 3 Dimensions (ASTRO 3D), Australia\\
+%$^{12}$Astronomisches Rechen-Institut, Zentrum f\"ur Astronomie der Universit\"at Heidelberg, M\"onchhofstr.\ 12-14, D-69120 Heidelberg, Germany\\
+%}
+%$^{13}$Instituto de Astrofísica de La Plata, CONICET--UNLP, Paseo del Bosque S/N, B1900FWA La Plata, Argentina
+
+% These dates will be filled out by the publisher
+%\date{Accepted XXX. Received YYY; in original form ZZZ}
+
+% Enter the current year, for the copyright statements etc.
+%\pubyear{2023}
+
+
+\begin{document}
+
+\title{PHANGS-HST catalogs for $\sim$100,000 star clusters and compact associations in 38 galaxies: I. Observed properties}
+
+
+%\label{firstpage}
+%\pagerange{\pageref{firstpage}--\pageref{lastpage}}
+%\maketitle
+\input{authors}
+
+\begin{abstract}
+%word limit is 250
+We present the largest catalog to-date of star clusters and compact associations in nearby galaxies.  We have performed a V-band-selected census of clusters across the 38 spiral galaxies of the PHANGS-HST Treasury Survey, and measured integrated, aperture-corrected NUV-U-B-V-I photometry.
+This work has resulted in uniform catalogs that contain $\sim$20,000 clusters and compact associations which have passed human inspection and morphological classification, and a larger sample of $\sim$100,000 classified by neural network models. 
+Here, we report on the observed properties of these samples, and demonstrate that tremendous insight can be gained from just the observed properties of clusters, even in the absence of their transformation into physical quantities. 
+In particular, we show the utility of the UBVI color-color diagram, and its three principal features: the young cluster locus, the middle-age plume, and the old globular cluster clump.  
+%We examine variations in these features for different color combinations (NUV-B-V-I and B-V-I as well as standard U-B-V-I), for three morphological classes of clusters and compact associations, and as a function of cluster stellar mass.  
+%We find that a galaxy's offset from the MS is correlated with the fraction of its cluster population in the middle-age plume. %This shows how we can use color-color distributions of clusters to infer the evolutionary past of their host galaxy.
+We present an atlas of maps of the 2D spatial distribution of clusters and compact associations in the context of the molecular clouds from PHANGS-ALMA.  We explore new ways of understanding this large dataset in a multi-scale context by bringing together once-separate techniques for the characterization of clusters (color-color diagrams and spatial distributions) and their parent galaxies (galaxy morphology and location relative to the galaxy main sequence). 
+%The maps illustrate how young clusters are more densely grouped relative to older populations, and are twice as frequently associated with molecular gas clouds. %than all other clusters. 
+%We furthermore see how young cluster tend to form in large clumps and subsequently disperse into the galaxy.
+%The maps illustrate the strong correlation between young clusters and molecular clouds along the spiral arms, and the gradual dispersion of clusters across the galaxies.
+A companion paper presents the physical properties: ages, masses, and dust reddenings derived using improved spectral energy distribution (SED) fitting techniques.
+%%%  main results 
+% largest cluster ctalog 
+% robustness of ML catalog 
+% color color is represting the evolutionary state of a galaxy. or its cluster formation history
+% spatial distribution: clumpy star formation sites. young clusters more likely coincied with molecular gas (put percentages). a first idea of timescale how cluster dispers in the galaxy and leave their formation site.
+\end{abstract}
+%\keywords{star formation --- star clusters --- spiral galaxies --- surveys}
+\keywords{galaxies: star formation -- galaxies: star clusters: general -- Galaxy evolution}
+
+%%%%%%%%%%%%%%%%% BODY OF PAPER %%%%%%%%%%%%%%%%%%
+
+\section{Introduction}\label{sec:intro}
+% Daniel's text from the initial version of the paper is here
+% https://www.overleaf.com/5396719392bmmhqggqmyht
+Decades of research on star formation have taught us that systematic observations – spanning key spatial scales and phases of the star formation cycle, over a full set of galactic environments – are essential for development of a robust, unified model of star formation and galaxy evolution \citep[e.g.][]{kennicutt_star_2012}.  To enable such an integrated multi-phase, multi-scale study of star formation, the PHANGS (Physics at High Angular resolution in Nearby GalaxieS) collaboration \citep{schinnerer_physics_2019} has conducted large surveys with ALMA \citep{leroy_phangs-alma_2021}, VLT/MUSE \citep{emsellem_phangs-muse_2022}, HST \citep{lee_phangs-hst_2022}, and JWST \citep{lee_phangs-jwst_2023}, and is studying the relationships between molecular clouds, HII regions, dust, and star clusters across the large diversity of environments found in nearby galaxies. Beyond these four principal surveys, a wealth of additional supporting data is available and continues to be obtained by PHANGS including Astrosat far-/near-ultraviolet imaging (PI: E. Rosolowsky; Hassani 2023, submitted), HST H$\alpha$ narrowband imaging (PIs: R. Chandar, D. Thilker, F. Belfiore), ground-based wide-field H$\alpha$ narrow-band imaging (PIs: G. Blanc, I.-T. Ho), and H I 21 cm observations with the VLA and MeerKAT.  To support science analysis with this wealth of data, %by the PHANGS team as well as by the broader community, 
+PHANGS has been producing and publicly releasing
+an extensive set of ``higher level science products.'' \footnote{\url{https://sites.google.com/view/phangs/home/data}}
+
+In the context of this comprehensive effort, NUV-U-B-V-I imaging for 38 spiral galaxies was obtained from 2019-21 through a HST Cycle 26 Treasury program.  The galaxies were drawn from the PHANGS-ALMA parent sample and thus have $^{12}$CO(J = 2$\rightarrow$1) observations at $\sim1^{\prime\prime}$ resolution.  Half of the sample (19 galaxies) are covered by all four principal surveys of PHANGS; i.e., in addition to the HST and ALMA observations, integral field spectroscopic mapping from 4800–9300\AA\, has been performed with VLT-MUSE, and imaging in eight bands from 2-21 $\mu$m is being obtained through a JWST Cycle 1 Treasury program.  Details on the design of the PHANGS-ALMA, PHANGS-HST, PHANGS-MUSE, and PHANGS-JWST foundational surveys are provided in the papers cited above.  New large HST and JWST surveys to expand the number of galaxies with HST-JWST-ALMA data to 74 have been recently approved in 2023 (JWST Cycle 2, GO-3707, PI A. Leroy; HST Cycle 31, GO-17502, PI D. Thilker).
+
+As discussed in \cite{lee_phangs-hst_2022}, one of the main goals of the PHANGS-HST Treasury Survey is to conduct a uniform census of star clusters and stellar associations in 38 nearby spiral galaxies (${\rm d \lesssim 20 Mpc}$) to probe cluster formation and evolution, and to utilize these effectively single-age stellar populations as `clocks' to time star formation and ISM processes.  Here, we present the result of this census: catalogs providing the photometric properties of over $\sim$100,000 star clusters and compact associations, the largest such sample to-date.  These catalogs are the culmination of technical efforts as summarized in \cite{lee_phangs-hst_2022} to establish improved techniques for cluster candidate detection and selection \citep{whitmore_star_2021, thilker_phangs-hst_2022}, photometry \citep{deger_bright_2022}, and automated morphological classification using machine learning techniques \citep{wei_deep_2020, whitmore_star_2021, hannon_star_2023}.  
+
+A companion paper \citep[][hereafter Paper II]{thilker23sed} presents the physical properties of the sample (specifically, age, mass, and reddening) derived using improved strategies for spectral energy distribution (SED) fitting, which were initially explored by \citet{whitmore_improving_2023}.  The improvements seek to mitigate the age-reddening-metallicity degeneracy by building upon conventional SED fitting techniques for star clusters which were adopted at the outset of the PHANGS-HST survey \citep{turner_phangs-hst_2021}.  All of the catalogs described here can be accessed through the Mikulski Archive for Space Telescopes (MAST).\footnote{\url{https://archive.stsci.edu/hlsp/phangs-cat}}
+
+The PHANGS-HST star cluster catalogs enable a wide range of science investigations. Many of the studies by the PHANGS team which have utilized these catalogs so far have focused on star formation feedback and timescales, but investigations of the old stellar populations (globular clusters) has also begun \citep{floyd}. We briefly describe some of these studies below.
+
+\citet{barnes_linking_2022} examine the clusters and associations within isolated, compact H II regions in NGC1672, identified through HST narrowband imaging.  They find higher pressures (as measured from PHANGS-MUSE) within more compact H II regions, though with significant scatter which is presumably introduced by variation in the stellar population properties (e.g. mass, age, metallicity). 
+
+By cross matching star clusters and multi-scale stellar associations with H\,II regions from PHANGS-MUSE across the full set of 19 galaxies with PHANGS-HST$+$MUSE data, \citet{scheuermann_stellar_2023} study how H II regions evolve over time.   They find that younger nebulae are more attenuated by dust and closer to giant molecular clouds, as expected by feedback-regulated models of star formation.  They also report strong correlations with local metallicity variations and age, suggesting that star formation preferentially occurs in locations of locally enhanced metallicity. 
+
+Across this same set of 19 galaxies, \citet{egorov_quantifying_2023} study the star clusters and associations within nebular regions of locally elevated velocity dispersion, including expanding superbubbles, identified with PHANGS-MUSE.  They find that the kinetic energy of the ionised gas is correlated with the inferred mechanical energy input from supernovae and stellar winds %from clusters and associations, 
+which can be interpreted as a coupling efficiency of $10-20\,\%$. They also find that young clusters and associations are preferentially located along the rims of superbubbles, which provides possible evidence for star formation propagation or triggering. 
+
+\citet{watkins_quantifying_2023} perform a similar analysis, but starting with molecular gas superbubbles in PHANGS-ALMA.  They measure radii and expansion velocities, and dynamically derive bubble ages and the mechanical power from young stars required to drive the bubbles. They find that the masses and ages of the PHANGS-HST clusters and associations are consistent with the required power, if a supernova (SN) model that injects energy with a coupling efficiency of $\sim10\,\%$ is assumed.  
+
+Joint HST-JWST analysis with the IR imaging from the PHANGS-JWST Cycle 1 Treasury has also begun, and first results have been published in a collection of papers for a PHANGS-JWST ApJL focus issue.\footnote{\url{https://iopscience.iop.org/collections/2041-8205_PHANGS-JWST-First-Results}}  
+
+One of the most striking features of the PHANGS-JWST MIRI imaging is the ubiquitous bubble structure \citep{lee_phangs-jwst_2023}. \citet{watkins_phangs-jwst_2023} and \citet{barnes_phangs-jwst_2023} demonstrate star formation feedback are likely to be the origin of these bubbles, based on analysis of the PHANGS-HST star cluster and associations catalogs for NGC~628.  \citet{thilker_phangs-jwst_2023} study the dust filament network in NGC~628 and its relation to sites of star formation, finding that $>$60\% optically-selected young clusters ($<$5 Myr) occurs within $\sim$25~pc dust filaments. \citet{rodriguez_phangs-jwst_2023} and \citet{whitmore_phangs-jwst_2023} present first results on dust embedded star clusters, which trace the youngest sites of star formation, with the PHANGS-HST clusters and associations serving as a essential reference for computing constraints on the timescales for dust clearing and the embedded phase.
+
+
+In this paper, we describe the PHANGS-HST catalogs of star clusters and compact associations with the aim of supporting further science with this extensive dataset.  The characterization of the observed properties presented in this paper provide a starting point for the utilization of the full census of star clusters and compact associations across the PHANGS-HST 38 galaxy sample to realize the aim of PHANGS to understand the interplay of the small-scale physics of gas and star formation with galactic structure and galaxy evolution.
+
+
+The remainder of this paper is organized as follows. In Section~\ref{sect:catalog_content}, we provide an overview of the PHANGS-HST galaxy sample, HST observations, star cluster and compact association catalog production pipeline, and describe the publicly-released catalog structure and contents.  In Section~\ref{sect:catalog_properties}, we examine the size and photometric depths of the samples detected in each galaxy.  In Section~\ref{sect:color_color}, we continue to develop the ideas introduced in \cite{lee23ubvi} on using UV-optical color-color diagrams to gain insight into star cluster formation and evolution.  We explore new ways of understanding the data in a multi-scale context by studying the features of the UBVI star cluster color-color diagrams for each galaxy in relation to its position relative to the star-forming galaxy main sequence in star formation rate (SFR) and stellar mass (M$_*$).  This composite diagram provides a framework for understanding cluster formation, evolution, and destruction in the context of the global properties of their host galaxies.  In Section~\ref{sect:spatialdist}, we present an atlas of maps illustrating the 2D spatial distributions of the clusters and compact associations relative to giant molecular clouds from the PHANGS-ALMA CO(2-1) catalogs.  We bring together characteristics of the cluster spatial distributions and color-color diagrams, with galaxy morphology and position along the main sequence to gain qualitative insight into the global drivers of cluster formation and evolution.  In Section~\ref{sect:discussion}, we discuss issues related to sample completeness to outline future work and to provide advice to users of the catalog.  Key conclusions are summarized in Section~\ref{sect:summary}.
+
+Vega magnitudes are used in this paper to facilitate comparison to prior work.
+
+\section{Star Cluster Catalogs}\label{sect:catalog_content}
+As mentioned in the introduction, the PHANGS-HST catalogs of star clusters and compact associations are the end-product of an extensive processing pipeline.  In this section, we provide a brief overview of the HST observations and this pipeline.  The reader is referred to the corresponding technical papers, as cited in the Introduction and below, for a full discussion.  Documentation of the PHANGS-HST imaging filters and exposure times for individual galaxies are provided in the next section as these are needed to understand the depth of the cluster catalogs.  
+
+% just introductory and summarizing word for this section
+%PHANGS-HST provides an unprecedented dataset 
+%jcl: note that LEGUS has perfomed the same imaging for 50 galaxies (although half were dwarf galaxies)
+
+
+\subsection{Galaxy sample and observations}
+% the observation data
+Galaxies for the PHANGS-ALMA parent sample were selected to be nearby (D$\lesssim$20~Mpc), massive ($M_{*} \gtrsim 10^{9.75}$~\msun), on the star-forming galaxy main sequence, and relatively face-on \citep{leroy_phangs-alma_2021}.  A subset of these were chosen for observation with HST (GO-15654) as discussed in \citet{lee_phangs-hst_2022}. The resulting PHANGS-HST sample is comprised of 38 spiral galaxies with morphological types of Sa through Sd, specific SFR (sSFR) from ${\sim}10^{-10.5} {-} 10^{-9}$~yr$^{-1}$, SFR from ${\sim}0.2{-}17$ \sfr, and molecular gas surface density ($\Sigma_{\mbox{mol}}$) from ${\sim}10^{0.5}{-}10^{2.7}$ \msun~pc$^{-2}$ \citep[][Table 1 \& Figure 1]{lee_phangs-hst_2022}.
+
+PHANGS-HST imaging targeted the star-forming galaxy disk, and includes a combination of new and archival observations in five filters: F275W (NUV), F336W (U), F438W or F435W (B), F555W (V), and F814W (I).\footnote{Parallel imaging with ACS targeting the galaxy halo was also performed to constrain distances by measuring the brightness of the tip of the red giant branch (TRGB) (see \citealt{anand_distances_2021} and Section 3.2 of \citealt{lee_phangs-hst_2022})} We obtained new imaging of 34 galaxies with 43 WFC3 pointings using an allocation of 122 orbits.  Archival NUV-U-B-V-I observations from the LEGUS survey \citep{calzetti_legacy_2015}\footnote{LEGUS data products: \url{https://archive.stsci.edu/prepds/legus/dataproducts-public.html}} were used for seven galaxies (NGC~0628, NGC~1433, NGC~1512, NGC~1566, NGC~3351, NGC~3627, NGC~6744; for the latter three, we obtained additional imaging to increase the HST footprint and match PHANGS-ALMA coverage of the disk).  Suitable archival imaging in select bands was available for 16 other galaxies.
+%The sample consists of 31 fields (in 26 galaxies) of new observations with the WFC3 UVIS camera and 12 pointings of suitable WFC3 or ACS data, taken by prior programs and missing filters were added by new observations.
+
+Table\,\ref{tab:exp_time} summarizes all HST observations, specifies the cameras used and the exposure times. The new data obtained for PHANGS-HST and the archival data were processed together using the same data reduction pipeline \citep[as summarized by][]{lee_phangs-hst_2022} to ensure homogeneity in the data products to the extent possible.  All of the PHANGS-HST science-ready drizzled images and co-aligned single exposures are available for download at MAST\footnote{\url{https://archive.stsci.edu/hlsp/phangs-hst}}. 
+%
+\input{expt_time_table}
+%
+
+\subsection{Candidate star cluster selection and photometry}\label{ssect:select_photo}
+
+%dolphot and DAO star finder
+Initial source detection \citep{thilker_phangs-hst_2022} on the HST imaging was performed with a combination of the PSF-fitting photometry software \textsc{DOLPHOT}\footnote{\url{http://americano.dolphinsim.com/dolphot/}} \citep[v2.0,][]{dolphin_dolphot_2016} and \textsc{photutils/DAOStarFinder}\footnote{\url{https:https://photutils.readthedocs.io/en/stable/api/photutils.detection.DAOStarFinder.html}}\citep[][]{bradley_astropyphotutils_2023}, a python implementation of \textsc{DAOPHOT}\footnote{\url{https://www.star.bris.ac.uk/~mbt/daophot/}}\citep[v1.3-2][]{stetson_daophot_1987}. A combined ``all-source" V-band detection catalog was created as described in \citet{thilker_phangs-hst_2022}. The number of sources detected in each galaxy ranges from $\sim$200K to 1.2M, with a median of 300K.
+%202,960 to 1,222,811, with a median of 318,573. 
+
+%number counts from all-source catalog:
+%>>> for galaxy in dirs:
+%...     %t=Table.read(galaxy+'/augcat_candidates_photprocessed/'+galaxy+'_augmented_dolphot_candidates_photprocessed_v1p2.fits')
+%...     print(galaxy,len(t))
+%...     lvals.append(len(t))
+%... 
+%ngc1087 225678
+%ngc1097 545872
+%ngc1300 544737
+%ngc1317 209153
+%ngc1365 259591
+%ngc1385 238883
+%ngc1433 266386
+%ngc1512 704175
+%ngc1559 354560
+%ngc1566 377133
+%ngc1672 762170
+%ngc1792 267089
+%ngc2775 202960
+%ngc2835 291645
+%ngc2903 536080
+%ngc3351 452247
+%ngc3621 1222811
+%ngc3627 639541
+%ngc4254 545016
+%ngc4298 264185
+%ngc4303 320175
+%ngc4321 378213
+%ngc4535 280859
+%ngc4536 517058
+%ngc4548 239523
+%ngc4569 229548
+%ngc4571 244416
+%ngc4654 261379
+%ngc4689 236752
+%ngc4826 600349
+%ngc5068 710026
+%ngc5248 241076
+%ngc628c 646263
+%ngc628e 761914
+%ngc6744 887582
+%ngc7496 207087
+%ic1954 238196
+%ic5332 316971
+
+
+
+% aperture photometry
+Star clusters have effective radii between 0.5 and 10~pc \citep{portegies_zwart_young_2010,ryon_effective_2017,krumholz_star_2019,brown_radii_2021}. At the distance of our targets, they appear single-peaked and are marginally-resolved in HST WFC3 images, which have a pixel scale of 0\farcs04.  To distinguish point sources from cluster candidates, multiple concentration indices \citep[MCI, ][]{thilker_phangs-hst_2022} are computed using V-band photometry measured in series of circular apertures with radii from 1-5 pixels.  Across all 38 galaxies, a total of $\sim$190K cluster candidates are found.  The candidates are inspected and morphologically classified as described in the next section.  
+
+Fluxes are computed using photometry in circular apertures with radii of 4 pixels \citep[$\sim$ 0\farcs16; which subtends 3.4 to 18 pc for galaxy distances 5 to 23 Mpc spanned by the PHANGS-HST sample, see][Table 1]{lee_phangs-hst_2022}. Sky background at the position of each object is estimated in a sky annulus between 7--8 pixels radius. To compute total fluxes, we apply a correction for the light outside the aperture, carefully derived for each filter and for each galaxy as described in \cite{deger_bright_2022}.  The details of the aperture correction can introduce important differences in the colors and derived physical properties of the sources as discussed by \cite{deger_bright_2022}.
+
+
+%Even though star clusters can appear point like, a flux measurement using PSF photometry would not necessarily measure all light emitted by the sources. In addition, some clusters are asymmetric or have multiple peaks, which makes it even more challenging to determine the flux by source fitting. As described in detail in \citet{deger_bright_2022}, the flux of all sources is measured with established star cluster aperture corrections. For each individual observation field and band, an average aperture correction and a mean uncertainty is estimated from carefully selected bright clusters. This is the basis of the photometry measurement for all star clusters performed in the NUV-U-B-V-I bands.
+
+% shapes with concentration index and the selection procedure 
+%The average number of detected sources in each HST observed galaxies is on average $\sim 500,~000$ comprising not only star cluster but also bright stars. In order to distinguish between these two types of objects a multi concentration index was introduced in \citet{thilker_phangs-hst_2022}. With a semi-empirical approach including synthetic cluster populations and existing star cluster catalogs, a proper separation between stellar objects and star clusters was derived with a high purity of up to 70~\% for moderately luminous sources. 
+%This leads to a total Number of 188,760 cluster candidates.
+
+\subsection{Human and Machine Learning (ML) morphological classification}\label{ssec:classification}
+Cluster candidates are inspected to eliminate spurious sources, and to place them into three morphological classes associated
+with the likelihood of gravitational boundedness for clusters older than 10 Myr\citep{whitmore_antennae_2010, gieles_distinction_2011, bastian_stellar_2012, fall_similarities_2012, chandar_star-cluster_2014, grasha_spatial_2015, adamo_legacy_2017, cook_star_2019, wei_deep_2020}.  We use the following commonly adopted classes:
+\begin{itemize}
+    \item Class~1 (C1): star cluster -- single peak, circularly symmetric, with radial profile more extended relative to point source
+    \item Class~2 (C2): star cluster -- similar to Class~1, but elongated or asymmetric 
+    \item Class~3 (C3): compact stellar association -- asymmetric, multiple peaks %sometimes superimposed on diffuse extended source
+    \item Class~4 (C4): not a star cluster or compact stellar association (e.g. image artifacts, background galaxies, individual stars or pairs of stars) 
+\end{itemize}
+The reader is referred to \citet{whitmore_star_2021} for a full description of the PHANGS-HST classification process, and discussion of differences from the LEGUS cluster classification of \citet{adamo_legacy_2017}.  Figures with examples of each of these morphological classes can be found in \citet{wei_deep_2020} Figure 1, \citet{whitmore_star_2021} Figures 1-4, \citet{lee_phangs-hst_2022} Figure 9, \citet{deger_bright_2022} Figures 11-12, \citet{hannon_star_2023} Figure 1.
+
+Historically, a bottleneck in the production of extragalactic cluster catalogs has been the visual inspection of candidates.
+To address this bottleneck, the classification of the $\sim190,000$ PHANGS-HST cluster candidates was automated using convolutional neural networks (CNNs).  CNNs were trained using ``deep transfer" machine learning (ML) techniques and samples of human classified candidates, as discussed in detail in \cite{wei_deep_2020, whitmore_star_2021, hannon_star_2023}. \footnote{\textsc{VGG19-BN} \citep{simonyan_very_2015} and \textsc{ResNet18} \citep{he_deep_2015} network architectures were both explored, although we adopt \textsc{VGG19-BN} for the present work.}
+
+
+To produce the training sets, human classification was performed for the brightest $\sim$1000 candidates 
+%sample of candidates 
+in each galaxy by co-author BCW. %In general, process is to determine what apparent V magnitude cutoff per galaxy would result in about 1000 cluster candidates being considered. Following this, all candidates brighter than such magnitude cuts were examined (with this set including all candidates in some galaxies without many objects). 
+As a result, the brightest clusters are all classified in both the human and ML catalogs, but in the more highly populated galaxies, fainter clusters are missing from the human catalog.  The ML samples are $\sim$ 1 mag (median) deeper in the V-band \citep[and Section~\ref{ssect:v_mag}]{whitmore_star_2021}, with a range of 16-26\,mag. %For example, in NGC 3621 there are 20,347 candidates. We could have used all of our human classification resources to classify this single galaxy, but we instead decided to adopt the more distributed strategy described above ensuring that the cluster populations were inspected in all targets. 
+This is an aspect of the human classified cluster samples that users of the PHANGS-HST catalogs should keep in mind, and leads to a number of key characteristics of the catalogs as discussed in Sec.~\ref{sect:catalog_properties}.   
+
+As reported in \citet{hannon_star_2023}, the PHANGS-HST ML and human classifications agreement rates are 74, 60 and 71\,\% for class 1,2 and 3, respectively.  
+The model accuracy slightly decreases as the galaxy distance increases ($\lesssim$ 10\% from 10 to 23 Mpc), and as the clusters become fainter ($\sim$10\% for $m_v>$ 23.5 mag).
+Overall, the performance of our neural network models is comparable to the consistency between human classifiers \citep{wei_deep_2020, whitmore_star_2021}, as well as the \textsc{STARCNET} models of \citet{perez_starcnet_2021}, developed for classification of star clusters in the LEGUS survey \citep{calzetti_legacy_2015, linden_star_2022}; i.e., 78, 55 and 45\,\%.   \citet{whitmore_star_2021} demonstrated that analysis of mass and age functions are robust to the uncertainties in machine learning classifications, and also provided essential advice on science analysis of catalogs based on machine learning classifications.  Differences in the catalogs based on human and machine learning classifications are explored further in this paper.
+
+%These results are not significantly dependent on the galaxy distance,  
+%or galaxy inclination 
+%and are comparable to \citet{linden_star_2022} who classified star cluster in M101 using \textsc{STARCNET} \citep{perez_starcnet_2021} and found agreement in 70\,\%-75\,\% between ML classification and human inspection.
+
+%60-80\,\% of the time, and have a recall of 74, 60 and 71\,\% and precision of 74, 54 and 82\,\% for class 1,2 and 3, respectively. These results are, furthermore, not significantly dependent on the distance or galaxy inclination and are comparable to \citet{linden_star_2022} who classified star cluster in M101 using \textsc{STARCNET} \citep{perez_starcnet_2021} and found agreement in 70\,\%-75\,\% between ML classification and human inspection. Differences between outcome of human and ML cluster candidate classification have been previously studied in \citet{whitmore_star_2021, hannon_star_2023} for a limited number of PHANGS-HST galaxies during the process of validating the ML classification technique. 
+%Most importantly, \citet{whitmore_star_2021} found the ML classification is not showing strong dependencies on source crowding, the background brightness, or the spatial resolution (i.e., distance).  
+%A more detailed analysis found a slight decrease in the model accuracy as a function of galaxy distance and a slightly higher accuracy for galaxies with greater star formation rates \citep{hannon_star_2023}.
+%They, furthermore, find for class 1 clusters a lower recovery rate for young and fainter clusters and a frequent mis-classification between class 1 and 2. Class 3 compact associations on the other hand show the highest accuracy for the youngest objects. However, about $23\,\%$ of class 4 objects are falsely classified as class 3. In the following sections, we document these differences further in order to permit proper interpretation of results based on the catalogs.
+
+\subsection{Catalog structure and contents}\label{ssect:cat_content}
+The observed properties of our census of star clusters and compact associations throughout the PHANGS-HST 38 galaxy sample are provided as part of PHANGS-HST Data Release~4 / Catalog Release~2 (DR4/CR2) hosted at MAST
+\footnote{\url{https://archive.stsci.edu/hlsp/phangs-cat}}.  Four separate catalogs are provided for each galaxy: 
+\begin{itemize}
+    \item human-classified clusters (Human C1+C2)
+    \item ML-classified clusters (ML C1+C2)
+    \item human-classified compact associations (Human C3)
+    \item ML-classified compact associations (ML C3)
+\end{itemize}
+The corresponding physical quantities (ages, masses, reddenings) derived through SED fitting are provided in companion catalogs, as described in Paper II.  This catalog structure is motivated by the expectation that the physical quantities may continue to evolve, in particular with the addition of JWST photometry, while the observed properties (from HST) will remain fixed with this release. Thus, overall, 38 (galaxies) $\times$ 4 (morphological classification subsets) $ \times$2 (observed or physical properties) catalogs are available.
+
+
+The C1+C2 clusters are provided separately from the C3 compact associations for two main reasons.  First, in studies of star cluster evolution, particularly those which seek to constrain cluster disruption, analysis is often performed with only C1+C2 single-peaked, centrally concentrated objects, which are thought to have a higher probability of being gravitationally bound, and exclude C3 multi-peaked objects \citep{bastian_stellar_2012, chandar_star-cluster_2014}.  Terminology was introduced by \citet{krumholz_star_2019} to facilitate discussion of the differences in the approaches taken by various groups: C1+C2 samples are referred to as ``exclusive" samples, while C1+C2+C3 are referred to as ``inclusive samples."  This delineation is explicitly reflected in our catalog structure. Second, the selection methods implemented in the pipeline described above are optimized for the detection of single-peaked clusters, and yield a highly incomplete inventory for multi-peaked stellar associations.  
+
+Science applications requiring a more complete sampling of the young stellar population should not rely on the C1+C2+C3 catalogs alone.  We have developed a second PHANGS-HST pipeline focused on the identification of multi-scale stellar associations to address this issue, by deploying a watershed algorithm to segment point source catalogs into hierarchically nested structures spanning physical scales from 8~pc to 64~pc \citep{larson_multi-scale_2022}.  We find that the majority of C3 objects have a position located within these watershed-identified multi-scale stellar associations. Preliminary products from both the PHANGS-HST multi-scale stellar association pipeline and the cluster pipeline have been released for five galaxies as part of PHANGS-HST DR3/CR1.  The current DR4/CR2 for the full 38 galaxy sample supersedes the preliminary DR3/CR1 cluster catalogs.  A complete set of multi-scale stellar association data products for the full 38 PHANGS-HST galaxy sample will be published at a later date. %at which time a unified catalog eliminating redundant clusters, compact associations or multi-scale stellar associations will be provided as well.
+
+The observed quantities provided in the DR4/CR2 catalogs include:
+\begin{itemize}
+\item persistent IDs to facilitate cross-identification between catalogs, and positional information (object IDs, RA, DEC, image x, y)
+\item morphological classification (human classification, if available; machine learning classification for all sources)
+\item NUV-U-B-V-I aperture photometry (corrected for aperture losses and foreground reddening; provided in Vega magnitudes and mJy; flags for non-detection and lack of HST coverage)
+\item standard concentration indices measured in the V-band
+\end{itemize}
+
+A listing of these quantities is provided in Table~\ref{tab:cat_content}, while a full description can be found in the documentation accompanying the DR4/CR2 release at MAST.
+%
+\input{catalog_content}
+%
+
+
+%\section{Star Cluster Catatlog Properties}\label{sect:catalog_properties}
+
+\section{Size and Depth of Cluster Samples}\label{sect:catalog_properties}
+
+%
+\input{table_number}
+%
+In this section, we begin to characterize the star cluster and compact association populations within PHANGS-HST galaxies by examining the sizes and depths of the samples.  Table~\ref{tab:numbers} summarizes the numbers of cluster candidates, number that have human classifications, and number in each morphological class (based on human inspection and ML classification) for each galaxy.
+
+\subsection{How many star clusters and compact associations are found?}
+%
+\begin{figure}
+\includegraphics[width=0.45\textwidth]{n_cluster_ssfr.pdf}
+ \caption{The number of star clusters (top panel) and compact associations (bottom panel) in each of the 38 PHANGS-HST galaxies, shown as a function of the specific star formation rate (sSFR), estimated inside the HST footprint. Sources which have been inspected and classified by a human (co-author BCW) are shown in dark green, while those which have been classified using a neural network model \citep{hannon_star_2023} are shown in light green.}
+ \label{fig:n_cluster_ssfr}
+\end{figure}
+% 
+
+A variety of factors determine the number of star clusters and compact associations reported in the PHANGS-HST catalogs.
+In addition to observational completeness (e.g., due to the depth of the imaging for individual targets, spatial resolution achieved, and selection function imprinted by our catalog production pipeline), the global physical properties of galaxies, in particular the star formation history, influence the properties of the cluster population. 
+%(e.g., the larger the current SFR of a galaxy, the more very young clusters are produced; the larger the total stellar mass of the galaxy, the more likely it is to have a large number of globular clusters; the balance of local environmental conditions in a galaxy will likely influence the relative numbers of C1, C2, and C3 objects).  
+%Of course, evolutionary processes on galaxy- and cluster- temporospatial scales also play a role: 
+%the SFR of a given galaxy is not constant over cosmic time \citep{madau_cosmic_2014}, and clusters dissolve over time if they do not have sufficient gravitational binding \citep[i.e., cluster destruction; e.g., see][]{whitmore_star_2007,portegies_zwart_young_2010,chandar_luminosity_2010,chandar_age_2016,chandar_star-cluster_2014, adamo_legacy_2017, krumholz_star_2019}. In addition, clusters become fainter with age and older populations may not be detected \citep[e.g., cluster-mass age diagrams in][]{cook_star_2019, turner_phangs-hst_2021, deger_bright_2022}. %Such factors must be considered when relating the cluster population to the host galaxy and when considering the completeness and biases of the catalogs. 
+
+
+With these factors in mind, and to help visualize the variation in the sizes of the cluster samples across the PHANGS-HST survey, in Figure~\ref{fig:n_cluster_ssfr} we show the number of catalog sources as a function of the specific star formation rate (${\rm sSFR = SFR / M_{*}}$) evaluated inside the HST footprint. \footnote{DSS images with overlays of the HST footprint for each galaxy can be found at \url{https://archive.stsci.edu/hlsp/phangs-hst}.}  
+The SFRs are based on a FUV$+$IR prescription, while the galaxy stellar masses are computed based on an IR flux and mass-to-light ratio \citep{leroy_z_2019,leroy_phangs-alma_2021}\footnote{Also see notes and references provided in Table 1 of \citet{lee_phangs-hst_2022}}.  We present clusters of class 1 and 2 together in the upper panel and compact associations (class 3) in the bottom panel.  
+% We plot the human and the ML classified samples separately to enable comparison between the two samples.
+The human and the ML classified samples are shown separately, again to illustrate the differences in sample sizes. 
+
+
+The mean size of the human classified C1+C2+C3 sample per galaxy is $\sim560$, while for the ML classified C1+C2+C3 sample it is $\sim2500$ ($\sim4$ times larger).  Human classified ``inclusive" C1+C2+C3 samples span over a factor of ten in size from 68 in NGC\,1317 to 958 in NGC\,3627.  ML classified samples of the same variety span an even larger range from  178 in NGC\,1317 to 7947 in NGC\,3621.  This large variation in sample sizes is perhaps the most basic demonstration of the diversity of cluster populations in nearby spiral galaxies.
+
+%Regarding the ``exclusive" C1+C2-only catalogs, the smallest per galaxy samples are 34 and 50 in NGC\,1317 for the human and ML classified sample, respectively. NGC\,1317 is a stripped galaxy right next to NGC\,1316, the brightest galaxy in the Fornax cluster (like M\,87), so this finding is not surprising. NGC\,628e (one of two fields in NGC\,628) is also a low outlier in terms of C1+C2 sample size, but this is easily explainable as this field predominately covers a portion of the galaxy outskirts, whereas all the rest of PHANGS-HST targets were positioned more centrally. The largest C1+C2 samples comprise 774 in NGC\,3627 for the human, and 2998 in NGC\,3621 for the ML classification.  In the case of NGC\,3627, it is the most massive spiral still occupying the galaxy main sequence in our PHANGS-HST sample.  It also has a large number of clusters owing to the HST coverage being a mosaic of two fields, each largely filled with star formation activity.  NGC\,3621 on the other hand, it at the low mass end of our sample, but has two mosaicked fields and is considerably nearby ($d$ = 7.06~Mpc) allowing recovery of much fainter / lower mass objects than most of the galaxies in the survey.
+
+By construction, the C1+C2 ML classified sample is significantly larger than the human sample for the majority of galaxies. 
+However, for IC\,5332, NGC\,685, 2775, 2835, 4571, 4689 and 4826 the human sample contains more C1+C2 clusters than the ML sample. Due to the relatively low number of cluster candidates in these galaxies, all available candidates were classified by co-author BCW. The higher number of C1+C2 human classifications are due to differences in the classification determination with the ML algorithm.
+
+For the C3 compact associations, the ML samples are always significantly larger than the human samples (Figure~\ref{fig:n_cluster_ssfr} bottom panel). 
+These large numbers are likely due to a combination of two factors.
+First, we deploy our neural network models to classify the full candidate list, and the ML samples thus reach a fainter magnitude limit.  (Recall that our ML samples are a median of $\sim$1 mag deeper in the V-band as discussed in Section~\ref{ssec:classification}; we examine this further in the next section.)  Since the mass function of clusters and associations rises as $\rm{dN/dM} \propto M{^\beta}$, where $\beta\sim-2$ \citep[and references therein]{krumholz_star_2019}, there will be a factor of 100 increase in the number of sources for every additional decade of mass probed (or, up to a factor of 40 increase for every additional magnitude probed).  Second, the C3 compact associations in our catalogs tend to be young \citep[$\lesssim$10 Myr, e.g.,][see also Sec~\ref{ssect:cc_regions}]{lee_phangs-hst_2022}.  For a fixed magnitude limit, these young populations can be detected to much lower masses (between $\sim$0.5 to $\sim$2.5 dex lower, depending on the age of the comparison population) due to the high light-to-mass ratios of massive O and B stars, as illustrated in mass-age diagrams for star clusters \citep[e.g.,][Figure 13]{cook_star_2019}.  
+
+%a large number of stars and stellar associations (class 4) are falsely identified as compact associations (See Section~\ref{ssect:caveats}). XXX-jclrevise} 
+
+In general, the number of clusters and associations found in each galaxy increases with the sSFR.  Further analysis of the variation in cluster populations with SFR is provided in Section~\ref{{ssect:cc_sf}.
+%In Figure~\ref{fig:n_cluster_ssfr} there is a weak positive correlation between the number of clusters and the sSFR for the C1+C2 clusters (Pearson coefficient of 0.4 and 0.46 for the human and ML samples, respectively). The correlation is not expected to be strong since the current star formation activity is only connected to the young clusters. 
+%Compact associations (C3) tend to be younger and in fact we do see a stronger correlation between the number of clusters and the sSFR for the ML samples (correlation coefficient of 0.58). For the human samples there is no correlation due to the more limited sample sizes. 
+%on the other hand, we do not find any correlation (correlation coefficient of 0.21) which is the result of the more limited sample sizes. Dust is a further complication which likely limits correlation between star formation activity and number of V-band identified clusters. Work is ongoing with JWST to determine how many very embedded young clusters from overall population are missing from our HST-based census.  This concern will be discussed in detail in Section~\ref{ssect:discuss_content}  
+%The trend is stronger for the class 3 compact stellar associations since they tend to be young (see Section XXX) and thus their number densities will be more strongly correlated with recent star formation as parameterized by the sSFR.  
+
+%Due to the limited classification sizes and magnitude limits of the human catalog 
+
+
+
+
+
+
+\subsection{V-band magnitude distributions}\label{ssect:v_mag}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{v_mag.pdf}
+ \caption{Probability distributions of apparent total V-band magnitude (i.e., corrected for aperture losses) for class 1 + 2 + compact associations of all 38 PHANGS-HST galaxies. We show with red (grey) the Human (ML) classified catalogs. In order to compare the distribution shape we normalized their surfaces to one. 
+ %We note that the surfaces does not represent the sample sizes which are listed in Table~\ref{tab:numbers}. 
+ For each target, we display the distance and the faintest detected magnitude for the human and the ML classified clusters. A grey dashed line shows the median ML V-band magnitude and the solid black line the limit of ${\rm M_v=-6}$ used as the lower magnitude cut in \citet{adamo_legacy_2017}. We mark targets with a star, if the faintest human detected magnitude is brighter than the median ML detected magnitude.}
+ \label{fig:v_mag_panel}
+\end{figure*}
+%
+%One of the most fundamental properties of astronomical objects is their brightness, as it can be used to determine detection limits and to begin to gain insight on their properties.
+Table \ref{tab:numbers} shows the median, minimum, and maximum absolute V-band
+%(aperture corrected) 
+magnitude ($M_{\rm V}$) for the human and ML samples.  In the absence of a completeness analysis based on (computationally expensive) recovery simulations with artificial star clusters \citep[e.g.][]{adamo_legacy_2017, messa_young_2018, linden_massive_2021, linden_star_2022, tang_cluster_2023}, these statistics provide an estimate of the depth of the cluster samples for each galaxy. In Figure~\ref{fig:v_mag_panel}, we show histograms of the apparent V-band magnitude ($m_{\rm V}$) for the clusters and associations in each of the galaxies in the PHANGS-HST sample. The panels are ordered by increasing galaxy distance, and the human and the ML samples are shown separately.
+
+In 18 out of 38 galaxies, the human classified sample is shallower (by $\sim$2 mag) than the ML sample, which is a direct result of our strategy of only providing human classifications for the brightest clusters. %hich results directly from the classification prioritization strategy described in (Sec.~\ref{ssec:classification}). 
+For these galaxies (marked with a star next to their names in Figure~\ref{fig:v_mag_panel}), the faintest object in the human classified sample is brighter than the median magnitude of the ML classified sample. 
+%
+\begin{figure} 
+\includegraphics[width=0.5\textwidth]{abs_v_mag_hist.pdf}
+ \caption{Distribution of the absolute V-band magnitude of the Human (red) and the ML (grey) samples for class 1 + 2 + compact associations. The histograms are shown in logarithmic scale to visualize the zone where both samples agree with each other and to visualize the discrepancy towards larger magnitudes.}
+ \label{fig:v_abs_mag}
+\end{figure}
+%
+
+Figure~\ref{fig:v_abs_mag} shows a single histogram of the absolute V-band magnitude for all C1 + C2 and C3 compact associations aggregated across the 38 galaxies, with the human and the ML samples shown separately.  The distributions for the human and the ML samples are consistent for the brightest objects up to an absolute magnitude of $M_{\rm V} \sim -10$. After that the distributions diverge.
+
+For the aggregate Human and the ML samples, the median absolute V-band magnitude is $-8.1$ and $-7.0$ , and their 99-percentiles are $-5.5$ and $-4.5$, respectively. This means that when combined across the 38 galaxies, the ML sample is about 1 magnitude deeper in the V-band than the human sample.
+% small differences for the most luminous clusters
+%At the opposite extreme, the human cluster candidate classification strategy adopted above would suggest that the bright end of the $M_{\rm V}$ distribution should be identical for the human and ML samples. However, 
+
+We note that at the bright end, the aggregate ML sample has 423 fewer C1+C2+C3 objects than the human sample for $M_{\rm V} < -10$\,mag, and this is generally consistent with the accuracy of the ML classifier \citep{hannon_star_2023}.  In cases where a human classification exists, it is preferred for most science applications relative to the ML classification.
+
+%The existence of this discrepancy stems from inevitable disagreements between human and ML classification, since each census permits certain objects that the other does not, even while the overall agreement is high. The sense of the discrepancy, with ML having less confirmed objects than human, lends support to a view where expert classification is still preferable in difficult cases  \citep{whitmore_star_2021, hannon_star_2023}
+
+The detection limit depends primarily on the distance of the target since the exposure times for all new HST observations (i.e., as opposed to recycled archival data) were generally uniform (Table 1).  In Figure~\ref{fig:mag_mstar}, we plot the brightest, median, and faintest absolute V-band magnitude, and corresponding quantities for the stellar masses for the C1+C2 samples, in each galaxy as a function of the galaxy distance. The stellar mass is estimated through SED fitting of the 5 filter UV-optical PHANGS-HST photometry as described in \citet{thilker23sed}.
+In the upper left panel of Figure~\ref{fig:mag_mstar}, the galaxies where the human classified sample is far shallower are indicated with open circles, consistent with the annotation provided in the Figure~\ref{fig:v_mag_panel} histograms. In Fig.~\ref{fig:ML12_brightestMV} we present a montage showing the brightest cluster in each of our targets.  These luminous clusters are almost all very young (1--3~Myr), though a few middle-age objects and one globular cluster (in NGC\,2775) are also in the sample.
+%These targets tend to diverge from a general trend of increasing brightness and mass with galaxy distance.
+
+%The distance dependence, which we see in Figure~\ref{fig:mag_mstar}, has the effect that we find a population of faint star clusters in near targets, which are not detectable in distant targets. As a consequence, we have to take this relative incompleteness into account when comparing the cluster populations of different targets. 
+
+Our catalogs will of course include a population of fainter star clusters in the galaxies which are closer to us which are not detectable in the more distant targets.
+The median absolute V-band magnitude is $-6.6$~mag for C1+C2 ML clusters below a distance of 14~Mpc. At distances $>14~{\rm Mpc}$, the median absolute V-band magnitude is $-7.7$~mag. The medians for the human classified samples are $-7.9$~mag for galaxies at distance $<14~{\rm Mpc}$, and $-8.5$~mag for those that are further away. 
+In terms of stellar mass, we find median stellar masses of $\log(M_*/M_{\odot}) = 3.8$ and $4.2$ for ML and human clusters, respectively, at distances $<14~{\rm Mpc}$. For the more distant clusters ($>14~{\rm Mpc}$) we find median $\log(M_*/M_{\odot}) = 4.3$ and $4.5$. %The stellar masses are computed in Paper~II.
+%and it needs to be said that in comparison to the absolute magnitudes systematic uncertainties of the stellar mass are caused by the age-reddening degeneracy.
+%
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{mag_mstar.pdf}
+ \caption{Absolute V-band magnitude (top panels) and stellar mass (bottom panels) as function of galaxy distance. The left (resp. right) panels are for human (resp. ML) classified star clusters (class 1 + 2) for each galaxy. Grey dots with error-bars denote the median value and the 16-84 percentile range, red (resp. blue) dots represent the brightest (resp. faintest) V-band magnitude. The most (resp. least) massive clusters are shown with violet (resp. green) dots.  
+ In the top left panel, we use open circles, if the maximal human detected magnitude is brighter than the median ML detected magnitude (See Figure\,\ref{fig:v_mag_panel}).} 
+ \label{fig:mag_mstar}
+\end{figure*}
+%
+\begin{figure*}
+\includegraphics[width=\textwidth]{ML12_brightest.png}
+ \caption{The brightest (absolute V-band magnitude, uncorrected for internal extinction) cluster in each PHANGS-HST target. Color images are constructed from I-, V-, U-band data, and each cutout spans 2.38 arcsec (corresponding to $\sim$50-270~pc, depending on the distance to each galaxy). The clusters are arranged in from left-to-right, top-to-bottom in the order of Table~\ref{tab:numbers}.} 
+ \label{fig:ML12_brightestMV}
+\end{figure*}
+
+
+
+
+\section{Color-Color Diagrams: The PHANGS-HST 38 galaxy aggregate distribution}\label{sect:color_color}
+%introductory words on the motivation of this diagram
+The SED of a single-age stellar population (or simple stellar population - SSP) evolves over time such that young populations ($\sim 10 {\rm Myr}$) are dominated by blue light from massive stars (e.g. brighter in the NUV or U-band), while old stellar populations ($\sim 1 {\rm Gyr}$), are dominated by red light from lower mass main sequence and evolved intermediate mass stellar populations (e.g. brighter in the I-band).  
+Hence, the distribution of star clusters in color-color diagrams is often studied to gain insight into the properties and evolution of the population 
+%\citep[e.g.,][]{chandar_luminosity_2010, adamo_legacy_2017, larson_multi-scale_2022}. 
+\citep[see][and other earlier papers referred to therein]{lee23ubvi}.
+
+%can give insights into the evolution of the population. However, one must take color shifts from dust reddening into account, which is typically largest for the youngest stellar populations as star formation occurs in dusty molecular clouds, and gradually clears the dust through the feedback from massive stars.
+
+An introduction to the U-B vs. V-I color-color diagram as a diagnostic tool for studying large samples of star clusters and compact associations combined across galaxies is presented by \citet{lee23ubvi}.  In \citet{lee23ubvi}, we showed that the distribution can be described in terms of three main features: a young cluster locus (YCL), a middle-age plume (MAP), and an old globular cluster clump (OGC).   %Here, we provide a more detailed discussion of the color-color diagram for different subsets of the PHANGS-HST star cluster catalogs as well as for the populations in each of the individual 38 PHANGS-HST galaxies.
+Here, we examine variations in these features for 
+\begin{itemize}
+\item different color combinations (NUV-B-V-I and B-V-I as well as standard U-B-V-I), 
+\item the three morphological classes of clusters and compact associations, 
+\item the machine-learning and human classified samples
+\item low and high mass samples
+\item the individual 38 galaxies in the survey
+\end{itemize}
+
+\subsection{Comparison of the C1, C2, C3 morphological classes and different color combinations}\label{ssect:cc_overview}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{cc_compare.pdf}
+ \caption{Color-color diagrams for the PHANGS-HST human classified sample, with each morphological class shown separately: C1 single-peaked symmetric clusters (left column); C2 single-peaked asymmetric clusters (middle column); and C3 multi-peaked compact associations (right column). In all panels V-I is plotted along the horizontal axis, and three other colors are shown along the vertical axis: NUV-B (top row), U-B (middle row) and B-V (bottom row).  We only show data points for clusters which are detected with at least a ${\rm S/N > 3}$ in the plotted bands. 
+ Individual clusters are represented by black dots whereas in crowded regions we show a Gaussian-smoothed heat map indicating the relative density. 
+ The size of the smoothing kernel is shown by a red circle on the top middle panel.
+ A cyan track denotes the \citetalias{bruzual_stellar_2003} SSP model for ${\rm Z_{\odot}}$ metallicity at ages from 1\,Myr till 13.7\,Gyr. The portion of the SSP track ${\rm Z_{\odot}/50}$ metallicity from 0.5-13.7\,Gyr is also shown with a magenta track. Key ages are indicated on the right column and are marked with blue and pink dots on each track.  A reddening vector (top right of each panel) corresponds to ${\rm A_v = 1.0 mag}$. In panel d), we indicate names for relevant loci in the color-color space.}
+ \label{fig:cc_compare}
+\end{figure*}
+%
+We begin by presenting color-color diagrams formed from NUV-B-V-I, U-B-V-I and B-V-I photometry for clusters and compact associations in the three (human-determined) morphological classes (Figure~\ref{fig:cc_compare}).  As in \citet{lee23ubvi}, we place the distributions in the context of  \citetalias{bruzual_stellar_2003} SSP model tracks and the dust reddening vector.  We show \citetalias{bruzual_stellar_2003} SSP models of $Z_{\odot}$ and $Z_{\odot}/50$ metallicity since PHANGS-MUSE has established that the spiral galaxies in our sample generally have nebular metallicities around $Z_{\odot}$ \citep{kreckel_mapping_2019, groves_phangs-muse_2023, scheuermann_stellar_2023}, and because our catalogs include objects with a full range of ages, including old globular clusters which are metal poor. The $Z_{\odot}/50$ metallicity BC03 models (based on the Padova 1994 tracks) correspond to $[$Fe/H$]=1.65$ which should generally cover the range of globular cluster metallicities for spiral galaxies \citep[]{BS06}. 
+
+Examination of Figure~\ref{fig:cc_compare}, where the human-classified C1, C2, and C3 samples are shown in separate panels, provides insight into how the three morphological classes map onto other cluster properties.  
+
+The C1 single-peaked symmetric clusters are predominantly older than $\sim$10 Myr (Figure\,\ref{fig:cc_compare} left panels).  Both the middle-age plume and old globular cluster clump are evident in the NUV-B vs V-I, and U-B vs V-I diagrams of the C1 population (Figure\,\ref{fig:cc_compare} a and d). %The middle age plume spans a region to the right of the track between about 20 Myr and 1 Gyr.  There is a remarkable correspondence between the shape of the left side of the middle-age plume and the \citetalias{bruzual_stellar_2003} SSP track; substructure appears to be present.  
+%If the spread towards the right of the track is attributed to dust reddening, we would estimate ranges from around E(B-V) 0.0 to a couple tenths of a mag (i.e., ${\rm A_{v} \sim 0~ to~ 0.6 mag}$). However, multiple factors such as color uncertainties, variations in metallicity \citep[e.g.]{scheuermann_stellar_2023} or statistical sampling of the the initial mass function (IMF) \citep[e.g.][]{fouesneau_accounting_2010,popescu_age_2012,de_meulenaer_deriving_2013,krumholz_star_2015} can further contribute to this scatter. Nevertheless, the missing scatter to the left side of the SSP track indicates that the driving factor of this spread is in fact primarily due to dust reddening.
+%The spread toward the right can be explained by dust reddening, and from the width of the plume, generally ranges from around E(B-V) 0.0 to a couple tenths of a mag (i.e., ${\rm A_{v} \sim 0~ to~ 0.6 mag}$).  
+%There is a steep valley in the population density between the middle-age plume and the old globular cluster clump, presumably due to the metal-poor nature of the ancient population, as discussed extensively in \citet{turner_phangs-hst_2021,deger_bright_2022} and \citet{whitmore_improving_2023}.  The clump is offset from the relevant portions of both the $Z_{\odot}$ and $Z_{\odot}/50$ SSP tracks, just above the $Z_{\odot}$ track at an age around 1 Gyr, and to the right of the end of the $Z_{\odot}/50$ SSP track.  
+Although there are younger C1 clusters which define a sharp diagonal locus roughly parallel to the reddening vector in the U-V vs B-I diagram (Figure\,\ref{fig:cc_compare} d), these objects are in the minority of the C1 population.  
+
+In contrast, the populations of C2 single-peaked asymmetric clusters and C3 multi-peaked compact associations are predominately young, and both show a prominent, clearly defined young cluster locus, which again appears to be roughly parallel to the reddening vector.  The C2 sample YCL exhibits an extension into the middle-age plume to $\sim$500 Myr (Figure\,\ref{fig:cc_compare}b and e).  The shape of the left side of the extension, which follows the BC03 SSP track, suggests that this distribution contains middle-age clusters, and are not solely reddened young clusters.  The C3 YCL human-classified (bright) sample does not have an obvious extension into the middle-age plume.
+
+In the B-V vs V-I diagrams, the three main features are blended and far less distinct (Figure\,\ref{fig:cc_compare} bottom row); this makes clear the need for NUV and U band photometry for cluster age dating.  
+%[words about how prior work may have relied on BVI] 
+After 100 Myr, not only is the reddening vector parallel to the B-V vs V-I SSP track, but the solar and sub-solar metallicity SSP models trace a similar path (Figure\,\ref{fig:cc_compare} i).  The NUV band (F275W) is the shortest wavelength filter available on the HST WFC3 camera that avoids the 2175 \AA\ dust feature, while the U and B bands straddle the 4000 \AA\ break.  The combination of the NUV-U-B-V-I filters serve to break the age-extinction-metallicity degeneracy, as illustrated by the untangling of the SSP tracks in the NUV-B vs V-I (top row) and U-B vs V-I (middle row) planes, and by the separation of metal-rich and metal-poor tracks, as reflected in the segregation of the old globular cluster clump from the middle-age plume. 
+
+Hereafter, we choose to focus on the U-B vs V-I color-color diagram.  While the separation between the middle-age plume and the old globular cluster clump is larger in the NUV-B vs V-I plane, the NUV detection rate and signal-to-noise for old clusters (which are significantly dimmer in the blue) are lower relative to the U-band (Figure~\ref{fig:color_color_uncert}) despite the factor of $\sim2$ larger NUV exposure time (Table 1).
+
+\begin{figure*} 
+\includegraphics[width=\textwidth]{uncert_reg_c12.pdf}
+ \caption{Mean color uncertainties for the NUV-B vs V-I (top row) and U-B vs V-I (bottom row) diagrams. We present class 1+2 clusters for ML (left two panels) and human classifications (right two panels) separately. %We show the color uncertainties with a 
+ The maps show the mean uncertainty in each bin, and only bins with at least 5 clusters are displayed. }
+ \label{fig:color_color_uncert}
+\end{figure*}
+
+%One of the most obvious separation between different populations can be found for class 1 clusters: In the bottom right corner, we find an almost isolated clump where mostly old globular clusters reside with ages of around 13\,Gyr. This separation is mainly driven by the V-I color as the decline of blue colors (e.g. U-B) stalls after few 100\,Myr and the V-I color evolves towards redder colors as AGB stars maintain the near-infrared luminosity while the blue part of the spectrum gets dimmer (REF).
+
+%Another recurring feature is an upper left elongated population found in class 2 clusters and compact associations. In fact these young clusters of $< 10$\,Myr are affected by dust and spread out parallel to the reddening vector. 
+%Class 1 objects show a distinctive populations of middle age clusters (20\,Myr to 500\,Myr) which is also slightly visible for class 2 clusters. However, in the B-V diagram for Class 2 clusters this population is completely blended together with young dusty objects. Only by using the NUV-B and U-B colors these two populations separate. This shows the need of the NUV and U band to be able to break the age-reddening degeneracy as we discussed in our initial proposals to justify the NUV and U observations (REF proposal).
+
+%Using color-color diagrams as a tool to resolve different cluster populations we clearly see an advantage for the diagram flavours including the NUV or U bands. A closer inspection however shows that for instance the region associated with class 1 old globular clusters is less populated in the NUV-B band observation. This is due to the fact that old stellar populations become significant dimmer in the blue and UV bands and therefore the detection rate in the NUV band drops. In addition to that is the S/N for this bad lower in comparison to the U band, which justifies the UBVI diagram as a standard diagram in the subsequent analysis. 
+
+
+\subsection{Comparison of human and machine-learning classified samples}\label{ssect:cc_compare}
+As discussed earlier, by construction, a important difference between the human and ML classified catalogs is the depth of the samples.
+%The question, the cluster catalog users have to keep in mind is in which way different depth can change the relative population of regions in the color-color diagrams.
+\citet{whitmore_star_2021} looked for other possible systematic differences between the ML and human classified samples, and assessed the performance of the ML classifications by examining the UVBI color-color diagram of five individual galaxies processed with the first generation of our CNN models \citep{wei_deep_2020}\footnote{DR3/CR1 at https://archive.stsci.edu/hlsp/phangs-cat}.
+Here, we compare the samples aggregated over all 38 galaxies, and classified using the current version of our CNN model \citep{hannon_star_2023}.\footnote{DR3/CR2 at https://archive.stsci.edu/hlsp/phangs-cat} 
+
+In Figure~\ref{fig:colo_colo_first_view} we compare the U-B vs V-I diagram for each cluster class for the Human (top row) and the ML samples (middle and bottom rows).
+%To highlight the impact of the different magnitude limits of the Human and the ML samples, 
+In the bottom row a V-band magnitude cut corresponding to the depth of the human classified sample (as indicated in Figure~\ref{fig:v_mag_panel}) is applied to the ML sample for each individual galaxy. Qualitatively, it appears that this magnitude cut results in the same color-color features seen in the human-classified sample, which provides evidence for the robustness of the ML classifications for the brighter sources. 
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{ub_vi_compare_density.pdf}
+ \caption{Color-color diagrams for the Human cluster sample (top row) and the ML cluster sample (middle and bottom rows). In the middle row we show all ML classified clusters, whereas the bottom row only shows ML classified clusters up to the same V-band magnitude for each target as detected for the human sample. The individual V-band cuts are estimated with the maximal detected magnitude as presented in Figure~\ref{fig:v_mag_panel}. Cluster classes 1, 2, 1+2 and class 3 compact associations are shown individually in each column from left to right, respectively. Clusters are represented by black dots and in crowded regions by a Gaussian-smoothed heat map indicating the relative density.}
+ \label{fig:colo_colo_first_view}
+\end{figure*}
+%
+
+
+For the C1 clusters, the old globular cluster clump shows a slightly broader distribution for the full ML sample (compare Figure~\ref{fig:colo_colo_first_view} a and e). This slightly broader distribution is mostly due to the fact that fainter globular clusters in the ML sample are detected in the U and B bands, but have low signal-to-noise. %adding a larger scatter to this region. 
+These fainter clusters in the ML samples also appear to shift the peak of the middle-age plume towards older ages (compare Figure~\ref{fig:colo_colo_first_view} a and e).   For the C2 clusters, the increase of fainter sources in the ML sample results in a prominent middle-age plume, which were under-represented in the human classified sample, but does not result in a distinct old globular cluster clump (compare Figure~\ref{fig:colo_colo_first_view} b and f).
+
+Comparison of the human and ML classified C3 compact associations, shows a significantly broader distribution for the ML sample stretching over the entire color-color diagram (compare Figure~\ref{fig:colo_colo_first_view} d and h).    The broadening of the distribution is not surprising given that the ML C3 sample (1) is dominated by young populations and will probe to lower masses relative to the C1/C2 samples (as discussed in Section 3.1), and (2) will thus have the lowest mean S/N values.   We find about 4 times as many ML C3s when applying the human-classified catalog V-band magnitude limit. For the human classified sample, C3s are the smallest category (N=6235, 28\%), however, for the ML classified sample, it is by far as the largest category (N=59684, 62\%). %This higher number is most likely due to the fact that the borders between stellar associations and compact stellar associations are challenging to separate at lower magnitudes. This is in detail discussed in Section~\ref{ssect:caveats}.
+The low mass ML C3 associations (${\rm <10^4 M_{\odot} }$) will also be affected by stochasticity in sampling of the stellar initial mass function \citep[e.g.][]{fouesneau_accounting_2010,popescu_age_2012,de_meulenaer_deriving_2013,krumholz_star_2015, OD2022}, which leads to large scatter in their luminosities and colors relative to the predictions of the BC03 SSP model track, which assumes a fully sampled IMF.
+%An additional aspect of ML C3 compact associations in comparison to other samples is that many low mass clusters are found in this class (${\rm <10^4 M_{\odot} }$), whose luminosities and colors are strongly affected by stochasticity in sampling of the stellar initial mass function \citep[e.g.][]{fouesneau_accounting_2010,popescu_age_2012,de_meulenaer_deriving_2013,krumholz_star_2015}. This effect is one aspect of the origin of the large scatter we find in Figure~\ref{fig:colo_colo_first_view}, panel \textit{h}. 
+
+\subsection{Comparison of high and low mass clusters}\label{ssect:cc_mag_m_star}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{cc_mass_cut.pdf}
+ \caption{Color-color diagram of ML classified class 1 and 2 clusters in three bins of stellar mass. The most massive clusters with ${\rm M_{*} > 10^4 M_{\odot}}$ are shown in the left panel, intermediate masses of ${5\times10^3 M_{\odot} > \rm M_{*} < 10^4 M_{\odot}}$ are in the middle panel, and low mass clusters of ${\rm M_{*} < 5\times10^3 M_{\odot}}$ are in the right panel. Similar to Figure\,\ref{fig:cc_compare}, we use a density heat map to illustrate the distribution of clusters.}
+ \label{fig:cc_mass_cut}
+\end{figure*}
+%
+%Different regions in color-color diagrams can be seen as a surrogate of their evolutionary state and therefore are directly connected to quantities like stellar ages. The C1 and C2 samples show the largest diversity and range over the full span of ages. To get a deeper understanding of these distributions, we take the stellar mass of each cluster into account which we present in Fig\,\ref{fig:cc_mass_cut}. The stellar masses estimated through SED fitting used here are described in \citet{thilker23sed}.
+%By dividing the clusters in three mass groups, we can see how different mass populations are connected to cluster age, providing insights on cluster destruction and cluster formation.
+%By dividing the clusters in three mass groups, we can see how different mass populations are represented in the color-color space and find connections to their evolutionary state. This can furthermore give insights on cluster formation and cluster destruction.
+
+To further explore the impact of stellar IMF stochasticity on the observed properties of low mass clusters, in Figure~\ref{fig:cc_mass_cut} we present the color-color diagram for the C1+C2 aggregate sample in three different mass bins.
+
+The differences in the predominance of the YCL, MAP, and OGC in the three mass bins is primarily due to the dependence of the mass limit with age. As discussed at the end of Section 3.1, for a fixed magnitude limit, due to evolution of the mass-to-light ratio, the YCL ($<10^7$ Myr) can be detected to masses 100 times lower than the OGC ($>$1 Gyr), as illustrated in mass-age diagrams for star clusters \citep[e.g.,][]{cook_star_2019}.
+However, the effects of IMF stochasticity are clear when comparing the YCL across the three mass bins.  The YCL is narrow, well-defined, and roughly parallel to the reddening vector in the highest mass bin.  In the lowest mass bin, the distribution is much broader and similar to the stochastic synthesis model predictions shown in Figure 2 of \citet{fouesneau_analyzing_2012}.
+%The largest clusters in terms of mass (${\rm M_{*} > 10^4 M_{\odot}}$) are mainly old clusters of several hundred Myr to several Gyr with the distinct globular cluster population mostly associated with 13\,Gyr. 
+%The largest clusters in terms of mass (${\rm M_{*} > 10^4 M_{\odot}}$) are mainly associated with ages of several hundred Myr to several Gyr with the distinct globular cluster population mostly associated with 13\,Gyr. 
+%Only a few young clusters are found in this mass group. 
+%Intermediate mass clusters (${5\times10^3 M_{\odot} > \rm M_{*} < 10^4 M_{\odot}}$) mainly correspond to ages of 100-500\,Myr with a vanishing small young cluster population. This distribution is similar to the one of the largest clusters but without the old globular cluster clump.
+%Low mass cluster (${\rm M_{*} < 5\times10^3 M_{\odot}}$) on the other hand do not show the same well-defined features as seen for the higher mass clusters.  The distribution is broader than the intermediate-mass clusters and likely is the impact of stochastic sampling of the stellar initial mass function \citep[][e.g.]{fouesneau_accounting_2010,popescu_age_2012,de_meulenaer_deriving_2013,krumholz_star_2015}. 
+%Low mass cluster (${\rm M_{*} < 5\times10^3 M_{\odot}}$) on the other hand are mostly young dusty objects with only a few objects reaching 100\,Myr or are young and strongly reddened. 
+%This observation however does not imply that low mass clusters are always destructed before they reach old ages since their luminosity decreases with age making them undetectable at high ages.  
+
+
+
+\subsection{Quantitative characterization}\label{ssect:cc_regions}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{contour_maps_ubvi.pdf}
+ \caption{Characteristic regions in U-B vs V-I color-color diagrams of C1 and C2 clusters and C3 compact associations.
+ We show human and ML classified samples in the top and bottom row, respectively.
+ We compute the color-color maps by stacking each cluster as a normalized Gaussian function on a grid using the color uncertainties as standard deviations. 
+ We then identify the YCL (blue) and the MAP (green) as the contour lines encircling 50\,\% of the highest point for C1 clusters and C3 compact associations, respectively. We then find the largest contour line which only encircles the OGC (red), separating this region from the MAP. We show the hulls of all three regions for C2 clusters.
+ In order to compare the slope of the reddening vector and the sequence of dust-reddened objects in the YCL, we fit a linear function to all C3 compact association which are inside the blue segmented area.
+ }
+ \label{fig:color_color_regions}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{contour_maps_nuvbvi.pdf}
+ \caption{Same as Figure\,\ref{fig:color_color_regions} but with NUV-B colors on the \textit{y}-axis.}
+ \label{fig:color_color_regions_nuvb}
+\end{figure*}
+
+%To highlight the characteristic regions of over-densities, 
+We now proceed to a quantitative characterization of the three principal features to facilitate further analysis. In particular, in Section~\ref{sect:spatialdist} we will examine the spatial distribution of the populations associated with these features. 
+
+Our first step is to produce an uncertainty weighted color-color diagram. In Figure~\ref{fig:color_color_regions}, each cluster is represented as a 
+%We stack each cluster onto a grid as a 
+normalized Gaussian function with the color uncertainties adopted as standard deviations. Using this approach, clusters with low S/N color measurements are blurred out and do not provide high signal at their specific location in the diagram. On the other hand, more luminous clusters with more precise color-color measurements will dominate the distribution at their positions in these maps.  Figure~\ref{fig:color_color_uncert} shows that the color uncertainties are highest in regions that cannot be reached through reddening of the \citetalias{bruzual_stellar_2003} models.
+Uncertainties in the V-I color are highest (left four panels) for clusters on the blue side of the \citetalias{bruzual_stellar_2003} model for middle age clusters (100 to 500\,Myr), and are particular prominent for the ML sample.   U-B color uncertainties (bottom right panels) are highest redward of the \citetalias{bruzual_stellar_2003} model of old clusters (500\,Myr to 13.8\,Gyr). %These high uncertainty regions are also unreachable by shifting clusters away from model prediction due to dust reddening. 
+By incorporating the uncertainty in the color-color diagrams in Figure~\ref{fig:color_color_regions}, these region with large photometric uncertainties are down-weighted and are less prominent as a result.  
+
+
+%In Sect.\,\ref{ssect:cc_overview} and \ref{ssect:cc_mag_m_star}, we have seen how different features in the U-B vs V-I color-color diagram are representing different cluster populations. 
+
+%As we learned in Sect.\,\ref{ssect:v_mag} and \ref{ssect:cc_mag_m_star}, especially in the ML catalog many low S/N clusters introduce a large scatter and make it challenging to identify characteristic region, where clusters reside in the color-color diagram at their evolutionary state. 
+
+%To quantify the uncertainty of each color in the color-color diagrams, we present in Appendix~\ref{append:add_fig}, Figure~\ref{fig:color_color_uncert} color-color maps with average color uncertainties.
+%One can see for C1 and C2 clusters how the color uncertainties are dominant in regions which cannot be covered by the \citetalias{bruzual_stellar_2003} models.
+%Uncertainties in the V-I color are highest for clusters left of the \citetalias{bruzual_stellar_2003} model for middle age clusters (100 to 500\,Myr) and U-B color uncertainties are highest below the \citetalias{bruzual_stellar_2003} model of old clusters (500\,Myr to 13.8\,Gyr). These high uncertainty regions are also unreachable by shifting clusters away from model prediction due to dust reddening. In the uncertainty-weighted color-color representation in Figure~\ref{fig:color_color_regions}, these regions are less prominent.
+
+%We Identify three characteristic regions which have been discussed in %Section~\ref{ssect:cc_overview} and \ref{ssect:cc_compare}:
+%\begin{itemize}
+%    \item \textbf{Young Cluster Locus (YCL)} (blue) 
+%    \item \textbf{Middle-Age Plume (MAP)} (green) 
+%    \item \textbf{Old Globular Cluster Clump (OGC)} (red)  
+%\end{itemize}
+
+We provide definitions of the Young Cluster Locus, Middle-Age Plume, and Old Globular Cluster Clump by selecting contour lines enclosing the respective regions.
+We define the MAP and YCL with contour-lines enclosing $50\,\%$ of all C1 clusters and C3 compact associations, respectively. 
+To define the OGC, we select the largest contour lines of C1 clusters which separates it from the MAP. %and select only the latter line. 
+We perform this analysis for the human and ML classified samples separately, as well as for the NUV-B vs V-I diagram.  The results are presented in  Figures~\ref{fig:color_color_regions} and Figure~\ref{fig:color_color_regions_nuvb}. %We also provide this parameterization for the NUV-B vs V-I diagram in Appendix~\ref{append:add_fig}, Figure~\ref{fig:color_color_regions_nuvb}. 
+Files providing these contours are at \url{https://archive.stsci.edu/hlsp/phangs-cat}.
+
+Earlier in this section, we noted that the YCL appears roughly parallel to the reddening vector.
+%The YCL is an elongated region in the upper left and is solely populated by young objects of a few Myr. By taking into account that the youngest clusters are expected to have the largest spread in reddening, explains the elongated shape roughly parallel to the reddening vector. 
+The reddening vector corresponding to the \citet{cardelli_relationship_1989} reddening curve has a slope of $0.64$ in the U-B vs V-I diagram.
+To probe the orientation of the YCL with respect to the reddening vector, we fit a straight line to the C3 compact associations which are inside the $50\,\%$ contour, and find a slope of $0.63\pm0.01$ and $0.814\pm0.005$ for the human and ML classifications, respectively. 
+The general consistency for the human classified C3 compact associations suggests that the shape of the C3 locus is indeed the result of the dust reddening of young clusters (for the ML sample this is affected by the increased scatter due to IMF stochasticity). %It has to be said that the spread in ages ($\lesssim 10\,{\rm Myr}$) and variations of the IMF introduce systematic shifts of the position in the color-color diagram. Furthermore, the larger region of the YCL for ML classified C3 compact associations can explain the discrepancy with the reddening vector slope. 
+This exercise illustrates the potential of using color-color diagrams to test reddening laws using carefully selected young, dusty clusters and compact associations. 
+
+
+
+
+
+
+%By comparing the \citetalias{bruzual_stellar_2003} model tracks with the relative position of each main cluster region in the color-color diagram we can assign different time scales to these groups. Of course one need to take into account the shift due to dust reddening which is only significant for the youngest clusters as discussed in \citet{thilker23sed}. 
+%Since the YCL does not extend far beyond the model track of $\sim10\,{\rm Myr}$ and the fact that we assign clusters to the MAP in the overlap region, we associate this region with age of $< 10\,{\rm Myr}$.
+%The MAP covers a large sequence of different ages and ranges from $\sim 10\,{\rm Myr}$ to about 0.5-1\,Gyr. Finally, we associate the OGC with clusters of $\sim 10\,{\rm Gyr}$ of age. 
+
+%These regions only enclose the most significant features found in the color-color diagrams and hence do not cover all clusters. In fact, we can only classify $52\,\%$ and $48\,\%$ of the human and ML clusters, respectively. One should view these classifications rather as the best representation of the three main cluster groups.
+%As described in Sect.\,\ref{sect:catalog_content}, we provide for each cluster in the released catalogs with which region the cluster is associated. 
+
+
+
+
+
+%This way of representing the color-color space adds more contrast to the characteristic regions enabling us to distinguish them with a simple segmentation algorithm representing characteristic regions by different colors in Figure~\ref{fig:color_color_regions}:
+%\begin{itemize}
+%    \item \textbf{Young Cluster Locus} (blue) 
+%    \item \textbf{Middle-Age Plume} (green) 
+%    \item \textbf{Old Globular Cluster Clump} (red)  
+%\end{itemize}
+%In this work we use the three hulls computed from the segmentation in order to select clusters associated with these regions. 
+%However, in order to provide an easy accessible parametrization, we computed ellipses containing 68\,\% of each region. The parameters are for each region are given in Table\,\ref{tab:ellipse}.
+
+%The YDP is an elongated region in the upper left and is solely populated by young objects of a few Myr. By taking into account that the youngest clusters are expected to have the largest spread in reddening, explains the high density of data points in this region.
+%The fact that we expect the youngest clusters to be the most prevalent, due to the destruction of clusters \citep[e.g., see ][]{chandar_luminosity_2010,chandar_age_2016,chandar_star-cluster_2014, adamo_legacy_2017, krumholz_star_2019} , accentuates this population. 
+%The emergence of red super giants at around 10~Myr and the resulting domination of red light in the spectrum spreads the data out, resulting in a much sparser distribution of points than seen in the YDP. 
+%Another effect that might modify the predicted positions is the length of star formation in the cluster, as demonstrated in Figure 20 of \citet{deger_bright_2022}.
+
+%The MAC is meant to show the sharp left edge of the observed distribution in the range from 10 to 500~Myr
+%The sharpness of the edge, and the fact that it generally aligns with the \citetalias{bruzual_stellar_2003} solar metallicity model, demonstrates the good agreement between the observational data and the \citetalias{bruzual_stellar_2003} model for the majority of the clusters. The spread toward the right is, of course, due to the reddening from dust, and generally ranges from around E(B-V) 0.0 to a couple tenths of a mag (i.e., ${\rm A_{v} \sim 0~ to~ 0.6 mag}$). 
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{ub_vi_panel_1.pdf}
+ \caption{UB-VI color-color diagrams for each individual PHANGS-HST galaxies. We present ML classified class 1 and 2 clusters with black contours. With green and blue points, we over-plot human classified class 1 and 2 clusters, respectively. For reference, we show the solar metallicity track with a red line of the \citetalias{bruzual_stellar_2003}-model. To indicate the direction of color-color shift due to reddening, we show a black arrow in the top left which indicates a reddening of ${\rm A_{V} = 1}$. To study the color-color distribution of each galaxy with respect to the position of the Main Sequence (MS) of star-forming galaxies (see Figure~\ref{fig:ms}), we sort the diagrams in decreasing order of $\Delta$MS values.}
+ \label{fig:ub_vi_1}
+\end{figure*}
+%
+\begin{figure*}
+\includegraphics[width=\textwidth]{ub_vi_panel_2.pdf}
+ \caption{Continuation of Figure~\ref{fig:ub_vi_1}.}
+ \label{fig:ub_vi_2}
+\end{figure*}
+
+\section{Color-Color Diagrams: Individual galaxies}\label{ssect:cc_sf}
+%\subsection{Relation to galactic star formation properties}
+%
+%\subsubsection{Global trends}\label{sssect:cc_trends}
+%
+%In Section~\ref{ssect:cc_overview}-\ref{ssect:cc_regions} we have discussed the main characteristics of the cluster samples and different cluster types. However, we know from Section~\ref{ssect:select_photo}, that not all PHANGS-HST galaxies have the same cluster populations and have different detection limits due to varying distances. 
+
+Until this point, our analyses of the color-color diagrams have followed the approach of \citet{lee23ubvi} and have been based on the cluster population aggregated across the full sample of PHANGS-HST galaxies.  Here, we return to the more conventional approach of studying color-color diagrams for individual galaxies.
+
+To provide a framework for analysis of the star cluster color-color distributions in the 38 individual galaxies (Figures~\ref{fig:ub_vi_1} and \ref{fig:ub_vi_2}), we consider the global star formation rate (SFR) and stellar mass (M$_*$) of the galaxies, but now in the context of the star-forming galaxy main sequence \citep[e.g.,][]{salim_uv_2007, noeske_star_2007, lee_star_2007}.  As in Section 3.1, SFRs are based on an FUV$+$IR prescription, while the galaxy stellar masses are computed based on an IR flux and mass-to-light ratio.
+
+To visualize trends in the star cluster color-color distributions with galactic star formation properties, in  Figure~\ref{fig:ms} we plot the contours of individual color-color diagrams at the parent galaxy’s position in the star formation rate (SFR)-stellar mass (M$_*$) diagram.  We compute $\Delta$MS, the offset of the galaxy's position in the SFR-M$_*$ diagram relative to the galaxy main sequence.   We order the individual color-color diagrams in Figures~\ref{fig:ub_vi_1} and \ref{fig:ub_vi_2} by $\Delta$MS, from the most intensely star-forming galaxies furthest above the MS to those below the MS.  Table~\ref{tab:DeltaMS} provides $\Delta$MS and M$_*$ for each galaxy.  In these plots we show only C1 and C2 clusters, which have a higher likelihood of being gravitationally bound.  
+
+To quantify changes in the relative distribution of clusters and associations among the three principal features of the color-color diagram, we compute the relative number fractions in the YCL, MAP, and OGC for each individual galaxy and examine them as a function of $\Delta$MS (Figure~\ref{fig:ms_stats}). No attempt was made to correct for the variation in the depth of the YCL, MAP, and OGC populations due to evolution in the mass-to-light ratio with age prior to computing these fractions.  Thus, the absolute values of the number fractions themselves may not be physically meaningful.  However, the general trends in Figure~\ref{fig:ms_stats} should still provide insights into differences in the global processes which drive, regulate, and extinguish star and cluster formation across the galaxy sample.
+%Therefore, we will give an overview by looking at the color-color space of all individual galaxies in Figures~\ref{fig:ub_vi_1} and \ref{fig:ub_vi_2}, highlighting trends and establishing a link between galaxy types, their position relative to the Main Sequence (MS) of star-forming galaxies (Figure~\ref{fig:ms}) and their cluster population.
+%To better highlight the connection between the distance to the MS ($\Delta$MS) and their color-color distribution, we sorted the galaxies in Figures~\ref{fig:ub_vi_1} and \ref{fig:ub_vi_2} by their decreasing distance to the MS. 
+ 
+%show in Figure~\ref{fig:ms_stats} the relative number fractions of each color-color feature as a function of $\Delta$MS. This presentation enables not only to better identify trends but also to quantify them. 
+
+%the stellar masses M$_*$ and star formation rate (SFR) were estimated by \citet{leroy_z_2019,leroy_phangs-alma_2021} for all PHANGS galaxies. The SFR values are based on SED fitting of GALEX + WISE observations following the methods developed in \citet{salim_galex-sdss-wise_2016, salim_dust_2018}. 
+
+%
+
+%
+\begin{figure*}
+\includegraphics[width=\textwidth]{ms_cc.pdf}
+ \caption{The main sequence (MS) of star-forming galaxies. We represent each galaxy of the PHANGS-HST sample as a U-B vs. V-I color-color diagram (Figure~\ref{fig:ub_vi_1} and \ref{fig:ub_vi_2}) at the position on the MS of their host galaxy. The color-color diagrams are presented by contours computed for the ML catalog of C1 and C2 clusters. As a reference, we show for each diagram the  \citetalias{bruzual_stellar_2003}-model track in red. For crowded regions, we shift the color-color diagrams and denote their position on the MS with a red point and an arrow. For those galaxies which are not in a crowded region we mark their position on the MS with a red star, situated in the center of the color-color diagrams. The purple background represents the density of SDSS galaxies of $z < 0.2$ with M$_*$ and SFR values computed by \citet{salim_galex-sdss-wise_2016}. The dashed line is the predicted MS at $z = 0$ defined by \citet{leroy_phangs-alma_2021} and the grey area shows the standard deviation computed by \citet{catinella_xgass_2018}. 
+ The essence of this figure is the connection between star formation activity and the cluster population of all PHANGS-HST galaxies. As discussed in the text, the star formation rates are sensitive to timescales of $< 100\,{\rm Myr}$ and therefore the relative fractions of MAS clusters correlate with the relative position on the MS as shown in Figure~\ref{fig:ms_stats}.}
+ \label{fig:ms}
+\end{figure*}
+%
+\begin{figure*}
+\includegraphics[width=\textwidth]{ms_stats.pdf}
+ \caption{Number fraction of C1 and C2 clusters of each galaxy associated with the main characteristic regions in color-color diagrams found in Section~\ref{ssect:cc_regions} as a function of $\Delta$MS. We show the YCL, the MAP and the OGC in blue, green and red, respectively. In gray, we show clusters outside the main regions. We distinguish galaxies at a distance of smaller and larger than $15\,{Mpc}$ with full and open circles respectively. For each panel we show the Pearson correlation coefficient in the top right. Since the MAP shows a strong correlation which we explain in the text, we fitted a linear function to the data points and provide the fit parameters.}
+ \label{fig:ms_stats}
+\end{figure*}
+%
+%\input{tables/DeltaMS_vs_galprop}
+
+\input{delta_ms_morph}
+% young populations
+
+
+%\subsection{Color-color diagrams for individual galaxies and relation to galaxy morphology}\label{ssect:cc_sf}
+
+\subsection{$\Delta$MS \& the Young Cluster Locus (YCL)}\label{sec:ycl}
+Figure~\ref{fig:ms_stats} shows no correlation between $\Delta$MS and the relative number fraction of clusters associated with the YCL. There are at least two reasons for the lack of correlation.  First, the dust-corrected FUV star formation indicator traces galaxy SFRs over $\sim$100 Myr timescales, while the YCL population is $\lesssim$ 10 Myr.  Nevertheless, SFR tracers over these two timescales have been shown to correlate \citep[e.g.,][and references therein]{salim_uv_2007, lee_comparison_2009}.  A more important issue involves the impact of dust on the observed colors of young clusters.   An absent or weak YCL does not necessarily signify the lack of recent cluster formation.  In fact, NGC\,1365 and 1672, neither of which have a prominent YCL, have the largest $\Delta$MS and are host to the most extreme central starbursts in the sample \citep{brandt_rosat_1996, querejeta_stellar_2021, whitmore_phangs-jwst_2023}.  These high sSFR galaxies have significant dust, which shifts the YCL feature along the reddening vector into the middle age plume \citep{thilker23sed} and even into the old globular cluster clump \citep{hollyhead_studying_2015}. On the other hand, galaxies with low $\Delta$MS values would be expected to have a lack of recent cluster formation, and a weak YCL.  Examples of this are NGC~4826, and NGC~4569, which has the most peculiar color-color distribution of the sample.  In this context it is notable that NGC 4569 is the brightest late-type galaxy in the Virgo cluster.  It experienced a ram pressure stripping event about 300 Myr ago \citep{vollmer_ngc_2004,crowl_stellar_2008,boselli_spectacular_2016} which drained the galaxy's gas reservoir and quenched its star formation.  This event is reflected in the nearly complete absence of the YCL and unusual MAP in NGC~4569's cluster color-color diagram.
+
+%The most obvious cluster population indicating ongoing star formation is the YCL as it consists of clusters $< 10\,{\rm Myr}$.
+PHANGS-HST galaxies with prominent YCLs relative to the other color-color diagram features are
+NGC~7496, 1559, 4536, 1566, 1300, 685 and 2775. %(see Figures~\ref{fig:ub_vi_1} and \ref{fig:ub_vi_2}).
+It is notable that in their YCL regions, we mostly find C2 clusters, indicating that their asymmetric shape is associated with young age.   %what underlines the fact that these objects must be young since their asymmetric shape would normalize into a spherical distribution over time or the cluster would dissolve due to cluster destruction. 
+
+%An absent or weak YCL does not necessarily signify the lack of recent cluster formation.
+%is not alwaexcluding a recent starburst scenario. 
+%In fact, NGC\,1365 and 1672, neither of which have a prominent YCL, have the largest $\Delta$MS and are host to the most extreme central starbursts in the sample \citep{brandt_rosat_1996, querejeta_stellar_2021, whitmore_phangs-jwst_2023}.  These galaxies have significant dust, which shifts the YCL feature along the reddening vector into the middle age plume.
+%Depending on the dust content of the host galaxy, the YCL feature can be shifted towards the MAP which is the case for the dusty starbursts in NGC\,1365 \citep{whitmore_improving_2023} and NGC\,1672 \citep{brandt_rosat_1996}.
+%Also NGC\,1385 lies above the MS and lacks a distinctive young cluster locus which might be the result of strong dust reddening (See E(B-V) vs. age diagram in \citet{thilker23sed}).
+%By comparing the relative position to the MS in figure\,\ref{fig:ms}, we do not find a clear trend for galaxies with a prominent YCL. %This is most likely due to the fact that the star formation estimator used here is not sensitive to the YCL population. This is further supported by the lack of correlation between $\Delta$MS and the relative number fraction of clusters associated with the YCL as seen in Figure~\ref{fig:ms_stats}. We find no correlation for human classified clusters in the YCL and even a slight anti correlation for the ML classification. 
+
+%Interestingly all these three galaxies are barred and host an AGN \citep{2013Natur.494..432R,2011ApJ...734...33J,1990ApJS...74..347K}. 
+
+\subsection{$\Delta$MS \& Middle Age Plume (MAP)}\label{sec:map}
+The MAP feature is visible for most of our galaxies and for some galaxies this feature is by far the most prominent one. 
+Figure~\ref{fig:ms} shows that galaxies with more positive $\Delta$MS values have more distinct MAP features. In fact, galaxies below the MS tend to lack this feature, as in NGC~4569, 4689, 4571, 1317, 4548, 2775 and 4826. 
+This trend is apparent in Figure~\ref{fig:ms_stats} through a clear correlation between the number fraction of clusters situated in the MAP and the $\Delta$MS value. 
+
+A linear fit to this correlation yields the same slope of $0.14$ for both human and ML classified cluster samples. This behaviour may be expected since the SFR values are the average of the star formation history of $ < 100\,{\rm Myr}$, and the MAP holds the largest fraction of such clusters. %This not only confirms the robustness of the main regions, we selected through color-color diagrams but further underlines the diagnostic power of color-color diagrams.
+
+
+\subsection{$\Delta$MS \& Old Globular Cluster Clump (OGC)}
+% globular clusters
+The OGC feature in the color-color diagram contains the oldest star cluster populations in each galaxy. A larger relative number of globular clusters may indicate intense star formation in the early evolutionary phase of the galaxy \citep{BS06}, whether in-situ or ex-situ \citep[and references therein]{CG19}, but also means that the clusters have not been disrupted and have persisted through time. 
+In particular NGC 4826, 6744, 3621, 628c, 1097, 1512, 1433, 1300 and 2775 host a significant population of old globular clusters, which are almost exclusively classified as class 1.  There is no correlation with $\Delta$MS.
+
+%By looking at the position on the MS of these galaxies, we find a large scatter: For instance is NGC\,1097 situated slightly above the MS, whereas e.g. NGC\,2775 or 4826 are significantly below it. This can be explained by the fact that globular clusters have nothing to do with recent star formation. 
+%In addition, when galaxies have less dust fewer clusters in the field are covered and the distinct globular cluster region appears more prominent in the color-color diagram.
+
+
+
+
+\section{An atlas of star cluster spatial distributions}\label{sect:spatialdist}
+
+A careful examination of Figure~\ref{fig:ms} in combination with our HST imaging reveals a number of trends between the positions of the galaxies in the diagram and galaxy morphology.  This motivates examination of the properties of the cluster populations in relation to both $\Delta$MS and galaxy morphology.  For this and other science applications \citep[e.g., calculation of correlation functions, constraints on star formation timescales, and comparison with simulations, e.g.,][]{Gouliermis14, grasha_spatial_2015, grasha_hierarchical_2017, grasha_spatial_2019, turner22}, it essential to examine the 2D spatial distribution of clusters in each galaxy.
+
+Here, we provide an atlas of star cluster maps for the full PHANGS-HST 38 galaxy sample.  In Figure~\ref{fig:spatial_dist} to \ref{fig:spatial_dist_9}, we present the spatial distributions of the clusters associated with the three principal features of the color-color diagram -- the old globular cluster clump (OGC), middle age plume (MAP), and young cluster locus (YCL).  A color composite HST image is included, and ALMA CO(2-1) intensity contours are overlaid on the maps of the YCL. Following the analysis of the previous section, we show the maps in decreasing order of $\Delta$MS values.   
+
+A broad examination of the overall atlas shows that objects associated with the YCL are generally found in areas with CO, as expected. On average, we find that YCL objects are coincident with CO twice as often than objects associated with the MAP or OGC (Figure~\ref{fig:dist_gmc}).   As also expected, YCL objects closely trace the spiral structure and central dynamical rings, and reflect the structure of the ISM from which they are born.  These structures then disperse with age -- the spatial organization is broader for the MAP objects, and is closest to a random distribution for objects associated with OGC.
+
+%By studying the spatial distributions of the MAP and the OGC, we find in most of the cases that the MAP still represents the main features of the host galaxy but is further spread out that the clumpy YCL. In contrast objects associated with the OGC are almost evenly distributed.  
+%To provide a first analysis of the spatial relationship between molecular gas and each population, 
+%we show in Figure~\ref{fig:dist_gmc} the fraction of the YCL, MAP, OGC which are co-spatial with ALMA CO(2-1) sightlines having at least ${\rm S/N > 6}$. 
+% main results
+%In most galaxies, objects associated with the YCL are found in CO detected Giant Molecular Clouds (GMCs). On average, we find these objects are twice as often associated with molecular gas than objects found in the MAP or OGC. By studying the spatial distributions of the MAP and the OGC, we find in most of the cases that the MAP still represents the main features of the host galaxy but is further spread out that the clumpy YCL. In contrast objects associated with the OGC are almost evenly distributed.  
+
+\section{Galaxy morphology}
+To facilitate a multi-scale examination of trends across the 38 PHANGS-HST galaxies, we combine information about key galaxy morphological features with galaxy $M_*$ and $\Delta$MS in Table~\ref{tab:DeltaMS}. The classifications in Table~\ref{tab:DeltaMS} are based on visual examination of a BVI image by co-author BCW. 
+
+We have checked how well our visual classifications agree with prior reference studies in the literature for bars, global spiral structure, and flocculent star formation. For example, we find that all 15 galaxies in which we have identified 
+% star forming bars - BCW changed, and commented out next two sentences 
+bar-driven SF (i.e., either in the bar, in a central star-forming ring at the inner end of the bar, or at the outer end of the bar) are indeed classified as barred (11 / 15 as SB and 4 / 15 as SAB) by \citet{buta15}. 
+% For our purposes here, we distinguish between star forming bars and bars without star formation, and exclude the latter from Table~\ref{tab:DeltaMS}. The galaxies which are not marked in Table~\ref{tab:DeltaMS} which were classified as barred by Buta are NGC 4536, NGC 1087, NGC 1566, NGC 2835, NGC 6744, IC 1954, NGC 685, NGC 1433, and NGC 4548.
+
+We performed a similar check on our classification of spiral structure, as determined by \citet{EE87}. Here we find that 8 of the 9 galaxies in which we have identified global spiral structure, and that are within the sample defined by \citet{EE87}, are consistent with the their determinations. Similarly, 9 of the 11 galaxies in common characterized as flocculent agree. We conclude that our classifications are in reasonably good agreement with previously established determinations.
+
+Starting at the top of Figure~\ref{fig:ms} and Table~\ref{tab:DeltaMS}, we note that several of the galaxies with the largest positive residuals are galaxies with star forming bars, such as NGC 1365, NGC 1672, NGC 4303, NGC 7496, NGC 1385, and NGC 1559. On the other hand, most of the galaxies with the largest negative residuals are flocculent and quiescent galaxies, like NGC 4826, NGC 2775, NGC 4548, NGC 1317, NGC 4571, and NGC 4698.    
+%to provide a tabular representation of corr in the main sequence diagram shown in  Figure~\ref{fig:ms}. 
+Other properties that tend to be correlated with positive $\Delta$MS are the presence of star formation at the end of the bars and the presence of global spiral arms. Galaxies with bulges tend to have negative $\Delta$MS as expected.
+
+\section{Relation of cluster population properties to $\Delta$MS and Galaxy Morphology}
+
+\subsubsection{Bars and central rings}
+
+ As just mentioned, many of the galaxies with the largest $\Delta$MS are those with bars that appear to be driving star formation.  
+ The presence of a strong bar is known to effectively funnel gas into the galaxy's central regions \citep[e.g.][]{athanassoula_existence_1992,sellwood_dynamics_1993,kuno_nobeyama_2007, sormani_fuelling_2023, schinnerer_phangs-jwst_2023}.  This process creates high gas densities, leads to more efficient star formation, and often promotes cluster formation. 
+
+An examination of the star cluster color-color diagrams for such galaxies in Figure~\ref{fig:ub_vi_1} shows they all have prominent middle age plumes, as expected based on Figure~\ref{fig:ms_stats}. NGC 1365, the galaxy with the highest SFR in the sample (16.90 M$_{\odot}$ yr$^{-1}$), is exceptional, and this activity results from the combination of a bar which drives a central star-forming ring, and strong spiral arm structure.
+ It not only has a particularly prominent middle age plume, but also has the richest population of massive young clusters of any known galaxy within 30 Mpc, with $\sim$30 star clusters more massive than 10$^6$M$_{\odot}$ and younger than 10 Myr \citep{whitmore_phangs-jwst_2023}.
+ 
+ The cluster spatial distribution maps (Figures~\ref{fig:spatial_dist}-\ref{fig:spatial_dist_9}) reveal star formation hot-spots where young clusters dominate, many of which are related to the presence of a bar. %By comparing these region with the morphological classification one can locate where such local star bursts happen. 
+Beyond NGC~1365, central star-forming rings are found in an additional 6 galaxies, and all but one of these galaxies also exhibit 
+% a star-forming 
+a clear bar morphology (Table~\ref{tab:DeltaMS}).  The presence of the ring is reflected in the distribution of young star clusters.
+Concentrations of young clusters also appear at the connection points between bars and spiral arms as observed in NGC\,1365, 7496, 1097, 1300, and 1512. The enhanced star formation at these parts of galaxies are explained by the increase of density due to the elliptical orbits in bars \citep[e.g.][]{nguyen_luong_w43_2011,beuther_interactions_2017}. 
+Interestingly, these cluster hot-spots are dominated by highly dust-reddened ($>1.5 A_V$) young ($<{\rm 10\,Myr}$) clusters, which are located in the middle-age plume or globular cluster region rather than the young cluster locus \citep{whitmore_improving_2023, thilker23sed}. This means that these high density regions have large amounts of dust which have a major impact on our HST UV-optical observations, and long-wavelength JWST and ALMA observations become essential for studying the earliest stages of dust and embedded star and cluster formation \citep[e.g.][and Sun et al. in prep.]{johnson_physical_2015, leroy_phangs-alma_2021, emig_super_2020,rico-villas_super_2020, levy_outflows_2021, levy_morpho-kinematic_2022, schinnerer_phangs-jwst_2023, whitmore_phangs-jwst_2023}.
+
+% middle age clusters 
+% bars & the overshoot in NGC 1079
+%The young cluster and the globular cluster population are representing quite homogeneous  groups of clusters as they only probe clusters of $<{\rm 10\,Myr}$ and $\sim{\rm 10\,Gyr}$. The MAP, however, spans over a quite large evolution of clusters. Clusters of $\sim{\rm 20\,Myr}$ should be still fairly near their formation site whereas the older end of this population $\sim{\rm 500\,Myr}$ should be completely disconnected to any star formation sites. 
+Another common feature of galaxies with bar-driven star formation is that middle-age clusters are found near the young cluster hot-spots, as well as throughout the bar (e.g., NGC~1672, NGC~2903, NGC~1097).  Comparison with the distribution of the old globular clusters, which are more uniformly distributed, makes it clear that the middle-age clusters still reflect the dynamical features of their galaxy.
+
+Some galaxies show a string of middle-age clusters parallel to the bar (e.g., NGC~1097). This population seems to be a relic from a star-formation episode after which the star clusters remained on a similar orbit. In fact, this scenario is described by simulations in \citet{dobbs_age_2010} and their Figure 2 reflects a situation where $\sim50$\,Myr old clusters are orbiting parallel to the bar. \citet{sormani_simulations_2020} suggested that such clusters are formed near the central ring and then collectively moved out into the galaxy. %as they are not restricted by viscose gas and dust. 
+Considering the relative position above the MS of these galaxies, we can infer that such a past star formation episode contributes to the enhanced SFR value.
+%This is in fact a behaviour, we can observe in some galaxies and is most striking in NGC\,1672 and 2903. In these barred galaxies, we find some middle-age clusters near young cluster clumps but also an evenly distributed population inside the bar. By comparing their distribution with the globular cluster population, we clearly see that middle-age clusters still show higher concentrations associated with morphological features of their galaxy.
+%In NGC\,1097 we see %see how middle age dissect different cluster populations locally: We see 
+%the majority of young clusters along the bar and in the central star-forming ring, while globular clusters are more uniformly distributed. Some middle-age clusters are also found near star formation hot-spots and inside the bar. 
+%We, furthermore, see a string of middle age clusters parallel to the bar. This population seems to be a relic from a star-formation episode after which the star clusters remained on a similar orbit. In fact this scenario is described by simulations in \citet{dobbs_age_2010} and their figure 2 reflects a situation where $\sim50$\,Myr old clusters are orbiting parallel to the bar. \citet{sormani_simulations_2020} suggested that these clusters were formed near the central ring and then moved collectively out into the galaxy. %as they are not restricted by viscose gas and dust. 
+%Considering the relative position above the MS we can assume that such a past star formation episode was responsible for the enhanced SFR value.
+
+
+\subsubsection{Flocculent star formation}
+
+
+Galaxies with flocculent morphologies dominate the galaxies below the main sequence (i.e., with negative $\Delta$MS; see Table~\ref{tab:DeltaMS}). As already discussed in Section~\ref{sec:map} and shown in Figure~\ref{fig:ms_stats}, galaxies with negative $\Delta$MS tend to have peculiar color-color diagrams (Figure~\ref{fig:ms}) which lack a distinct MAP feature, indicating a major departure from steady-state star-formation due to interactions with their external environments. 
+
+Examination of individual cases shows the connection between the MAP deficiency, and galaxy morphology. %We now link this trend back to the flocculent morphologies of these galaxies.
+In particular, NGC 2775 is of Type a SA(r)ab with an intermediate sized bulge, a flocculent disc, and a color-color distribution that appears strongly bimodal.  It has the second lowest $\Delta$MS in the sample and flocculent structure so striking that its HST imaging has captured broad attention\footnote{\url{https://esahubble.org/images/potw2026a/}}. %with a strong young cluster locus and old globular cluster clump but a weak middle age plume. 
+Almost all class 1 clusters are situated in the bulge and class 2 clusters in the disc (Figure~\ref{fig:spatial_dist_9}). The bimodal distribution originates from the combination of a relatively dust free old central region with no recent star formation \citep{hogg_hot_2001}, and flocculent star formation thought to be seeded by accreted gas \citep[i.e., from the nearby companion NGC\,2777,][]{arp_properties_1991} which led to a disk rejuvenation event. 
+
+Two other flocculent galaxies NGC\,4571 \citep{kennicutt_evolution_1983} and NGC\,4689 \citep{elmegreen_arm_2002} exhibit a strong YCL feature. They are adjacent in Figure~\ref{fig:ms} below the main sequence.  NGC\,4689 is a member of the Virgo cluster. The galaxies are not able to sustain their star formation as they are presumed to have lost most of their gas due to their environment \citep{kenney_co_1986}, resulting in a weak middle-age plume.
+
+Our multi-scale observational analysis is consistent with a two-component disk model which predicts a dearth of intermediate age stars in the disk of a flocculent galaxy \citep{ET93,SM22}.  In this model, flocculent patterns arise through gravitational instabilities in a low-mass cool disk component embedded in a massive halo. \citet{SM22} suggest that a two-component disk could arise naturally with the abrupt accretion of gas following a period of gas starvation. Flocculent instabilities would then give rise to star formation in short arm segments. 
+
+
+% galaxies shifted below the MS
+%NGC\,685, 4569, 1433, 4689, 4571, 1317, 4548, 2775, 4826 are galaxies shifted below the MS (Figure\,\ref{fig:ms}). 
+%In comparison to the galaxies shifted slightly above the MS, we do not find large clumps of young clusters in the disc, with the exception NGC\,1314 as it has a star forming ring, dominated by young clusters. However, This galaxy has a low surface brightness profile with a sparse cluster population indicating very low global star formation activity. 
+All of these flocculent galaxies below the MS show an evenly distributed cluster population with no significant hot-spots of clusters. 
+%This suggests that the clump structure evident younger cluster populations already disappears.  
+%As we discussed in Section~\ref{ssect:cc_sf}, these galaxies lack middle age clusters for which the used star formation tracer is sensitive to. 
+
+
+% Galaxies with the highest star formation activity
+%Galaxies exhibiting the highest star-formation activity in the PHANGS-HST sample such as NGC\,1365, 1672, 4303, 7496, 1385 and 1559 are characterized by clumps of young clusters situated on or directly next to GMCs. 
+%A closer inspection reveals that clusters of the YCL are not always co-spatial with the ones of the MAP. In fact we find middle age clusters to be less clumpier and more spread out into the field. 
+
+
+%These differences are expected, considering the time scales these two populations probe. 
+%In fact there are multiple possibilities to explain why middle age clusters are not spatially close to young cluster populations or GMCs: for instance the star formation in a certain region can have stopped due to the depletion of a local gas reservoir leaving behind an aging cluster population with no gas or younger star clusters. Another explanation is that the molecular gas was either pushed away by star formation feed back or the star clusters subsequently moved out of the gas clouds after their formation. Considering the spiral structure of these galaxies, it is also possible to explain the spatial offset by the spiral arm passing through, leaving behind a stretched out distribution of middle-age clusters. 
+%These scenarios would well fit into the time scales the MAP populations are covering ($\sim 10\,{\rm Myr}$ up to several hundreds of Myr).
+% concentration in spiral arms
+%This behaviour is also well visible in the well-defined spiral arms of NGC\,1566: Young clusters are found in a thin stripe next to the dust lanes with a strong overlap with the molecular gas. Middle-age clusters also follow this structure but with a significant larger spread. This is especially noticeable in the color-composite images, as the center of the spiral arms is blue (young), framed by green (middle-age).
+
+%A closer inspection reveals that young cluster populations and the middle-age ones are not always co-spatial. 
+%This suggests that the middle age population which is $>{\rm 10\,Myr}$ seem to have moved out of their stellar nurseries. 
+%By comparing the median distance of young and middle-age clusters to the closest GMCs, as shown in Figure\,\ref{fig:dist_gmc}, we indeed find that middle age clusters tend to have larger distances to GMCs than young clusters.
+%\citep{2023A&A...673A.147P} look at
+% hotspots of star formation
+
+
+% globular clusters 
+%The distribution of old globular clusters in galaxies follows in some way the mass distribution of the host galaxy. However, beyond that, no clustering can be observed, which is a not surprising result as these star clusters were created about 13\,Gyr ago \citep{thilker23sed} and orbiting in the galaxy ever since. Thus we find these old globular clusters also in regions, where no recent star formation took place due to prohibited gas orbits such as between outer rings and bars in NGC\,6744, 3351, 1300, 1512 and 4548. These regions have a lack of gas, as the bar structure rapidly funnels gas into the center, where the subsequent star formation takes place. As a consequence the region in between does not get populated by younger or intermediate age clusters and only old globular clusters from past star formation are present.
+
+
+
+
+
+
+
+% discussion with molecular gas 
+%molecular gas and star formation in NGC 4826 \citep{2003A&A...407..485G}
+%GC and middle age cascade is around 100 pc for NGC 2903 and 3621
+%NGC 2930 is a gas rich star forming galaxy \citep{2012ApJ...758..105Y}
+
+
+%
+
+%
+%
+\begin{figure} 
+\includegraphics[width=0.48\textwidth]{molecular_gas_stats_snr_6.pdf}
+\caption{Histograms representing the percentage of C1 + C2 compact clusters associated with molecular clouds. We show for each characteristic region (YCL, MAP and OGCC) the percentages of clusters which are co-spatial with ALMA CO(2-1) molecular gas detection with a S/N$>6$. The human-classified and machine learning classified samples are shown separately.}
+ \label{fig:dist_gmc}
+\end{figure}
+%
+\section{Discussion}\label{sect:discussion}
+
+With the completion of the largest HST census to-date of star clusters and compact associations, we are beginning to realize the scientific potential of PHANGS-HST to advance our understanding of star clusters, and break new ground in the multi-scale characterization of their observational properties.  
+
+The nature and size of our dataset allow us to bring together once-separate techniques for the characterization of galaxies (galaxy morphology and location relative to the galaxy main sequence) and clusters (color-color diagrams and 2D spatial distributions) for a diverse sample of spiral galaxies.  We provide a broad overview of the demographics of the objects in our catalogs, which demonstrates that tremendous insight can be gained from the observed properties of clusters alone, even in the absence of their transformation into physical quantities.  
+
+In particular, we show the utility of the UBVI color-color diagram.  The UBVI CCD reveals that the three standard morphological classes of clusters and associations map to distinct combinations of YCL, MAP, and OCG features, and hence to distinct age distributions.  It provides a model-independent graphical representation of the star formation history of individual galaxies as traced by clusters.  In fact, when coupled with population synthesis model tracks and dust reddening laws, the UBVI CCD exposes how SED fitting translates photometric colors into ages, and how dust gives rise to a degeneracy between age and reddening.   The much broader distribution of low luminosity/low mass systems in the UBVI CCD illustrates how photometric colors do not map uniquely to a given age, even if the reddening and metallicity are known.
+
+%\textbf{UNDER CONSTRUCTION - jcl working on revising rest of this section; drafts of all other parts of paper are complete!}
+
+Nonetheless, robust determination of their physical properties, which we discuss in Paper II, as well as careful attention to the completeness limits of the catalogs, are required for proper quantitative study of the timescales and processes governing the star and cluster formation cycle.  Here we discuss issues related to sample completeness both to outline future work and to provide advice to users of the catalog.
+
+Characterizing the completeness of star cluster samples is known to be a messy business. While completeness will depend on the distance of the galaxy (which changes by a factor of 4 from 5-23 Mpc in PHANGS-HST), it also is affected by:
+\begin{itemize}
+    \item local background in the galaxy, which can be highly variable.  For example, cluster candidates are not detected in the bright central regions of some galaxies (e.g., NGC\,1566, 3627, 1317 and 4548; Figure~\ref{fig:spatial_dist}-\ref{fig:spatial_dist_9}). Completeness will also be a function of the density of resolved sources (crowding).
+    \item dust, which can also be highly variable across a galaxy.  Incompleteness will be higher for the youngest clusters ($\lesssim5$ Myr), which are still clearing the natal gas and dust from the environments in which they are born.  The earliest stages of star and cluster formation will be entirely dust enshrouded and unobservable in the optical.   The PHANGS-JWST dataset will be critical in this regard for completing the cluster census at young ages, and this was a key science driver for the survey \citep[][and references therein]{lee_phangs-jwst_2023}.
+    \item the size of the cluster, and the underlying cluster size distribution.  Incompleteness is likely higher for the most compact clusters, which may not be distinguishable from a point source \citep[e.g.,][]{ryon_effective_2017, brown_radii_2021}.  
+    \item the details of the source detection algorithm and candidate selection criteria.  Two issues are particularly important to note in this context.
+    \item the age of the cluster, due to the evolution of the mass-to-light ratio,
+    \begin{itemize}
+    \item As discussed in \citet{lee_phangs-hst_2022} and Section~\ref{ssect:cat_content}, the PHANGS-HST pipeline is optimized to identify single-peaked clusters, which leads to a high level of incompleteness for multi-peaked stellar associations (class 3).  The majority of star formation occurs in stellar associations \citep[][and references therein]{lada03,ward18, ward20, wright20}.  Whether the C3 compact associations provided in this catalog should be used will thus be heavily dependent on the science goal of the analysis. A separate pipeline for stellar associations, based on a watershed algorithm, provides a far more complete inventory of young stellar populations across multiple physical scales \citep{larson_multi-scale_2022}. Multi-scale stellar association data products for the full 38 PHANGS-HST galaxy sample will be published at a later date.  
+    \item Even when pipelines are specifically developed for single-peaked clusters, differences in the adopted detection algorithm and morphological selection criteria \citep[which has generally been based on some form of concentration index, e.g.,][]{chandar_luminosity_2010, adamo_legacy_2017} can lead to significant differences in the populations captured.  As discussed in \citet{thilker_phangs-hst_2022}, LEGUS \citep{calzetti_legacy_2015} has produced cluster catalogs for four of the seven galaxies in common with PHANGS (NGC~628, NGC~1433, NGC~1566, NGC~3351)\footnote{\url{https://archive.stsci.edu/prepds/legus/dataproducts-public.html}}, and there is an overlap of 50–75\% of human verified C1 and C2 clusters in the union of the LEGUS$+$PHANGS-HST catalogs.  Understanding the differences in the catalogs, and comparison of results based on the union of the two catalogs with those based on the separate catalogs from each survey will be important subjects for future investigation.
+    \end{itemize}
+    \item unknown-unknowns, e.g., systematics in the neural network morphological classifications, particularly for the fainter sources in the sample for which human classifications were not generally performed. 
+    
+\end{itemize}
+
+In the future, analysis of artificial star clusters added to the HST imaging can be performed to quantify catalog completeness \citep[e.g.,][]{adamo_legacy_2017, tang_cluster_2023}.  In the meantime:
+%\subsection{Sample Completeness}
+\begin{itemize}
+\item In Section~\ref{sect:catalog_properties}, we provide basic statistics for the size and depths of the catalogs for both individual galaxies and the total sample aggregated across all 38 galaxies.  These data can be used to estimate the completeness limit of the catalogs, by locating the turn-over point in the luminosity (or mass functions) as has been done in prior work \citep[e.g.,][]{ryon_effective_2017, cook_star_2019}.
+\item analysis can be conducted using different sub-samples of the catalog, selected based on a completeness-dependent parameter, and the results compared.  For example, sub-samples can be defined with different magnitude limits, galaxy distances, from different regions of the galaxies (e.g., excluding the inner crowded, high background parts of the galaxy).  Comparative analysis using C1 vs C2 vs C1+C2 samples, as suggested in \citet{whitmore_star_2021} and demonstrated in several figures in the current paper (e.g., Figures~\ref{fig:cc_compare} and \ref{fig:colo_colo_first_view}) can also be performed.
+\end{itemize}
+%\item with human-classified and machine-classified catalogs can be compared.
+%\item results based on different magnitude limits can be compared. While the normal tendency is to maximize the size of the sample, this is where systematic selection effects are likely to appear. %In most cases, results will be clear based on analysis of the bright part of the distribution, and you will end up chasing noise at the fainter levels. For example, based on Figure 3 a magnirude cutoff of Mv = -8 mag is a natural breaking point that will minimize differences between human and ML catalogs.
+%\item results based on samples in different distances ranges can be compared
+%- Compare difference parts of galaxies (e.g., exclude the inner very crowded, high background parts of the galaxy).
+%Compare using C1 vs C2 vs C1+C2, as suggested in Whitmore et al. 2021, Thilker 2024, and demonstrated in several figures in the current paper (eg., figures 5, 6, 8)
+%If your primary results provide a much stronger signal than the scatter in these different comparisons, you can be sure you have a robust result.
+
+Finally, due to the black-box nature of the neural-network models, comparative analysis with human-classified and machine-classified catalogs should be performed.
+It would be hoped that the agreement between human and ML classification would be so robust that the we can rely entirely on the ML catalog once it is built. While the current state of the art is quite promising (especially for C1+C2), we are not yet at a stage where  ML classification can be used blindly - care  must be taken.
+ Machine learning classifications will continue to improve, but the subject is still at an early stage of development. See \citet{wei_deep_2020, whitmore_star_2021, perez_starcnet_2021, hannon_star_2023} for additional discussion and other examples of how well the ML classifications perform for specific science applications.
+
+
+
+%\subsection{The star cluster content of nearby galaxies}\label{ssect:discuss_content}
+
+%Color-color diagrams have great power to find conclusions about the stellar population. In some cases, it may be obvious which global events and mechanisms have shaped the cluster population as we find it. 
+%In fact color-color diagrams can be seen as a blend together of all cluster population situated in different environments. Especially the shift due to dust attenuation makes it challenging to distinguish between different populations and to conclude on their underlying mechanism.
+%To gain more precise insights, we need to look at the spatial distribution of the individual cluster groups.
+
+% transormation on how we are studying cluste content of galaxy 
+%With the present work we provide human and ML classified star cluster and compact association catalogs for each of the 38 PHANGS--HST galaxies.
+%This not only offers the possibility to study certain cluster types individually, but also provides a new view on the stellar population in galaxies. 
+%With the unprecedented size of these catalogs due to ML-based classification and the available observational (this work) and physical \citep{thilker23sed} properties, we transform the way how the cluster content of galaxies is studied.
+%A first analysis in this work shows that clusters can be used to find a link between the cluster population and global properties such as star-formation activity (see Sect.\,\ref{ssect:cc_sf}) or study the spatial distribution with respect to the molecular gas reservoir of a galaxy (see Sect.\,\ref{sect:spatialdist}). 
+
+
+
+
+% different depth in magnitude between the human and the ML sample
+%In order to use the cluster and compact association catalogs, many aspects of individual galaxies have to be taken into account: The galaxies are distributed over a range of distances (4 to 23\,Mpc) and some exhibit bright centers (NGC\,1566, 3627, 1317 and 4548), prohibiting the detection algorithm to find any candidates in these regions due to the bright background. 
+%These factors can lead to a truncation of the magnitude distribution which has to be taken into account when conducting an analysis which depends on completeness.
+%Furthermore, properties of the host galaxies have to be taken into account as we find a variation of morphological features (bars, rings, discs, spiral arms) \citep{querejeta_stellar_2021} or in some cases the activity of the central nuclei (REF). %In addition to that, we find a diversity of the spatial distribution of young clusters suggesting different trigger mechanisms for star formation (REF). 
+
+% classification of ML is good but has its flaws. Better use the classification quality flag?
+%Another aspect that the user of the catalog must consider is the difference between human and ML classification. The human classified catalogs are more accurate per se, but do not cover all galaxies equally. Especially in galaxies with many candidates, only the brightest clusters are classified, resulting in different depths (See Sect.\,\ref{ssect:v_mag}). 
+%This is not the case for the ML catalog, which goes on average 1 V-band magnitude deeper than the human catalog. However, the ML classification must be taken with caution: the accuracy is $\sim$60--80\,\% which also depends on the cluster brightness \citep{hannon_star_2023}. This caveat can be circumvented by including the accuracy flag (See Sect.\,\ref{sect:catalog_content}), indicating the likeliness a cluster was correctly selected by the CNN. But this comes at a cost of diminishing the sample size and possibly truncating fainter clusters.
+
+% due to different sensitivities it is not entirly clear how deep into dust we are peering and how far into the embedded stadium of recently formed star clusters are detected?
+%Taking into account the different magnitude limitations and the classification accuracy, there is an additional aspect for young clusters the catalog user needs to pay attention to: It is not entirely clear how many young clusters, covered by dust, are missing and how far back we can look into their formation history. 
+%Due to dust attenuation young dusty sources can remain undetectable until it cleared most of their gas. 
+%The time scale to clear out the majority of the dust is estimated to be between 2 and 5\,Myr  \citep{hollyhead_studying_2015, hannon_h_2019,kim_environmental_2022}. This means that it is  unlikely to detect clusters younger than 5\,Myr and certainly younger than 3\,Myr due to dust obscuration. However, the detection depends as well on the brightness of the cluster, as massive young objects can shine through the layers of dust. In %\citet{scheuermann_stellar_2023} it was found that $71.8\,\%$ of all detected HII regions have at least one counterpart of multi-scale stellar associations \citep{larson_multi-scale_2022}. 
+%The stellar models we use here show no significant evolution during the first 3 Myr, which makes dust the limiting factor. Also the parallel estimation of physical properties \citep{thilker23sed} is not sensitive to the evolutionary stage of cluster formation below 1\,Myr. 
+%This means that in addition to the detection limit at different distances dust can prohibit our detection pipeline to see the very young cluster population. This can also vary with the star-forming environments as they can have different amounts of dust.
+%A case study for highly dust embedded clusters has been performed for NGC\,7496 in \citet{rodriguez_phangs-jwst_2023} finding 67 embedded clusters ($\sim10^4 - 10^5\,{\rm M_{\odot}}$) of which only eight were found in the PHANGS--HST catalog. We find a clear spatial link between the molecular gas reservoir and the young cluster population in Sect\,\ref{sect:spatialdist}. However, it is under debate how many clusters we are missing and if we are probing different early cluster formation stages depending on the environment, detection limits and the wavelength of the observations used to detect clusters.  
+
+
+%\subsection{Color-color diagrams and the properties of the host galaxy}\label{ssect:discuss_cc}
+% the separation of different regions using color color diagrams works good
+%Color-color diagrams are widely used as a diagnostic tool and to compare stellar populations with evolutionary tracks of models. 
+%As discussed in Sect.\,\ref{ssect:cc_overview}, the U-B vs V-I diagram in particular performs best. On the one hand this is based on the choice of the U-band instead of the NUV-band as the latter suffers from low S/N measurements for fainter or dust-reddened clusters. 
+
+%On the other hand this diagram type finds a good separation of the different age classes, which makes this diagram an excellent classification tool, or clusters above $\sim3-5\,{\rm Myr}$ in age (given the previous paragraph).  
+%When considering the color-color distribution of C1 and C2 cluster of $14,440$ in the human catalog and $35,111$ in the ML catalog, three characteristic regions are clearly visible: the Young cluster sequence (YCL), the Middle-age Plume (MAP) and the Old Globular Cluster Clump (OGC). We parameterized these features by computing contour lines around these regions in Section~\ref{ssect:cc_regions}. 
+
+%This subdivision, we provide here, can be used in some sense as a surrogate for groups representing different evolutionary stages. However, due to dust reddening this is not replacing a proper age and reddening dating of the clusters as we did in \citet{thilker23sed}. In order to finally use these regions we had to re-assign young highly dust reddened clusters found in the MAP and OGC to the YCL. 
+
+%These color-color plots show that the youngest clusters we can detect,  where the majority of new stars are formed, exhibit the largest dust content, in agreement with observational studies at longer wavelengths and theories of star cluster formation and evolution \citep[e.g.]{rodriguez_phangs-jwst_2023,leroy_forming_2018,krumholz_star_2019, emig_super_2020,levy_morpho-kinematic_2022,kim_environmental_2022} 
+%It even turns out that young clusters found in clumpy regions, where the majority of new clusters were formed, exhibit the largest dust content.
+
+% global properties
+%We discussed the link between the color-color distribution and the relative distance to the MS of star-forming galaxies ($\Delta$MS). 
+%We find a significant correlation between the fraction of clusters found in the MAP and the $\Delta$MS value of the host galaxy. Intuitively one would assume that the YCL would show the the strongest correlation with global star formation estimators as the time scale of local star bursts is ${\rm \sim 10\,Myr}$ \citep{leitherer_time_2001}. But this is not the case since we find no correlation for the human classified C1 and C2 clusters (Pearson correlation coefficient $=-0.01$) and for the ML classified once even a slight anti correlation (Pearson correlation coefficient $=-0.30$). As discussed in Section~\ref{sssect:cc_trends} this behaviour is due to the fact that our SFR estimator is most sensitive to clusters up to 100\,Myr and therefore the cluster in the MAP traced by this measurement \citep{salim_galex-sdss-wise_2016}. 
+%For example the SFR estimation based on dust corrected H$\alpha$ line luminosity, probes HII region and therefore younger stellar populations ${\rm \sim 10\,Myr}$ of age \citep[see discussion in ]{flores_velazquez_time-scales_2021}.
+%The fact that the SFR correlates with the size of middle-age clusters suggests that one can in a certain way deduce the star formation history of a galaxy from its cluster population. Of course, one has to consider that cluster destruction \citep[e.g., see ][]{chandar_luminosity_2010,chandar_age_2016,chandar_star-cluster_2014, adamo_legacy_2017, krumholz_star_2019} and an accurate estimation of the completeness is needed. Nevertheless our findings here indicate that novel approaches to model the entire cluster population as done by \citet{tang_cluster_2023} could become a standard tool unveil the past evolution of a galaxy.
+
+%For some galaxies we see strong evidence that these two diagnostics are shaped by the same mechanism. It is especially the presence or the lack of the young cluster locus that drives this relation. Interestingly, probes the YDP clusters till an age of ${\rm \sim 10\,Myr}$, which is in fact the timescale of local star bursts \citep{leitherer_time_2001}.
+%That the connection between star-formation activity and color-color distribution fits so well for PHANGS--HST galaxies may be due to the initial sample characteristics: They are predominantly face-on spiral galaxies of masses $M_{*} \gtrsim 10^{9.75}$~\msun and situated close to the MS \citep{lee_phangs-hst_2022}. 
+%This excludes a recent major merger and speaks rather for a scenario in which a steady gas inflow nourishes the ongoing star formation at a steady level. 
+%This clearly raises the question to what extent this connection works for other galaxy types such star burst galaxies or low-metallicity dwarf galaxies?
+
+
+
+
+
+
+
+
+
+
+
+%However, the outstanding opportunity of this method is not the location of the very young clusters: it is rather the mechanism on how young clusters move out of their stellar nurseries and become more and more dispersed (REF). Especially in the context of cluster destruction are these timescales of immense importance as it is not clear to what extent the local environment is responsible for cluster destruction (REF).
+%By looking at the median distance between star clusters and compact associations to GMCs we find young clusters, as expected to be the closest. On the contrary, middle age and old globular clusters are situated more distant to them. This simple analysis shows how powerful an accurate classification of the entire cluster population in a galaxy can be as it can connect global properties such as star-formation activity and molecular gas content to local star-forming regions. 
+
+
+
+%\subsection{The role of star cluster population in future works}\label{ssect:future_work}
+% intro words
+%In this work we present the publicly available cluster and compact association catalogs and discuss their properties to enable a correct use. We only investigate in some basic analysis to showcase the potential of these catalogs since a more detailed investigation would go beyond the scope of this article.
+%We therefore use this section to discuss the scientifically most interesting applications our data release offers.
+
+
+% KS relation MS and galaxy morphology.
+%In Sect.\,\ref{ssect:cc_sf}, and \ref{sect:spatialdist}, we have seen how a galaxies population of young and middle-age clusters can be connected to star formation activity and how star-formation hot-spots are distributed. However, as pointed out in Sect.\,\ref{ssect:discuss_content} and \ref{ssect:discuss_cc}, this analysis is not going deep enough to conclude on the underlying mechanism driving the star formation process itself. 
+%The empirical Kennicutt-Schmidt (KS) relation describes the connection between gas and SFR surface densities through a power law \citep{schmidt_rate_1959,kennicutt_global_1998}. Based on this relation one can estimate how efficient gas is turned into stars. This can be done for entire galaxies \citep[e.g.][]{tacconi_phibss_2018} or spatially resolved \citep{bigiel_star_2008,leroy_star_2008}. The latter analysis showed that the star formation efficiency in spiral galaxies is constant at a resolution of 750--800\,pc. 
+%This directly brings up the question if this is still valid on small scales and whether this is driven by local starburst regions, we see in form of young cluster clumps in Sect.\,\ref{sect:spatialdist}. Taking now samples of clusters and compact associations into account a whole new set of unexplored possibilities emerges merely due to the high resolution capabilities of HST $(\sim0\farcs08)$. In order to understand star formation efficiencies on small scales one need to understand at what rate clusters are being destroyed, how fast they disperse into the field and compare these findings to star formation and molecular gas surface densities. 
+%With the rise of JWST, enabling us to peer through the dust and allow us to measure local SFR surface densities in combination with HST and sub arc-second ALMA CO J = 2$\rightarrow$1 observations this field of research is ready to be explored and systematic catalogs of star clusters and compact associations will play a major role. 
+
+
+% extend the galaxy sample and discuss different galaxy types
+%One of the easiest ways to represent a galaxy's cluster population is through color-color diagrams, as we have done in Sect.\,\ref{sect:color_color}. However, the PHANGS--HST galaxy sample presented here is especially in terms of specific star formation rate of ${\sim}10^{-10.5} {-} 10^{-9}$~yr$^{-1}$ quite homogeneous. This raises the question whether color-color diagrams show similar shapes in e.g. star burst galaxies or quenched spiral galaxies. For the PHANGS--HST sample we found strong indications that we can indeed use the cluster population to connect local processes such as star-formation regions and spatial distribution of different cluster types to global galaxy properties and infer its past evolution. Now the question would be in how far this would work also for galaxies which have more extreme conditions such as ongoing mergers, interactions with radiation and outflows coming from an AGN or at different metallicities.
+
+% forward modelling, modelling the evolution of the stellar population in galaxies
+
+
+
+
+\section{Summary}\label{sect:summary}
+We present the largest catalog of star clusters and associations to-date for nearby galaxies.  For the 38 spiral galaxies of the PHANGS-HST survey, which span distances between 5 to 23 Mpc, our catalog provides aperture-corrected photometry in the NUV-U-B-V-I filters for:
+\begin{itemize}
+    \item a total of $\sim20,000$ star clusters and compact associations, with a median of $\sim500$ sources per galaxy, which have been visually inspected and morphologically classified by a human \citep[co-author BCW,][]{whitmore_star_2021}.  This subset of the catalog is comprised of $\sim$8000 class 1 and $\sim$8000 class 2 clusters, and $\sim$6000 compact associations (class 3).  The median $m_V$ of this human-classified sample is $\sim-8$ mag (Vega).
+    \item a larger sample of $\sim100,000$, with a median of $\sim1700$ sources per galaxy, which have passed neural network classification \citep{hannon_star_2023}.  This sample is comprised of $\sim$13000 class 1 and $\sim$23000 class 2 clusters, and $\sim$60000 compact associations (class 3).  The neural network models were trained on the human-classified sample, and deployed on the entire cluster candidate list of $\sim$190,000 sources. This yields a sample of clusters and associations $\sim$1 V-band magnitude deeper than the human classified sample.
+\end{itemize}
+
+ %Human classified ``inclusive" C1+C2+C3 samples span over a factor of ten in size from 68 in NGC\,1317 to 958 in NGC\,3627.  ML classified samples of the same variety span an even larger range from  192 in NGC\,1317 to 7948 in NGC\,3621.
+%The large variation in sample sizes between galaxies is perhaps the most basic demonstration of the diversity of cluster populations in nearby spiral galaxies.
+  
+We provide a broad overview of the observed properties of the photometric catalogs.  A summary of our findings is as follows.
+
+Regarding UV-optical color-color diagrams for star clusters and associations:
+\begin{enumerate}  
+\item given the typical depth of HST Treasury surveys of nearby galaxies, the U-B-V-I color-color diagram provides the greatest diagnostic power (relative to B-V-I and NUV-B-V-I) for distinguishing between different age populations and separating its three principal features --  the young cluster locus (YCL, $\lesssim$ 10 Myr), the middle-age plume (MAP, 1 Gyr$\lesssim$t$\lesssim$ 100 Myr), and the old globular cluster clump (OGC, t$\gtrsim$ 1 Gyr).  We provide contour based definitions for each feature.
+%\item the YCL has a slope parallel to the reddening vector (0.63 in the U-B-V-I color-color diagram) --> highlight in letter
+\item the C1, C2, C3 morphological classes have distinct color-color diagrams, and hence map to distinct age distributions.  C1 clusters have a prominent MAP and OGC, and weak, but narrow YCL.  C2 clusters have a clear YCL and MAP, but no OGC.  C3 compact associations have a strong YCL, and no significant MAP or OGC.
+\item  The distribution of clusters in the color-color diagram is qualitatively similar for human and ML classified clusters when both samples have similar magnitude limits.  This provides evidence for the robustness of the ML classifications.
+\item The distribution of low mass young clusters ($<$5000 M$_\odot$) on the color-color diagram show increased scatter which is generally consistent the impact of stochastic sampling of the stellar IMF.
+\end{enumerate}
+
+We bring together various techniques -- the characterization of galaxies (galaxy morphology and location relative to the galaxy main sequence) and cluster populations (color-color diagrams and 2D spatial distributions) -- to explore the dataset in a multi-scale context and demonstrate that the UBVI color-color diagram is a highly valuable, model-independent, observational diagnostic of the star and cluster formation history and evolutionary status of the galaxy.
+\begin{enumerate}
+\item As expected YCL populations closely trace spiral structure.  They are coincident with CO twice as often than objects associated with the MAP or OGC, and reflect the structure of the ISM from which they were born. These structures then disperse with age as has been found previously -- the spatial organization is broader for the MAP objects, and is closest to a random distribution for objects associated with OGC.
+
+\item There is no correlation between $\Delta$MS and the fraction of clusters in the YCL. The absence of a strong YCL feature at above the MS is generally due to dust reddening and does not necessarily imply the absence of cluster formation.  Above the MS, strong bars, a number of which are associated with central star forming rings, appear to be driving high star formation densities and promote cluster formation. Clusters trace the star forming rings, concentrations of clusters appear at the bar ends, and these populations tend to be highly dust-reddened.  At low $\Delta$MS the relative fractions of the cluster populations in each of the features reflects a complex star formation history due to the external environment of the galaxy (e.g., Virgo cluster) and interactions with neighboring galaxies.  At low $\Delta$MS, many galaxies have flocculent morphologies and evidence of a recent gas accretion (``rejuvenation'') event which is fueling low levels of star and cluster formation.  
+\item  There is a strong linear correlation between a galaxy's offset from the MS and the fraction of its cluster population in the middle-age plume.  In contrast to the YCL, dust is not a confounding factor as the width of the MAP indicates low amounts of reddening.  Above the MS, the presence of a strong MAP feature indicates the elevated star and cluster formation activity must have a duration on the order of 100 Myr.  Below the MS, galaxies appear to have a deficient MAP feature, which is consistent with a two-component disk model where flocculent patterns arise through gravitational instabilities in a low-mass cool disk component embedded in
+a massive halo which has recently accreted gas after a period of quiescence.    
+
+
+%This suggests that the the star formation history of a galaxy can be deduced from its cluster population. {\bf more here on implications for cluster formation and destruction rate for middle-age clusters?}.  
+%\item For some individual galaxies we can directly connect past events such as gas stripping to the color-color distribution of their cluster population, suggesting that one can indeed study the mass-assembly history of individual galaxies by analysing its cluster content.
+%\item The spatial distribution of star clusters visualize how clusters are mainly formed in clumpy regions and subsequently disperse into the galaxy. We see that twice as many young clusters are associated with molecular gas detections than middle age or old globular clusters, suggesting a relatively short time scale $< 10\,{\rm Myr}$ of an entire dust clearing.
+%\item We find that a galaxy's offset from the MS is correlated with the fraction of its cluster population in the middle-age plume. This shows how we can use color-color distributions of clusters to infer the evolutionary past of their host galaxy.
+
+\end{enumerate}
+
+This presentation of the PHANGS-HST star cluster and association catalogs of observed photometric properties provides a foundation for a broad range of science. Previous studies of star formation and feedback timescales, and cluster formation and evolution, which were performed with a limited number of galaxies (e.g., as highlighted in the introduction) can now be expanded to a large diverse sample of spiral galaxies to probe the interplay of the small-scale physics of gas and star formation with galactic structure and galaxy evolution.  These catalogs are an essential complement for JWST studies of the earliest phases of dust embedded star and cluster formation, and for extending the study of the observed cluster properties into the infrared.  In Paper II, we discuss the derivation of cluster masses, ages, and reddenings based on improved SED fitting methods for UV-optical photometry, and present the companion catalog of physical properties.  
+
+
+
+
+
+ 
+
+% outlook and next steps
+%This work is mainly focused on a complete description of the public available star cluster catalogs and provides future catalog users with the main characteristics and caveats. At the same time with a first analysis on the spatial star cluster distribution and color-color based categorization, we present the potential this approach can offer and how it can transform the way the community perceives the stellar content of nearby galaxies.
+ 
+
+%This subdivision, we provide here, can be used in some sense as a surrogate for groups representing different evolutionary stages. However, due to dust reddening this is not replacing a proper age and reddening dating of the clusters as we did in \citet{thilker23sed}. In order to finally use these regions we had to re-assign young highly dust reddened clusters found in the MAP and OGC to the YCL. 
+
+%Future work: Of course, one has to consider that cluster destruction \citep[e.g., see ][]{chandar_luminosity_2010,chandar_age_2016,chandar_star-cluster_2014, adamo_legacy_2017, krumholz_star_2019} and an accurate estimation of the completeness is needed. 
+
+%\subsection{Spatial cluster distributions in future work}
+% how this works for small scales.
+%One of the biggest potentials the cluster catalog brings with it is the possibility of studying the spatial distribution of clusters. In Section~\ref{sect:spatialdist}, we have seen how well starburst regions in form of rings or connection points between bars and spiral arms are highlighted by young clusters and how globular clusters are, as expected, uniformly distributed across the galaxy. 
+
+%A comparison of the spatial cluster distribution of the YCL, MAP and OGC indicates that young clusters $< 10\,{\rm Myr}$ of age tend to remain in clumps and subsequently disperse into the galaxy. 
+%This trend is in good agreement with \citet{grasha_connecting_2018} who find on average a time scale of $\sim7$\,Myr to move out of the molecular gas. 
+
+%Here, we have only touched on a few aspects spatial information of the cluster samples can provide as this would otherwise go beyond the scope.
+%The statistical power we provide combined with value added physical properties provided in \citet{thilker23sed} can allow in-depth studies on various aspects on cluster formation. For instance, \citet{grasha_spatial_2019} found a dependency on the clustering strength depending on the distance to the galaxy center.   
+%By taking morphological features (bars, rings, discs, spiral arms) \citep{querejeta_stellar_2021} this aspect can be generalized for different environments.
+%An additional aspect is cluster disruption: \citet{grasha_hierarchical_2017} found that stellar associations tend to disrupt quickly after their formation near their stellar nurseries in comparison to clusters. Joint analysis of the catalogs we deliver here in combination with multi-scale stellar association catalogs \citep{larson_multi-scale_2022} can tackle this very question and provide further insides on disruption mechanisms depending on environment and cluster types. 
+
+%%%  main results 
+%% robustness of ML catalog 
+%By comparing both the human and machine classified cluster samples, we find that the latter goes on average one V-band magnitude deeper. When applying the same magnitude cuts to the machine classified samples we are able to recover the same physical properties as we find for the human classified sample, demonstrating the robustness of the catalogs. 
+%We further provide a detailed description on the observational properties of the released catalogs and inform the catalog users of caveats such as completeness and machine learning accuracy. We encourage the user of course to test the different catalogs and give guidance how to make an educated choice on which catalog to use based on the science question.  
+
+
+
+
+\section*{Acknowledgements}
+We dedicate this paper to the memory of Julie Whitmore (January 13, 1954 - August 23, 2023).
+
+We thank summer undergraduate intern Lucius Brown (Yale) for his help with artifact identification in the HST images.
+
+JCL is enormously grateful to Michele Judd, Janet Seid, and the W.M. Keck Institute for Space Studies (KISS) at Caltech for its sustained support of collaboration meetings where key work for this paper was performed, and for providing a quiet space for JCL to think.  The PHANGS-HST survey benefited from early discussions between JCL, AL, and other current PHANGS team members which date back to the 2014 KISS workshop, ``Bridging the Gap: Observations and Theory of Star Formation Meet on Large and Small Scales.''
+
+R.C.L. acknowledges support for this work provided by a National Science Foundation (NSF) Astronomy and Astrophysics Postdoctoral Fellowship under award AST-2102625.
+
+MB gratefully acknowledges support from the ANID BASAL project FB210003 and from the FONDECYT regular grant 1211000.
+
+This work was supported by the French government through the France 2030 investment plan managed by the National Research Agency (ANR), as part of the Initiative of Excellence of Université Côte d’Azur under reference number ANR-15-IDEX-01.
+
+KK gratefully acknowledges funding from the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) in the form of an Emmy Noether Research Group (grant number KR4598/2-1, PI Kreckel) and the European Research Council’s starting grant ERC StG-101077573 (“ISM-METALS"). 
+
+QT acknowledges generous support from the Adelphic Educational Fund Wesleyan Summer Grants for a summer internship in Baltimore and thanks the Johns Hopkins University Department of Physics and Astronomy and the Space Telescope Science Institute for hosting him.
+
+KG is supported by the Australian Research Council through the Discovery Early Career Researcher Award (DECRA) Fellowship (project number DE220100766) funded by the Australian Government, and by the Australian Research Council Centre of Excellence for All Sky Astrophysics in 3 Dimensions (ASTRO~3D), through project number CE170100013.
+
+This work is based on observations made with the NASA/ESA Hubble Space Telescope, obtained at the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS 5-26555. These observations are associated with program \#15654. 
+
+
+\section*{Data Availability}
+The PHANGS--HST star cluster catalogs will be made publicly available through the Mikulski Archive for Space Telescopes (MAST) December 2023 at \url{https://archive.stsci.edu/hlsp/phangs-cat}.
+
+{DOLPHOT \citep[v2.0][]{dolphin_dolphot_2016}, CIGALE \citep{burgarella_star_2005,noll_analysis_2009,boquien_cigale_2019}}
+
+%\bibliographystyle{aasjournal}
+\bibliographystyle{aasjournal}   
+\bibliography{bibliography, bibliography_add} 
+
+\clearpage
+
+
+%\appendix
+\section{Additional figures}\label{append:add_fig}
+%
+%\begin{figure*} 
+%\includegraphics[width=\textwidth]{uncert_reg_c12.pdf}
+% \caption{Color uncertainties for the NUV-B vs V-I (top row) and U-B vs V-I (bottom row) diagrams. We present class 1+2 clusters for human and ML classifications separately. We show the color uncertainties with a map where we combine the mean uncertainty value in each bin. We only display bins with at least 5 clusters. }
+% \label{fig:color_color_uncert}
+%\end{figure*}
+%
+%
+
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_0.pdf}
+ \caption{Spatial distributions for ML-classified star clusters of class 1 and 2 as categorized  (Sect.\,\ref{ssect:cc_regions}) into three groups: OGC (red, top panels), MAP (green, upper middle panels) and YCL (blue, lower middle panels); plus color-composite images created from the HST U-B-V bands (bottom panels).  The cluster spatial distribution maps are produced by binning the cluster positions onto a pixel grid which is subsequently convolved with a Gaussian and normalized to unity. 
+ In order to highlight the relation between young clusters and molecular gas, with magenta lines, we overlay the ALMA CO(2-1) intensity contours on the YCL distribution maps.
+ In this figure and Figures\,\ref{fig:spatial_dist_1}--\ref{fig:spatial_dist_9}, we show the spatial cluster distribution for all PHANGS--HST galaxies sorted by decreasing $Delta$MS values (see Figure\,\ref{fig:ms}).}
+ \label{fig:spatial_dist}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_1.pdf}
+ \caption{Continuation of Figure\,\ref{fig:spatial_dist}}
+ \label{fig:spatial_dist_1}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_2.pdf}
+ \caption{Continuation of Figure\,\ref{fig:spatial_dist}}
+ \label{fig:spatial_dist_2}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_3.pdf}
+ \caption{Continuation of Figure\,\ref{fig:spatial_dist}}
+ \label{fig:spatial_dist_3}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_4.pdf}
+ \caption{Continuation of Figure\,\ref{fig:spatial_dist}}
+ \label{fig:spatial_dist_4}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_5.pdf}
+ \caption{Continuation of Figure\,\ref{fig:spatial_dist}}
+ \label{fig:spatial_dist_5}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_6.pdf}
+ \caption{Continuation of Figure\,\ref{fig:spatial_dist}. We note that for IC\,5332 there is no ALMA CO(2-1) detection.}
+ \label{fig:spatial_dist_6}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_7.pdf}
+ \caption{Continuation of Figure\,\ref{fig:spatial_dist}}
+ \label{fig:spatial_dist_7}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_8.pdf}
+ \caption{Continuation of Figure\,\ref{fig:spatial_dist}}
+ \label{fig:spatial_dist_8}
+\end{figure*}
+%
+\begin{figure*} 
+\includegraphics[width=\textwidth]{overview_panel_9.pdf}
+ \caption{Continuation of Figure\,\ref{fig:spatial_dist}}
+ \label{fig:spatial_dist_9}
+\end{figure*}
+%
+
+% Don't change these lines
+\bsp % typesetting comment
+\label{lastpage}
+\end{document}
+
+
+

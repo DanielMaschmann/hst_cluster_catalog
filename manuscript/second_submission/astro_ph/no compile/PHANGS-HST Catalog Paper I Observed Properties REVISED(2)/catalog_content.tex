@@ -1,0 +1,59 @@
+%
+\begin{table*}
+\centering
+\caption{Content description for the PHANGS-HST DR4/CR2 observed property catalogs of clusters and compact associations.  Source positions were determined in the V-band at the detection stage, generally stemming from the \textsc{DOLPHOT} PSF-fitting photometry measurements and have not been optimized with post-facto centroiding or fitting of extended source models.  This can cause source positions to be shifted slightly ($\sim$~1~pixel) from the true location, but has negligible influence on our photometry due to use of a 4 pixel radius aperture. Upcoming structural fitting of C1+C2 clusters, for the purpose of measuring effective radii, will refine source positions.}
+\label{tab:cat_content}
+\begin{tabular}{lcl}
+\hline\hline
+\multicolumn{1}{c}{Column name} & \multicolumn{1}{c}{Unit} & \multicolumn{1}{c}{Description} \\ 
+\hline
+INDEX & int & Running index from 1 to N for each individual target \\ 
+ID\_PHANGS\_CLUSTER & int & PHANGS cluster ID for each individual object classified as class 1,2 \\ 
+ &  &  \,\,\, or 3, ordered by increasing Y pixel coordinate \\ 
+ID\_PHANGS\_CANDIDATE & int & ID in the PHANGS-HST candidate catalog for each individual target, \\ 
+ &  &  \,\,\, for cross-identification. \\ 
+ID\_PHANGS\_ALLSOURCES & int & ID in the initial PHANGS-HST “all-source” detection catalog for each \\ 
+ &  &  \,\,\, individual target, for cross-identification. \\ 
+PHANGS\_X & pix & X coordinates on HST X-pixel grid (0...n-1). Scale = 0.03962 \\ 
+ &  &  \,\,\, arcsec/pixel. \\ 
+PHANGS\_Y & pix & Y coordinates on HST Y-pixel grid (0...n-1). Scale = 0.03962 \\ 
+ &  &  \,\,\, arcsec/pixel. \\ 
+PHANGS\_RA & deg & J2000 Right ascension, ICRS frame, calibrated against selected Gaia \\ 
+ &  &  \,\,\, sources. \\ 
+PHANGS\_DEC & deg & J2000 Declination, ICRS frame, calibrated against selected Gaia \\ 
+ &  &  \,\,\, sources. \\ 
+PHANGS\_CLUSTER\_CLASS\_HUMAN & int & Cluster class assigned through visual inspection. Integers 1 and 2 \\ 
+ &  &  \,\,\, represent C1 and C2 compact clusters. 3 stands for C3 compact \\ 
+ &  &  \,\,\, associations. Intengers > 3 are artefacts. \\ 
+PHANGS\_CLUSTER\_CLASS\_ML\_VGG & int & Cluster class determined by VGG neural network. Integers 1 and 2 \\ 
+ &  &  \,\,\, represent C1 and C2 compact clusters. 3 stands for C3 compact \\ 
+ &  &  \,\,\, associations. Intengers > 3 are artefacts. \\ 
+PHANGS\_CLUSTER\_CLASS\_ML\_VGG\_QUAL & float & Quality value for `cluster\_class\_ml' with values between 0.3 and 1, \\ 
+ &  &  \,\,\, providing the frequency of the mode among the 10 randomly \\ 
+ &  &  \,\,\, initialized models. \\ 
+PHANGS\_[BAND]\_VEGA & mag & HST band apparent vega magnitude, MW foreground reddening and \\ 
+ &  &  \,\,\, aperture corrected. Set to -9999 if source is not covered by HST \\ 
+ &  &  \,\,\, filter. \\ 
+PHANGS\_[BAND]\_VEGA\_ERR & mag & Uncertainty of `[BAND]\_VEGA' \\ 
+PHANGS\_[BAND]\_mJy & mJy & HST band flux in mJy, MW foreground reddening and aperture corrected. \\ 
+ &  &  \,\,\, Set to -9999 if source is not covered by HST filter. \\ 
+PHANGS\_[BAND]\_mJy\_ERR & mJy & Uncertainty of `[BAND]\_mJy' \\ 
+PHANGS\_NON\_DETECTION\_FLAG & int & Integer denoting the number of bands in which the photometry for the \\ 
+ &  &  \,\,\, object was below the requested signal-to-noise ratio (S/N=1). 0 \\ 
+ &  &  \,\,\, indicates all five bands had detections. A value of 1 and 2 means \\ 
+ &  &  \,\,\, the object was detected in four and three bands, respectively. By \\ 
+ &  &  \,\,\, design, this flag cannot be higher than 2. \\ 
+PHANGS\_NO\_COVERAGE\_FLAG & int & Integer denoting the number of bands with no coverage for object. The \\ 
+ &  &  \,\,\, specific bands can be identified as photometry columns are set to \\ 
+ &  &  \,\,\, -9999. \\ 
+PHANGS\_CI & float & Concentration index: difference in magnitudes measured in 1 pix and 3 \\ 
+ &  &  \,\,\, pix radii apertures. \\ 
+CC\_CLASS & str & Flag to identify in which region on the color-color diagram the \\ 
+ &  &  \,\,\, object was associated with. Values are `YCL' (young cluster locus), \\ 
+ &  &  \,\,\, `MAP' (middle aged plume) `OGCC' (old globular cluster clump) or \\ 
+ &  &  \,\,\, `outside' (outside the main regions and therefore not classified). A \\ 
+ &  &  \,\,\, detailed description is found in Section\,\ref{ssect:cc_regions}. \\ 
+\hline
+\end{tabular} 
+\end{table*}
+%

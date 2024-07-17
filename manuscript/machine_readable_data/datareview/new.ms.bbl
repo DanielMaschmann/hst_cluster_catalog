@@ -1,0 +1,836 @@
+\begin{thebibliography}{}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\providecommand{\url}[1]{\href{#1}{#1}}
+\providecommand{\dodoi}[1]{doi:~\href{http://doi.org/#1}{\nolinkurl{#1}}}
+\providecommand{\doeprint}[1]{\href{http://ascl.net/#1}{\nolinkurl{http://ascl.net/#1}}}
+\providecommand{\doarXiv}[1]{\href{https://arxiv.org/abs/#1}{\nolinkurl{https://arxiv.org/abs/#1}}}
+
+\bibitem[{Adamo {et~al.}(2017)Adamo, Ryon, Messa, Kim, Grasha, Cook, Calzetti,
+  Lee, Whitmore, Elmegreen, Ubeda, Smith, Bright, Runnholm, Andrews, Fumagalli,
+  Gouliermis, Kahre, Nair, Thilker, Walterbos, Wofford, Aloisi, Ashworth,
+  Brown, Chandar, Christian, Cignoni, Clayton, Dale, de~Mink, Dobbs, Elmegreen,
+  Evans, Gallagher, Grebel, Herrero, Hunter, Johnson, Kennicutt, Krumholz,
+  Lennon, Levay, Martin, Nota, Östlin, Pellerin, Prieto, Regan, Sabbi, Sacchi,
+  Schaerer, Schiminovich, Shabani, Tosi, Van~Dyk, \&
+  Zackrisson}]{adamo_legacy_2017}
+Adamo, A., Ryon, J.~E., Messa, M., {et~al.} 2017, The Astrophysical Journal,
+  841, 131, \dodoi{10.3847/1538-4357/aa7132}
+
+\bibitem[{{Adamo} {et~al.}(2020){Adamo}, {Zeidler}, {Kruijssen}, {Chevance},
+  {Gieles}, {Calzetti}, {Charbonnel}, {Zinnecker}, \& {Krause}}]{adamo20}
+{Adamo}, A., {Zeidler}, P., {Kruijssen}, J.~M.~D., {et~al.} 2020, \ssr, 216,
+  69, \dodoi{10.1007/s11214-020-00690-x}
+
+\bibitem[{{Anand} {et~al.}(2020){Anand}, {Lee}, {van Dyk}, {Deger}, {Thilker},
+  {Whitmore}, {Boquien}, {Chandar}, {Dale}, {Larson}, {Turner}, {Ubeda},
+  {Schinnerer}, {Leroy}, \& {Phangs-HST Team}}]{anand_distances_2020}
+{Anand}, G., {Lee}, J., {van Dyk}, S., {et~al.} 2020, in American Astronomical
+  Society Meeting Abstracts, Vol. 236, American Astronomical Society Meeting
+  Abstracts \#236, 336.01
+
+\bibitem[{Anand {et~al.}(2021)Anand, Lee, Van~Dyk, Leroy, Rosolowsky,
+  Schinnerer, Larson, Kourkchi, Kreckel, Scheuermann, Rizzi, Thilker, Tully,
+  Bigiel, Blanc, Boquien, Chandar, Dale, Emsellem, Deger, Glover, Grasha,
+  Groves, S.~Klessen, Kruijssen, Querejeta, Sánchez-Blázquez, Schruba,
+  Turner, Ubeda, Williams, \& Whitmore}]{anand_distances_2021}
+Anand, G.~S., Lee, J.~C., Van~Dyk, S.~D., {et~al.} 2021, Monthly Notices of the
+  Royal Astronomical Society, 501, 3621, \dodoi{10.1093/mnras/staa3668}
+
+\bibitem[{Arp \& Sulentic(1991)}]{arp_properties_1991}
+Arp, H., \& Sulentic, J.~W. 1991, The Astrophysical Journal, 375, 569,
+  \dodoi{10.1086/170218}
+
+\bibitem[{Athanassoula(1992)}]{athanassoula_existence_1992}
+Athanassoula, E. 1992, Monthly Notices of the Royal Astronomical Society, 259,
+  345, \dodoi{10.1093/mnras/259.2.345}
+
+\bibitem[{Barnes {et~al.}(2022)Barnes, Chandar, Kreckel, Glover, Scheuermann,
+  Belfiore, Bigiel, Blanc, Boquien, den Brok, Congiu, Chevance, Dale, Deger,
+  Kruijssen, Egorov, Eibensteiner, Emsellem, Grasha, Groves, Klessen, Hannon,
+  Hassani, Lee, Leroy, Lopez, McLeod, Pan, Sánchez-Blázquez, Schinnerer,
+  Sormani, Thilker, Ubeda, Watkins, \& Williams}]{barnes_linking_2022}
+Barnes, A.~T., Chandar, R., Kreckel, K., {et~al.} 2022, Astronomy and
+  Astrophysics, 662, L6, \dodoi{10.1051/0004-6361/202243766}
+
+\bibitem[{Barnes {et~al.}(2023)Barnes, Watkins, Meidt, Kreckel, Sormani, Treß,
+  Glover, Bigiel, Chandar, Emsellem, Lee, Leroy, Sandstrom, Schinnerer,
+  Rosolowsky, Belfiore, Blanc, Boquien, Brok, Cao, Chevance, Dale, Egorov,
+  Eibensteiner, Grasha, Groves, Hassani, Henshaw, Jeffreson, Jiménez-Donaire,
+  Keller, Klessen, Koch, Kruijssen, Larson, Li, Liu, Lopez, Murphy, Neumann,
+  Pety, Pinna, Querejeta, Renaud, Saito, Sarbadhicary, Sardone, Smith, Stuber,
+  Sun, Thilker, Usero, Whitmore, \& Williams}]{barnes_phangs-jwst_2023}
+Barnes, A.~T., Watkins, E.~J., Meidt, S.~E., {et~al.} 2023, The Astrophysical
+  Journal, 944, L22, \dodoi{10.3847/2041-8213/aca7b9}
+
+\bibitem[{Bastian {et~al.}(2012)Bastian, Adamo, Gieles, Silva-Villa, Lamers,
+  Larsen, Smith, Konstantopoulos, \& Zackrisson}]{bastian_stellar_2012}
+Bastian, N., Adamo, A., Gieles, M., {et~al.} 2012, Monthly Notices of the Royal
+  Astronomical Society, 419, 2606, \dodoi{10.1111/j.1365-2966.2011.19909.x}
+
+\bibitem[{Beuther {et~al.}(2017)Beuther, Meidt, Schinnerer, Paladino, \&
+  Leroy}]{beuther_interactions_2017}
+Beuther, H., Meidt, S., Schinnerer, E., Paladino, R., \& Leroy, A. 2017,
+  Astronomy and Astrophysics, 597, A85, \dodoi{10.1051/0004-6361/201526749}
+
+\bibitem[{Boquien {et~al.}(2019)Boquien, Burgarella, Roehlly, Buat, Ciesla,
+  Corre, Inoue, \& Salas}]{boquien_cigale_2019}
+Boquien, M., Burgarella, D., Roehlly, Y., {et~al.} 2019, Astronomy and
+  Astrophysics, 622, A103, \dodoi{10.1051/0004-6361/201834156}
+
+\bibitem[{Boselli {et~al.}(2016)Boselli, Cuillandre, Fossati, Boissier, Bomans,
+  Consolandi, Anselmi, Cortese, Côté, Durrell, Ferrarese, Fumagalli, Gavazzi,
+  Gwyn, Hensler, Sun, \& Toloba}]{boselli_spectacular_2016}
+Boselli, A., Cuillandre, J.~C., Fossati, M., {et~al.} 2016, Astronomy and
+  Astrophysics, 587, A68, \dodoi{10.1051/0004-6361/201527795}
+
+\bibitem[{Bradley(2023)}]{bradley_astropyphotutils_2023}
+Bradley, L. 2023, astropy/photutils: 1.8.0,  Zenodo,
+  \dodoi{10.5281/ZENODO.7946442}
+
+\bibitem[{Brandt {et~al.}(1996)Brandt, Halpern, \& Iwasawa}]{brandt_rosat_1996}
+Brandt, W.~N., Halpern, J.~P., \& Iwasawa, K. 1996, Monthly Notices of the
+  Royal Astronomical Society, 281, 687, \dodoi{10.1093/mnras/281.2.687}
+
+\bibitem[{{Brodie} \& {Strader}(2006)}]{BS06}
+{Brodie}, J.~P., \& {Strader}, J. 2006, \araa, 44, 193,
+  \dodoi{10.1146/annurev.astro.44.051905.092441}
+
+\bibitem[{Brown \& Gnedin(2021)}]{brown_radii_2021}
+Brown, G., \& Gnedin, O.~Y. 2021, Monthly Notices of the Royal Astronomical
+  Society, 508, 5935, \dodoi{10.1093/mnras/stab2907}
+
+\bibitem[{Bruzual \& Charlot(2003)}]{bruzual_stellar_2003}
+Bruzual, G., \& Charlot, S. 2003, Monthly Notices of the Royal Astronomical
+  Society, 344, 1000, \dodoi{10.1046/j.1365-8711.2003.06897.x}
+
+\bibitem[{Burgarella {et~al.}(2005)Burgarella, Buat, \&
+  Iglesias-Páramo}]{burgarella_star_2005}
+Burgarella, D., Buat, V., \& Iglesias-Páramo, J. 2005, Monthly Notices of the
+  Royal Astronomical Society, 360, 1413,
+  \dodoi{10.1111/j.1365-2966.2005.09131.x}
+
+\bibitem[{{Buta} {et~al.}(2015){Buta}, {Sheth}, {Athanassoula}, {Bosma},
+  {Knapen}, {Laurikainen}, {Salo}, {Elmegreen}, {Ho}, {Zaritsky}, {Courtois},
+  {Hinz}, {Mu{\~n}oz-Mateos}, {Kim}, {Regan}, {Gadotti}, {Gil de Paz}, {Laine},
+  {Men{\'e}ndez-Delmestre}, {Comer{\'o}n}, {Erroz Ferrer}, {Seibert},
+  {Mizusawa}, {Holwerda}, \& {Madore}}]{buta15}
+{Buta}, R.~J., {Sheth}, K., {Athanassoula}, E., {et~al.} 2015, \apjs, 217, 32,
+  \dodoi{10.1088/0067-0049/217/2/32}
+
+\bibitem[{Calzetti {et~al.}(2015)Calzetti, Lee, Sabbi, Adamo, Smith, Andrews,
+  Ubeda, Bright, Thilker, Aloisi, Brown, Chandar, Christian, Cignoni, Clayton,
+  da~Silva, de~Mink, Dobbs, Elmegreen, Elmegreen, Evans, Fumagalli, Gallagher,
+  Gouliermis, Grebel, Herrero, Hunter, Johnson, Kennicutt, Kim, Krumholz,
+  Lennon, Levay, Martin, Nair, Nota, Östlin, Pellerin, Prieto, Regan, Ryon,
+  Schaerer, Schiminovich, Tosi, Van~Dyk, Walterbos, Whitmore, \&
+  Wofford}]{calzetti_legacy_2015}
+Calzetti, D., Lee, J.~C., Sabbi, E., {et~al.} 2015, The Astronomical Journal,
+  149, 51, \dodoi{10.1088/0004-6256/149/2/51}
+
+\bibitem[{Cardelli {et~al.}(1989)Cardelli, Clayton, \&
+  Mathis}]{cardelli_relationship_1989}
+Cardelli, J.~A., Clayton, G.~C., \& Mathis, J.~S. 1989, The Astrophysical
+  Journal, 345, 245, \dodoi{10.1086/167900}
+
+\bibitem[{Catinella {et~al.}(2018)Catinella, Saintonge, Janowiecki, Cortese,
+  Davé, Lemonias, Cooper, Schiminovich, Hummels, Fabello, Geréb, Kilborn, \&
+  Wang}]{catinella_xgass_2018}
+Catinella, B., Saintonge, A., Janowiecki, S., {et~al.} 2018, Monthly Notices of
+  the Royal Astronomical Society, 476, 875, \dodoi{10.1093/mnras/sty089}
+
+\bibitem[{Chandar {et~al.}(2014)Chandar, Whitmore, Calzetti, \&
+  O'Connell}]{chandar_star-cluster_2014}
+Chandar, R., Whitmore, B.~C., Calzetti, D., \& O'Connell, R. 2014, The
+  Astrophysical Journal, 787, 17, \dodoi{10.1088/0004-637X/787/1/17}
+
+\bibitem[{Chandar {et~al.}(2010)Chandar, Whitmore, Kim, Kaleida, Mutchler,
+  Calzetti, Saha, O'Connell, Balick, Bond, Carollo, Disney, Dopita, Frogel,
+  Hall, Holtzman, Kimble, McCarthy, Paresce, Silk, Trauger, Walker, Windhorst,
+  \& Young}]{chandar_luminosity_2010}
+Chandar, R., Whitmore, B.~C., Kim, H., {et~al.} 2010, The Astrophysical
+  Journal, 719, 966, \dodoi{10.1088/0004-637X/719/1/966}
+
+\bibitem[{{Choksi} \& {Gnedin}(2019)}]{CG19}
+{Choksi}, N., \& {Gnedin}, O.~Y. 2019, \mnras, 488, 5409,
+  \dodoi{10.1093/mnras/stz2097}
+
+\bibitem[{Cook {et~al.}(2019)Cook, Lee, Adamo, Kim, Chandar, Whitmore, Mok,
+  Ryon, Dale, Calzetti, Andrews, Aloisi, Ashworth, Bright, Brown, Christian,
+  Cignoni, Clayton, da~Silva, de~Mink, Dobbs, Elmegreen, Elmegreen, Evans,
+  Fumagalli, Gallagher, Gouliermis, Grasha, Grebel, Herrero, Hunter, Jensen,
+  Johnson, Kahre, Kennicutt, Krumholz, Lee, Lennon, Linden, Martin, Messa,
+  Nair, Nota, Östlin, Parziale, Pellerin, Regan, Sabbi, Sacchi, Schaerer,
+  Schiminovich, Shabani, Slane, Small, Smith, Smith, Taibi, Thilker, de~la
+  Torre, Tosi, Turner, Ubeda, Van~Dyk, Walterbos, \& Wofford}]{cook_star_2019}
+Cook, D.~O., Lee, J.~C., Adamo, A., {et~al.} 2019, Monthly Notices of the Royal
+  Astronomical Society, 484, 4897, \dodoi{10.1093/mnras/stz331}
+
+\bibitem[{{Cook} {et~al.}(2023){Cook}, {Lee}, {Adamo}, {Calzetti}, {Chandar},
+  {Whitmore}, {Aloisi}, {Cignoni}, {Dale}, {Elmegreen}, {Fumagalli}, {Grasha},
+  {Johnson}, {Kennicutt}, {Kim}, {Linden}, {Messa}, {{\"O}stlin}, {Ryon},
+  {Sacchi}, {Thilker}, {Tosi}, \& {Wofford}}]{cook23}
+{Cook}, D.~O., {Lee}, J.~C., {Adamo}, A., {et~al.} 2023, \mnras, 519, 3749,
+  \dodoi{10.1093/mnras/stac3748}
+
+\bibitem[{Costa {et~al.}(2021)Costa, Johnson, Indebetouw, Finn, Brogan, \&
+  Reines}]{costa_toward_2021}
+Costa, A.~H., Johnson, K.~E., Indebetouw, R., {et~al.} 2021, The Astrophysical
+  Journal, 918, 76, \dodoi{10.3847/1538-4357/ac0e93}
+
+\bibitem[{Crowl \& Kenney(2008)}]{crowl_stellar_2008}
+Crowl, H.~H., \& Kenney, J. D.~P. 2008, The Astronomical Journal, 136, 1623,
+  \dodoi{10.1088/0004-6256/136/4/1623}
+
+\bibitem[{Cuevas-Otahola {et~al.}(2023)Cuevas-Otahola, Mayya,
+  Arriaga-Hernández, Puerari, \& Bruzual}]{cuevas-otahola_cluster_2023}
+Cuevas-Otahola, B., Mayya, Y.~D., Arriaga-Hernández, J., Puerari, I., \&
+  Bruzual, G. 2023, Monthly Notices of the Royal Astronomical Society, 525,
+  5262, \dodoi{10.1093/mnras/stad2643}
+
+\bibitem[{de~Meulenaer {et~al.}(2013)de~Meulenaer, Narbutis, Mineikis, \&
+  Vansevičius}]{de_meulenaer_deriving_2013}
+de~Meulenaer, P., Narbutis, D., Mineikis, T., \& Vansevičius, V. 2013,
+  Astronomy and Astrophysics, 550, A20, \dodoi{10.1051/0004-6361/201220674}
+
+\bibitem[{Deger {et~al.}(2022)Deger, Lee, Whitmore, Thilker, Boquien, Chandar,
+  Dale, Ubeda, White, Grasha, Glover, Schruba, Barnes, Klessen, Kruijssen,
+  Rosolowsky, \& Williams}]{deger_bright_2022}
+Deger, S., Lee, J.~C., Whitmore, B.~C., {et~al.} 2022, Monthly Notices of the
+  Royal Astronomical Society, 510, 32, \dodoi{10.1093/mnras/stab3213}
+
+\bibitem[{Dobbs \& Pringle(2010)}]{dobbs_age_2010}
+Dobbs, C.~L., \& Pringle, J.~E. 2010, Monthly Notices of the Royal Astronomical
+  Society, 409, 396, \dodoi{10.1111/j.1365-2966.2010.17323.x}
+
+\bibitem[{Dolphin(2016)}]{dolphin_dolphot_2016}
+Dolphin, A. 2016, Astrophysics Source Code Library, ascl:1608.013.
+\newblock \url{https://ui.adsabs.harvard.edu/abs/2016ascl.soft08013D}
+
+\bibitem[{Egorov {et~al.}(2023)Egorov, Kreckel, Glover, Groves, Belfiore,
+  Emsellem, Klessen, Leroy, Meidt, Sarbadhicary, Schinnerer, Watkins, Whitmore,
+  Barnes, Congiu, Dale, Grasha, Larson, Lee, Méndez-Delgado, Thilker, \&
+  Williams}]{egorov_quantifying_2023}
+Egorov, O.~V., Kreckel, K., Glover, S. C.~O., {et~al.} 2023, Quantifying the
+  energy balance between the turbulent ionised gas and young stars,
+  \dodoi{10.48550/arXiv.2307.10277}
+
+\bibitem[{{Elmegreen} \& {Thomasson}(1993)}]{ET93}
+{Elmegreen}, B.~G., \& {Thomasson}, M. 1993, \aap, 272, 37
+
+\bibitem[{{Elmegreen} \& {Elmegreen}(1987)}]{EE87}
+{Elmegreen}, D.~M., \& {Elmegreen}, B.~G. 1987, \apj, 314, 3,
+  \dodoi{10.1086/165034}
+
+\bibitem[{Elmegreen {et~al.}(2002)Elmegreen, Elmegreen, Frogel, Eskridge,
+  Pogge, Gallagher, \& Iams}]{elmegreen_arm_2002}
+Elmegreen, D.~M., Elmegreen, B.~G., Frogel, J.~A., {et~al.} 2002, The
+  Astronomical Journal, 124, 777, \dodoi{10.1086/341613}
+
+\bibitem[{Emig {et~al.}(2020)Emig, Bolatto, Leroy, Mills, Jiménez~Donaire,
+  Tielens, Ginsburg, Gorski, Krieger, Levy, Meier, Ott, Rosolowsky, Thompson,
+  \& Veilleux}]{emig_super_2020}
+Emig, K.~L., Bolatto, A.~D., Leroy, A.~K., {et~al.} 2020, The Astrophysical
+  Journal, 903, 50, \dodoi{10.3847/1538-4357/abb67d}
+
+\bibitem[{Emsellem {et~al.}(2022)Emsellem, Schinnerer, Santoro, Belfiore,
+  Pessa, McElroy, Blanc, Congiu, Groves, Ho, Kreckel, Razza, Sanchez-Blazquez,
+  Egorov, Faesi, Klessen, Leroy, Meidt, Querejeta, Rosolowsky, Scheuermann,
+  Anand, Barnes, Bešlić, Bigiel, Boquien, Cao, Chevance, Dale, Eibensteiner,
+  Glover, Grasha, Henshaw, Hughes, Koch, Kruijssen, Lee, Liu, Pan, Pety, Saito,
+  Sandstrom, Schruba, Sun, Thilker, Usero, Watkins, \&
+  Williams}]{emsellem_phangs-muse_2022}
+Emsellem, E., Schinnerer, E., Santoro, F., {et~al.} 2022, Astronomy and
+  Astrophysics, 659, A191, \dodoi{10.1051/0004-6361/202141727}
+
+\bibitem[{Fall \& Chandar(2012)}]{fall_similarities_2012}
+Fall, S.~M., \& Chandar, R. 2012, The Astrophysical Journal, 752, 96,
+  \dodoi{10.1088/0004-637X/752/2/96}
+
+\bibitem[{{Floyd} {et~al.}(2023){Floyd}, {Chandar}, \& the
+  PHANGS-HST~team}]{floyd}
+{Floyd}, M., {Chandar}, R., \& the PHANGS-HST~team. 2023
+
+\bibitem[{Fouesneau \& Lançon(2010)}]{fouesneau_accounting_2010}
+Fouesneau, M., \& Lançon, A. 2010, Astronomy and Astrophysics, 521, A22,
+  \dodoi{10.1051/0004-6361/201014084}
+
+\bibitem[{Fouesneau {et~al.}(2012)Fouesneau, Lançon, Chandar, \&
+  Whitmore}]{fouesneau_analyzing_2012}
+Fouesneau, M., Lançon, A., Chandar, R., \& Whitmore, B.~C. 2012, The
+  Astrophysical Journal, 750, 60, \dodoi{10.1088/0004-637X/750/1/60}
+
+\bibitem[{Gieles \& Portegies~Zwart(2011)}]{gieles_distinction_2011}
+Gieles, M., \& Portegies~Zwart, S.~F. 2011, Monthly Notices of the Royal
+  Astronomical Society, 410, L6, \dodoi{10.1111/j.1745-3933.2010.00967.x}
+
+\bibitem[{Girardi {et~al.}(1995)Girardi, Chiosi, Bertelli, \&
+  Bressan}]{girardi_age_1995}
+Girardi, L., Chiosi, C., Bertelli, G., \& Bressan, A. 1995, Astronomy and
+  Astrophysics, 298, 87.
+\newblock \url{https://ui.adsabs.harvard.edu/abs/1995A&A...298...87G}
+
+\bibitem[{{Gouliermis} {et~al.}(2014){Gouliermis}, {Hony}, \&
+  {Klessen}}]{Gouliermis14}
+{Gouliermis}, D.~A., {Hony}, S., \& {Klessen}, R.~S. 2014, \mnras, 439, 3775,
+  \dodoi{10.1093/mnras/stu228}
+
+\bibitem[{Grasha {et~al.}(2015)Grasha, Calzetti, Adamo, Kim, Elmegreen,
+  Gouliermis, Aloisi, Bright, Christian, Cignoni, Dale, Dobbs, Elmegreen,
+  Fumagalli, Gallagher, Grebel, Johnson, Lee, Messa, Smith, Ryon, Thilker,
+  Ubeda, \& Wofford}]{grasha_spatial_2015}
+Grasha, K., Calzetti, D., Adamo, A., {et~al.} 2015, The Astrophysical Journal,
+  815, 93, \dodoi{10.1088/0004-637X/815/2/93}
+
+\bibitem[{Grasha {et~al.}(2017)Grasha, Calzetti, Adamo, Kim, Elmegreen,
+  Gouliermis, Dale, Fumagalli, Grebel, Johnson, Kahre, Kennicutt, Messa,
+  Pellerin, Ryon, Smith, Shabani, Thilker, \& Ubeda}]{grasha_hierarchical_2017}
+---. 2017, The Astrophysical Journal, 840, 113,
+  \dodoi{10.3847/1538-4357/aa6f15}
+
+\bibitem[{Grasha {et~al.}(2019)Grasha, Calzetti, Adamo, Kennicutt, Elmegreen,
+  Messa, Dale, Fedorenko, Mahadevan, Grebel, Fumagalli, Kim, Dobbs, Gouliermis,
+  Ashworth, Gallagher, Smith, Tosi, Whitmore, Schinnerer, Colombo, Hughes,
+  Leroy, \& Meidt}]{grasha_spatial_2019}
+---. 2019, Monthly Notices of the Royal Astronomical Society, 483, 4707,
+  \dodoi{10.1093/mnras/sty3424}
+
+\bibitem[{Groves {et~al.}(2023)Groves, Kreckel, Santoro, Belfiore, Zavodnik,
+  Congiu, Egorov, Emsellem, Grasha, Leroy, Scheuermann, Schinnerer, Watkins,
+  Barnes, Bigiel, Dale, Glover, Pessa, Sanchez-Blazquez, \&
+  Williams}]{groves_phangs-muse_2023}
+Groves, B., Kreckel, K., Santoro, F., {et~al.} 2023, Monthly Notices of the
+  Royal Astronomical Society, 520, 4902, \dodoi{10.1093/mnras/stad114}
+
+\bibitem[{Hannon {et~al.}(2023)Hannon, Whitmore, Lee, Thilker, Deger, Huerta,
+  Wei, Mobasher, Klessen, Boquien, Dale, Chevance, Grasha, Sanchez-Blazquez,
+  Williams, Scheuermann, Groves, Kim, Kruijssen, \& {Phangs-HST
+  Team}}]{hannon_star_2023}
+Hannon, S., Whitmore, B.~C., Lee, J.~C., {et~al.} 2023, Monthly Notices of the
+  Royal Astronomical Society, \dodoi{10.1093/mnras/stad2238}
+
+\bibitem[{He {et~al.}(2015)He, Zhang, Ren, \& Sun}]{he_deep_2015}
+He, K., Zhang, X., Ren, S., \& Sun, J. 2015, Deep {Residual} {Learning} for
+  {Image} {Recognition},  arXiv.
+\newblock \url{http://arxiv.org/abs/1512.03385}
+
+\bibitem[{Hogg {et~al.}(2001)Hogg, Roberts, Bregman, \& Haynes}]{hogg_hot_2001}
+Hogg, D.~E., Roberts, M.~S., Bregman, J.~N., \& Haynes, M.~P. 2001, The
+  Astronomical Journal, 121, 1336, \dodoi{10.1086/319400}
+
+\bibitem[{Hollyhead {et~al.}(2015)Hollyhead, Bastian, Adamo, Silva-Villa, Dale,
+  Ryon, \& Gazak}]{hollyhead_studying_2015}
+Hollyhead, K., Bastian, N., Adamo, A., {et~al.} 2015, Monthly Notices of the
+  Royal Astronomical Society, 449, 1106, \dodoi{10.1093/mnras/stv331}
+
+\bibitem[{Johnson {et~al.}(2015)Johnson, Leroy, Indebetouw, Brogan, Whitmore,
+  Hibbard, Sheth, \& Evans}]{johnson_physical_2015}
+Johnson, K.~E., Leroy, A.~K., Indebetouw, R., {et~al.} 2015, The Astrophysical
+  Journal, 806, 35, \dodoi{10.1088/0004-637X/806/1/35}
+
+\bibitem[{Kenney \& Young(1986)}]{kenney_co_1986}
+Kenney, J.~D., \& Young, J.~S. 1986, The Astrophysical Journal, 301, L13,
+  \dodoi{10.1086/184614}
+
+\bibitem[{Kennicutt \& Evans(2012)}]{kennicutt_star_2012}
+Kennicutt, R.~C., \& Evans, N.~J. 2012, Annual Review of Astronomy and
+  Astrophysics, 50, 531, \dodoi{10.1146/annurev-astro-081811-125610}
+
+\bibitem[{Kennicutt(1983)}]{kennicutt_evolution_1983}
+Kennicutt, Jr., R.~C. 1983, The Astronomical Journal, 88, 483,
+  \dodoi{10.1086/113334}
+
+\bibitem[{Krumholz {et~al.}(2019)Krumholz, McKee, \&
+  Bland-Hawthorn}]{krumholz_star_2019}
+Krumholz, M.~R., McKee, C.~F., \& Bland-Hawthorn, J. 2019, Annual Review of
+  Astronomy and Astrophysics, 57, 227,
+  \dodoi{10.1146/annurev-astro-091918-104430}
+
+\bibitem[{Krumholz {et~al.}(2015)Krumholz, Adamo, Fumagalli, Wofford, Calzetti,
+  Lee, Whitmore, Bright, Grasha, Gouliermis, Kim, Nair, Ryon, Smith, Thilker,
+  Ubeda, \& Zackrisson}]{krumholz_star_2015}
+Krumholz, M.~R., Adamo, A., Fumagalli, M., {et~al.} 2015, The Astrophysical
+  Journal, 812, 147, \dodoi{10.1088/0004-637X/812/2/147}
+
+\bibitem[{Kuno {et~al.}(2007)Kuno, Sato, Nakanishi, Hirota, Tosaki, Shioya,
+  Sorai, Nakai, Nishiyama, \& Vila-Vilaró}]{kuno_nobeyama_2007}
+Kuno, N., Sato, N., Nakanishi, H., {et~al.} 2007, Publications of the
+  Astronomical Society of Japan, 59, 117, \dodoi{10.1093/pasj/59.1.117}
+
+\bibitem[{{Lada} \& {Lada}(2003)}]{lada03}
+{Lada}, C.~J., \& {Lada}, E.~A. 2003, ARA\&A, 41, 57,
+  \dodoi{10.1146/annurev.astro.41.011802.094844}
+
+\bibitem[{Lang {et~al.}(2020)Lang, Meidt, Rosolowsky, Nofech, Schinnerer,
+  Leroy, Emsellem, Pessa, Glover, Groves, Hughes, Kruijssen, Querejeta,
+  Schruba, Bigiel, Blanc, Chevance, Colombo, Faesi, Henshaw, Herrera, Liu,
+  Pety, Puschnig, Saito, Sun, \& Usero}]{lang_phangs_2020}
+Lang, P., Meidt, S.~E., Rosolowsky, E., {et~al.} 2020, The Astrophysical
+  Journal, 897, 122, \dodoi{10.3847/1538-4357/ab9953}
+
+\bibitem[{Larsen \& Richtler(1999)}]{larsen_young_1999}
+Larsen, S.~S., \& Richtler, T. 1999, Astronomy and Astrophysics, 345, 59,
+  \dodoi{10.48550/arXiv.astro-ph/9902227}
+
+\bibitem[{Larson {et~al.}(2023)Larson, Lee, Thilker, Whitmore, Deger, Lilly,
+  Chandar, Dale, Bigiel, Grasha, Groves, Hannon, Klessen, Kreckel, Kruijssen,
+  Leroy, Pan, Rosolowsky, Schinnerer, Schruba, Watkins, \&
+  Williams}]{larson_multiscale_2023}
+Larson, K.~L., Lee, J.~C., Thilker, D.~A., {et~al.} 2023, Monthly Notices of
+  the Royal Astronomical Society, 523, 6061, \dodoi{10.1093/mnras/stad1600}
+
+\bibitem[{{Lee} {et~al.}(2024){Lee}, {Boquien}, {Maschmann}, {Thilker}, \&
+  {Whitmore}}]{lee23ubvi}
+{Lee}, J., {Boquien}, M., {Maschmann}, D., {Thilker}, D., \& {Whitmore}, B.
+  2024
+
+\bibitem[{Lee {et~al.}(2007)Lee, Kennicutt, Funes, Sakai, \&
+  Akiyama}]{lee_star_2007}
+Lee, J.~C., Kennicutt, R.~C., Funes, José~G., S.~J., Sakai, S., \& Akiyama, S.
+  2007, The Astrophysical Journal, 671, L113, \dodoi{10.1086/526341}
+
+\bibitem[{Lee {et~al.}(2009)Lee, Gil~de Paz, Tremonti, Kennicutt, Salim,
+  Bothwell, Calzetti, Dalcanton, Dale, Engelbracht, Funes, Johnson, Sakai,
+  Skillman, van Zee, Walter, \& Weisz}]{lee_comparison_2009}
+Lee, J.~C., Gil~de Paz, A., Tremonti, C., {et~al.} 2009, The Astrophysical
+  Journal, 706, 599, \dodoi{10.1088/0004-637X/706/1/599}
+
+\bibitem[{Lee {et~al.}(2022)Lee, Whitmore, Thilker, Deger, Larson, Ubeda,
+  Anand, Boquien, Chandar, Dale, Emsellem, Leroy, Rosolowsky, Schinnerer,
+  Schmidt, Lilly, Turner, Van~Dyk, White, Barnes, Belfiore, Bigiel, Blanc, Cao,
+  Chevance, Congiu, Egorov, Glover, Grasha, Groves, Henshaw, Hughes, Klessen,
+  Koch, Kreckel, Kruijssen, Liu, Lopez, Mayker, Meidt, Murphy, Pan, Pety,
+  Querejeta, Razza, Saito, Sánchez-Blázquez, Santoro, Sardone, Scheuermann,
+  Schruba, Sun, Usero, Watkins, \& Williams}]{lee_phangs-hst_2022}
+Lee, J.~C., Whitmore, B.~C., Thilker, D.~A., {et~al.} 2022, The Astrophysical
+  Journal Supplement Series, 258, 10, \dodoi{10.3847/1538-4365/ac1fe5}
+
+\bibitem[{Lee {et~al.}(2023)Lee, Sandstrom, Leroy, Thilker, Schinnerer,
+  Rosolowsky, Larson, Egorov, Williams, Schmidt, Emsellem, Anand, Barnes,
+  Belfiore, Bešlić, Bigiel, Blanc, Bolatto, Boquien, den Brok, Cao, Chandar,
+  Chastenet, Chevance, Chiang, Congiu, Dale, Deger, Eibensteiner, Faesi,
+  Glover, Grasha, Groves, Hassani, Henny, Henshaw, Hoyer, Hughes, Jeffreson,
+  Jiménez-Donaire, Kim, Kim, Klessen, Koch, Kreckel, Kruijssen, Li, Liu,
+  Lopez, Maschmann, Chen, Meidt, Murphy, Neumann, Neumayer, Pan, Pessa, Pety,
+  Querejeta, Pinna, Rodríguez, Saito, Sánchez-Blázquez, Santoro, Sardone,
+  Smith, Sormani, Scheuermann, Stuber, Sutter, Sun, Teng, Treß, Usero,
+  Watkins, Whitmore, \& Razza}]{lee_phangs-jwst_2023}
+Lee, J.~C., Sandstrom, K.~M., Leroy, A.~K., {et~al.} 2023, The Astrophysical
+  Journal, 944, L17, \dodoi{10.3847/2041-8213/acaaae}
+
+\bibitem[{Leroy {et~al.}(2019)Leroy, Sandstrom, Lang, Lewis, Salim, Behrens,
+  Chastenet, Chiang, Gallagher, Kessler, \& Utomo}]{leroy_z_2019}
+Leroy, A.~K., Sandstrom, K.~M., Lang, D., {et~al.} 2019, The Astrophysical
+  Journal Supplement Series, 244, 24, \dodoi{10.3847/1538-4365/ab3925}
+
+\bibitem[{Leroy {et~al.}(2021)Leroy, Schinnerer, Hughes, Rosolowsky, Pety,
+  Schruba, Usero, Blanc, Chevance, Emsellem, Faesi, Herrera, Liu, Meidt,
+  Querejeta, Saito, Sandstrom, Sun, Williams, Anand, Barnes, Behrens, Belfiore,
+  Benincasa, Bešlić, Bigiel, Bolatto, den Brok, Cao, Chandar, Chastenet,
+  Chiang, Congiu, Dale, Deger, Eibensteiner, Egorov, García-Rodríguez,
+  Glover, Grasha, Henshaw, Ho, Kepley, Kim, Klessen, Kreckel, Koch, Kruijssen,
+  Larson, Lee, Lopez, Machado, Mayker, McElroy, Murphy, Ostriker, Pan, Pessa,
+  Puschnig, Razza, Sánchez-Blázquez, Santoro, Sardone, Scheuermann, Sliwa,
+  Sormani, Stuber, Thilker, Turner, Utomo, Watkins, \&
+  Whitmore}]{leroy_phangs-alma_2021}
+Leroy, A.~K., Schinnerer, E., Hughes, A., {et~al.} 2021, The Astrophysical
+  Journal Supplement Series, 257, 43, \dodoi{10.3847/1538-4365/ac17f3}
+
+\bibitem[{Levy {et~al.}(2021)Levy, Bolatto, Leroy, Emig, Gorski, Krieger,
+  Lenkić, Meier, Mills, Ott, Rosolowsky, Tarantino, Veilleux, Walter, Weiß,
+  \& Zwaan}]{levy_outflows_2021}
+Levy, R.~C., Bolatto, A.~D., Leroy, A.~K., {et~al.} 2021, The Astrophysical
+  Journal, 912, 4, \dodoi{10.3847/1538-4357/abec84}
+
+\bibitem[{Levy {et~al.}(2022)Levy, Bolatto, Leroy, Sormani, Emig, Gorski,
+  Lenkić, Mills, Tarantino, Teuben, Veilleux, \&
+  Walter}]{levy_morpho-kinematic_2022}
+---. 2022, The Astrophysical Journal, 935, 19, \dodoi{10.3847/1538-4357/ac7b7a}
+
+\bibitem[{Linden {et~al.}(2021)Linden, Evans, Larson, Privon, Armus, Rich,
+  Díaz-Santos, Murphy, Song, Barcos-Muñoz, Howell, Charmandaris, Inami, U,
+  Surace, Mazzarella, \& Calzetti}]{linden_massive_2021}
+Linden, S.~T., Evans, A.~S., Larson, K., {et~al.} 2021, The Astrophysical
+  Journal, 923, 278, \dodoi{10.3847/1538-4357/ac2892}
+
+\bibitem[{Linden {et~al.}(2022)Linden, Perez, Calzetti, Maji, Messa, Whitmore,
+  Chandar, Adamo, Grasha, Cook, Elmegreen, Dale, Sacchi, Sabbi, Grebel, \&
+  Smith}]{linden_star_2022}
+Linden, S.~T., Perez, G., Calzetti, D., {et~al.} 2022, The Astrophysical
+  Journal, 935, 166, \dodoi{10.3847/1538-4357/ac7c07}
+
+\bibitem[{Linden {et~al.}(2023)Linden, Evans, Armus, Rich, Larson, Lai, Privon,
+  U, Inami, Bohn, Song, Barcos-Muñoz, Charmandaris, Medling, Stierwalt,
+  Diaz-Santos, Böker, van~der Werf, Aalto, Appleton, Brown, Hayward, Howell,
+  Iwasawa, Kemper, Frayer, Law, Malkan, Marshall, Mazzarella, Murphy, Sanders,
+  \& Surace}]{linden_goals-jwst_2023}
+Linden, S.~T., Evans, A.~S., Armus, L., {et~al.} 2023, The Astrophysical
+  Journal, 944, L55, \dodoi{10.3847/2041-8213/acb335}
+
+\bibitem[{Maraston(1998)}]{maraston_evolutionary_1998}
+Maraston, C. 1998, Monthly Notices of the Royal Astronomical Society, 300, 872,
+  \dodoi{10.1046/j.1365-8711.1998.01947.x}
+
+\bibitem[{{Mayya} {et~al.}(2008){Mayya}, {Romano}, {Rodr{\'\i}guez-Merino},
+  {Luna}, {Carrasco}, \& {Rosa-Gonz{\'a}lez}}]{mayya08}
+{Mayya}, Y.~D., {Romano}, R., {Rodr{\'\i}guez-Merino}, L.~H., {et~al.} 2008,
+  \apj, 679, 404, \dodoi{10.1086/587541}
+
+\bibitem[{Mayya {et~al.}(2008)Mayya, Romano, Rodríguez-Merino, Luna, Carrasco,
+  \& Rosa-González}]{mayya_hst_2008}
+Mayya, Y.~D., Romano, R., Rodríguez-Merino, L.~H., {et~al.} 2008, The
+  Astrophysical Journal, 679, 404, \dodoi{10.1086/587541}
+
+\bibitem[{Messa {et~al.}(2018)Messa, Adamo, Östlin, Calzetti, Grasha, Grebel,
+  Shabani, Chandar, Dale, Dobbs, Elmegreen, Fumagalli, Gouliermis, Kim, Smith,
+  Thilker, Tosi, Ubeda, Walterbos, Whitmore, Fedorenko, Mahadevan, Andrews,
+  Bright, Cook, Kahre, Nair, Pellerin, Ryon, Ahmad, Beale, Brown, Clarkson,
+  Guidarelli, Parziale, Turner, \& Weber}]{messa_young_2018}
+Messa, M., Adamo, A., Östlin, G., {et~al.} 2018, Monthly Notices of the Royal
+  Astronomical Society, 473, 996, \dodoi{10.1093/mnras/stx2403}
+
+\bibitem[{{Moustakas} {et~al.}(2010){Moustakas}, {Kennicutt}, {Tremonti},
+  {Dale}, {Smith}, \& {Calzetti}}]{moustakas10}
+{Moustakas}, J., {Kennicutt}, Robert~C., J., {Tremonti}, C.~A., {et~al.} 2010,
+  \apjs, 190, 233, \dodoi{10.1088/0067-0049/190/2/233}
+
+\bibitem[{Nguyen~Luong {et~al.}(2011)Nguyen~Luong, Motte, Schuller, Schneider,
+  Bontemps, Schilke, Menten, Heitsch, Wyrowski, Carlhoff, Bronfman, \&
+  Henning}]{nguyen_luong_w43_2011}
+Nguyen~Luong, Q., Motte, F., Schuller, F., {et~al.} 2011, Astronomy and
+  Astrophysics, 529, A41, \dodoi{10.1051/0004-6361/201016271}
+
+\bibitem[{Noeske {et~al.}(2007)Noeske, Weiner, Faber, Papovich, Koo,
+  Somerville, Bundy, Conselice, Newman, Schiminovich, Le~Floc'h, Coil, Rieke,
+  Lotz, Primack, Barmby, Cooper, Davis, Ellis, Fazio, Guhathakurta, Huang,
+  Kassin, Martin, Phillips, Rich, Small, Willmer, \& Wilson}]{noeske_star_2007}
+Noeske, K.~G., Weiner, B.~J., Faber, S.~M., {et~al.} 2007, The Astrophysical
+  Journal, 660, L43, \dodoi{10.1086/517926}
+
+\bibitem[{Noll {et~al.}(2009)Noll, Burgarella, Giovannoli, Buat, Marcillac, \&
+  Muñoz-Mateos}]{noll_analysis_2009}
+Noll, S., Burgarella, D., Giovannoli, E., {et~al.} 2009, Astronomy and
+  Astrophysics, 507, 1793, \dodoi{10.1051/0004-6361/200912497}
+
+\bibitem[{{Orozco-Duarte} {et~al.}(2022){Orozco-Duarte}, {Wofford},
+  {Vidal-Garc{\'\i}a}, {Bruzual}, {Charlot}, {Krumholz}, {Hannon}, {Lee},
+  {Wofford}, {Fumagalli}, {Dale}, {Messa}, {Grebel}, {Smith}, {Grasha}, \&
+  {Cook}}]{OD2022}
+{Orozco-Duarte}, R., {Wofford}, A., {Vidal-Garc{\'\i}a}, A., {et~al.} 2022,
+  \mnras, 509, 522, \dodoi{10.1093/mnras/stab2988}
+
+\bibitem[{Peng {et~al.}(2010)Peng, Lilly, Kovač, Bolzonella, Pozzetti,
+  Renzini, Zamorani, Ilbert, Knobel, Iovino, Maier, Cucciati, Tasca, Carollo,
+  Silverman, Kampczyk, de~Ravel, Sanders, Scoville, Contini, Mainieri,
+  Scodeggio, Kneib, Le~Fèvre, Bardelli, Bongiorno, Caputi, Coppa, de~la Torre,
+  Franzetti, Garilli, Lamareille, Le~Borgne, Le~Brun, Mignoli, Perez~Montero,
+  Pello, Ricciardelli, Tanaka, Tresse, Vergani, Welikala, Zucca, Oesch, Abbas,
+  Barnes, Bordoloi, Bottini, Cappi, Cassata, Cimatti, Fumana, Hasinger,
+  Koekemoer, Leauthaud, Maccagni, Marinoni, McCracken, Memeo, Meneux, Nair,
+  Porciani, Presotto, \& Scaramella}]{peng_mass_2010}
+Peng, Y.-j., Lilly, S.~J., Kovač, K., {et~al.} 2010, The Astrophysical
+  Journal, 721, 193, \dodoi{10.1088/0004-637X/721/1/193}
+
+\bibitem[{Popescu {et~al.}(2012)Popescu, Hanson, \&
+  Elmegreen}]{popescu_age_2012}
+Popescu, B., Hanson, M.~M., \& Elmegreen, B.~G. 2012, The Astrophysical
+  Journal, 751, 122, \dodoi{10.1088/0004-637X/751/2/122}
+
+\bibitem[{Portegies~Zwart {et~al.}(2010)Portegies~Zwart, McMillan, \&
+  Gieles}]{portegies_zwart_young_2010}
+Portegies~Zwart, S.~F., McMillan, S. L.~W., \& Gieles, M. 2010, Annual Review
+  of Astronomy and Astrophysics, 48, 431,
+  \dodoi{10.1146/annurev-astro-081309-130834}
+
+\bibitem[{Pérez {et~al.}(2021)Pérez, Messa, Calzetti, Maji, Jung, Adamo, \&
+  Sirressi}]{perez_starcnet_2021}
+Pérez, G., Messa, M., Calzetti, D., {et~al.} 2021, The Astrophysical Journal,
+  907, 100, \dodoi{10.3847/1538-4357/abceba}
+
+\bibitem[{Querejeta {et~al.}(2021)Querejeta, Schinnerer, Meidt, Sun, Leroy,
+  Emsellem, Klessen, Muñoz-Mateos, Salo, Laurikainen, Bešlić, Blanc,
+  Chevance, Dale, Eibensteiner, Faesi, García-Rodríguez, Glover, Grasha,
+  Henshaw, Herrera, Hughes, Kreckel, Kruijssen, Liu, Murphy, Pan, Pety, Razza,
+  Rosolowsky, Saito, Schruba, Usero, Watkins, \&
+  Williams}]{querejeta_stellar_2021}
+Querejeta, M., Schinnerer, E., Meidt, S., {et~al.} 2021, Astronomy \&
+  Astrophysics, 656, A133, \dodoi{10.1051/0004-6361/202140695}
+
+\bibitem[{Renaud(2018)}]{renaud_star_2018}
+Renaud, F. 2018, New Astronomy Reviews, 81, 1,
+  \dodoi{10.1016/j.newar.2018.03.001}
+
+\bibitem[{Rico-Villas {et~al.}(2020)Rico-Villas, Martín-Pintado,
+  González-Alfonso, Martín, \& Rivilla}]{rico-villas_super_2020}
+Rico-Villas, F., Martín-Pintado, J., González-Alfonso, E., Martín, S., \&
+  Rivilla, V.~M. 2020, Monthly Notices of the Royal Astronomical Society, 491,
+  4573, \dodoi{10.1093/mnras/stz3347}
+
+\bibitem[{Rodríguez {et~al.}(2023)Rodríguez, Lee, Whitmore, Thilker,
+  Maschmann, Chandar, Deger, Boquien, Dale, Larson, Williams, Kim, Schinnerer,
+  Rosolowsky, Leroy, Emsellem, Sandstrom, Kruijssen, Grasha, Watkins, Barnes,
+  Sormani, Kim, Anand, Chevance, Bigiel, Klessen, Hassani, Liu, Faesi, Cao,
+  Belfiore, Pessa, Kreckel, Groves, Pety, Indebetouw, Egorov, Blanc, Saito, \&
+  Hughes}]{rodriguez_phangs-jwst_2023}
+Rodríguez, M.~J., Lee, J.~C., Whitmore, B.~C., {et~al.} 2023, The
+  Astrophysical Journal, 944, L26, \dodoi{10.3847/2041-8213/aca653}
+
+\bibitem[{Ryon {et~al.}(2017)Ryon, Gallagher, Smith, Adamo, Calzetti, Bright,
+  Cignoni, Cook, Dale, Elmegreen, Fumagalli, Gouliermis, Grasha, Grebel, Kim,
+  Messa, Thilker, \& Ubeda}]{ryon_effective_2017}
+Ryon, J.~E., Gallagher, J.~S., Smith, L.~J., {et~al.} 2017, The Astrophysical
+  Journal, 841, 92, \dodoi{10.3847/1538-4357/aa719e}
+
+\bibitem[{Salim {et~al.}(2007)Salim, Rich, Charlot, Brinchmann, Johnson,
+  Schiminovich, Seibert, Mallery, Heckman, Forster, Friedman, Martin,
+  Morrissey, Neff, Small, Wyder, Bianchi, Donas, Lee, Madore, Milliard, Szalay,
+  Welsh, \& Yi}]{salim_uv_2007}
+Salim, S., Rich, R.~M., Charlot, S., {et~al.} 2007, The Astrophysical Journal
+  Supplement Series, 173, 267, \dodoi{10.1086/519218}
+
+\bibitem[{Salim {et~al.}(2016)Salim, Lee, Janowiecki, da~Cunha, Dickinson,
+  Boquien, Burgarella, Salzer, \& Charlot}]{salim_galex-sdss-wise_2016}
+Salim, S., Lee, J.~C., Janowiecki, S., {et~al.} 2016, The Astrophysical Journal
+  Supplement Series, 227, 2, \dodoi{10.3847/0067-0049/227/1/2}
+
+\bibitem[{Scheuermann {et~al.}(2023)Scheuermann, Kreckel, Barnes, Belfiore,
+  Groves, Hannon, Lee, Minsley, Rosolowsky, Bigiel, Blanc, Boquien, Dale,
+  Deger, Egorov, Emsellem, Glover, Grasha, Hassani, Jeffreson, Klessen,
+  Kruijssen, Larson, Leroy, Lopez, Pan, Sánchez-Blázquez, Santoro,
+  Schinnerer, Thilker, Whitmore, Watkins, \&
+  Williams}]{scheuermann_stellar_2023}
+Scheuermann, F., Kreckel, K., Barnes, A.~T., {et~al.} 2023, Monthly Notices of
+  the Royal Astronomical Society, 522, 2369, \dodoi{10.1093/mnras/stad878}
+
+\bibitem[{Schinnerer {et~al.}(2019)Schinnerer, Leroy, Blanc, Emsellem, Hughes,
+  Rosolowsky, Schruba, Bigiel, Escala, Groves, Kreckel, Kruijssen, Lee, Meidt,
+  Pety, Sanchez-Blazquez, Sandstrom, Usero, Barnes, Belfiore, Bešlić,
+  Chandar, Chatzigiannakis, Chevance, Congiu, Dale, Faesi, Gallagher,
+  Garcia-Rodriguez, Glover, Grasha, Henshaw, Herrera, Ho, Hygate,
+  Jimenez-Donaire, Kessler, Kim, Klessen, Koch, Lang, Larson, Le~Reste, Liu,
+  McElroy, Nofech, Ostriker, Pessa~Gutierrez, Puschnig, Querejeta, Razza,
+  Saito, Santoro, Stuber, Sun, Thilker, Turner, Ubeda, Utreras, Utomo, van Dyk,
+  Ward, \& Whitmore}]{schinnerer_physics_2019}
+Schinnerer, E., Leroy, A., Blanc, G., {et~al.} 2019, The Messenger, 177, 36,
+  \dodoi{10.18727/0722-6691/5151}
+
+\bibitem[{Schinnerer {et~al.}(2023)Schinnerer, Emsellem, Henshaw, Liu, Meidt,
+  Querejeta, Renaud, Sormani, Sun, Egorov, Larson, Leroy, Rosolowsky,
+  Sandstrom, Williams, Barnes, Bigiel, Chevance, Cao, Chandar, Dale,
+  Eibensteiner, Glover, Grasha, Hannon, Hassani, Kim, Klessen, Kruijssen,
+  Murphy, Neumann, Pan, Pety, Saito, Stuber, Treß, Usero, Watkins, Whitmore,
+  \& {Phangs}}]{schinnerer_phangs-jwst_2023}
+Schinnerer, E., Emsellem, E., Henshaw, J.~D., {et~al.} 2023, The Astrophysical
+  Journal, 944, L15, \dodoi{10.3847/2041-8213/acac9e}
+
+\bibitem[{Searle {et~al.}(1980)Searle, Wilkinson, \&
+  Bagnuolo}]{searle_classification_1980}
+Searle, L., Wilkinson, A., \& Bagnuolo, W.~G. 1980, The Astrophysical Journal,
+  239, 803, \dodoi{10.1086/158165}
+
+\bibitem[{{Sellwood} \& {Masters}(2022)}]{SM22}
+{Sellwood}, J.~A., \& {Masters}, K.~L. 2022, \araa, 60,
+  \dodoi{10.1146/annurev-astro-052920-104505}
+
+\bibitem[{Sellwood \& Wilkinson(1993)}]{sellwood_dynamics_1993}
+Sellwood, J.~A., \& Wilkinson, A. 1993, Reports on Progress in Physics, 56,
+  173, \dodoi{10.1088/0034-4885/56/2/001}
+
+\bibitem[{Silva-Villa \& Larsen(2011)}]{silva-villa_star_2011}
+Silva-Villa, E., \& Larsen, S.~S. 2011, Astronomy and Astrophysics, 529, A25,
+  \dodoi{10.1051/0004-6361/201016206}
+
+\bibitem[{Simonyan \& Zisserman(2015)}]{simonyan_very_2015}
+Simonyan, K., \& Zisserman, A. 2015, Very {Deep} {Convolutional} {Networks} for
+  {Large}-{Scale} {Image} {Recognition},  arXiv.
+\newblock \url{http://arxiv.org/abs/1409.1556}
+
+\bibitem[{{Skillman} {et~al.}(1996){Skillman}, {Kennicutt}, {Shields}, \&
+  {Zaritsky}}]{skillman_virgo_96}
+{Skillman}, E.~D., {Kennicutt}, Robert~C., J., {Shields}, G.~A., \& {Zaritsky},
+  D. 1996, \apj, 462, 147, \dodoi{10.1086/177138}
+
+\bibitem[{Smith {et~al.}(2007)Smith, Bastian, Konstantopoulos, Gallagher,
+  Gieles, de~Grijs, Larsen, O'Connell, \& Westmoquette}]{smith_young_2007}
+Smith, L.~J., Bastian, N., Konstantopoulos, I.~S., {et~al.} 2007, The
+  Astrophysical Journal, 667, L145, \dodoi{10.1086/522120}
+
+\bibitem[{Sormani {et~al.}(2020)Sormani, Tress, Glover, Klessen, Battersby,
+  Clark, Hatchfield, \& Smith}]{sormani_simulations_2020}
+Sormani, M.~C., Tress, R.~G., Glover, S. C.~O., {et~al.} 2020, Monthly Notices
+  of the Royal Astronomical Society, 497, 5024, \dodoi{10.1093/mnras/staa1999}
+
+\bibitem[{Sormani {et~al.}(2023)Sormani, Barnes, Sun, Stuber, Schinnerer,
+  Emsellem, Leroy, Glover, Henshaw, Meidt, Neumann, Querejeta, Williams,
+  Bigiel, Eibensteiner, Fragkoudi, Levy, Grasha, Klessen, Kruijssen, Neumayer,
+  Pinna, Rosolowsky, Smith, Teng, Tress, \& Watkins}]{sormani_fuelling_2023}
+Sormani, M.~C., Barnes, A.~T., Sun, J., {et~al.} 2023, Monthly Notices of the
+  Royal Astronomical Society, 523, 2918, \dodoi{10.1093/mnras/stad1554}
+
+\bibitem[{Stetson(1987)}]{stetson_daophot_1987}
+Stetson, P.~B. 1987, Publications of the Astronomical Society of the Pacific,
+  99, 191, \dodoi{10.1086/131977}
+
+\bibitem[{Sun {et~al.}(2024)Sun, He, Batschkun, Levy, Emig, Jimena~Rodriguez,
+  Hassani, Leroy, Schinnerer, Ostriker, Wilson, Bolatto, Mills, Rosolowsky,
+  Lee, Dale, Larson, Thilker, Ubeda, Whitmore, Williams, Barnes, Bigiel,
+  Chevance, Glover, Grasha, Groves, Henshaw, Indebetouw, Jimenez-Donaire,
+  Klessen, Koch, Liu, Mathur, Meidt, Menon, Neumann, Pinna, Querejeta, Sormani,
+  \& Tress}]{sun_hidden_2024}
+Sun, J., He, H., Batschkun, K., {et~al.} 2024, Hidden {Gems} on a {Ring}:
+  {Infant} {Massive} {Clusters} and {Their} {Formation} {Timeline} {Unveiled}
+  by {ALMA}, {HST}, and {JWST} in {NGC} 3351, \dodoi{10.48550/arXiv.2401.14453}
+
+\bibitem[{Tang {et~al.}(2023)Tang, Grasha, \& Krumholz}]{tang_cluster_2023}
+Tang, J., Grasha, K., \& Krumholz, M.~R. 2023, Cluster {Population}
+  {Demographics} in {NGC} 628 {Derived} from {Stochastic} {Population}
+  {Synthesis} {Models}, \dodoi{10.48550/arXiv.2301.05912}
+
+\bibitem[{{Thilker} {et~al.}(2024){Thilker}, {Lee}, {Whitmore}, {Maschmann}, \&
+  {Deger}}]{thilker23sed}
+{Thilker}, D., {Lee}, J., {Whitmore}, B., {Maschmann}, D., \& {Deger}, S. 2024
+
+\bibitem[{Thilker {et~al.}(2022)Thilker, Whitmore, Lee, Deger, Chandar, Larson,
+  Hannon, Ubeda, Dale, Glover, Grasha, Klessen, Kruijssen, Rosolowsky, Schruba,
+  White, \& Williams}]{thilker_phangs-hst_2022}
+Thilker, D.~A., Whitmore, B.~C., Lee, J.~C., {et~al.} 2022, Monthly Notices of
+  the Royal Astronomical Society, 509, 4094, \dodoi{10.1093/mnras/stab3183}
+
+\bibitem[{Thilker {et~al.}(2023)Thilker, Lee, Deger, Barnes, Bigiel, Boquien,
+  Cao, Chevance, Dale, Egorov, Glover, Grasha, Henshaw, Klessen, Koch,
+  Kruijssen, Leroy, Lessing, Meidt, Pinna, Querejeta, Rosolowsky, Sandstrom,
+  Schinnerer, Smith, Watkins, Williams, Anand, Belfiore, Blanc, Chandar,
+  Congiu, Emsellem, Groves, Kreckel, Larson, Liu, Pessa, \&
+  Whitmore}]{thilker_phangs-jwst_2023}
+Thilker, D.~A., Lee, J.~C., Deger, S., {et~al.} 2023, The Astrophysical
+  Journal, 944, L13, \dodoi{10.3847/2041-8213/acaeac}
+
+\bibitem[{Tress {et~al.}(2020)Tress, Sormani, Glover, Klessen, Battersby,
+  Clark, Hatchfield, \& Smith}]{tress_simulations_2020}
+Tress, R.~G., Sormani, M.~C., Glover, S. C.~O., {et~al.} 2020, Monthly Notices
+  of the Royal Astronomical Society, 499, 4455, \dodoi{10.1093/mnras/staa3120}
+
+\bibitem[{Turner {et~al.}(2021)Turner, Dale, Lee, Boquien, Chandar, Deger,
+  Larson, Mok, Thilker, Ubeda, Whitmore, Belfiore, Bigiel, Blanc, Emsellem,
+  Grasha, Groves, Klessen, Kreckel, Kruijssen, Leroy, Rosolowsky,
+  Sanchez-Blazquez, Schinnerer, Schruba, Van~Dyk, \&
+  Williams}]{turner_phangs-hst_2021}
+Turner, J.~A., Dale, D.~A., Lee, J.~C., {et~al.} 2021, Monthly Notices of the
+  Royal Astronomical Society, 502, 1366, \dodoi{10.1093/mnras/stab055}
+
+\bibitem[{{Turner} {et~al.}(2022){Turner}, {Dale}, {Lilly}, {Boquien}, {Deger},
+  {Lee}, {Whitmore}, {Anand}, {Benincasa}, {Bigiel}, {Blanc}, {Chevance},
+  {Emsellem}, {Faesi}, {Glover}, {Grasha}, {Hughes}, {Klessen}, {Kreckel},
+  {Kruijssen}, {Leroy}, {Pan}, {Rosolowsky}, {Schruba}, \&
+  {Williams}}]{turner22}
+{Turner}, J.~A., {Dale}, D.~A., {Lilly}, J., {et~al.} 2022, \mnras, 516, 4612,
+  \dodoi{10.1093/mnras/stac2559}
+
+\bibitem[{{Ubeda} {et~al.}(2021){Ubeda}, {Whitmore}, {Thilker}, {Lee}, {White},
+  {Anand}, \& {Hannon}}]{https://doi.org/10.17909/t9-r08f-dq31}
+{Ubeda}, L., {Whitmore}, B., {Thilker}, D., {et~al.} 2021, Physics at High
+  Angular resolution in Nearby GalaxieS - HST ("PHANGS-HST"),  STScI/MAST,
+  \dodoi{10.17909/T9-R08F-DQ31}
+
+\bibitem[{van~den Bergh \& Hagen(1968)}]{van_den_bergh_ubv_1968}
+van~den Bergh, S., \& Hagen, G.~L. 1968, The Astronomical Journal, 73, 569,
+  \dodoi{10.1086/110663}
+
+\bibitem[{Vollmer {et~al.}(2004)Vollmer, Balkowski, Cayatte, van Driel, \&
+  Huchtmeier}]{vollmer_ngc_2004}
+Vollmer, B., Balkowski, C., Cayatte, V., van Driel, W., \& Huchtmeier, W. 2004,
+  Astronomy and Astrophysics, 419, 35, \dodoi{10.1051/0004-6361:20034552}
+
+\bibitem[{Vázquez \& Leitherer(2005)}]{vazquez_optimization_2005}
+Vázquez, G.~A., \& Leitherer, C. 2005, The Astrophysical Journal, 621, 695,
+  \dodoi{10.1086/427866}
+
+\bibitem[{{Ward} \& {Kruijssen}(2018)}]{ward18}
+{Ward}, J.~L., \& {Kruijssen}, J.~M.~D. 2018, \mnras, 475, 5659,
+  \dodoi{10.1093/mnras/sty117}
+
+\bibitem[{{Ward} {et~al.}(2020){Ward}, {Kruijssen}, \& {Rix}}]{ward20}
+{Ward}, J.~L., {Kruijssen}, J.~M.~D., \& {Rix}, H.-W. 2020, \mnras, 495, 663,
+  \dodoi{10.1093/mnras/staa1056}
+
+\bibitem[{Watkins {et~al.}(2023{\natexlab{a}})Watkins, Kreckel, Groves, Glover,
+  Whitmore, Leroy, Schinnerer, Meidt, Egorov, Barnes, Lee, Bigiel, Boquien,
+  Chandar, Chevance, Dale, Grasha, Klessen, Kruijssen, Larson, Li,
+  Méndez-Delgado, Pessa, Saito, Sanchez-Blazquez, Sarbadhicary, Scheuermann,
+  Thilker, \& Williams}]{watkins_quantifying_2023}
+Watkins, E.~J., Kreckel, K., Groves, B., {et~al.} 2023{\natexlab{a}}, Astronomy
+  and Astrophysics, 676, A67, \dodoi{10.1051/0004-6361/202346075}
+
+\bibitem[{Watkins {et~al.}(2023{\natexlab{b}})Watkins, Barnes, Henny, Kim,
+  Kreckel, Meidt, Klessen, Glover, Williams, Keller, Leroy, Rosolowsky, Lee,
+  Anand, Belfiore, Bigiel, Blanc, Boquien, Cao, Chandar, Chen, Chevance,
+  Congiu, Dale, Deger, Egorov, Emsellem, Faesi, Grasha, Groves, Hassani,
+  Henshaw, Herrera, Hughes, Jeffreson, Jiménez-Donaire, Koch, Kruijssen,
+  Larson, Liu, Lopez, Pessa, Pety, Querejeta, Saito, Sandstrom, Scheuermann,
+  Schinnerer, Sormani, Stuber, Thilker, Usero, \&
+  Whitmore}]{watkins_phangs-jwst_2023}
+Watkins, E.~J., Barnes, A.~T., Henny, K., {et~al.} 2023{\natexlab{b}}, The
+  Astrophysical Journal, 944, L24, \dodoi{10.3847/2041-8213/aca6e4}
+
+\bibitem[{Wei {et~al.}(2020)Wei, Huerta, Whitmore, Lee, Hannon, Chandar, Dale,
+  Larson, Thilker, Ubeda, Boquien, Chevance, Kruijssen, Schruba, Blanc, \&
+  Congiu}]{wei_deep_2020}
+Wei, W., Huerta, E.~A., Whitmore, B.~C., {et~al.} 2020, Monthly Notices of the
+  Royal Astronomical Society, 493, 3178, \dodoi{10.1093/mnras/staa325}
+
+\bibitem[{Whitmore {et~al.}(2010)Whitmore, Chandar, Schweizer, Rothberg,
+  Leitherer, Rieke, Rieke, Blair, Mengel, \&
+  Alonso-Herrero}]{whitmore_antennae_2010}
+Whitmore, B.~C., Chandar, R., Schweizer, F., {et~al.} 2010, The Astronomical
+  Journal, 140, 75, \dodoi{10.1088/0004-6256/140/1/75}
+
+\bibitem[{Whitmore {et~al.}(2021)Whitmore, Lee, Chandar, Thilker, Hannon, Wei,
+  Huerta, Bigiel, Boquien, Chevance, Dale, Deger, Grasha, Klessen, Kruijssen,
+  Larson, Mok, Rosolowsky, Schinnerer, Schruba, Ubeda, Van~Dyk, Watkins, \&
+  Williams}]{whitmore_star_2021}
+Whitmore, B.~C., Lee, J.~C., Chandar, R., {et~al.} 2021, Monthly Notices of the
+  Royal Astronomical Society, 506, 5294, \dodoi{10.1093/mnras/stab2087}
+
+\bibitem[{Whitmore {et~al.}(2023{\natexlab{a}})Whitmore, Chandar, Lee, Floyd,
+  Deger, Lilly, Minsley, Thilker, Boquien, Dale, Henny, Scheuermann, Barnes,
+  Bigiel, Emsellem, Glover, Grasha, Groves, Hannon, Klessen, Kreckel,
+  Kruijssen, Larson, Leroy, Mok, Pan, Pinna, Sánchez-Blázquez, Schinnerer,
+  Sormani, Watkins, \& Williams}]{whitmore_improving_2023}
+Whitmore, B.~C., Chandar, R., Lee, J.~C., {et~al.} 2023{\natexlab{a}}, Monthly
+  Notices of the Royal Astronomical Society, 520, 63,
+  \dodoi{10.1093/mnras/stad098}
+
+\bibitem[{Whitmore {et~al.}(2023{\natexlab{b}})Whitmore, Chandar, Rodríguez,
+  Lee, Emsellem, Floyd, Kim, Kruijssen, Mok, Sormani, Boquien, Dale, Faesi,
+  Henny, Hannon, Thilker, White, Barnes, Bigiel, Chevance, Henshaw, Klessen,
+  Leroy, Liu, Maschmann, Meidt, Rosolowsky, Schinnerer, Sun, Watkins, \&
+  Williams}]{whitmore_phangs-jwst_2023}
+Whitmore, B.~C., Chandar, R., Rodríguez, M.~J., {et~al.} 2023{\natexlab{b}},
+  The Astrophysical Journal, 944, L14, \dodoi{10.3847/2041-8213/acae94}
+
+\bibitem[{Williams {et~al.}(2024)Williams, Lee, Larson, Leroy, Sandstrom,
+  Schinnerer, Thilker, Belfiore, Egorov, Rosolowsky, Sutter, DePasquale, Pagan,
+  Anand, Barnes, Bigiel, Boquien, Cao, Chastenet, Chevance, Chown, Dale,
+  Eibensteiner, Emsellem, Faesi, Glover, Grasha, Hannon, Hassani, Henshaw,
+  Jiménez-Donaire, Kim, Klessen, Koch, Li, Liu, Meidt, Méndez-Delgado,
+  Murphy, Neumann, Neumann, Neumayer, Oakes, Pathak, Pety, Pinna, Querejeta,
+  Ramambason, Romanelli, Sormani, Stuber, Sun, Teng, Usero, Watkins, \&
+  Weinbeck}]{williams_phangs-jwst_2024}
+Williams, T.~G., Lee, J.~C., Larson, K.~L., {et~al.} 2024, {PHANGS}-{JWST}:
+  {Data} {Processing} {Pipeline} and {First} {Full} {Public} {Data} {Release},
+  \dodoi{10.48550/arXiv.2401.15142}
+
+\bibitem[{Wofford {et~al.}(2016)Wofford, Charlot, Bruzual, Eldridge, Calzetti,
+  Adamo, Cignoni, de~Mink, Gouliermis, Grasha, Grebel, Lee, Östlin, Smith,
+  Ubeda, \& Zackrisson}]{wofford_comprehensive_2016}
+Wofford, A., Charlot, S., Bruzual, G., {et~al.} 2016, Monthly Notices of the
+  Royal Astronomical Society, 457, 4296, \dodoi{10.1093/mnras/stw150}
+
+\bibitem[{{Wright}(2020)}]{wright20}
+{Wright}, N.~J. 2020, \nar, 90, 101549, \dodoi{10.1016/j.newar.2020.101549}
+
+\bibitem[{{Zaritsky} {et~al.}(1994){Zaritsky}, {Kennicutt}, \&
+  {Huchra}}]{zkh94}
+{Zaritsky}, D., {Kennicutt}, Robert~C., J., \& {Huchra}, J.~P. 1994, \apj, 420,
+  87, \dodoi{10.1086/173544}
+
+\end{thebibliography}

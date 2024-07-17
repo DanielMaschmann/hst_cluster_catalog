@@ -1,0 +1,93 @@
+% old abstract 
+
+
+%add description of upper limits since new element since previous round of papers.
+%comment on obscured clusters with 70 percent of ages wrong
+%The PHANGS program is building a unique dataset to enable the multi-phase, multi-scale study of star formation across the nearby spiral galaxy population. This effort has been enabled by large survey programs with ALMA, VLT/MUSE, and HST. Here, we provide a first look at the ensemble properties of star clusters and associations in the 38 galaxies observed by PHANGS-HST, with special focus on the most massive young star clusters and the environments which have enabled their formation. We describe the PHANGS-HST star cluster and multi-scale association catalogs to be publicly released. 
+
+
+
+\subsection{Single stellar population models}\label{ssect:ssp_models}
+% motivate the choice of the model
+%To understand different properties of star clusters, we start by exploring the predicted evolution of stellar evolutionary models. 
+In this work, we adopt the \citetalias{bruzual_stellar_2003} models, since these better reproduce the measured colors of very young clusters than most other single stellar population (SSP) models \citep[e.g.][]{turner_phangs-hst_2021}.
+The evolutionary path of SSP models strongly depends on the metallicity as this quantity directly influences the SED shape \citep{buser_library_1992,lejeune_standard_1997}.
+The PHANGS sample contains mostly massive spiral galaxies which have metal abundances that are approximately solar (${\rm Z \sim Z_{\odot}}$) (REF???). However, as discussed in \citet{whitmore_improving_2023}, old globular clusters, due to their age, are better described by ${\rm Z = Z_{\odot}/50}$. In Figure~\ref{fig:bc03_ages}, we illustrate the SEDs and the positions in the color-color diagrams at different ages for the \citetalias{bruzual_stellar_2003} models at solar metallicity. To explain the impact of metallicity on the color-color space, we also show the 1/50th solar metallicity track. 
+
+We first note that the predicted positions for solar metallicity models are essentially identical for the ages 1, 2, and 3 Myr at the top left of the \citetalias{bruzual_stellar_2003} track. Between 5 and 10 Myr the first red super giants emerge, causing a substantial reddening in the V-I-color as these stars are very bright in the near-infrared \citep{white_photoelectric_1978}. 
+% the loops
+From 10 Myr till almost 1 Gyr the most significant evolution is found in the decrease of near-UV and blue light. 
+This is described by a drop to redder colors in the U-B color. However, this evolution fluctuates till about 25 Myr and causes loops in the track as shown in a zoom-in in Figure~\ref{fig:bc03_ages}. This decline in blue colors is caused by the evolution of the most massive main sequence stars into red super giants \citepalias{bruzual_stellar_2003}. 
+% the older populations
+During this time the near-infrared regime is hardly evolving till about a few 100 Myr where the decline of U-B color stalls and the V-I color evolves towards redder colors. The latter change is due to the fact that AGB stars maintain the near-infrared luminosity while the blue part of the spectrum gets dimmer (REF).
+
+The color-color track of a SSP model with 1/50th of the solar metallicty differs significantly from the one with the solar metallicity. The recent formation of star cluster with such low metallicity is not observed in nearby PHANGS galaxies as their interstellar medium shows higher gas-phase metallicities (REF). However, star cluster formed during the early Universe emerged from gas clouds providing a significant lower metallicity. As discussed in \citet{whitmore_improving_2023} massive, red globular star cluster of $\sim10~{\rm Myr}$ are best described by 1/50th solar metallicity. We therefore, show their modelled evolution (dashed line) in the color-color diagram but only highlight the the oldest ages of $> 500~{\rm Myr}$ (solid line).  
+
+% reddening 
+Using the SED shapes or positions on the color-color diagram of an SSP for age-dating has a catch: dust affects the SED shape and therefore can seriously affect the science results. The effect that the blue part of an SSP spectrum decreases with age can be equally achieved by dust attenuation. On the color-color diagram this means that both mechanisms shift the position from the top left corner towards the left bottom \citep[e.g.][]{whitmore_what_2002,whitmore_what_2002}. 
+We visualize this effect in Figure~\ref{fig:bc03_dust}, by showing an SSP of 1 Myr with dust attenuation values ${\rm A_{V}}$ between 0 and 2 (colored lines). For reference, we show a dust free SSP of age of 1 Gyr. In fact this SED has similarities with the one of 1~Myr and ${\rm A_{V}\sim1.5}$. To illustrate the relative shift in the color-color diagram, we added a reddening vector which represents the same reddening scale of ${0 < \rm A_{V} < 2}$ on the left panel in Figure~\ref{fig:bc03_dust}. 
+This ambiguity makes it challenging to properly age date stellar clusters based on broad-band color distributions and is known as the so-called age-reddening degeneracy. In a more general context, the metallicity adds also a degeneracy to this problem \citep{worthey_age-metallicity_1999}. However, since we are here restricting our analysis to solar and 1/50th solar metallicity we restrict our analysis only on the age-reddening degeneracy instead to the age-reddening-metallicity degeneracy. 
+
+
+In order to break the degeneracies, a wide range of photometric bands can help to identify spectroscopy features \citep{anders_analysing_2004,smith_hststis_2006,smith_young_2007}. However, followup spectroscopic observations have shown that photometric observations alone are not enough to break the degeneracy in some cases \citep{chandar_ngc_2004,annibali_lbtmods_2018,whitmore_legus_2020}. Since spectroscopy is observationally expensive and unfeasible for large crowded fields, narrow-band imaging can provide important spectral features such as the H$\alpha$ line flux which can be used to improve age-dating \citep{whitmore_what_2002, anders_spectral_2003,fouesneau_analyzing_2012,ashworth_exploring_2017,barnes_comparing_2021,whitmore_improving_2023}.
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Consistency with SSP Track}
+
+After accounting for scatter due to observational uncertainties and reddening, what are the remaining inconsistencies that may indicate systematic offsets with the models?
+
+Young ages
+What causes the gap between the track and the data?
+Does it indicate a problem with the models?  The tracks do not include nebular emission, so missing hook.
+Does it indicate that there are missing, highly reddened clusters?
+Can it be simply explained by dust reddening.
+
+Intermediate ages
+Points generally fall to the right of the track.
+Does this validate the models?
+is the spread consistent with the observational uncertainties and reddening?
+How much of the spread is due to stochasticity - AGB stars?
+
+The clusters to the left of the track due to noise.
+
+
+Old ages
+Globular cluster clump
+
+Consistency with the reddening vector
+
+Consistency between machine learning and human cluster distributions
+
+
+
+
+
+
+
+\subsection{Characteristic regions in color-color diagrams}\label{ssect:color_color_regions}
+
+%As a next step, we examine the distribution of the star cluster samples in the color-color diagram in the context of the \citetalias{bruzual_stellar_2003} model predictions. 
+%It must be taken into account that the distinction between different cluster classes plays an important role. Particularly young recently formed star clusters are characterized by asymmetries or multiple peaks. On the other hand, old clusters show a spherical symmetry (globular clusters), since they have stabilized their gravitational bounding over a long time period. In fact, young asymmetric clusters and stellar associations tend to dissolve rapidly. This is due to the lack of gravitational binding of such regions. 
+%In Figure~\ref{fig:color_color_regions}, we show ML selected star cluster of class 1 and 2. 
+%In contrast to Figure~\ref{fig:colo_colo_first_view}, we only take star clusters into account with a high selection accuracy of at least 0.9 (See Sect. catalog selection...). This quality cut sorts out low S/N objects which are dominated by noise and thus highlights various loci, which we will describe here.
+
+
+
+
+
+
+
+
+
+
+
